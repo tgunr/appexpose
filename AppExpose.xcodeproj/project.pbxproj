@@ -13,6 +13,8 @@
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
+		75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F270E314B5D1E6003A96B1 /* AppsViewController.m */; };
+		75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F270E414B5D1E6003A96B1 /* AppsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,14 +23,17 @@
 		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		752BC7E214B5A0F4009ACADB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		752BC7E314B5A0F4009ACADB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		752BC7E614B5A0F4009ACADB /* AppExpose-Info.plist */ = {isa = PBXFileReference; path = "AppExpose-Info.plist"; sourceTree = "<group>"; };
+		752BC7E614B5A0F4009ACADB /* AppExpose-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppExpose-Info.plist"; sourceTree = "<group>"; };
 		752BC7E814B5A0F4009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		752BC7EA14B5A0F4009ACADB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		752BC7EC14B5A0F4009ACADB /* AppExpose-Prefix.pch */ = {isa = PBXFileReference; path = "AppExpose-Prefix.pch"; sourceTree = "<group>"; };
+		752BC7EC14B5A0F4009ACADB /* AppExpose-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExpose-Prefix.pch"; sourceTree = "<group>"; };
 		752BC7EE14B5A0F4009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		75F270E214B5D1E6003A96B1 /* AppsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsViewController.h; sourceTree = "<group>"; };
+		75F270E314B5D1E6003A96B1 /* AppsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsViewController.m; sourceTree = "<group>"; };
+		75F270E414B5D1E6003A96B1 /* AppsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +91,9 @@
 				752BC7F114B5A0F4009ACADB /* AppDelegate.m */,
 				752BC7F314B5A0F5009ACADB /* MainMenu.xib */,
 				752BC7E514B5A0F4009ACADB /* Supporting Files */,
+				75F270E214B5D1E6003A96B1 /* AppsViewController.h */,
+				75F270E314B5D1E6003A96B1 /* AppsViewController.m */,
+				75F270E414B5D1E6003A96B1 /* AppsViewController.xib */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -155,6 +163,7 @@
 				752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */,
 				752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */,
 				752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */,
+				75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +176,7 @@
 			files = (
 				752BC7EB14B5A0F4009ACADB /* main.m in Sources */,
 				752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */,
+				75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +298,7 @@
 				752BC7FA14B5A0F5009ACADB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

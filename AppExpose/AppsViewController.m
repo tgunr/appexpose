@@ -9,6 +9,7 @@
 #import "AppsViewController.h"
 
 @implementation AppsViewController
+@synthesize appsBrowser;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

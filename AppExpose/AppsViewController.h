@@ -10,4 +10,5 @@
 
 @interface AppsViewController : NSViewController
 
+@property (weak) IBOutlet NSBrowser *appsBrowser;
 @end
