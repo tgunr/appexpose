@@ -47,6 +47,7 @@
  */
 
 #import "MyViewController.h"
+#import "AppEntry.h"
 
 @implementation IconViewBox
 
@@ -87,7 +88,10 @@
 @end
 
 
-@implementation MyViewController
+@implementation MyViewController {
+	id appDirectory;
+	AppEntry *rootEntry;
+}
 
 @synthesize images, sortingMode, alternateColors;
 
@@ -97,24 +101,18 @@
 // -------------------------------------------------------------------------------
 //	awakeFromNib
 // -------------------------------------------------------------------------------
-- (void)awakeFromNib
-{
-    // save this for later when toggling between alternate colors
-    savedAlternateColors = [collectionView backgroundColors];
-    
-    [self setSortingMode:0];		// icon collection in ascending sort order
-    [self setAlternateColors:NO];	// no alternate background colors (initially use gradient background)
-    
-    // Determine the content of the collection view by reading in the plist "icons.plist",
-    // and add extra "named" template images with the help of NSImage class.
-    //
-    NSBundle		*bundle = [NSBundle mainBundle];
-    NSString		*path = [bundle pathForResource: @"icons" ofType: @"plist"];
-    NSArray			*iconEntries = [NSArray arrayWithContentsOfFile: path];
-    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
-    
-    // read the list of icons from disk in 'icons.plist'
-    if (iconEntries != nil)
+- (void)originalCollection {
+// Determine the content of the collection view by reading in the plist "icons.plist",
+	// and add extra "named" template images with the help of NSImage class.
+	//
+	NSBundle		*bundle = [NSBundle mainBundle];
+	NSString		*path = [bundle pathForResource: @"icons" ofType: @"plist"];
+	NSArray			*iconEntries = [NSArray arrayWithContentsOfFile: path];
+	NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
+
+
+	// read the list of icons from disk in 'icons.plist'
+	if (iconEntries != nil)
     {
         NSInteger idx;
         NSInteger count = [iconEntries count];
@@ -125,7 +123,7 @@
             {
                 NSString *codeStr = [entry valueForKey: KEY_IMAGE];
                 NSString *iconName = [entry valueForKey: KEY_NAME];
-                
+
                 OSType code = UTGetOSTypeFromString((__bridge CFStringRef)codeStr);
                 NSImage *picture = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(code)];
                 [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -135,74 +133,151 @@
             }
         }
     }
-    
-    // now add named image templates
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	// now add named image templates
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameIconViewTemplate], KEY_IMAGE,
                            NSImageNameIconViewTemplate, KEY_NAME,
                            nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameBluetoothTemplate], KEY_IMAGE,
                            NSImageNameBluetoothTemplate, KEY_NAME,
                            nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameIChatTheaterTemplate], KEY_IMAGE,
                            NSImageNameIChatTheaterTemplate, KEY_NAME,
                            nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameSlideshowTemplate], KEY_IMAGE,
                            NSImageNameSlideshowTemplate, KEY_NAME,
                            nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameActionTemplate], KEY_IMAGE,
                            NSImageNameActionTemplate, KEY_NAME,
                            nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameSmartBadgeTemplate], KEY_IMAGE,
                            NSImageNameSmartBadgeTemplate, KEY_NAME,
                            nil]];
-    
-    // Finder icon templates
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	// Finder icon templates
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameListViewTemplate], KEY_IMAGE,
                            NSImageNameListViewTemplate, KEY_NAME,
                            nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameColumnViewTemplate], KEY_IMAGE,
                            NSImageNameColumnViewTemplate, KEY_NAME,
                            nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameFlowViewTemplate], KEY_IMAGE,
                            NSImageNameFlowViewTemplate, KEY_NAME,
                            nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNamePathTemplate], KEY_IMAGE,
                            NSImageNamePathTemplate, KEY_NAME,
                            nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameInvalidDataFreestandingTemplate], KEY_IMAGE,
                            NSImageNameInvalidDataFreestandingTemplate, KEY_NAME,
                            nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameLockLockedTemplate], KEY_IMAGE,
                            NSImageNameLockLockedTemplate, KEY_NAME,
                            nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSImage imageNamed:NSImageNameLockUnlockedTemplate], KEY_IMAGE,
                            NSImageNameLockUnlockedTemplate, KEY_NAME,
                            nil]];
-    
-    [self setImages:tempArray];
 
-    [collectionView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+	[self setImages:tempArray];
 }
 
+- (void)awakeFromNib
+{
+    // save this for later when toggling between alternate colors
+    savedAlternateColors = [collectionView backgroundColors];
+    
+    [self setSortingMode:0];		// icon collection in ascending sort order
+    [self setAlternateColors:NO];	// no alternate background colors (initially use gradient background)
+
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
+	appDirectory = [paths objectAtIndex: 0];
+	if ([paths count] > 0)  {
+        appDirectory = [paths objectAtIndex:0];
+    }
+	appDirectory = [appDirectory stringByAppendingString: @"/"];
+    NSURL *root = [NSURL fileURLWithPath: appDirectory];
+    [self readFromURL:root];
+//	[self originalCollection];
+
+	[collectionView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
+
+- (void)addEntries:(NSArray *)array {
+    // This method is called on the main thread when a background read operation has entries to be added to the entry tree and displayed
+    for (AppEntry *entry in array)
+        [entry addToRootEntry: rootEntry];
+}
+
+- (void)setIcons:(NSMutableArray *)iconImages {
+    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
+    
+    NSInteger idx;
+    NSInteger count = [iconImages count];
+    for (idx = 0; idx < count; idx++)
+    {
+        AppEntry *entry = [iconImages objectAtIndex:idx];
+        if (entry != nil)
+        {
+            if ([[[entry name] pathExtension] isEqualToString:@"app"]) {
+                NSString *iconName = [entry name];
+                NSImage *picture = [entry iconImage];
+                if (picture) {
+                    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           picture, KEY_IMAGE,
+                                           iconName, KEY_NAME,
+                                           nil]];
+                } else {
+                    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NSImage imageNamed:NSImageNameFolder], KEY_IMAGE,
+                                           iconName, KEY_NAME,
+                                           nil]];
+
+                }
+            }
+        }
+    }
+    [self setImages:tempArray];
+}
+
+- (void)readFromURL: (NSURL *) url {
+	AppEntry       *entry;
+	NSError * error;
+	NSMutableArray *entryArray = [NSMutableArray array];
+
+	if (url) {
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSString *const path = [url path];
+		NSArray *dirItems = [fm contentsOfDirectoryAtPath: path error: &error];
+
+        int i = 0;
+		for (NSString *item in dirItems) {
+            i++;
+			NSURL *itemURL = [url URLByAppendingPathComponent: item];
+			entry = [[AppEntry alloc] initWithURL: itemURL];
+			[entryArray addObject: entry];
+		}
+		[self addEntries: entryArray];
+        [self setIcons:entryArray];
+	}
+}
 
 // -------------------------------------------------------------------------------
 //	setAlternateColors:useAlternateColors
@@ -262,5 +337,6 @@
     }
     return NO;
 }
+
 
 @end

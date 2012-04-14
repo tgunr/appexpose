@@ -21,10 +21,10 @@
 	__weak NSBrowser *appBrowser;
 }
 
+@synthesize myWindowController;
 @synthesize window = _window;
 @synthesize iconCollection = _iconCollection;
 @synthesize appBrowser;
-
 
 - (id)init {
     self = [super init];
@@ -36,15 +36,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
-	appDirectory = [paths objectAtIndex: 0];
-	if ([paths count] > 0)  {
-        appDirectory = [paths objectAtIndex:0];
-    }
-	appDirectory = [appDirectory stringByAppendingString: @"/"];
-    NSURL *root = [NSURL fileURLWithPath:appDirectory];
-    [self readFromURL:root];
-    [appBrowser loadColumnZero];
+//    [appBrowser loadColumnZero];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
@@ -59,30 +51,6 @@
 {
 	NSString* fullPath = [[NSBundle mainBundle] pathForResource:@"ReadMe" ofType:@"txt"];
 	[[NSWorkspace sharedWorkspace] openFile:fullPath];
-}
-
-- (void)addEntries:(NSArray *)array {
-    // This method is called on the main thread when a background read operation has entries to be added to the entry tree and displayed
-    for (AppEntry *entry in array) 
-        [entry addToRootEntry:rootEntry];
-}
-
-- (void)readFromURL: (NSURL *) absoluteURL {
-	AppEntry       *entry;
-	NSError * error;
-	NSMutableArray *entryArray = [NSMutableArray array];
-
-	if (absoluteURL) {
-		NSFileManager *fm = [NSFileManager defaultManager];
-		NSString *const path = [absoluteURL path];
-		dirItems = [fm contentsOfDirectoryAtPath: path error: &error];
-
-		for (NSString *item in dirItems) {
-			entry = [[AppEntry alloc] initWithPath: [path stringByAppendingFormat:@"/%@", item]];
-			[entryArray addObject: entry];
-		}
-		[self addEntries: entryArray];
-	}
 }
 
 #pragma mark NSBrowser Data Source Methods

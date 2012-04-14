@@ -11,9 +11,9 @@
 @class MyWindowController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    MyWindowController *myWindowController;
 }
 
+@property (unsafe_unretained) IBOutlet MyWindowController *myWindowController;
 @property(assign) IBOutlet NSWindow       *window;
 @property(weak) IBOutlet NSCollectionView *iconCollection;
 @property (weak) IBOutlet NSBrowser *appBrowser;

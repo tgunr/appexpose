@@ -12,9 +12,11 @@
 @property(nonatomic, assign) BOOL isLeaf;
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic, strong) NSMutableArray *childEntries;
+@property(nonatomic, strong) NSImage *iconImage;
+
 
 + (AppEntry *)rootEntry;
-- (id)initWithPath: (NSString *) path;
+- (AppEntry *)initWithURL: (NSURL *) url;
 - (BOOL)addToRootEntry: (AppEntry *) rootEntry;
 
 @end

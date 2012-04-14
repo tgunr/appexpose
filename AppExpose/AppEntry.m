@@ -11,41 +11,62 @@
 @implementation AppEntry {
 	BOOL isLeaf;
 	NSString *name;
-	NSString *leadingPath;
+	NSURL *leadingPath;
 	NSMutableArray *childEntries;
+	NSImage *iconImage;
 }
 @synthesize isLeaf;
 @synthesize name;
 @synthesize childEntries;
+@synthesize iconImage;
 
 
 + (AppEntry *)rootEntry {
-    return [[self alloc] initWithPath:@"/"];
+    return [[self alloc] initWithURL:[NSURL fileURLWithPath: @"/"]];
 }
 
-- (id)initWithPath:(NSString *)path {
+- (AppEntry *)initWithURL: (NSURL *) url {
 	self = [super init];
 	if (self) {
-		isLeaf           = [self isLeaf:path];
-		path             = [@"/" stringByAppendingPathComponent: path];
-		name             = [[path lastPathComponent] copy];
-		leadingPath      = [[path stringByDeletingLastPathComponent] copy];
-		if (!isLeaf)                                        {
-			childEntries = [[NSMutableArray alloc] init];
+		isLeaf      = [self isLeaf: url];
+//		url         = [url initWithString: @"/" relativeToURL: url];
+		name        = [[url lastPathComponent] copy];
+		leadingPath = [[[url path] stringByDeletingLastPathComponent] copy];
+		if (!isLeaf) {
+			if ([[url pathExtension] isEqualToString: @"app"]) {
+				isLeaf = !isLeaf;
+				NSURL *plistURL = [url URLByAppendingPathComponent:@"Contents/Info.plist"];
+				NSFileManager *fm = [NSFileManager defaultManager];
+                NSURL * absoluteFile = [plistURL absoluteURL];
+				NSString *const aPath = [absoluteFile path];
+				if ([fm fileExistsAtPath: aPath]) {
+					NSDictionary *appInfo = [NSDictionary dictionaryWithContentsOfURL:plistURL];
+					NSString *iconFile = [appInfo objectForKey: @"CFBundleIconFile"];
+					NSURL *iconURL = [url URLByAppendingPathComponent: [NSString stringWithFormat: @"Resources/%@", iconFile]];
+					iconImage = nil;
+                    if (iconURL) {
+                        iconImage = [[NSWorkspace sharedWorkspace] iconForFile:[iconURL path]];
+                        PMLOG(1, @"iconImage: %@", iconImage);
+                    } else {
+                        PMERR(1, @"iconURL: %@ is nil", iconURL);
+                    }
+				}
+			} else
+				childEntries = [[NSMutableArray alloc] init];
 		}
 	}
 	return self;
 }
 
-- (BOOL)isLeaf:(NSString *)path {
+- (BOOL)isLeaf:(NSURL *) url {
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
-    [fm fileExistsAtPath:path isDirectory: &isDir];
+    [fm fileExistsAtPath: [url path] isDirectory: &isDir];
     return !isDir;
 }
 
-- (NSString *)path {
-    NSString *path = [leadingPath stringByAppendingPathComponent:name];
+- (NSString *)pathWithName {
+    NSString *path = [[leadingPath path] stringByAppendingPathComponent:name];
     return isLeaf ? path : [path stringByAppendingString:@"/"];
 }
 
@@ -70,7 +91,7 @@
         }
     }
     if (!childEntry && flag && !isLeaf) {
-        childEntry = [[AppEntry alloc] initWithPath:[[[self path] stringByAppendingPathComponent:str] stringByAppendingString:@"/"]];
+        childEntry = [[AppEntry alloc] initWithURL:[NSURL URLWithString: [[[self pathWithName] stringByAppendingPathComponent:str] stringByAppendingString:@"/"]]];
         [self addChildEntry:childEntry];
     }
     return childEntry;
