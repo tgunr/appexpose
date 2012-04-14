@@ -15,7 +15,25 @@
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
 		75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F270E314B5D1E6003A96B1 /* AppsViewController.m */; };
 		75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F270E414B5D1E6003A96B1 /* AppsViewController.xib */; };
+		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		75F636651538E08B0079D063 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7535D1CF14DF240C00613F39;
+			remoteInfo = PMUtility;
+		};
+		75F636691538E2390079D063 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7535D1CE14DF240C00613F39;
+			remoteInfo = PMUtility;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		752BC7DA14B5A0F4009ACADB /* AppExpose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExpose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +52,7 @@
 		75F270E214B5D1E6003A96B1 /* AppsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsViewController.h; sourceTree = "<group>"; };
 		75F270E314B5D1E6003A96B1 /* AppsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsViewController.m; sourceTree = "<group>"; };
 		75F270E414B5D1E6003A96B1 /* AppsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsViewController.xib; sourceTree = "<group>"; };
+		75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */,
 				752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +71,7 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
+				75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
 				752BC7DD14B5A0F4009ACADB /* Frameworks */,
 				752BC7DB14B5A0F4009ACADB /* Products */,
@@ -110,6 +131,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		75F6365F1538E08B0079D063 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75F636661538E08B0079D063 /* PMUtility.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -124,6 +153,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				75F6366A1538E2390079D063 /* PBXTargetDependency */,
 			);
 			name = AppExpose;
 			productName = AppExpose;
@@ -148,12 +178,28 @@
 			mainGroup = 752BC7CF14B5A0F4009ACADB;
 			productRefGroup = 752BC7DB14B5A0F4009ACADB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 75F6365F1538E08B0079D063 /* Products */;
+					ProjectRef = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				752BC7D914B5A0F4009ACADB /* AppExpose */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		75F636661538E08B0079D063 /* PMUtility.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PMUtility.framework;
+			remoteRef = 75F636651538E08B0079D063 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		752BC7D814B5A0F4009ACADB /* Resources */ = {
@@ -181,6 +227,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		75F6366A1538E2390079D063 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PMUtility;
+			targetProxy = 75F636691538E2390079D063 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		752BC7E714B5A0F4009ACADB /* InfoPlist.strings */ = {
@@ -217,6 +271,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/Debug\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -245,6 +300,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/Debug\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

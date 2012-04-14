@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <PMUtility/pm.h>
 
 @implementation AppDelegate {
 	NSString *appDirectory;
@@ -30,20 +31,30 @@
     if ([paths count] > 0)  {
         appDirectory = [paths objectAtIndex:0];
     }
+    dirPath = appDirectory;
+	PMLOG(1, @"root: %@", appDirectory);
     return appDirectory;
 }
 
 - (NSInteger)browser:(NSBrowser *)browser numberOfChildrenOfItem:(id)item {
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSError * error;
-	dirPath = item;
-	dirItems = [fm contentsOfDirectoryAtPath: item  error: &error];
+    NSString *fullPath;
+    if ([item isEqualToString: appDirectory])
+        fullPath = item;
+    else
+        fullPath = [dirPath stringByAppendingFormat:@"/%@", item];
+	dirPath = fullPath;
+
+	dirItems = [fm contentsOfDirectoryAtPath: dirPath  error: &error];
 	NSUInteger number = [dirItems count];
+    PMLOG(1, @"item: %@ number: %d", item, number);
     return number;
 }
 
 - (id)browser:(NSBrowser *)browser child:(NSInteger)index ofItem:(id)item  {
     NSString *itemAtIndex = [dirItems objectAtIndex: (NSUInteger)index];
+    PMLOG(1, @"item: %@ index: %d itemAtIndex: %@", item, index, itemAtIndex);
 	return itemAtIndex;
 }
 
@@ -59,6 +70,7 @@
 }
 
 - (id)browser:(NSBrowser *)browser objectValueForItem:(id)item {
+    PMLOG(1, @"item: %@", item);
     return item;
 }
 
