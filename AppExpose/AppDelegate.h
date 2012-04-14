@@ -8,10 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@class MyWindowController;
 
-@property (assign) IBOutlet NSWindow *window;
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+    MyWindowController *myWindowController;
+}
+
+@property(assign) IBOutlet NSWindow       *window;
+@property(weak) IBOutlet NSCollectionView *iconCollection;
 @property (weak) IBOutlet NSBrowser *appBrowser;
-@property (weak) IBOutlet NSCollectionView *iconCollection;
 
+-(IBAction)openReadMe:(id)sender;
 @end

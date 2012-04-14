@@ -16,6 +16,12 @@
 		75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F270E314B5D1E6003A96B1 /* AppsViewController.m */; };
 		75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F270E414B5D1E6003A96B1 /* AppsViewController.xib */; };
 		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
+		75F636761538FFAC0079D063 /* AppEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F636751538FFAC0079D063 /* AppEntry.m */; };
+		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
+		75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367E153922E20079D063 /* IconViewPrototype.xib */; };
+		75F63684153923730079D063 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63681153923730079D063 /* MyViewController.m */; };
+		75F63685153923730079D063 /* MyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63683153923730079D063 /* MyWindowController.m */; };
+		75F636871539279F0079D063 /* icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75F636861539279F0079D063 /* icons.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,15 @@
 		75F270E314B5D1E6003A96B1 /* AppsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsViewController.m; sourceTree = "<group>"; };
 		75F270E414B5D1E6003A96B1 /* AppsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsViewController.xib; sourceTree = "<group>"; };
 		75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
+		75F636741538FFAC0079D063 /* AppEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEntry.h; sourceTree = "<group>"; };
+		75F636751538FFAC0079D063 /* AppEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppEntry.m; sourceTree = "<group>"; };
+		75F6367C153922D50079D063 /* Collection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Collection.xib; sourceTree = "<group>"; };
+		75F6367E153922E20079D063 /* IconViewPrototype.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconViewPrototype.xib; sourceTree = "<group>"; };
+		75F63680153923730079D063 /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
+		75F63681153923730079D063 /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
+		75F63682153923730079D063 /* MyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindowController.h; sourceTree = "<group>"; };
+		75F63683153923730079D063 /* MyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindowController.m; sourceTree = "<group>"; };
+		75F636861539279F0079D063 /* icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,13 +123,19 @@
 		752BC7E414B5A0F4009ACADB /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
+				75F636861539279F0079D063 /* icons.plist */,
+				75F636741538FFAC0079D063 /* AppEntry.h */,
+				75F636751538FFAC0079D063 /* AppEntry.m */,
 				752BC7F014B5A0F4009ACADB /* AppDelegate.h */,
 				752BC7F114B5A0F4009ACADB /* AppDelegate.m */,
-				752BC7F314B5A0F5009ACADB /* MainMenu.xib */,
+				75F63680153923730079D063 /* MyViewController.h */,
+				75F63681153923730079D063 /* MyViewController.m */,
+				75F63682153923730079D063 /* MyWindowController.h */,
+				75F63683153923730079D063 /* MyWindowController.m */,
+				75F6367B153922C00079D063 /* Nibs */,
 				752BC7E514B5A0F4009ACADB /* Supporting Files */,
 				75F270E214B5D1E6003A96B1 /* AppsViewController.h */,
 				75F270E314B5D1E6003A96B1 /* AppsViewController.m */,
-				75F270E414B5D1E6003A96B1 /* AppsViewController.xib */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -137,6 +158,17 @@
 				75F636661538E08B0079D063 /* PMUtility.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		75F6367B153922C00079D063 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				75F6367E153922E20079D063 /* IconViewPrototype.xib */,
+				75F6367C153922D50079D063 /* Collection.xib */,
+				752BC7F314B5A0F5009ACADB /* MainMenu.xib */,
+				75F270E414B5D1E6003A96B1 /* AppsViewController.xib */,
+			);
+			name = Nibs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +242,9 @@
 				752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */,
 				752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */,
 				75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */,
+				75F6367D153922D50079D063 /* Collection.xib in Resources */,
+				75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */,
+				75F636871539279F0079D063 /* icons.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +258,9 @@
 				752BC7EB14B5A0F4009ACADB /* main.m in Sources */,
 				752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */,
 				75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */,
+				75F636761538FFAC0079D063 /* AppEntry.m in Sources */,
+				75F63684153923730079D063 /* MyViewController.m in Sources */,
+				75F63685153923730079D063 /* MyWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
