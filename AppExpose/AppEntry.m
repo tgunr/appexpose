@@ -113,10 +113,7 @@
                 PMERR(1, @"Failed to add childEntry at: %@", [theURL path]);
         }
     }
-    
-    // Do something with the path URLs.
-    PMLOG(2, @"theArray: %@",theArray);
-    return theArray;
+        return theArray;
 }
 
 - (BOOL)isLeaf:(NSURL *) url {

@@ -75,8 +75,9 @@
 @property (nonatomic, assign) BOOL alternateColors;
 @property(nonatomic, strong) NSMutableArray *contentArray;
 
-
 - (void)showBeforeAppearance;
-
 - (void)showAfterAppearance;
+- (void)applyIcons;
+- (void)removeIcons;
+
 @end

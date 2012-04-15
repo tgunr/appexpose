@@ -410,4 +410,36 @@
     }
     [self setImages:tempArray];
 }
+
+- (void)applyIcons {
+    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
+    for (AppEntry *entry in contentArray) {
+        if (entry != nil) {
+            NSMutableDictionary *iconDictionary = [entry appDictionary];
+            if (iconDictionary) {
+                NSImage *original = [entry originalImage];
+                NSImage *current = [entry iconImage];
+                if (current != original) {
+                    PMLOG(1, @"Setting icon on: %@", [entry appURL]);
+                    [tempArray addObject: entry];
+                }
+            }
+        } else {
+            PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+        }
+    }
+    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
+    for (AppEntry *entry in tempArray) {
+        NSURL *url = [entry appURL];
+        BOOL result = [ws setIcon:[entry iconImage] forFile:[url path] options:0];
+        if (!result) {
+            PMERR(1, @"Failed to set icon on: %@", url);
+        }
+    }
+}    
+
+- (void)removeIcons {
+    
+}
+
 @end

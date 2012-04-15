@@ -55,9 +55,19 @@
     MyViewController *viewController;
     IBOutlet NSView	*myTargetView;
     IBOutlet NSTextField *selectionField;
+    __weak NSButton *applyButton;
+    __weak NSButton *removeButton;
+    __weak IKImageView *iconView;
+    __weak IKImageBrowserView *iconsView;
 }
 
 -(void)showBeforeAppearance;
 -(void)showAfterAppearance;
+- (IBAction)applyIcons:(id)sender;
+- (IBAction)removeIcons:(id)sender;
 
+@property (weak) IBOutlet NSButton *applyButton;
+@property (weak) IBOutlet NSButton *removeButton;
+@property (weak) IBOutlet IKImageView *iconView;
+@property (weak) IBOutlet IKImageBrowserView *iconsView;
 @end

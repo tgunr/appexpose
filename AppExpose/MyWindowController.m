@@ -54,6 +54,10 @@
 // -------------------------------------------------------------------------------
 //	awakeFromNib:
 // -------------------------------------------------------------------------------
+@synthesize iconView;
+@synthesize iconsView;
+@synthesize removeButton;
+@synthesize applyButton;
 - (void)awakeFromNib
 {
     [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
@@ -80,5 +84,13 @@
 
 -(void)showAfterAppearance {
 	[viewController showAfterAppearance];
+}
+
+- (IBAction)applyIcons:(id)sender {
+    [viewController applyIcons];
+}
+
+- (IBAction)removeIcons:(id)sender {
+    [viewController removeIcons];
 }
 @end

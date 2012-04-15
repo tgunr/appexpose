@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
+		7528A12F153A94050077D483 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7528A12E153A94050077D483 /* Quartz.framework */; };
 		752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752BC7DE14B5A0F4009ACADB /* Cocoa.framework */; };
 		752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
 		752BC7EB14B5A0F4009ACADB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7EA14B5A0F4009ACADB /* main.m */; };
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
-		75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F270E314B5D1E6003A96B1 /* AppsViewController.m */; };
-		75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F270E414B5D1E6003A96B1 /* AppsViewController.xib */; };
 		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		75F636761538FFAC0079D063 /* AppEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F636751538FFAC0079D063 /* AppEntry.m */; };
 		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
@@ -56,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7528A12E153A94050077D483 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		752BC7DA14B5A0F4009ACADB /* AppExpose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExpose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		752BC7DE14B5A0F4009ACADB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -69,9 +69,6 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		75F270E214B5D1E6003A96B1 /* AppsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsViewController.h; sourceTree = "<group>"; };
-		75F270E314B5D1E6003A96B1 /* AppsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsViewController.m; sourceTree = "<group>"; };
-		75F270E414B5D1E6003A96B1 /* AppsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsViewController.xib; sourceTree = "<group>"; };
 		75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		75F636741538FFAC0079D063 /* AppEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEntry.h; sourceTree = "<group>"; };
 		75F636751538FFAC0079D063 /* AppEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppEntry.m; sourceTree = "<group>"; };
@@ -89,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7528A12F153A94050077D483 /* Quartz.framework in Frameworks */,
 				75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */,
 				752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */,
 			);
@@ -100,6 +98,7 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
+				7528A12E153A94050077D483 /* Quartz.framework */,
 				75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
 				752BC7DD14B5A0F4009ACADB /* Frameworks */,
@@ -148,8 +147,6 @@
 				75F63683153923730079D063 /* MyWindowController.m */,
 				75F6367B153922C00079D063 /* Nibs */,
 				752BC7E514B5A0F4009ACADB /* Supporting Files */,
-				75F270E214B5D1E6003A96B1 /* AppsViewController.h */,
-				75F270E314B5D1E6003A96B1 /* AppsViewController.m */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -180,7 +177,6 @@
 				75F6367E153922E20079D063 /* IconViewPrototype.xib */,
 				75F6367C153922D50079D063 /* Collection.xib */,
 				752BC7F314B5A0F5009ACADB /* MainMenu.xib */,
-				75F270E414B5D1E6003A96B1 /* AppsViewController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -256,7 +252,6 @@
 				752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */,
 				752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */,
 				752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */,
-				75F270E614B5D1E6003A96B1 /* AppsViewController.xib in Resources */,
 				75F6367D153922D50079D063 /* Collection.xib in Resources */,
 				75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */,
 				75F636871539279F0079D063 /* icons.plist in Resources */,
@@ -272,7 +267,6 @@
 			files = (
 				752BC7EB14B5A0F4009ACADB /* main.m in Sources */,
 				752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */,
-				75F270E514B5D1E6003A96B1 /* AppsViewController.m in Sources */,
 				75F636761538FFAC0079D063 /* AppEntry.m in Sources */,
 				75F63684153923730079D063 /* MyViewController.m in Sources */,
 				75F63685153923730079D063 /* MyWindowController.m in Sources */,
