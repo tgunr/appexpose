@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AppEntry.h"
+#import "MyWindowController.h"
 
 @interface AppDelegate ()
 
@@ -25,6 +26,7 @@
 @synthesize window = _window;
 @synthesize iconCollection = _iconCollection;
 @synthesize appBrowser;
+@synthesize iconAppearance;
 
 - (id)init {
     self = [super init];
@@ -44,9 +46,20 @@
 	return YES;
 }
 
-// -------------------------------------------------------------------------------
-//	openReadMe:sender
-// -------------------------------------------------------------------------------
+- (IBAction)changeAppearance:(id)sender {
+    NSInteger segment = [sender selectedSegment];
+    switch (segment) {
+        case 0:
+            [myWindowController showBeforeAppearance];
+            break;
+        case 1:
+            [myWindowController showAfterAppearance];
+            break;
+        default:
+            break;
+    }
+}
+
 - (IBAction)openReadMe:(id)sender
 {
 	NSString* fullPath = [[NSBundle mainBundle] pathForResource:@"ReadMe" ofType:@"txt"];

@@ -1329,9 +1329,10 @@
 							<string key="NSToolbarItemPaletteLabel"/>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="728009913">
-								<nil key="NSNextResponder"/>
+								<reference key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {119, 18}}</string>
+								<reference key="NSSuperview"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="167153332">
 									<int key="NSCellFlags">-2080244224</int>
@@ -1394,9 +1395,10 @@
 							<string key="NSToolbarItemPaletteLabel">Icon Search</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSSearchField" key="NSToolbarItemView" id="50736799">
-								<nil key="NSNextResponder"/>
+								<reference key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {180, 19}}</string>
+								<reference key="NSSuperview"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSearchFieldCell" key="NSCell" id="653777008">
 									<int key="NSCellFlags">343014976</int>
@@ -1472,13 +1474,14 @@
 						</object>
 						<object class="NSToolbarItem" key="D41CFB93-7CE1-4316-9349-C2818CABFF35" id="624940196">
 							<string key="NSToolbarItemIdentifier">D41CFB93-7CE1-4316-9349-C2818CABFF35</string>
-							<string key="NSToolbarItemLabel">Icon Ordering</string>
-							<string key="NSToolbarItemPaletteLabel">Icon Ordering</string>
+							<string key="NSToolbarItemLabel">Icon Appearance</string>
+							<string key="NSToolbarItemPaletteLabel">Icon Appearance</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSSegmentedControl" key="NSToolbarItemView" id="23623200">
-								<nil key="NSNextResponder"/>
+								<reference key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{0, 14}, {158, 20}}</string>
+								<string key="NSFrame">{{0, 14}, {100, 20}}</string>
+								<reference key="NSSuperview"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSegmentedCell" key="NSCell" id="754266910">
 									<int key="NSCellFlags">67239424</int>
@@ -1487,11 +1490,11 @@
 									<reference key="NSControlView" ref="23623200"/>
 									<array class="NSMutableArray" key="NSSegmentImages">
 										<object class="NSSegmentItem">
-											<string key="NSSegmentItemLabel">Ascending</string>
+											<string key="NSSegmentItemLabel">Before</string>
 											<int key="NSSegmentItemImageScaling">2</int>
 										</object>
 										<object class="NSSegmentItem">
-											<string key="NSSegmentItemLabel">Descending</string>
+											<string key="NSSegmentItemLabel">After</string>
 											<int key="NSSegmentItemTag">1</int>
 											<bool key="NSSegmentItemSelected">YES</bool>
 											<int key="NSSegmentItemImageScaling">2</int>
@@ -1504,7 +1507,7 @@
 							<nil key="NSToolbarItemImage"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
-							<string key="NSToolbarItemMinSize">{158, 20}</string>
+							<string key="NSToolbarItemMinSize">{96, 19}</string>
 							<string key="NSToolbarItemMaxSize">{158, 20}</string>
 							<bool key="NSToolbarItemEnabled">YES</bool>
 							<bool key="NSToolbarItemAutovalidates">YES</bool>
@@ -1669,6 +1672,7 @@
 							<string key="NSFrame">{{0, -1}, {502, 318}}</string>
 							<reference key="NSSuperview" ref="249289257"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</array>
@@ -1691,7 +1695,7 @@
 			<object class="NSCustomObject" id="755631768">
 				<string key="NSClassName">NSFontManager</string>
 			</object>
-			<object class="NSCustomObject" id="923671452">
+			<object class="NSCustomObject" id="341039985">
 				<string key="NSClassName">NSObject</string>
 			</object>
 			<object class="NSUserDefaultsController" id="365040251">
@@ -2390,11 +2394,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">iconAppearance</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="23623200"/>
+					</object>
+					<int key="connectionID">640</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeAppearance:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="23623200"/>
+					</object>
+					<int key="connectionID">641</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">myWindowController</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="366419672"/>
 					</object>
-					<int key="connectionID">639</int>
+					<int key="connectionID">642</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2419,22 +2439,6 @@
 						</object>
 					</object>
 					<int key="connectionID">630</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: viewController.sortingMode</string>
-						<reference key="source" ref="754266910"/>
-						<reference key="destination" ref="366419672"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="754266910"/>
-							<reference key="NSDestination" ref="366419672"/>
-							<string key="NSLabel">selectedIndex: viewController.sortingMode</string>
-							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">viewController.sortingMode</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">633</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3634,7 +3638,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">638</int>
-						<reference key="object" ref="923671452"/>
+						<reference key="object" ref="341039985"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
@@ -3795,6 +3799,7 @@
 				<string key="606.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="607.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="608.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<integer value="0" key="609.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="609.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="610.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="611.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3819,26 +3824,30 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">639</int>
+			<int key="maxID">642</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">openReadMe:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">openReadMe:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="changeAppearance:">id</string>
+						<string key="openReadMe:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="changeAppearance:">
+							<string key="name">changeAppearance:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openReadMe:">
 							<string key="name">openReadMe:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="appBrowser">NSBrowser</string>
+						<string key="iconAppearance">NSSegmentedControl</string>
 						<string key="iconCollection">NSCollectionView</string>
 						<string key="myWindowController">MyWindowController</string>
 						<string key="window">NSWindow</string>
@@ -3847,6 +3856,10 @@
 						<object class="IBToOneOutletInfo" key="appBrowser">
 							<string key="name">appBrowser</string>
 							<string key="candidateClassName">NSBrowser</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="iconAppearance">
+							<string key="name">iconAppearance</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="iconCollection">
 							<string key="name">iconCollection</string>

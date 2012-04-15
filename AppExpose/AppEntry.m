@@ -9,16 +9,14 @@
 #import "AppEntry.h"
 
 @implementation AppEntry {
-	BOOL isLeaf;
-	NSString *name;
-	NSURL *leadingPath;
-	NSMutableArray *childEntries;
-	NSImage *iconImage;
 }
 @synthesize isLeaf;
+@synthesize isApp;
 @synthesize name;
+@synthesize appURL;
 @synthesize childEntries;
 @synthesize iconImage;
+@synthesize appDictionary;
 
 
 + (AppEntry *)rootEntry {
@@ -28,36 +26,35 @@
 - (AppEntry *)initWithURL: (NSURL *) url {
 	self = [super init];
 	if (self) {
+		appURL      = [url copy];
 		isLeaf      = [self isLeaf: url];
-//		url         = [url initWithString: @"/" relativeToURL: url];
+        isApp       = NO;
+        //		url         = [url initWithString: @"/" relativeToURL: url];
 		name        = [[url lastPathComponent] copy];
-		leadingPath = [[[url path] stringByDeletingLastPathComponent] copy];
 		if (!isLeaf) {
-			if ([[url pathExtension] isEqualToString: @"app"]) {
+			if ([[appURL pathExtension] isEqualToString: @"app"]) {
+                isApp = YES;
 				isLeaf = !isLeaf;
-				NSURL *plistURL = [url URLByAppendingPathComponent:@"Contents/Info.plist"];
-				NSFileManager *fm = [NSFileManager defaultManager];
-                NSURL * absoluteFile = [plistURL absoluteURL];
-				NSString *const aPath = [absoluteFile path];
-				if ([fm fileExistsAtPath: aPath]) {
-					NSDictionary *appInfo = [NSDictionary dictionaryWithContentsOfURL:plistURL];
-					NSString *iconFile = [appInfo objectForKey: @"CFBundleIconFile"];
-					NSURL *iconURL = [url URLByAppendingPathComponent: [NSString stringWithFormat: @"Resources/%@", iconFile]];
-					iconImage = nil;
-                    if (iconURL) {
-                        iconImage = [[NSWorkspace sharedWorkspace] iconForFile:[iconURL path]];
-                        PMLOG(1, @"iconImage: %@", iconImage);
-                    } else {
-                        PMERR(1, @"iconURL: %@ is nil", iconURL);
-                    }
-				}
-			} else
-				childEntries = [[NSMutableArray alloc] init];
-		}
-	}
-	return self;
+            } else
+                childEntries = [[NSMutableArray alloc] init];
+            //				NSURL *plistURL = [url URLByAppendingPathComponent:@"Contents/Info.plist"];
+            //				NSFileManager *fm = [NSFileManager defaultManager];
+            //                NSURL * absoluteFile = [plistURL absoluteURL];
+            //				NSString *const aPath = [absoluteFile path];
+            //				if ([fm fileExistsAtPath: aPath]) {
+            //					NSDictionary *appInfo = [NSDictionary dictionaryWithContentsOfURL:plistURL];
+            //					NSString *iconFile = [appInfo objectForKey: @"CFBundleIconFile"];
+            //					NSURL *iconURL = [url URLByAppendingPathComponent: [NSString stringWithFormat: @"Resources/%@", iconFile]];
+            iconImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+                appDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                 iconImage, KEY_IMAGE,
+                                 name, KEY_NAME,
+                                 nil];
+        }
+    }
+    return self;
 }
-
+    
 - (BOOL)isLeaf:(NSURL *) url {
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
@@ -66,7 +63,7 @@
 }
 
 - (NSString *)pathWithName {
-    NSString *path = [[leadingPath path] stringByAppendingPathComponent:name];
+    NSString *path = [[appURL path] stringByAppendingPathComponent:name];
     return isLeaf ? path : [path stringByAppendingString:@"/"];
 }
 
@@ -99,7 +96,7 @@
 
 - (BOOL)addToRootEntry:(AppEntry *)rootEntry {
 	AppEntry *directoryEntry = rootEntry;
-    NSArray *components = [leadingPath pathComponents];
+    NSArray *components = [appURL pathComponents];
     for (NSString *component in components) {
         if (![@"/" isEqualToString:component]) directoryEntry = [directoryEntry childDirectoryEntryWithName:component createIfNotPresent:YES];
     }

@@ -57,4 +57,7 @@
     IBOutlet NSTextField *selectionField;
 }
 
+-(void)showBeforeAppearance;
+-(void)showAfterAppearance;
+
 @end

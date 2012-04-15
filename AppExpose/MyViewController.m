@@ -94,9 +94,8 @@
 }
 
 @synthesize images, sortingMode, alternateColors;
+@synthesize contentArray;
 
-#define KEY_IMAGE	@"icon"
-#define KEY_NAME	@"name"
 
 // -------------------------------------------------------------------------------
 //	awakeFromNib
@@ -214,7 +213,8 @@
     }
 	appDirectory = [appDirectory stringByAppendingString: @"/"];
     NSURL *root = [NSURL fileURLWithPath: appDirectory];
-    [self readFromURL:root];
+    [self gatherContents:root];
+//    [self readFromURL:root];
 //	[self originalCollection];
 
 	[collectionView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
@@ -228,34 +228,69 @@
 
 - (void)setIcons:(NSMutableArray *)iconImages {
     NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
-    
-    NSInteger idx;
-    NSInteger count = [iconImages count];
-    for (idx = 0; idx < count; idx++)
-    {
-        AppEntry *entry = [iconImages objectAtIndex:idx];
-        if (entry != nil)
-        {
-            if ([[[entry name] pathExtension] isEqualToString:@"app"]) {
-                NSString *iconName = [entry name];
-                NSImage *picture = [entry iconImage];
-                if (picture) {
-                    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           picture, KEY_IMAGE,
-                                           iconName, KEY_NAME,
-                                           nil]];
-                } else {
-                    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           [NSImage imageNamed:NSImageNameFolder], KEY_IMAGE,
-                                           iconName, KEY_NAME,
-                                           nil]];
-
-                }
+    for (AppEntry *entry in iconImages) {
+        if (entry != nil) {
+            NSDictionary *iconDictionary = [entry appDictionary];
+            if (iconDictionary) {
+                [tempArray addObject: iconDictionary];
+            } else {
+                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
             }
         }
     }
     [self setImages:tempArray];
 }
+
+// -------------------------------------------------------------------------------
+//	gatherContents:inObject
+//
+//	Gathering the contents and their icons could be expensive.
+//	This method is being called on a separate thread to avoid blocking the UI.
+// -------------------------------------------------------------------------------
+- (void)gatherContents:(NSURL *) url 
+{	
+	contentArray = [[NSMutableArray alloc] init];
+    
+	NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[url path] error:nil];
+	for (NSString *element in files)
+	{
+		// we need to reconstruct the full path of the object since 'directoryContentsAtPath' only gives us the object name
+		NSString *pathStr = [[url path] stringByAppendingPathComponent:element];
+		
+		// examine if this object is invisible (don't include in the array)
+		CFDictionaryRef values = NULL;
+		CFStringRef attrs[1] = { kLSItemIsInvisible };
+		CFArrayRef attrNames = CFArrayCreate(NULL, (const void **)attrs, 1, NULL);
+        
+		FSRef fileRef;
+		Boolean isDirectory;
+		if (FSPathMakeRef((const UInt8 *)[pathStr fileSystemRepresentation], &fileRef, &isDirectory) == noErr)
+		{
+			if (LSCopyItemAttributes(&fileRef, kLSRolesViewer, attrNames, &values) == noErr)
+			{
+				if (values != NULL)
+				{
+					if (CFDictionaryGetValue(values, kLSItemIsInvisible) == kCFBooleanFalse)
+					{
+						// object is visible so add to our array
+//                        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                                                 [[NSWorkspace sharedWorkspace] iconForFile:pathStr], KEY_IMAGE,
+//                                                 element, KEY_NAME,
+//                                                 nil]];
+
+                        AppEntry * entry = [[AppEntry alloc] initWithURL: [NSURL fileURLWithPath: pathStr]];
+						[contentArray addObject:entry];
+					}
+				}
+				CFRelease(values);
+			}
+		}
+		CFRelease(attrNames);
+	}
+	[self setIcons: contentArray];
+//    [self setImages:contentArray];
+}
+
 
 - (void)readFromURL: (NSURL *) url {
 	AppEntry       *entry;
@@ -339,4 +374,15 @@
 }
 
 
+- (void)showBeforeAppearance {
+    int i =0;
+    for (id item in contentArray) {
+     i++;
+}   
+}
+
+- (void)showAfterAppearance {
+   //To change the template use AppCode | Preferences | File Templates.
+
+}
 @end

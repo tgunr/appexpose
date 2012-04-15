@@ -62,7 +62,8 @@
     IBOutlet NSCollectionView *collectionView;
     IBOutlet NSArrayController *arrayController;
     NSMutableArray *images;
-    
+    NSMutableArray *contentArray;
+
     NSUInteger sortingMode;
     BOOL alternateColors;
     
@@ -72,5 +73,10 @@
 @property (retain) NSMutableArray *images;
 @property (nonatomic, assign) NSUInteger sortingMode;
 @property (nonatomic, assign) BOOL alternateColors;
+@property(nonatomic, strong) NSMutableArray *contentArray;
 
+
+- (void)showBeforeAppearance;
+
+- (void)showAfterAppearance;
 @end
