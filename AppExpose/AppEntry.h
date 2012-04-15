@@ -17,7 +17,9 @@
 	NSString *name;
 	NSURL *appURL;
 	NSMutableArray *childEntries;
+	NSMutableArray *childIcons;
 	NSImage *iconImage;
+	NSImage *originalImage;
     NSMutableDictionary *appDictionary;
 }
 
@@ -28,11 +30,17 @@
 @property(nonatomic, strong) NSMutableArray *childEntries;
 @property(nonatomic, strong) NSMutableDictionary *appDictionary;
 @property(nonatomic, strong) NSImage *iconImage;
+@property(nonatomic, strong) NSImage *originalImage;
 
 + (AppEntry *)rootEntry;
-- (BOOL)isLeaf:(NSURL *) url;
-- (NSString *)pathWithName;
 - (AppEntry *)initWithURL: (NSURL *) url;
+- (AppEntry *)initRootWithURL: (NSURL *) url;
+- (BOOL)isLeaf:(NSURL *) url;
+- (BOOL)isFolder:(NSURL *) url;
+- (NSArray *)scanURLForIcons:(NSURL *)directoryToScan forEntry: (AppEntry *)appEntry;
+- (NSString *)pathWithName;
+- (NSComparisonResult)compare:(AppEntry *)other;
+- (BOOL)addChildEntry:(AppEntry *)entry;
+- (AppEntry *)childDirectoryEntryWithName:(NSString *)str createIfNotPresent:(BOOL)flag;
 - (BOOL)addToRootEntry: (AppEntry *) rootEntry;
-
 @end

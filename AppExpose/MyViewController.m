@@ -230,6 +230,7 @@
     NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
     for (AppEntry *entry in iconImages) {
         if (entry != nil) {
+            
             NSDictionary *iconDictionary = [entry appDictionary];
             if (iconDictionary) {
                 [tempArray addObject: iconDictionary];
@@ -375,14 +376,38 @@
 
 
 - (void)showBeforeAppearance {
-    int i =0;
-    for (id item in contentArray) {
-     i++;
-}   
+    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
+    for (AppEntry *entry in contentArray) {
+        if (entry != nil) {
+            NSMutableDictionary *iconDictionary = [entry appDictionary];
+            if (iconDictionary) {
+                NSImage *original = [entry originalImage];
+                NSImage *current = [entry iconImage];
+                if (current == original) 
+                    [tempArray addObject: iconDictionary];
+                else {
+                    NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                         original, KEY_IMAGE,
+                                                         [entry name], KEY_NAME,
+                                                         nil];
+                    [tempArray addObject: newDictionary];
+                }
+            } else {
+                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+            }
+        }
+    }
+    [self setImages:tempArray];
 }
 
 - (void)showAfterAppearance {
-   //To change the template use AppCode | Preferences | File Templates.
-
+    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
+    for (AppEntry *entry in contentArray) {
+        if (entry != nil) {
+            NSDictionary *iconDictionary = [entry appDictionary];
+            [tempArray addObject: iconDictionary];
+        }
+    }
+    [self setImages:tempArray];
 }
 @end

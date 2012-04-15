@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752BC7DE14B5A0F4009ACADB /* Cocoa.framework */; };
 		752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
 		752BC7EB14B5A0F4009ACADB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7EA14B5A0F4009ACADB /* main.m */; };
@@ -40,6 +41,19 @@
 			remoteInfo = PMUtility;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		751E7287153A7F60006C9F80 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		752BC7DA14B5A0F4009ACADB /* AppExpose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExpose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +195,7 @@
 				752BC7D614B5A0F4009ACADB /* Sources */,
 				752BC7D714B5A0F4009ACADB /* Frameworks */,
 				752BC7D814B5A0F4009ACADB /* Resources */,
+				751E7287153A7F60006C9F80 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -357,6 +372,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -368,6 +384,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

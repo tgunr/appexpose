@@ -16,50 +16,119 @@
 @synthesize appURL;
 @synthesize childEntries;
 @synthesize iconImage;
+@synthesize originalImage;
 @synthesize appDictionary;
 
 
 + (AppEntry *)rootEntry {
-    return [[self alloc] initWithURL:[NSURL fileURLWithPath: @"/"]];
+    return [[self alloc] initRootWithURL:[NSURL fileURLWithPath: @"/"]];
+}
+
+- (AppEntry *)initRootWithURL: (NSURL *) url {
+	self = [super init];
+	if (self) {
+		appURL          = [url copy];
+		isLeaf          = YES;
+        isApp           = NO;
+		name            = [[url lastPathComponent] copy];
+        originalImage   = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+        iconImage       = originalImage;
+        appDictionary   = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                         iconImage, KEY_IMAGE,
+                         name, KEY_NAME,
+                         nil];
+   }
+    return self;
 }
 
 - (AppEntry *)initWithURL: (NSURL *) url {
 	self = [super init];
 	if (self) {
-		appURL      = [url copy];
-		isLeaf      = [self isLeaf: url];
-        isApp       = NO;
-        //		url         = [url initWithString: @"/" relativeToURL: url];
-		name        = [[url lastPathComponent] copy];
-		if (!isLeaf) {
+		appURL          = [url copy];
+		isLeaf          = [self isLeaf: url];
+        isApp           = NO;
+		name            = [[url lastPathComponent] copy];
+        originalImage   = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+		if (isLeaf) {
+            iconImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+      } else {
 			if ([[appURL pathExtension] isEqualToString: @"app"]) {
                 isApp = YES;
 				isLeaf = !isLeaf;
-            } else
+                iconImage = originalImage;
+            } else {
                 childEntries = [[NSMutableArray alloc] init];
-            //				NSURL *plistURL = [url URLByAppendingPathComponent:@"Contents/Info.plist"];
-            //				NSFileManager *fm = [NSFileManager defaultManager];
-            //                NSURL * absoluteFile = [plistURL absoluteURL];
-            //				NSString *const aPath = [absoluteFile path];
-            //				if ([fm fileExistsAtPath: aPath]) {
-            //					NSDictionary *appInfo = [NSDictionary dictionaryWithContentsOfURL:plistURL];
-            //					NSString *iconFile = [appInfo objectForKey: @"CFBundleIconFile"];
-            //					NSURL *iconURL = [url URLByAppendingPathComponent: [NSString stringWithFormat: @"Resources/%@", iconFile]];
-            iconImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
-                appDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                 iconImage, KEY_IMAGE,
-                                 name, KEY_NAME,
-                                 nil];
+                iconImage = originalImage;
+                if ([self isFolder: url]) {
+                    [self scanURLForIcons: url forEntry:self];
+                    if ([childEntries count]) {
+                        iconImage = [[childEntries objectAtIndex:0] iconImage];
+                    }
+                }
+            }
         }
+        appDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                         iconImage, KEY_IMAGE,
+                         name, KEY_NAME,
+                         nil];
     }
     return self;
 }
     
+-(NSArray *)scanURLForIcons:(NSURL *)directoryToScan forEntry: (AppEntry *)appEntry
+{
+    // Create a local file manager instance
+    NSFileManager *fm =[[NSFileManager alloc] init];
+    
+    // Enumerate the directory (specified elsewhere in your code)
+    // Request the two properties the method uses, name and isDirectory
+    // Ignore hidden files
+    // The errorHandler: parameter is set to nil. Typically you'd want to present a panel
+    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsRegularFileKey, NSURLIsDirectoryKey, NSURLCustomIconKey, nil];
+
+    NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
+                                                  includingPropertiesForKeys:fileKeys
+                                                                     options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                                errorHandler:nil];
+    
+    // An array to store the all the enumerated file names in
+    NSMutableArray *theArray=[NSMutableArray array];
+    
+    // Enumerate the dirEnumerator results, each value is stored in allURLs
+    for (NSURL *theURL in dirEnumerator) {
+        
+        // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
+        NSString *fileName;
+        [theURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL];
+        
+        // Retrieve whether a directory. From NSURLIsDirectoryKey, also
+        // cached during the enumeration.
+        NSNumber *isDirectory;
+        [theURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+        
+        // Ignore files under the _extras directory
+        if ([[theURL pathExtension] isEqualToString: @"app"]) {
+            AppEntry *entry = [[AppEntry alloc] initWithURL:theURL];
+            if (! [appEntry addChildEntry:entry])
+                PMERR(1, @"Failed to add childEntry at: %@", [theURL path]);
+        }
+    }
+    
+    // Do something with the path URLs.
+    PMLOG(2, @"theArray: %@",theArray);
+    return theArray;
+}
+
 - (BOOL)isLeaf:(NSURL *) url {
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     [fm fileExistsAtPath: [url path] isDirectory: &isDir];
     return !isDir;
+}
+
+- (BOOL)isFolder:(NSURL *) url {
+    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
+    return ![ws isFilePackageAtPath: [url path]];
 }
 
 - (NSString *)pathWithName {
