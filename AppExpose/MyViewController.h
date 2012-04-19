@@ -48,36 +48,37 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define CUSTOM_ICON_ID @"com.polymicrosystems.appexpose.customicon"
+
 @interface IconViewBox : NSBox
 @end
 
-@interface MyScrollView : NSScrollView
-{
-    NSGradient *backgroundGradient;
+@interface MyScrollView : NSScrollView {
+	NSGradient *backgroundGradient;
 }
 @end
 
-@interface MyViewController : NSViewController <NSCollectionViewDelegate>
-{
-    IBOutlet NSCollectionView *collectionView;
-    IBOutlet NSArrayController *arrayController;
-    NSMutableArray *images;
-    NSMutableArray *contentArray;
+@interface MyViewController : NSViewController <NSCollectionViewDelegate> {
+	IBOutlet NSCollectionView *collectionView;
+	IBOutlet NSArrayController *arrayController;
+	NSMutableArray             *images;
+	NSMutableArray             *contentArray;
 
-    NSUInteger sortingMode;
-    BOOL alternateColors;
-    
-    NSArray *savedAlternateColors;
+	NSUInteger sortingMode;
+
+	NSArray *savedAlternateColors;
 }
 
-@property (retain) NSMutableArray *images;
-@property (nonatomic, assign) NSUInteger sortingMode;
-@property (nonatomic, assign) BOOL alternateColors;
+@property(retain) NSMutableArray *images;
+@property(nonatomic, assign) NSUInteger sortingMode;
 @property(nonatomic, strong) NSMutableArray *contentArray;
 
 - (void)showBeforeAppearance;
+
 - (void)showAfterAppearance;
+
 - (void)applyIcons;
+
 - (void)removeIcons;
 
 @end

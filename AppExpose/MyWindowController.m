@@ -74,8 +74,6 @@
     [[viewController view] setFrame:[myTargetView bounds]];
     
     [viewController setSortingMode:0];		// ascending sort order
-    [viewController setAlternateColors:NO];	// no alternate background colors (initially use gradient background)
-//    [[NSApp delegate] setMyWindowController: self];
 }
 
 -(void)showBeforeAppearance {

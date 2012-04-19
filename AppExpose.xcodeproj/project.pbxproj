@@ -15,6 +15,8 @@
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
+		75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
+		75C8358D153DFFBC009021F4 /* XATTR.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
 		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		75F636761538FFAC0079D063 /* AppEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F636751538FFAC0079D063 /* AppEntry.m */; };
 		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
@@ -25,6 +27,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		75C83586153DFF29009021F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DD76FB20486AB0100D96B5E;
+			remoteInfo = xattr;
+		};
+		75C83588153DFF29009021F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 75C8355B153DFAB8009021F4;
+			remoteInfo = XATTR;
+		};
+		75C8358A153DFFAD009021F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 75C8355A153DFAB8009021F4;
+			remoteInfo = XATTR;
+		};
 		75F636651538E08B0079D063 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
@@ -48,6 +71,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				75C8358D153DFFBC009021F4 /* XATTR.framework in CopyFiles */,
 				751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +93,7 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		75C8356C153DFC0D009021F4 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = xattr/xattr.xcodeproj; sourceTree = "<group>"; };
 		75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		75F636741538FFAC0079D063 /* AppEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEntry.h; sourceTree = "<group>"; };
 		75F636751538FFAC0079D063 /* AppEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppEntry.m; sourceTree = "<group>"; };
@@ -86,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */,
 				7528A12F153A94050077D483 /* Quartz.framework in Frameworks */,
 				75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */,
 				752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */,
@@ -98,7 +124,7 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
-				7528A12E153A94050077D483 /* Quartz.framework */,
+				75C8356C153DFC0D009021F4 /* xattr.xcodeproj */,
 				75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
 				752BC7DD14B5A0F4009ACADB /* Frameworks */,
@@ -117,6 +143,7 @@
 		752BC7DD14B5A0F4009ACADB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7528A12E153A94050077D483 /* Quartz.framework */,
 				752BC7DE14B5A0F4009ACADB /* Cocoa.framework */,
 				752BC7E014B5A0F4009ACADB /* Other Frameworks */,
 			);
@@ -163,6 +190,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		75C83582153DFF29009021F4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75C83587153DFF29009021F4 /* xattr */,
+				75C83589153DFF29009021F4 /* XATTR.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		75F6365F1538E08B0079D063 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +232,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				75C8358B153DFFAD009021F4 /* PBXTargetDependency */,
 				75F6366A1538E2390079D063 /* PBXTargetDependency */,
 			);
 			name = AppExpose;
@@ -226,6 +263,10 @@
 					ProductGroup = 75F6365F1538E08B0079D063 /* Products */;
 					ProjectRef = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
 				},
+				{
+					ProductGroup = 75C83582153DFF29009021F4 /* Products */;
+					ProjectRef = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -235,6 +276,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		75C83587153DFF29009021F4 /* xattr */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = xattr;
+			remoteRef = 75C83586153DFF29009021F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		75C83589153DFF29009021F4 /* XATTR.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = XATTR.framework;
+			remoteRef = 75C83588153DFF29009021F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		75F636661538E08B0079D063 /* PMUtility.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -276,6 +331,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		75C8358B153DFFAD009021F4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XATTR;
+			targetProxy = 75C8358A153DFFAD009021F4 /* PBXContainerItemProxy */;
+		};
 		75F6366A1538E2390079D063 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PMUtility;
@@ -368,6 +428,7 @@
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -380,6 +441,7 @@
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
