@@ -202,6 +202,9 @@
 		appDirectory = [paths objectAtIndex: 0];
 	}
 	appDirectory = [appDirectory stringByAppendingString: @"/"];
+#ifdef DEBUG
+    appDirectory = @"/Users/davec/Applications/";
+#endif
 	NSURL *root = [NSURL fileURLWithPath: appDirectory];
 	contentArray = [self gatherContents: root];
 //    [self readFromURL:root];
@@ -366,6 +369,10 @@
 	[self setImages: tempArray];
 }
 
+- (BOOL)askPermission: (NSURL *)url {
+    return NO;
+}
+
 - (void)applyIcons {
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
@@ -392,7 +399,9 @@
             NSError *error = [[entry xattr] resultError];
             if ([error code] == 13) {
                 // Show ask permission
+                ok = [self askPermission: [entry appURL]];
             }
+            [entry deleteAttribute: CUSTOM_ICON_ID];
         }
 		BOOL result = [ws setIcon: [entry iconImage] forFile: [url path] options: 0];
 		if (!result) {
