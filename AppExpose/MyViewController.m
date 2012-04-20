@@ -105,7 +105,7 @@
 	}
 	appDirectory = [appDirectory stringByAppendingString: @"/"];
 #ifdef DEBUG
-    appDirectory = @"/Users/davec/Applications/";
+        appDirectory = @"/Users/davec/Applications/";
 #endif
 	NSURL *root = [NSURL fileURLWithPath: appDirectory];
 	contentArray = [self gatherContents: root];
