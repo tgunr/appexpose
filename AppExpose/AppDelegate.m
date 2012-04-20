@@ -19,14 +19,22 @@
 	NSArray *dirItems;
 	NSString *dirPath;
 	AppEntry *rootEntry;
-	__weak NSBrowser *appBrowser;
 }
 
 @synthesize myWindowController;
-@synthesize window = _window;
-@synthesize iconCollection = _iconCollection;
+@synthesize window;
+@synthesize iconCollection;
 @synthesize appBrowser;
 @synthesize iconAppearance;
+
++ (id)shared
+{
+    static dispatch_once_t onceQueue;
+    static AppDelegate *appDelegate = nil;
+    
+    dispatch_once(&onceQueue, ^{ appDelegate = [[self alloc] init]; });
+    return appDelegate;
+}
 
 - (id)init {
     self = [super init];
@@ -44,20 +52,6 @@
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
 	return YES;
-}
-
-- (IBAction)changeAppearance:(id)sender {
-    NSInteger segment = [sender selectedSegment];
-    switch (segment) {
-        case 0:
-            [myWindowController showBeforeAppearance];
-            break;
-        case 1:
-            [myWindowController showAfterAppearance];
-            break;
-        default:
-            break;
-    }
 }
 
 - (IBAction)openReadMe:(id)sender
@@ -86,6 +80,11 @@
 - (id)browser:(NSBrowser *)browser objectValueForItem:(id)item {
     return [(AppEntry *)item name];
 }
+
+- (void)selectionChanged {
+    [myWindowController selectionChanged]; 
+}
+
 
 /*
 - (id)rootItemForBrowser:(NSBrowser *)browser {

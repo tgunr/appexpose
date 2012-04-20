@@ -55,19 +55,24 @@
     MyViewController *viewController;
     IBOutlet NSView	*myTargetView;
     IBOutlet NSTextField *selectionField;
-    __weak NSButton *applyButton;
-    __weak NSButton *removeButton;
-    __weak IKImageView *iconView;
-    __weak IKImageBrowserView *iconsView;
+    IBOutlet NSButton *applyButton;
+    IBOutlet NSButton *removeButton;
+    IBOutlet IKImageView *iconView;
+    IBOutlet IKImageBrowserView *iconsView;
+    IBOutlet NSSegmentedControl *appearanceControl;
 }
+
+@property (nonatomic, strong) IBOutlet NSButton *applyButton;
+@property (nonatomic, strong) IBOutlet NSButton *removeButton;
+@property (nonatomic, strong) IBOutlet IKImageView *iconView;
+@property (nonatomic, strong) IBOutlet IKImageBrowserView *iconsView;
+@property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
 
 -(void)showBeforeAppearance;
 -(void)showAfterAppearance;
+- (IBAction)changeAppearance:(id)sender;
 - (IBAction)applyIcons:(id)sender;
 - (IBAction)removeIcons:(id)sender;
+- (void)selectionChanged;
 
-@property (weak) IBOutlet NSButton *applyButton;
-@property (weak) IBOutlet NSButton *removeButton;
-@property (weak) IBOutlet IKImageView *iconView;
-@property (weak) IBOutlet IKImageBrowserView *iconsView;
 @end

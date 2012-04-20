@@ -51,13 +51,12 @@
 
 @implementation MyWindowController
 
-// -------------------------------------------------------------------------------
-//	awakeFromNib:
-// -------------------------------------------------------------------------------
+@synthesize appearanceControl;
 @synthesize iconView;
 @synthesize iconsView;
 @synthesize removeButton;
 @synthesize applyButton;
+
 - (void)awakeFromNib
 {
     [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
@@ -74,6 +73,10 @@
     [[viewController view] setFrame:[myTargetView bounds]];
     
     [viewController setSortingMode:0];		// ascending sort order
+    [[AppDelegate shared] setMyWindowController:self];
+    [applyButton setEnabled:NO];
+    [removeButton setEnabled:NO];
+
 }
 
 -(void)showBeforeAppearance {
@@ -84,6 +87,21 @@
 	[viewController showAfterAppearance];
 }
 
+- (IBAction)changeAppearance:(id)sender {
+    NSInteger segment = [sender selectedSegment];
+    switch (segment) {
+        case 0:
+            [viewController showBeforeAppearance];
+            break;
+        case 1:
+            [viewController showAfterAppearance];
+            break;
+        default:
+            break;
+    }
+}
+
+
 - (IBAction)applyIcons:(id)sender {
     [viewController applyIcons];
 }
@@ -91,4 +109,33 @@
 - (IBAction)removeIcons:(id)sender {
     [viewController removeIcons];
 }
+
+- (void)selectionChanged {
+    NSInteger segment = [appearanceControl selectedSegment];
+    switch (segment) {
+        case 0: {
+            [applyButton setEnabled:NO];
+            [removeButton setEnabled:NO];
+            break;
+        }
+        case 1: {
+            NSArray *entries = [viewController selectedIcons]; 
+            if ([entries count]) {
+                [applyButton setEnabled:YES];
+                [removeButton setEnabled:YES];
+            } else {
+                [applyButton setEnabled:NO];
+                [removeButton setEnabled:NO];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+}
+- (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser {
+    
+}
+
 @end

@@ -69,4 +69,7 @@
 - (BOOL)hasAttribute: (NSString *) string;
 
 - (BOOL)deleteAttribute: (NSString *) string;
+
+- (void)revertIcon;
+
 @end

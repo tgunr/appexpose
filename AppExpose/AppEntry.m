@@ -23,7 +23,6 @@
 @synthesize attributes;
 @synthesize xattr;
 
-
 + (AppEntry *)rootEntry {
 	return [[self alloc] initRootWithURL: [NSURL fileURLWithPath: @"/"]];
 }
@@ -197,7 +196,7 @@
 }
 
 - (BOOL)hasAttribute: (NSString *) string {
-	id result = [[xattr attributes] objectForKey: string];
+	id result = [xattr hasKey: string];
 	if (result)
 		return YES;
 	else
@@ -210,4 +209,9 @@
 	 ok = [xattr deleteAttribute: string];
     return ok;
 }
+
+- (void)revertIcon {
+    iconImage = originalImage;
+}
+
 @end

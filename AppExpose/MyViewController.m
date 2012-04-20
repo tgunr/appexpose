@@ -46,6 +46,7 @@
   
  */
 
+#import "AppDelegate.h"
 #import "MyViewController.h"
 #import "AppEntry.h"
 #import <XATTR/xattr.h>
@@ -57,6 +58,7 @@
 // -------------------------------------------------------------------------------
 - (NSView *)hitTest: (NSPoint) aPoint {
 	// don't allow any mouse clicks for subviews in this NSBox
+    [[AppDelegate shared] selectionChanged];
 	return nil;
 }
 
@@ -65,9 +67,6 @@
 
 @implementation MyScrollView
 
-// -------------------------------------------------------------------------------
-//	awakeFromNib
-// -------------------------------------------------------------------------------
 - (void)awakeFromNib {
 	// set up the background gradient for this custom scrollView
 	backgroundGradient = [[NSGradient alloc] initWithStartingColor:
@@ -75,9 +74,6 @@
 	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.6f]];
 }
 
-// -------------------------------------------------------------------------------
-//	drawRect:rect
-// -------------------------------------------------------------------------------
 - (void)drawRect: (NSRect) rect {
 	// draw our special background as a gradient
 	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
@@ -91,104 +87,10 @@
 	AppEntry *rootEntry;
 }
 
+@synthesize collectionViewItem;
 @synthesize images;
 @synthesize sortingMode;
 @synthesize contentArray;
-
-- (void)originalCollection {
-// Determine the content of the collection view by reading in the plist "icons.plist",
-	// and add extra "named" template images with the help of NSImage class.
-	//
-	NSBundle       *bundle      = [NSBundle mainBundle];
-	NSString       *path        = [bundle pathForResource: @"icons" ofType: @"plist"];
-	NSArray        *iconEntries = [NSArray arrayWithContentsOfFile: path];
-	NSMutableArray *tempArray   = [[NSMutableArray alloc] init];
-
-
-	// read the list of icons from disk in 'icons.plist'
-	if (iconEntries != nil) {
-		NSInteger idx;
-		NSInteger count = [iconEntries count];
-		for (idx = 0; idx < count; idx++) {
-			NSDictionary *entry = [iconEntries objectAtIndex: idx];
-			if (entry != nil) {
-				NSString *codeStr  = [entry valueForKey: KEY_IMAGE];
-				NSString *iconName = [entry valueForKey: KEY_NAME];
-
-				OSType code = UTGetOSTypeFromString((__bridge CFStringRef)codeStr);
-				NSImage *picture = [[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(code)];
-				[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-						                                           picture, KEY_IMAGE,
-						                                           iconName, KEY_NAME,
-						                                           nil]];
-			}
-		}
-	}
-
-	// now add named image templates
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameIconViewTemplate], KEY_IMAGE,
-			                                           NSImageNameIconViewTemplate, KEY_NAME,
-			                                           nil]];
-
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameBluetoothTemplate], KEY_IMAGE,
-			                                           NSImageNameBluetoothTemplate, KEY_NAME,
-			                                           nil]];
-
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameIChatTheaterTemplate], KEY_IMAGE,
-			                                           NSImageNameIChatTheaterTemplate, KEY_NAME,
-			                                           nil]];
-
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameSlideshowTemplate], KEY_IMAGE,
-			                                           NSImageNameSlideshowTemplate, KEY_NAME,
-			                                           nil]];
-
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameActionTemplate], KEY_IMAGE,
-			                                           NSImageNameActionTemplate, KEY_NAME,
-			                                           nil]];
-
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameSmartBadgeTemplate], KEY_IMAGE,
-			                                           NSImageNameSmartBadgeTemplate, KEY_NAME,
-			                                           nil]];
-
-	// Finder icon templates
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameListViewTemplate], KEY_IMAGE,
-			                                           NSImageNameListViewTemplate, KEY_NAME,
-			                                           nil]];
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameColumnViewTemplate], KEY_IMAGE,
-			                                           NSImageNameColumnViewTemplate, KEY_NAME,
-			                                           nil]];
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameFlowViewTemplate], KEY_IMAGE,
-			                                           NSImageNameFlowViewTemplate, KEY_NAME,
-			                                           nil]];
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNamePathTemplate], KEY_IMAGE,
-			                                           NSImageNamePathTemplate, KEY_NAME,
-			                                           nil]];
-
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameInvalidDataFreestandingTemplate], KEY_IMAGE,
-			                                           NSImageNameInvalidDataFreestandingTemplate, KEY_NAME,
-			                                           nil]];
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameLockLockedTemplate], KEY_IMAGE,
-			                                           NSImageNameLockLockedTemplate, KEY_NAME,
-			                                           nil]];
-	[tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			                                           [NSImage imageNamed: NSImageNameLockUnlockedTemplate], KEY_IMAGE,
-			                                           NSImageNameLockUnlockedTemplate, KEY_NAME,
-			                                           nil]];
-
-	[self setImages: tempArray];
-}
 
 - (void)awakeFromNib {
 	// save this for later when toggling between alternate colors
@@ -212,6 +114,8 @@
 
 	[self setIcons: contentArray];
 	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
+    NSIndexSet *indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
 }
 
 - (void)addEntries: (NSArray *) array {
@@ -356,8 +260,13 @@
 		}
 	}
 	[self setImages: tempArray];
+    NSIndexSet *indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
 }
 
+- (void)setBeforeAppearance {
+    
+}
 - (void)showAfterAppearance {
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
@@ -367,73 +276,115 @@
 		}
 	}
 	[self setImages: tempArray];
+    NSIndexSet *indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
 }
 
 - (BOOL)askPermission: (NSURL *)url {
     return NO;
 }
 
-- (void)applyIcons {
-	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
-	for (AppEntry  *entry in contentArray) {
-		if (entry != nil) {
-			NSMutableDictionary *iconDictionary = [entry appDictionary];
-			if (iconDictionary) {
-				NSImage *original = [entry originalImage];
-				NSImage *current  = [entry iconImage];
-				if (current != original) {
-					PMLOG(1, @"Setting icon on: %@", [entry appURL]);
-					[tempArray addObject: entry];
-				}
-			}
-		}
-		else {
-			PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
-		}
-	}
-	NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];
-	for (AppEntry  *entry in tempArray) {
-		NSURL *url = [entry appURL];
-		BOOL ok = [entry setAttribute: CUSTOM_ICON_ID value: @""];
-        if (!ok) {
-            NSError *error = [[entry xattr] resultError];
-            if ([error code] == 13) {
-                // Show ask permission
-                ok = [self askPermission: [entry appURL]];
-            }
-            [entry deleteAttribute: CUSTOM_ICON_ID];
-        }
-		BOOL result = [ws setIcon: [entry iconImage] forFile: [url path] options: 0];
-		if (!result) {
-			PMERR(1, @"Failed to set icon on: %@", url);
-		}
-	}
-}
+typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
 
-- (void)removeIcons {
-	for (AppEntry *entry in contentArray) {
-		NSURL *url = [entry appURL];
-		BOOL folder        = [entry isFolder];
-		BOOL leaf          = [entry isLeaf];
-		BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
-		if (hasCustomIcon) {
-			PMLOG(1, @"hasCustomIcon: %@", url);
-			NSURL         *customIconURL = [url URLByAppendingPathComponent: @"Icon\r"];
-			NSFileManager *fm            = [NSFileManager defaultManager];
-			BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
-			NSError *error;
-			if (ok)
-				[fm removeItemAtURL: customIconURL error: &error];
-			ok = [entry deleteAttribute: CUSTOM_ICON_ID];
+- (void)applyIcons {
+    NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
+
+    NSIndexSet *indexes = [collectionView selectionIndexes];
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+    }];
+    if ([indexes count]) {
+        NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+        for (AppEntry  *entry in tempContentArray) {
+            if (entry != nil) {
+                NSMutableDictionary *iconDictionary = [entry appDictionary];
+                if (iconDictionary) {
+                    NSImage *original = [entry originalImage];
+                    NSImage *current  = [entry iconImage];
+                    if (current != original) {
+                        PMLOG(1, @"Setting icon on: %@", [entry appURL]);
+                        [tempArray addObject: entry];
+                    }
+                }
+            }
+            else {
+                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+            }
+        }
+        NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];
+        for (AppEntry  *entry in tempArray) {
+            NSURL *url = [entry appURL];
+            BOOL ok = [entry setAttribute: CUSTOM_ICON_ID value: @""];
             if (!ok) {
                 NSError *error = [[entry xattr] resultError];
                 if ([error code] == 13) {
                     // Show ask permission
+                    ok = [self askPermission: [entry appURL]];
                 }
+                [entry deleteAttribute: CUSTOM_ICON_ID];
             }
-		}
-	}
-
+            ok = [ws setIcon: [entry iconImage] forFile: [url path] options: 0];
+            if (!ok) {
+                PMERR(1, @"Failed to set icon on: %@", url);
+            }
+        }
+    }
 }
+
+
+- (void)removeIcons {
+    NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
+    
+    NSIndexSet *indexes = [collectionView selectionIndexes];
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+    }];
+    if ([indexes count]) {
+        for (AppEntry *entry in contentArray) {
+            NSURL *url = [entry appURL];
+            BOOL folder        = [entry isFolder];
+            BOOL leaf          = [entry isLeaf];
+            BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
+            if (hasCustomIcon) {
+                PMLOG(1, @"removing CustomIcon: %@", url);
+                NSURL         *customIconURL = [url URLByAppendingPathComponent: @"Icon\r"];
+                NSFileManager *fm            = [NSFileManager defaultManager];
+                BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
+                NSError *error;
+                if (ok)
+                    [fm removeItemAtURL: customIconURL error: &error];
+                ok = [entry deleteAttribute: CUSTOM_ICON_ID];
+                if (ok) {
+                    [entry revertIcon];
+                } else {
+                    NSError *error = [[entry xattr] resultError];
+                    if ([error code] == 13) {
+                        // Show ask permission
+                    } else {
+                        NSLog(@"Error: @%", error);
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+}
+
+- (NSArray *)selectedIcons {
+    NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
+    
+    NSIndexSet *indexes = [collectionView selectionIndexes];
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+    }];
+    return tempContentArray;
+}
+
+- (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser {
+    
+}
+
+
 
 @end

@@ -61,6 +61,8 @@
 @interface MyViewController : NSViewController <NSCollectionViewDelegate> {
 	IBOutlet NSCollectionView *collectionView;
 	IBOutlet NSArrayController *arrayController;
+    NSCollectionViewItem *collectionViewItem;
+    IconViewBox *iconViewBox;
 	NSMutableArray             *images;
 	NSMutableArray             *contentArray;
 
@@ -72,6 +74,9 @@
 @property(retain) NSMutableArray *images;
 @property(nonatomic, assign) NSUInteger sortingMode;
 @property(nonatomic, strong) NSMutableArray *contentArray;
+@property (strong) IBOutlet NSCollectionViewItem *collectionViewItem;
+
++ (id)shared;
 
 - (void)showBeforeAppearance;
 
@@ -80,5 +85,7 @@
 - (void)applyIcons;
 
 - (void)removeIcons;
+
+- (NSArray *)selectedIcons;
 
 @end

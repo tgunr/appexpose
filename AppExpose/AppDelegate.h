@@ -11,15 +11,22 @@
 @class MyWindowController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-//    MyWindowController *myWindowController;
+    MyWindowController *myWindowController;
+    NSWindow       *window;
+    NSCollectionView *iconCollection;
+    NSBrowser *appBrowser;
+    NSSegmentedControl *iconAppearance;
 }
 
-@property (assign) IBOutlet MyWindowController *myWindowController;
-@property(assign) IBOutlet NSWindow       *window;
-@property(weak) IBOutlet NSCollectionView *iconCollection;
-@property (weak) IBOutlet NSBrowser *appBrowser;
-@property (weak) IBOutlet NSSegmentedControl *iconAppearance;
+@property (strong)  IBOutlet MyWindowController *myWindowController;
+@property (strong)  IBOutlet NSWindow *window;
+@property (strong)  IBOutlet NSCollectionView *iconCollection;
+@property (strong)  IBOutlet NSBrowser *appBrowser;
+@property (strong)  IBOutlet NSSegmentedControl *iconAppearance;
 
++ (id)shared;
 - (IBAction)changeAppearance:(id)sender;
--(IBAction)openReadMe:(id)sender;
+- (IBAction)openReadMe:(id)sender;
+- (void)selectionChanged;
+
 @end
