@@ -50,7 +50,7 @@
 #import "AppDelegate.h"
 
 @implementation MyWindowController
-
+@synthesize selectAllButton;
 @synthesize appearanceControl;
 @synthesize iconView;
 @synthesize iconsView;
@@ -79,23 +79,31 @@
 
 }
 
--(void)showBeforeAppearance {
-	[viewController showBeforeAppearance];
-}
-
--(void)showAfterAppearance {
-	[viewController showAfterAppearance];
-}
-
+//-(void)showBeforeAppearance {
+//	[viewController showBeforeAppearance];
+//    [applyButton setEnabled:NO];
+//    [removeButton setEnabled:NO];
+//}
+//
+//-(void)showAfterAppearance {
+//	[viewController showAfterAppearance];
+//}
+//
 - (IBAction)changeAppearance:(id)sender {
     NSInteger segment = [sender selectedSegment];
     switch (segment) {
-        case 0:
+        case 0: {
             [viewController showBeforeAppearance];
+            [applyButton setEnabled:NO];
+            [removeButton setEnabled:NO];
+            [selectAllButton setEnabled:NO];
             break;
-        case 1:
+        }
+        case 1: {
             [viewController showAfterAppearance];
+            [selectAllButton setEnabled:YES];
             break;
+        }
         default:
             break;
     }
@@ -110,12 +118,18 @@
     [viewController removeIcons];
 }
 
+- (IBAction)selectAll:(id)sender {
+    [viewController selectAll: sender];
+    [self selectionChanged];
+}
+
 - (void)selectionChanged {
     NSInteger segment = [appearanceControl selectedSegment];
     switch (segment) {
         case 0: {
             [applyButton setEnabled:NO];
             [removeButton setEnabled:NO];
+            [selectAllButton setEnabled:NO];
             break;
         }
         case 1: {

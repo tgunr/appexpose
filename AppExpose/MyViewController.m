@@ -243,8 +243,8 @@
 			NSMutableDictionary *iconDictionary = [entry appDictionary];
 			if (iconDictionary) {
 				NSImage *original = [entry originalImage];
-				NSImage *current  = [entry iconImage];
-				if (current == original)
+				NSImage *custom  = [entry iconImage];
+				if (custom == original)
 					[tempArray addObject: iconDictionary];
 				else {
 					NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -264,9 +264,6 @@
     [collectionView setSelectionIndexes:indexes];
 }
 
-- (void)setBeforeAppearance {
-    
-}
 - (void)showAfterAppearance {
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
@@ -381,6 +378,12 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
     return tempContentArray;
 }
 
+- (void)selectAll: (id)sender {
+    NSRange range = {0, [contentArray count]};
+    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange: range];
+    [collectionView setSelectionIndexes:indexes];
+
+}
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser {
     
 }

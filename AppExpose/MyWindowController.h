@@ -57,6 +57,7 @@
     IBOutlet NSTextField *selectionField;
     IBOutlet NSButton *applyButton;
     IBOutlet NSButton *removeButton;
+    IBOutlet NSButton *selectAllButton;
     IBOutlet IKImageView *iconView;
     IBOutlet IKImageBrowserView *iconsView;
     IBOutlet NSSegmentedControl *appearanceControl;
@@ -64,15 +65,17 @@
 
 @property (nonatomic, strong) IBOutlet NSButton *applyButton;
 @property (nonatomic, strong) IBOutlet NSButton *removeButton;
+@property (nonatomic, strong) IBOutlet NSButton *selectAllButton;
 @property (nonatomic, strong) IBOutlet IKImageView *iconView;
 @property (nonatomic, strong) IBOutlet IKImageBrowserView *iconsView;
 @property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
 
--(void)showBeforeAppearance;
--(void)showAfterAppearance;
+//-(void)showBeforeAppearance;
+//-(void)showAfterAppearance;
 - (IBAction)changeAppearance:(id)sender;
 - (IBAction)applyIcons:(id)sender;
 - (IBAction)removeIcons:(id)sender;
+- (IBAction)selectAll:(id)sender;
 - (void)selectionChanged;
 
 @end
