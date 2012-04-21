@@ -76,11 +76,11 @@
 @property(nonatomic, strong) NSMutableArray *contentArray;
 @property (strong) IBOutlet NSCollectionViewItem *collectionViewItem;
 
-+ (id)shared;
-
 - (void)showBeforeAppearance;
 
 - (void)showAfterAppearance;
+
+- (void)setIcons: (NSMutableArray *) iconImages;
 
 - (void)applyIcons;
 

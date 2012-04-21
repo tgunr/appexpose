@@ -17,6 +17,7 @@
 	BOOL isLeaf;
 	BOOL isApp;
 	BOOL isFolder;
+    BOOL canAccess;
 
 	NSString            *name;
 	NSURL               *appURL;

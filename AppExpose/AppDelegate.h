@@ -11,6 +11,7 @@
 @class MyWindowController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
+    AuthorizationRef myAuthorizationRef;
     MyWindowController *myWindowController;
     NSWindow       *window;
     NSCollectionView *iconCollection;
@@ -25,7 +26,6 @@
 @property (strong)  IBOutlet NSSegmentedControl *iconAppearance;
 
 + (id)shared;
-- (IBAction)changeAppearance:(id)sender;
 - (IBAction)openReadMe:(id)sender;
 - (void)selectionChanged;
 

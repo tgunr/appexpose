@@ -9,6 +9,19 @@
 #import "AppEntry.h"
 #import <XATTR/xattr.h>
 
+@interface NSImage (Dump)
+- (void)dump;
+@end
+
+@implementation NSImage (Dump)
+- (void)dump {
+    NSBitmapImageRep *imageRep = [[self representations] objectAtIndex: 0];
+    NSData *data = [imageRep representationUsingType: NSPNGFileType properties: nil];
+    [data writeToFile: @"/tmp/image.png" atomically: NO];
+}
+
+@end
+
 @implementation AppEntry {
 }
 @synthesize isLeaf;
@@ -48,7 +61,7 @@
 	self = [super init];
 	if (self) {
 
-		appURL            = [url copy];
+		appURL        = [url copy];
 		NSError       *error;
 		NSFileManager *fm = [[NSFileManager alloc] init];
 		attributes    = [fm attributesOfItemAtPath: [url path] error: &error];
@@ -56,6 +69,7 @@
 		isLeaf        = [self isALeaf: url];
 		isFolder      = [self isAFolder: url];
 		isApp         = NO;
+        canAccess     = [self userCanAccess];
 		name          = [[url lastPathComponent] copy];
 		originalImage = [[NSWorkspace sharedWorkspace] iconForFile: [appURL path]];
 		if (isLeaf) {
@@ -83,6 +97,9 @@
 				                                     name, KEY_NAME,
 				                                     nil];
 	}
+    if (!canAccess) {
+        [self badgeAsNoAccess];
+    }
 	return self;
 }
 
@@ -146,6 +163,17 @@
 		return NO; // symlinks can't be a folder for now
 	NSWorkspace *ws = [NSWorkspace sharedWorkspace];
 	return ![ws isFilePackageAtPath: [url path]];
+}
+
+- (BOOL)userCanAccess {
+    NSFileManager *fm             = [NSFileManager defaultManager];
+    BOOL result1 = [fm isWritableFileAtPath: [appURL path]];
+    NSError *error;
+    BOOL result2 = [appURL checkResourceIsReachableAndReturnError: &error];
+    if (!result1 || !result2) {
+        PMLOG(1, @"no access: %@", appURL);
+    }
+    return result1 && result2;
 }
 
 - (NSString *)pathWithName {
@@ -212,6 +240,26 @@
 
 - (void)revertIcon {
     iconImage = originalImage;
+}
+
+- (void) badgeAsNoAccess {
+    NSImage* currentImage = [appDictionary objectForKey:KEY_IMAGE];
+    NSSize currentSize = [currentImage size];
+    NSRect currentRect = {0.0, 0.0, currentSize.width, currentSize.height};
+    NSImage* resultImage = [[NSImage alloc] initWithSize:currentSize] ;
+    NSBundle *mb = [NSBundle mainBundle];
+    NSURL *badgeImageURL = [mb URLForResource: @"padlock-32" withExtension: @"png"];
+    NSImageRep *badgeRep = [NSImageRep imageRepWithContentsOfURL: badgeImageURL];
+    NSImage *badgeImage = [[NSImage alloc] initWithContentsOfURL: badgeImageURL];
+    NSPoint badgePoint = {0.0, 0.0}; 
+    NSRect badgeRect = {0.0, 0.0, 24.0, 24.0};
+
+    [resultImage lockFocus];
+//    [resultImage drawRepresentation: badgeRep inRect: badgeRect];
+    [currentImage drawAtPoint: badgePoint fromRect:currentRect operation:NSCompositeSourceOver fraction: 1.0];    
+    [badgeImage drawAtPoint: badgePoint fromRect:badgeRect operation:NSCompositeSourceOver fraction: 0.7];    
+    [resultImage unlockFocus];
+    [appDictionary setObject: resultImage forKey: KEY_IMAGE]; 
 }
 
 @end

@@ -46,7 +46,15 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-//    [appBrowser loadColumnZero];
+    OSStatus myStatus;
+    myStatus = AuthorizationCreate (NULL, kAuthorizationEmptyEnvironment,
+                                    kAuthorizationFlagDefaults, &myAuthorizationRef);
+    AuthorizationFlags myFlags;
+    myFlags = kAuthorizationFlagDefaults |
+    kAuthorizationFlagExtendRights |
+    kAuthorizationFlagInteractionAllowed |
+    kAuthorizationFlagPreAuthorize;
+	
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender

@@ -81,10 +81,10 @@
 
 @end
 
-
 @implementation MyViewController {
 	id appDirectory;
 	AppEntry *rootEntry;
+
 }
 
 @synthesize collectionViewItem;
@@ -128,7 +128,7 @@
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in iconImages) {
 		if (entry != nil) {
-
+            
 			NSDictionary *iconDictionary = [entry appDictionary];
 			if (iconDictionary) {
 				[tempArray addObject: iconDictionary];
@@ -339,8 +339,6 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
     if ([indexes count]) {
         for (AppEntry *entry in contentArray) {
             NSURL *url = [entry appURL];
-            BOOL folder        = [entry isFolder];
-            BOOL leaf          = [entry isLeaf];
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
                 PMLOG(1, @"removing CustomIcon: %@", url);
@@ -358,7 +356,7 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
                     if ([error code] == 13) {
                         // Show ask permission
                     } else {
-                        NSLog(@"Error: @%", error);
+                        NSLog(@"Error: %@", error);
                     }
                     
                 }
