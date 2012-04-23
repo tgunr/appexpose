@@ -58,6 +58,13 @@
 }
 @end
 
+@interface MyCollectionView : NSCollectionView
+@end
+
+@interface MyCollectionViewItem : NSCollectionViewItem
+@end
+
+
 @interface MyViewController : NSViewController <NSCollectionViewDelegate> {
 	IBOutlet NSCollectionView *collectionView;
 	IBOutlet NSArrayController *arrayController;

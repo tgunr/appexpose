@@ -69,7 +69,7 @@
 							<object class="NSCollectionView" id="972803657">
 								<reference key="NSNextResponder" ref="52813598"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrameSize">{301, 199}</string>
+								<string key="NSFrameSize">{316, 214}</string>
 								<reference key="NSSuperview" ref="52813598"/>
 								<reference key="NSNextKeyView" ref="290874252"/>
 								<string key="NSMinGridSize">{0, 0}</string>
@@ -104,7 +104,6 @@
 						<int key="NSvFlags">256</int>
 						<string key="NSFrame">{{302, 1}, {15, 208}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
-						<reference key="NSNextKeyView"/>
 						<reference key="NSTarget" ref="236214384"/>
 						<string key="NSAction">_doScroller:</string>
 						<double key="NSPercent">0.4221106</double>

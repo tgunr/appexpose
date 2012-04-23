@@ -26,12 +26,13 @@
 }
 @synthesize isLeaf;
 @synthesize isApp;
+@synthesize canAccess;
 @synthesize name;
 @synthesize appURL;
 @synthesize childEntries;
 @synthesize iconImage;
 @synthesize originalImage;
-@synthesize appDictionary;
+@synthesize iconDictionary;
 @synthesize isFolder;
 @synthesize attributes;
 @synthesize xattr;
@@ -49,7 +50,7 @@
 		name          = [[url lastPathComponent] copy];
 		originalImage = [[NSWorkspace sharedWorkspace] iconForFile: [appURL path]];
 		iconImage     = originalImage;
-		appDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+		iconDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 				                                     iconImage, KEY_IMAGE,
 				                                     name, KEY_NAME,
 				                                     nil];
@@ -72,27 +73,22 @@
         canAccess     = [self userCanAccess];
 		name          = [[url lastPathComponent] copy];
 		originalImage = [[NSWorkspace sharedWorkspace] iconForFile: [appURL path]];
-		if (isLeaf) {
-			iconImage = [[NSWorkspace sharedWorkspace] iconForFile: [appURL path]];
+        [originalImage setSize: NSMakeSize(64.0, 64.0)];
+		iconImage = originalImage;
+		if ([[appURL pathExtension] isEqualToString: @"app"]) {
+			isApp     = YES;
+			isLeaf    = !isLeaf;
 		}
 		else {
-			if ([[appURL pathExtension] isEqualToString: @"app"]) {
-				isApp     = YES;
-				isLeaf    = !isLeaf;
-				iconImage = originalImage;
-			}
-			else {
-				childEntries = [[NSMutableArray alloc] init];
-				iconImage    = originalImage;
-				if (isFolder) {
-					[self scanURLForIcons: url forEntry: self];
-					if ([childEntries count]) {
-						iconImage = [[childEntries objectAtIndex: 0] iconImage];
-					}
+			childEntries = [[NSMutableArray alloc] init];
+			if (isFolder) {
+				[self scanURLForIcons: url forEntry: self];
+				if ([childEntries count]) {
+					iconImage = [[childEntries objectAtIndex: 0] iconImage];
 				}
 			}
 		}
-		appDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+		iconDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 				                                     iconImage, KEY_IMAGE,
 				                                     name, KEY_NAME,
 				                                     nil];
@@ -243,23 +239,29 @@
 }
 
 - (void) badgeAsNoAccess {
-    NSImage* currentImage = [appDictionary objectForKey:KEY_IMAGE];
-    NSSize currentSize = [currentImage size];
+    NSSize currentSize = [iconImage size];
     NSRect currentRect = {0.0, 0.0, currentSize.width, currentSize.height};
     NSImage* resultImage = [[NSImage alloc] initWithSize:currentSize] ;
     NSBundle *mb = [NSBundle mainBundle];
-    NSURL *badgeImageURL = [mb URLForResource: @"padlock-32" withExtension: @"png"];
-    NSImageRep *badgeRep = [NSImageRep imageRepWithContentsOfURL: badgeImageURL];
+    NSURL *badgeImageURL = [mb URLForResource: @"red-lock" withExtension: @"png"];
     NSImage *badgeImage = [[NSImage alloc] initWithContentsOfURL: badgeImageURL];
+    [badgeImage setSize: currentSize];
     NSPoint badgePoint = {0.0, 0.0}; 
-    NSRect badgeRect = {0.0, 0.0, 24.0, 24.0};
+    NSRect badgeRect = {0.0, 0.0, 64.0, 64.0};
 
     [resultImage lockFocus];
-//    [resultImage drawRepresentation: badgeRep inRect: badgeRect];
-    [currentImage drawAtPoint: badgePoint fromRect:currentRect operation:NSCompositeSourceOver fraction: 1.0];    
-    [badgeImage drawAtPoint: badgePoint fromRect:badgeRect operation:NSCompositeSourceOver fraction: 0.7];    
+    [iconImage drawAtPoint: badgePoint fromRect:currentRect operation:NSCompositeSourceOver fraction: 1.0];    
+    [badgeImage drawAtPoint: badgePoint fromRect:badgeRect operation:NSCompositeSourceOver fraction: 0.1];    
     [resultImage unlockFocus];
-    [appDictionary setObject: resultImage forKey: KEY_IMAGE]; 
+    iconImage = resultImage;
+
+    resultImage = [[NSImage alloc] initWithSize:currentSize] ;    
+    [resultImage lockFocus];
+    [originalImage drawAtPoint: badgePoint fromRect:currentRect operation:NSCompositeSourceOver fraction: 1.0];    
+    [badgeImage drawAtPoint: badgePoint fromRect:badgeRect operation:NSCompositeSourceOver fraction: 0.1];    
+    [resultImage unlockFocus];
+    originalImage = resultImage;
+    [iconDictionary setObject: iconImage forKey: KEY_IMAGE];
 }
 
 @end

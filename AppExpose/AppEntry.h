@@ -25,17 +25,18 @@
 	NSMutableArray      *childIcons;
 	NSImage             *iconImage;
 	NSImage             *originalImage;
-	NSMutableDictionary *appDictionary;
+	NSMutableDictionary *iconDictionary;
 	NSDictionary        *attributes;
 	XATTR               *xattr;
 }
 
 @property(nonatomic, assign) BOOL isLeaf;
 @property(nonatomic, assign) BOOL isApp;
+@property(nonatomic, assign) BOOL canAccess;
 @property(nonatomic, copy) NSString              *name;
 @property(nonatomic, copy) NSURL                 *appURL;
 @property(nonatomic, strong) NSMutableArray      *childEntries;
-@property(nonatomic, strong) NSMutableDictionary *appDictionary;
+@property(nonatomic, strong) NSMutableDictionary *iconDictionary;
 @property(nonatomic, strong) NSImage             *iconImage;
 @property(nonatomic, strong) NSImage             *originalImage;
 @property(nonatomic, assign) BOOL isFolder;

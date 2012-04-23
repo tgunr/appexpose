@@ -69,14 +69,30 @@
 
 - (void)awakeFromNib {
 	// set up the background gradient for this custom scrollView
-	backgroundGradient = [[NSGradient alloc] initWithStartingColor:
-			[NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: 0.898f alpha: 0.0f]
-	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.6f]];
+	//backgroundGradient = [[NSGradient alloc] initWithStartingColor:
+//			[NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: 0.898f alpha: 0.0f]
+//	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.4f]];
 }
 
 - (void)drawRect: (NSRect) rect {
 	// draw our special background as a gradient
-	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
+//	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
+}
+
+@end
+
+@implementation MyCollectionView
+
+- (NSView *)hitTest: (NSPoint) aPoint {
+    return nil;
+}
+
+@end
+
+@implementation MyCollectionViewItem
+
+- (NSView *)hitTest: (NSPoint) aPoint {
+    return nil;
 }
 
 @end
@@ -129,7 +145,7 @@
 	for (AppEntry  *entry in iconImages) {
 		if (entry != nil) {
             
-			NSDictionary *iconDictionary = [entry appDictionary];
+			NSDictionary *iconDictionary = [entry iconDictionary];
 			if (iconDictionary) {
 				[tempArray addObject: iconDictionary];
 			}
@@ -240,7 +256,7 @@
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
 		if (entry != nil) {
-			NSMutableDictionary *iconDictionary = [entry appDictionary];
+			NSMutableDictionary *iconDictionary = [entry iconDictionary];
 			if (iconDictionary) {
 				NSImage *original = [entry originalImage];
 				NSImage *custom  = [entry iconImage];
@@ -268,7 +284,7 @@
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
 		if (entry != nil) {
-			NSDictionary *iconDictionary = [entry appDictionary];
+			NSDictionary *iconDictionary = [entry iconDictionary];
 			[tempArray addObject: iconDictionary];
 		}
 	}
@@ -294,18 +310,19 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
         for (AppEntry  *entry in tempContentArray) {
             if (entry != nil) {
-                NSMutableDictionary *iconDictionary = [entry appDictionary];
-                if (iconDictionary) {
-                    NSImage *original = [entry originalImage];
-                    NSImage *current  = [entry iconImage];
-                    if (current != original) {
-                        PMLOG(1, @"Setting icon on: %@", [entry appURL]);
-                        [tempArray addObject: entry];
-                    }
-                }
-            }
-            else {
-                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+                if ([entry canAccess]) {
+                    NSMutableDictionary *iconDictionary = [entry iconDictionary];
+                    if (iconDictionary) {
+                        NSImage *original = [entry originalImage];
+                        NSImage *current  = [entry iconImage];
+                        if (current != original) {
+                            PMLOG(1, @"Setting icon on: %@", [entry appURL]);
+                            [tempArray addObject: entry];
+                        }
+                    } else 
+                        PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+                } else
+                    PMLOG(1, @"Skipping non-accessible url: %@", [[entry appURL] path]);
             }
         }
         NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];

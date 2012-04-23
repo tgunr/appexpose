@@ -20,6 +20,8 @@
 		75C904891543042B004FC088 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C904881543042B004FC088 /* Security.framework */; };
 		75C9049415434BD8004FC088 /* padlock-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049315434BD8004FC088 /* padlock-icon.png */; };
 		75C9049615435202004FC088 /* padlock-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049515435202004FC088 /* padlock-32.png */; };
+		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
+		75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049B1545C6A3004FC088 /* redpadlock.png */; };
 		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		75F636761538FFAC0079D063 /* AppEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F636751538FFAC0079D063 /* AppEntry.m */; };
 		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
@@ -100,6 +102,8 @@
 		75C904881543042B004FC088 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		75C9049315434BD8004FC088 /* padlock-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "padlock-icon.png"; sourceTree = "<group>"; };
 		75C9049515435202004FC088 /* padlock-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "padlock-32.png"; sourceTree = "<group>"; };
+		75C904971545C635004FC088 /* red-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-lock.png"; sourceTree = "<group>"; };
+		75C9049B1545C6A3004FC088 /* redpadlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpadlock.png; sourceTree = "<group>"; };
 		75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		75F636741538FFAC0079D063 /* AppEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEntry.h; sourceTree = "<group>"; };
 		75F636751538FFAC0079D063 /* AppEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppEntry.m; sourceTree = "<group>"; };
@@ -189,6 +193,8 @@
 		752BC7E514B5A0F4009ACADB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				75C904971545C635004FC088 /* red-lock.png */,
+				75C9049B1545C6A3004FC088 /* redpadlock.png */,
 				75C9049515435202004FC088 /* padlock-32.png */,
 				75C9049315434BD8004FC088 /* padlock-icon.png */,
 				752BC7E614B5A0F4009ACADB /* AppExpose-Info.plist */,
@@ -322,6 +328,8 @@
 				75F636871539279F0079D063 /* icons.plist in Resources */,
 				75C9049415434BD8004FC088 /* padlock-icon.png in Resources */,
 				75C9049615435202004FC088 /* padlock-32.png in Resources */,
+				75C904991545C635004FC088 /* red-lock.png in Resources */,
+				75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
