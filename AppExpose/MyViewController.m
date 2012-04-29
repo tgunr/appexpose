@@ -107,6 +107,7 @@
 @synthesize images;
 @synthesize sortingMode;
 @synthesize contentArray;
+@synthesize scrollView;
 
 - (void)awakeFromNib {
 	// save this for later when toggling between alternate colors
@@ -168,29 +169,31 @@
 
 	NSArray       *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath: [url path] error: nil];
 	for (NSString *element in files) {
-		// we need to reconstruct the full path of the object since 'directoryContentsAtPath' only gives us the object name
-		NSString *pathStr = [[url path] stringByAppendingPathComponent: element];
-
-		// examine if this object is invisible (don't include in the array)
-		CFDictionaryRef values    = NULL;
-		CFStringRef     attrs[1]  = {kLSItemIsInvisible};
-		CFArrayRef      attrNames = CFArrayCreate(NULL, (const void **)attrs, 1, NULL);
-
-		FSRef   fileRef;
-		Boolean isDirectory;
-		if (FSPathMakeRef((const UInt8 *)[pathStr fileSystemRepresentation], &fileRef, &isDirectory) == noErr) {
-			if (LSCopyItemAttributes(&fileRef, kLSRolesViewer, attrNames, &values) == noErr) {
-				if (values != NULL) {
-					if (CFDictionaryGetValue(values, kLSItemIsInvisible) == kCFBooleanFalse) {
-						// object is visible so add to our array
-						AppEntry *entry = [[AppEntry alloc] initWithURL: [NSURL fileURLWithPath: pathStr]];
-						[contentArray addObject: entry];
-					}
-				}
-				CFRelease(values);
-			}
-		}
-		CFRelease(attrNames);
+        if (![[element pathExtension] isEqualToString: @"app"]) {
+            // we need to reconstruct the full path of the object since 'directoryContentsAtPath' only gives us the object name
+            NSString *pathStr = [[url path] stringByAppendingPathComponent: element];
+            
+            // examine if this object is invisible (don't include in the array)
+            CFDictionaryRef values    = NULL;
+            CFStringRef     attrs[1]  = {kLSItemIsInvisible};
+            CFArrayRef      attrNames = CFArrayCreate(NULL, (const void **)attrs, 1, NULL);
+            
+            FSRef   fileRef;
+            Boolean isDirectory;
+            if (FSPathMakeRef((const UInt8 *)[pathStr fileSystemRepresentation], &fileRef, &isDirectory) == noErr) {
+                if (LSCopyItemAttributes(&fileRef, kLSRolesViewer, attrNames, &values) == noErr) {
+                    if (values != NULL) {
+                        if (CFDictionaryGetValue(values, kLSItemIsInvisible) == kCFBooleanFalse) {
+                            // object is visible so add to our array
+                            AppEntry *entry = [[AppEntry alloc] initWithURL: [NSURL fileURLWithPath: pathStr]];
+                            [contentArray addObject: entry];
+                        }
+                    }
+                    CFRelease(values);
+                }
+            }
+            CFRelease(attrNames);
+        }
 	}
 	return contentArray;
 }
@@ -253,6 +256,9 @@
 
 
 - (void)showBeforeAppearance {
+    // get the current scroll position of the document view
+    NSPoint currentScrollPosition=[[scrollView contentView] bounds].origin;
+    NSIndexSet *indexes = [collectionView selectionIndexes];
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
 		if (entry != nil) {
@@ -276,11 +282,16 @@
 		}
 	}
 	[self setImages: tempArray];
-    NSIndexSet *indexes = [NSIndexSet indexSet];
     [collectionView setSelectionIndexes:indexes];
+     
+     // restore the scroll location
+     [[scrollView documentView] scrollPoint:currentScrollPosition];
 }
 
 - (void)showAfterAppearance {
+    // get the current scroll position of the document view
+    NSPoint currentScrollPosition=[[scrollView contentView] bounds].origin;
+    NSIndexSet *indexes = [collectionView selectionIndexes];
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
 		if (entry != nil) {
@@ -289,8 +300,9 @@
 		}
 	}
 	[self setImages: tempArray];
-    NSIndexSet *indexes = [NSIndexSet indexSet];
     [collectionView setSelectionIndexes:indexes];
+    // restore the scroll location
+    [[scrollView documentView] scrollPoint:currentScrollPosition];
 }
 
 - (BOOL)askPermission: (NSURL *)url {
@@ -343,6 +355,8 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
             }
         }
     }
+    indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
 }
 
 
@@ -381,6 +395,8 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
             }
         }
     }
+    indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
 }
 
 - (NSArray *)selectedIcons {

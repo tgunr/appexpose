@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class XATTR;
+@class CompositeView;
 
 #define KEY_IMAGE    @"icon"
 #define KEY_NAME    @"name"
+#define ICON_SIZE 128.0
 
 @interface AppEntry : NSObject {
 	BOOL isLeaf;
@@ -28,6 +30,7 @@
 	NSMutableDictionary *iconDictionary;
 	NSDictionary        *attributes;
 	XATTR               *xattr;
+    CompositeView     *myCompositeView;
 }
 
 @property(nonatomic, assign) BOOL isLeaf;
@@ -42,7 +45,7 @@
 @property(nonatomic, assign) BOOL isFolder;
 @property(nonatomic, strong) NSDictionary *attributes;
 @property(nonatomic, strong) XATTR *xattr;
-
+@property(nonatomic, strong) CompositeView     *myCompositeView;
 
 + (AppEntry *)rootEntry;
 

@@ -68,6 +68,8 @@
 @interface MyViewController : NSViewController <NSCollectionViewDelegate> {
 	IBOutlet NSCollectionView *collectionView;
 	IBOutlet NSArrayController *arrayController;
+    IBOutlet MyScrollView *scrollView;
+    
     NSCollectionViewItem *collectionViewItem;
     IconViewBox *iconViewBox;
 	NSMutableArray             *images;
@@ -78,6 +80,7 @@
 	NSArray *savedAlternateColors;
 }
 
+@property(nonatomic, strong) IBOutlet MyScrollView *scrollView;
 @property(retain) NSMutableArray *images;
 @property(nonatomic, assign) NSUInteger sortingMode;
 @property(nonatomic, strong) NSMutableArray *contentArray;
