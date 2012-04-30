@@ -9,8 +9,8 @@
 
 #import "CompositeView.h"
 
-const CGFloat kMyViewWidth = (CGFloat)120.0;
-const CGFloat kMyViewHeight = (CGFloat)120.0;
+const CGFloat kMyViewWidth = (CGFloat)128.0;
+const CGFloat kMyViewHeight = (CGFloat)128.0;
 
 @implementation MyView
 
@@ -19,6 +19,13 @@ const CGFloat kMyViewHeight = (CGFloat)120.0;
 	NSRect imageBounds = NSMakeRect((CGFloat)0.0, (CGFloat)0.0, kMyViewWidth, kMyViewHeight);
 	NSRect bounds = [self bounds];
 	NSAffineTransform *transform;
+	CGFloat alignStroke;
+	CGFloat resolution;
+	CGFloat stroke;
+	NSBezierPath *path;
+	NSRect drawRect;
+	NSColor *color;
+	resolution = [[self window] userSpaceScaleFactor] * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
 	
 	[[NSGraphicsContext currentContext] saveGraphicsState];
 	transform = [NSAffineTransform transform];
@@ -26,9 +33,30 @@ const CGFloat kMyViewHeight = (CGFloat)120.0;
 	[transform translateXBy:bounds.origin.x yBy:bounds.origin.y];
 	[transform concat];
 	
-	// Layer /Volumes/lion/Sources/Projects/AppExpose/AppExpose/default.png2
-	
 	// Layer 1
+	
+	stroke = (CGFloat)6.0;
+	stroke *= resolution;
+	if (stroke < (CGFloat)1.0) {
+		stroke = (CGFloat)ceil(stroke);
+	} else {
+		stroke = (CGFloat)round(stroke);
+	}
+	stroke /= resolution;
+	alignStroke = (CGFloat)fmod((CGFloat)0.5 * stroke * resolution, (CGFloat)1.0);
+	path = [NSBezierPath bezierPath];
+	drawRect = NSMakeRect((CGFloat)4.0, (CGFloat)4.0, (CGFloat)112.0, (CGFloat)112.0);
+	drawRect.origin.x = ((CGFloat)round(resolution * drawRect.origin.x + alignStroke) - alignStroke) / resolution;
+	drawRect.origin.y = ((CGFloat)round(resolution * drawRect.origin.y + alignStroke) - alignStroke) / resolution;
+	drawRect.size.width = (CGFloat)round(resolution * drawRect.size.width) / resolution;
+	drawRect.size.height = (CGFloat)round(resolution * drawRect.size.height) / resolution;
+	[path appendBezierPathWithRoundedRect:drawRect xRadius:(CGFloat)8.0 yRadius:(CGFloat)8.0];
+	[path setWindingRule:NSEvenOddWindingRule];
+	color = [NSColor colorWithCalibratedRed:(CGFloat)0.2 green:(CGFloat)0.2 blue:(CGFloat)0.2 alpha:(CGFloat)1.0];
+	[color setStroke];
+	[path setLineWidth:stroke];
+	[path setLineCapStyle:NSSquareLineCapStyle];
+	[path stroke];
 	
 	[[NSGraphicsContext currentContext] restoreGraphicsState];
 }

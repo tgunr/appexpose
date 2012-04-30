@@ -90,7 +90,7 @@
 	NSBezierPath *path;
 	NSRect drawRect;
 	NSColor *color;
-	resolution = 72.0 * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
+	resolution = 100.0 * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
 	
 	[[NSGraphicsContext currentContext] saveGraphicsState];
 	transform = [NSAffineTransform transform];
@@ -100,7 +100,7 @@
 	
 	// Layer 1
 	
-	stroke = (CGFloat)8.0;
+	stroke = (CGFloat)6.0;
 	stroke *= resolution;
 	if (stroke < (CGFloat)1.0) {
 		stroke = (CGFloat)ceil(stroke);
@@ -110,14 +110,14 @@
 	stroke /= resolution;
 	alignStroke = (CGFloat)fmod((CGFloat)0.5 * stroke * resolution, (CGFloat)1.0);
 	path = [NSBezierPath bezierPath];
-	drawRect = NSMakeRect((CGFloat)4.5, (CGFloat)4.0, (CGFloat)119.5, (CGFloat)120.5);
+	drawRect = NSMakeRect((CGFloat)4.0, (CGFloat)4.0, (CGFloat)112.0, (CGFloat)112.0);
 	drawRect.origin.x = ((CGFloat)round(resolution * drawRect.origin.x + alignStroke) - alignStroke) / resolution;
 	drawRect.origin.y = ((CGFloat)round(resolution * drawRect.origin.y + alignStroke) - alignStroke) / resolution;
 	drawRect.size.width = (CGFloat)round(resolution * drawRect.size.width) / resolution;
 	drawRect.size.height = (CGFloat)round(resolution * drawRect.size.height) / resolution;
 	[path appendBezierPathWithRoundedRect:drawRect xRadius:(CGFloat)8.0 yRadius:(CGFloat)8.0];
 	[path setWindingRule:NSEvenOddWindingRule];
-	color = [NSColor colorWithCalibratedRed:(CGFloat)0.298 green:(CGFloat)0.298 blue:(CGFloat)0.298 alpha:(CGFloat)1.0];
+	color = [NSColor colorWithCalibratedRed:(CGFloat)0.2 green:(CGFloat)0.2 blue:(CGFloat)0.2 alpha:(CGFloat)1.0];
 	[color setStroke];
 	[path setLineWidth:stroke];
 	[path setLineCapStyle:NSSquareLineCapStyle];
@@ -136,18 +136,19 @@
         NSURL    *bgImageURL = [mb URLForResource:@"default" withExtension:@"png"];
         NSImage  *bgImage    = [[NSImage alloc] initWithContentsOfURL:bgImageURL];
 
-        NSSize  resultSize = NSMakeSize([iconImage size].width / 4.0, [iconImage size].height / 4.0);
+        NSSize  resultSize = NSMakeSize(([iconImage size].width / 4.0) - 4, ([iconImage size].height / 4.0) - 4);
         [resultImage lockFocus];
-        [bgImage drawAtPoint:NSMakePoint(4.0, 4.0) fromRect:NSMakeRect(4.0, 4.0, 124.0, 124.0) operation:NSCompositeSourceOver fraction:1.0];
+        [bgImage setSize:NSMakeSize(120.0, 120.0)];
+        [bgImage drawAtPoint:NSMakePoint(6.0, 6.0) fromRect:NSMakeRect(0.0, 0.0, 108.0, 108.0) operation:NSCompositeSourceOver fraction:.8];
         [self drawRect:NSMakeRect(0.0, 0.0, 128.0, 128.0)];
         
         int i, j;
         int count = MIN(9, numImages);
         BOOL stop = NO;
         NSPoint point;
-        point.y = 84.0;
+        point.y = 82.0;
         for (i = 0; i < 3; i++) {
-            point.x = 84.0;
+            point.x = 82.0;
             for (j=0; j < 3; j++) {
                 AppEntry *entry          = [childEntries objectAtIndex:(i*3)+j];
                 NSImage  *imageToCompose = [[entry iconImage] copy];
