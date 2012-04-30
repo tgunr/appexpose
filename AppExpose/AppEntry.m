@@ -164,7 +164,6 @@
 
     NSSize resultSize = NSMakeSize([iconImage size].width / 4.0, [iconImage size].height / 4.0);
 	NSPoint point = {0.0, 0.0};
-	NSRect rect = {point, resultSize};
 	NSImage  *resultImage   = [[NSImage alloc] initWithSize: [[self iconImage] size]];
     [resultImage lockFocus];
 
