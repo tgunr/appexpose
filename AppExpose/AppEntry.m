@@ -8,7 +8,6 @@
 
 #import "AppEntry.h"
 #import <XATTR/xattr.h>
-#import "CompositeView.h"
 
 @interface NSImage (Dump)
 
@@ -82,7 +81,7 @@
 }
 
 - (void) drawRect:(NSRect) dirtyRect {
-	NSRect imageBounds = NSMakeRect((CGFloat)0.0, (CGFloat)0.0, kMyViewWidth, kMyViewHeight);
+	NSRect imageBounds = NSMakeRect((CGFloat)0.0, (CGFloat)0.0, 128.0, 128.0);
 	NSRect bounds = imageBounds;
 	NSAffineTransform *transform;
 	CGFloat alignStroke;
