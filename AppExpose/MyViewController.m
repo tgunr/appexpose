@@ -121,14 +121,12 @@
 		appDirectory = [paths objectAtIndex: 0];
 	}
 	appDirectory = [appDirectory stringByAppendingString: @"/"];
-#ifdef DEBUG
+#ifndef DEBUG
         appDirectory = @"/Users/davec/Applications/";
 #endif
 	NSURL *root = [NSURL fileURLWithPath: appDirectory];
-	contentArray = [self gatherContents: root];
-//    [self readFromURL:root];
-//	[self originalCollection];
-
+//    [self collectFolders:root];
+    contentArray = [self gatherContents: root];
 	[self setIcons: contentArray];
 	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
     NSIndexSet *indexes = [NSIndexSet indexSet];
@@ -196,6 +194,46 @@
         }
 	}
 	return contentArray;
+}
+
+- (NSArray *) collectFolders:(NSURL *) directoryToScan {
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsDirectoryKey, nil];
+    NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
+                                    includingPropertiesForKeys:fileKeys
+                                                       options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                  errorHandler:nil];
+    
+    NSMutableArray *theArray = [NSMutableArray array];
+    for (NSURL *theURL in dirEnumerator) {
+        
+        // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
+        NSString *fileName;
+        [theURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL];
+        
+        // Retrieve whether a directory. From NSURLIsDirectoryKey, also
+        // cached during the enumeration.
+        NSNumber *isFolder;
+        [theURL getResourceValue:&isFolder forKey:NSURLIsDirectoryKey error:NULL];
+        
+        NSNumber *symLink;
+        [theURL getResourceValue:&symLink forKey:NSURLIsSymbolicLinkKey error:NULL];
+        
+        NSImage *customIcon;
+        [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
+        
+        NSNumber *isPackage;
+        [theURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:NULL];
+        
+        // Ignore files under the app directory
+        AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
+        if (![entry isApp]) {
+            PMLOG(1, @"adding: %@", theURL);
+            [contentArray addObject: entry];
+        }
+        [dirEnumerator skipDescendents];
+    }
+    return theArray;
 }
 
 - (void)readFromURL: (NSURL *) url {
