@@ -13,12 +13,15 @@
 #define KEY_IMAGE    @"icon"
 #define KEY_NAME    @"name"
 #define ICON_SIZE 128.0
+#define CUSTOM_ICON_NAME @"Icon\r"
+#define CUSTOM_ICON_ID @"com.polymicrosystems.appexpose.customicon"
 
 @interface AppEntry : NSObject {
 	BOOL isLeaf;
 	BOOL isApp;
 	BOOL isFolder;
     BOOL canAccess;
+    BOOL hasCustomIcon;
 
 	NSString            *name;
 	NSURL               *appURL;
@@ -34,6 +37,7 @@
 @property(nonatomic, assign) BOOL isLeaf;
 @property(nonatomic, assign) BOOL isApp;
 @property(nonatomic, assign) BOOL canAccess;
+@property(nonatomic, assign) BOOL hasCustomIcon;
 @property(nonatomic, copy) NSString              *name;
 @property(nonatomic, copy) NSURL                 *appURL;
 @property(nonatomic, strong) NSMutableArray      *childEntries;

@@ -99,7 +99,7 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		75A01429154F2A1800AA6F70 /* AppExpose.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExpose.icns; sourceTree = "<group>"; };
+		75A01429154F2A1800AA6F70 /* AppExpose.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExpose.icns; sourceTree = SOURCE_ROOT; };
 		75A0142B154F34DA00AA6F70 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		75C8356C153DFC0D009021F4 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = xattr/xattr.xcodeproj; sourceTree = "<group>"; };
 		75C904881543042B004FC088 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -138,7 +138,6 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
-				75A01429154F2A1800AA6F70 /* AppExpose.icns */,
 				75C8356C153DFC0D009021F4 /* xattr.xcodeproj */,
 				75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
@@ -199,6 +198,7 @@
 		752BC7E514B5A0F4009ACADB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				75A01429154F2A1800AA6F70 /* AppExpose.icns */,
 				75A0142B154F34DA00AA6F70 /* default.png */,
 				75C904971545C635004FC088 /* red-lock.png */,
 				75C9049B1545C6A3004FC088 /* redpadlock.png */,

@@ -125,8 +125,8 @@
         appDirectory = @"/Users/davec/Applications/";
 #endif
 	NSURL *root = [NSURL fileURLWithPath: appDirectory];
-//    [self collectFolders:root];
-    contentArray = [self gatherContents: root];
+    contentArray = [self collectFolders:root];
+//    contentArray = [self gatherContents: root];
 	[self setIcons: contentArray];
 	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
     NSIndexSet *indexes = [NSIndexSet indexSet];
@@ -196,14 +196,14 @@
 	return contentArray;
 }
 
-- (NSArray *) collectFolders:(NSURL *) directoryToScan {
+- (NSMutableArray *) collectFolders:(NSURL *) directoryToScan {
     NSFileManager *fm = [[NSFileManager alloc] init];
-    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsDirectoryKey, nil];
+    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsDirectoryKey, NSURLCustomIconKey, nil];
     NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
                                     includingPropertiesForKeys:fileKeys
                                                        options:NSDirectoryEnumerationSkipsHiddenFiles
                                                   errorHandler:nil];
-    
+
     NSMutableArray *theArray = [NSMutableArray array];
     for (NSURL *theURL in dirEnumerator) {
         
@@ -216,22 +216,29 @@
         NSNumber *isFolder;
         [theURL getResourceValue:&isFolder forKey:NSURLIsDirectoryKey error:NULL];
         
-        NSNumber *symLink;
-        [theURL getResourceValue:&symLink forKey:NSURLIsSymbolicLinkKey error:NULL];
-        
-        NSImage *customIcon;
-        [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
+        NSNumber *isSymLink;
+        [theURL getResourceValue:&isSymLink forKey:NSURLIsSymbolicLinkKey error:NULL];
         
         NSNumber *isPackage;
         [theURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:NULL];
         
+        NSImage *customIcon;
+        [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
+        
+        BOOL hasCustom = NO;
+        
         // Ignore files under the app directory
-        AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
-        if (![entry isApp]) {
-            PMLOG(1, @"adding: %@", theURL);
-            [contentArray addObject: entry];
+        if ([isFolder boolValue]) {
+            if ([fm fileExistsAtPath:[theURL path]]) {
+                hasCustom = YES;
+                AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
+                if (![entry isApp]) {
+                    PMLOG(1, @"adding: %@", theURL);
+                    [theArray addObject: entry];
+                }
+                [dirEnumerator skipDescendents];
+            }
         }
-        [dirEnumerator skipDescendents];
     }
     return theArray;
 }
@@ -347,8 +354,6 @@
     return NO;
 }
 
-typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
-
 - (void)applyIcons {
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
 
@@ -411,7 +416,7 @@ typedef void(^selectedContents)(NSUInteger idx, BOOL stop);
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
                 PMLOG(1, @"removing CustomIcon: %@", url);
-                NSURL         *customIconURL = [url URLByAppendingPathComponent: @"Icon\r"];
+                NSURL         *customIconURL = [url URLByAppendingPathComponent: CUSTOM_ICON_NAME];
                 NSFileManager *fm            = [NSFileManager defaultManager];
                 BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
                 NSError *error;

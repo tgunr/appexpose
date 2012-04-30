@@ -31,6 +31,7 @@
 @synthesize isLeaf;
 @synthesize isApp;
 @synthesize canAccess;
+@synthesize hasCustomIcon;
 @synthesize name;
 @synthesize appURL;
 @synthesize childEntries;
@@ -136,7 +137,7 @@
         NSURL    *bgImageURL = [mb URLForResource:@"default" withExtension:@"png"];
         NSImage  *bgImage    = [[NSImage alloc] initWithContentsOfURL:bgImageURL];
 
-        NSSize  resultSize = NSMakeSize(([iconImage size].width / 4.0) - 4, ([iconImage size].height / 4.0) - 4);
+        NSSize  resultSize = NSMakeSize(([iconImage size].width / 4.0), ([iconImage size].height / 4.0) );
         [resultImage lockFocus];
         [bgImage setSize:NSMakeSize(120.0, 120.0)];
         [bgImage drawAtPoint:NSMakePoint(6.0, 6.0) fromRect:NSMakeRect(0.0, 0.0, 108.0, 108.0) operation:NSCompositeSourceOver fraction:.8];
@@ -179,14 +180,14 @@
 - (AppEntry *) initWithURL:(NSURL *) url {
     self = [super init];
     if (self) {
-
-        appURL            = [url copy];
         NSError       *error;
         NSFileManager *fm = [[NSFileManager alloc] init];
+        appURL        = [url copy];
         attributes    = [fm attributesOfItemAtPath:[url path] error:&error];
         xattr         = [[XATTR alloc] initWithURL:url options:nofollow];
         isLeaf        = [self isALeaf:url];
         isFolder      = [self isAFolder:url];
+        hasCustomIcon = [self hasACustomIcon];
         isApp         = [self isAnApp:url];
         canAccess     = [self userCanAccess];
         name          = [[url lastPathComponent] copy];
@@ -269,8 +270,6 @@
     if ([fileType isEqualToString:NSFileTypeSymbolicLink])
         return NO; // symlinks can't be a folder for now
     return [fileType isEqualToString:NSFileTypeDirectory] ? YES : NO;
-    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
-    return ![ws isFilePackageAtPath:[url path]];
 }
 
 - (BOOL) isAnApp:(NSURL *) url {
@@ -288,6 +287,12 @@
         PMLOG(1, @"no access: %@", appURL);
     }
     return result1 && result2;
+}
+
+- (BOOL)hasACustomIcon {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *customIconURL = [appURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
+    return [fm fileExistsAtPath:[customIconURL path]];
 }
 
 - (NSString *) pathWithName {

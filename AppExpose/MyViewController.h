@@ -48,8 +48,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define CUSTOM_ICON_ID @"com.polymicrosystems.appexpose.customicon"
-
 @interface IconViewBox : NSBox
 @end
 
