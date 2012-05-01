@@ -8,9 +8,10 @@
 
 #import "AppEntry.h"
 #import <XATTR/xattr.h>
+#import "CompositeView.h"
+#import "AppDelegate.h"
 
 @interface NSImage (Dump)
-
 - (void) dump;
 @end
 
@@ -80,67 +81,23 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
-- (void) drawRect:(NSRect) dirtyRect {
-	NSRect imageBounds = NSMakeRect((CGFloat)0.0, (CGFloat)0.0, 128.0, 128.0);
-	NSRect bounds = imageBounds;
-	NSAffineTransform *transform;
-	CGFloat alignStroke;
-	CGFloat resolution;
-	CGFloat stroke;
-	NSBezierPath *path;
-	NSRect drawRect;
-	NSColor *color;
-	resolution = 100.0 * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
-	
-	[[NSGraphicsContext currentContext] saveGraphicsState];
-	transform = [NSAffineTransform transform];
-	[transform scaleXBy:(bounds.size.width / imageBounds.size.width) yBy:(bounds.size.height / imageBounds.size.height)];
-	[transform translateXBy:bounds.origin.x yBy:bounds.origin.y];
-	[transform concat];
-	
-	// Layer 1
-	
-	stroke = (CGFloat)6.0;
-	stroke *= resolution;
-	if (stroke < (CGFloat)1.0) {
-		stroke = (CGFloat)ceil(stroke);
-	} else {
-		stroke = (CGFloat)round(stroke);
-	}
-	stroke /= resolution;
-	alignStroke = (CGFloat)fmod((CGFloat)0.5 * stroke * resolution, (CGFloat)1.0);
-	path = [NSBezierPath bezierPath];
-	drawRect = NSMakeRect((CGFloat)4.0, (CGFloat)4.0, (CGFloat)112.0, (CGFloat)112.0);
-	drawRect.origin.x = ((CGFloat)round(resolution * drawRect.origin.x + alignStroke) - alignStroke) / resolution;
-	drawRect.origin.y = ((CGFloat)round(resolution * drawRect.origin.y + alignStroke) - alignStroke) / resolution;
-	drawRect.size.width = (CGFloat)round(resolution * drawRect.size.width) / resolution;
-	drawRect.size.height = (CGFloat)round(resolution * drawRect.size.height) / resolution;
-	[path appendBezierPathWithRoundedRect:drawRect xRadius:(CGFloat)8.0 yRadius:(CGFloat)8.0];
-	[path setWindingRule:NSEvenOddWindingRule];
-	color = [NSColor colorWithCalibratedRed:(CGFloat)0.2 green:(CGFloat)0.2 blue:(CGFloat)0.2 alpha:(CGFloat)1.0];
-	[color setStroke];
-	[path setLineWidth:stroke];
-	[path setLineCapStyle:NSSquareLineCapStyle];
-	[path stroke];
-	
-	[[NSGraphicsContext currentContext] restoreGraphicsState];
-}
-
-
 - (NSImage *) composeIcons {
     NSInteger numImages = [childEntries count];
-    NSImage *resultImage = [[NSImage alloc] initWithSize:[[self iconImage] size]];
+    NSSize resultImageSize = NSMakeSize(kCompositeViewWidth, kCompositeViewHeight);
+    NSImage *resultImage = [[NSImage alloc] initWithSize:resultImageSize];
 
     if (numImages > 1) {
         NSBundle *mb            = [NSBundle mainBundle];
         NSURL    *bgImageURL = [mb URLForResource:@"default" withExtension:@"png"];
         NSImage  *bgImage    = [[NSImage alloc] initWithContentsOfURL:bgImageURL];
+        NSURL    *bgBoxURL = [mb URLForResource:@"box" withExtension:@"png"];
+        NSImage  *bgBox    = [[NSImage alloc] initWithContentsOfURL:bgBoxURL];
 
-        NSSize  resultSize = NSMakeSize(([iconImage size].width / 4.0), ([iconImage size].height / 4.0) );
+        NSSize  resultSize = NSMakeSize((resultImageSize.width / 4.0), (resultImageSize.height / 4.0) );
         [resultImage lockFocus];
-        [bgImage setSize:NSMakeSize(120.0, 120.0)];
-        [bgImage drawAtPoint:NSMakePoint(6.0, 6.0) fromRect:NSMakeRect(0.0, 0.0, 108.0, 108.0) operation:NSCompositeSourceOver fraction:.8];
-        [self drawRect:NSMakeRect(0.0, 0.0, 128.0, 128.0)];
+        [bgImage setSize:NSMakeSize(resultImageSize.width - 8, resultImageSize.height - 8)];
+        [bgImage drawAtPoint:NSMakePoint(0.0, 0.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
+        [bgBox drawAtPoint:NSMakePoint(0.0, 0.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
         
         int i, j;
         int count = MIN(9, numImages);
@@ -153,7 +110,7 @@
                 AppEntry *entry          = [childEntries objectAtIndex:(i*3)+j];
                 NSImage  *imageToCompose = [[entry iconImage] copy];
                 [imageToCompose setSize:resultSize];
-//                PMLOG(1, @"point: %f,%f", point.x, point.y);
+                PMLOG(1, @"point: %f,%f", point.x, point.y);
                 [imageToCompose drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
                 count--;
                 if (count == 0) {
