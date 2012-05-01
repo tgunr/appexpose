@@ -283,7 +283,7 @@
     NSError *error;
     BOOL result2 = [appURL checkResourceIsReachableAndReturnError:&error];
     if (!result1 || !result2) {
-        PMLOG(1, @"no access: %@", appURL);
+        PMLOG(2, @"no access: %@", appURL);
     }
     return result1 && result2;
 }

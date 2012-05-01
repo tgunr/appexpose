@@ -233,7 +233,7 @@
                 hasCustom = YES;
                 AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
                 if (![entry isApp]) {
-                    PMLOG(1, @"adding: %@", theURL);
+                    PMLOG(2, @"adding: %@", theURL);
                     [theArray addObject: entry];
                 }
                 [dirEnumerator skipDescendents];
@@ -371,7 +371,7 @@
                         NSImage *original = [entry originalImage];
                         NSImage *current  = [entry iconImage];
                         if (current != original) {
-                            PMLOG(1, @"Setting icon on: %@", [entry appURL]);
+                            PMLOG(2, @"Setting icon on: %@", [entry appURL]);
                             [tempArray addObject: entry];
                         }
                     } else 
