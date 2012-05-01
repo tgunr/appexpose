@@ -81,48 +81,69 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+	NSBezierPath *path;
+	NSColor *color;
+	CGFloat stroke;
+	
+	// Box
+	
+    stroke = dirtyRect.size.width / 10.0;
+    path = [NSBezierPath bezierPathWithRoundedRect:dirtyRect xRadius:stroke yRadius:stroke];
+	color = [NSColor colorWithCalibratedRed:(CGFloat)0.8 green:(CGFloat)0.8 blue:(CGFloat)0.8 alpha:(CGFloat)1.0];
+	[color setStroke];
+	[path setLineWidth:stroke];
+	[path setLineCapStyle:NSSquareLineCapStyle];
+	[[NSGraphicsContext currentContext] saveGraphicsState];
+	[path addClip];
+	[path stroke];
+	[[NSGraphicsContext currentContext] restoreGraphicsState];
+}
+
 - (NSImage *) composeIcons {
     NSInteger numImages = [childEntries count];
-    NSSize resultImageSize = NSMakeSize(kCompositeViewWidth, kCompositeViewHeight);
+    NSSize resultImageSize = NSMakeSize(ICON_SIZE, ICON_SIZE);
     NSImage *resultImage = [[NSImage alloc] initWithSize:resultImageSize];
 
     if (numImages > 1) {
         NSBundle *mb            = [NSBundle mainBundle];
         NSURL    *bgImageURL = [mb URLForResource:@"default" withExtension:@"png"];
         NSImage  *bgImage    = [[NSImage alloc] initWithContentsOfURL:bgImageURL];
-        NSURL    *bgBoxURL = [mb URLForResource:@"box" withExtension:@"png"];
-        NSImage  *bgBox    = [[NSImage alloc] initWithContentsOfURL:bgBoxURL];
 
-        NSSize  resultSize = NSMakeSize((resultImageSize.width / 4.0), (resultImageSize.height / 4.0) );
+        NSSize  littleIconSize = NSMakeSize((resultImageSize.width / 4.0), (resultImageSize.height / 4.0) );
         [resultImage lockFocus];
-        [bgImage setSize:NSMakeSize(resultImageSize.width - 8, resultImageSize.height - 8)];
-        [bgImage drawAtPoint:NSMakePoint(0.0, 0.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
-        [bgBox drawAtPoint:NSMakePoint(0.0, 0.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
-        
+        [bgImage setSize:NSMakeSize(resultImageSize.width - 64, resultImageSize.height - 64)];
+        [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
+        [self drawRect:NSMakeRect(0.0, 0.0, ICON_SIZE, ICON_SIZE)];
         int i, j;
         int count = MIN(9, numImages);
         BOOL stop = NO;
         NSPoint point;
-        point.y = 82.0;
+        CGFloat offset = resultImageSize.width / 8.0;
+        offset = resultImageSize.width * 0.64065;
+        point.y = offset;
+        PMLOG(2, @"name: %@ images: %d",name, numImages);
+
         for (i = 0; i < 3; i++) {
-            point.x = 82.0;
+            point.x = offset;
             for (j=0; j < 3; j++) {
                 AppEntry *entry          = [childEntries objectAtIndex:(i*3)+j];
                 NSImage  *imageToCompose = [[entry iconImage] copy];
-                [imageToCompose setSize:resultSize];
-                PMLOG(1, @"point: %f,%f", point.x, point.y);
+                [imageToCompose setSize:littleIconSize];
+                PMLOG(2, @"point: %f,%f", point.x, point.y);
                 [imageToCompose drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
                 count--;
                 if (count == 0) {
                     stop = YES;
                     break;
                 }
-                point.x = (point.x - 32) - 4;
+                point.x = (point.x - 256) - 32;
             }
             if (stop) {
                 break;
             }
-            point.y = (point.y - 32) - 4;
+            point.y = (point.y - 256) - 32;
         }
         [resultImage unlockFocus];
     } else {

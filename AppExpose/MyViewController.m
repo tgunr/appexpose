@@ -48,6 +48,7 @@
 
 #import "AppDelegate.h"
 #import "MyViewController.h"
+#import "MyWindowController.h"
 #import "AppEntry.h"
 #import <XATTR/xattr.h>
 
@@ -56,6 +57,21 @@
 // -------------------------------------------------------------------------------
 //	hitTest:aPoint
 // -------------------------------------------------------------------------------
+@synthesize labelField;
+@synthesize imageView;
+
+- (IconViewBox *)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+    
+- (void)awakeFromNib {
+    [[[[AppDelegate shared] myWindowController] viewController] setIconViewBox: self];
+}
+
 - (NSView *)hitTest: (NSPoint) aPoint {
 	// don't allow any mouse clicks for subviews in this NSBox
     [[AppDelegate shared] selectionChanged];
@@ -87,6 +103,14 @@
     return nil;
 }
 
+- (void)didAddSubview:(NSView *)subview {
+    
+}
+
+- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
+    
+}
+
 @end
 
 @implementation MyCollectionViewItem
@@ -103,6 +127,7 @@
 
 }
 
+@synthesize iconViewBox;
 @synthesize collectionViewItem;
 @synthesize images;
 @synthesize sortingMode;
@@ -121,7 +146,7 @@
 		appDirectory = [paths objectAtIndex: 0];
 	}
 	appDirectory = [appDirectory stringByAppendingString: @"/"];
-#ifndef DEBUG
+#ifdef DEBUG
         appDirectory = @"/Users/davec/Applications/";
 #endif
 	NSURL *root = [NSURL fileURLWithPath: appDirectory];
@@ -143,7 +168,6 @@
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in iconImages) {
 		if (entry != nil) {
-            
 			NSDictionary *iconDictionary = [entry iconDictionary];
 			if (iconDictionary) {
 				[tempArray addObject: iconDictionary];
@@ -444,7 +468,6 @@
 
 - (NSArray *)selectedIcons {
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
-    
     NSIndexSet *indexes = [collectionView selectionIndexes];
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [tempContentArray addObject:[contentArray objectAtIndex:idx]];
@@ -458,10 +481,34 @@
     [collectionView setSelectionIndexes:indexes];
 
 }
-- (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser {
+
+- (void) zoomChanged: (CGFloat) newValue {
+    NSSize newSize = NSMakeSize(newValue, newValue);
+    NSRect newRect = NSMakeRect(0.0, 0.0, (newValue + 20), (newValue + 42) );
+                                
+    NSArray *views = [collectionView subviews];
+    for (IconViewBox *box in views) {
+//        [[box imageView] setFrameSize:newSize];
+        [box setFrameSize:newSize];
+    }
     
+	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+	for (AppEntry  *entry in contentArray) {
+		if (entry != nil) {
+			NSDictionary *iconDictionary = [entry iconDictionary];
+			if (iconDictionary) {
+                [[iconDictionary objectForKey:KEY_IMAGE] setSize:newSize];
+				[[entry iconImage] setSize:newSize];
+				[[entry originalImage] setSize:newSize];
+                [tempArray addObject: iconDictionary];
+			}
+			else {
+				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+			}
+		}
+	}
+	[self setImages: tempArray];
+//    [[collectionViewItem view] display];
 }
-
-
 
 @end

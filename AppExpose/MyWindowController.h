@@ -61,14 +61,17 @@
     IBOutlet IKImageView *iconView;
     IBOutlet IKImageBrowserView *iconsView;
     IBOutlet NSSegmentedControl *appearanceControl;
+    IBOutlet NSSlider *zoomSlider;
 }
 
+@property (nonatomic, strong) MyViewController *viewController;
 @property (nonatomic, strong) IBOutlet NSButton *applyButton;
 @property (nonatomic, strong) IBOutlet NSButton *removeButton;
 @property (nonatomic, strong) IBOutlet NSButton *selectAllButton;
 @property (nonatomic, strong) IBOutlet IKImageView *iconView;
 @property (nonatomic, strong) IBOutlet IKImageBrowserView *iconsView;
 @property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
+@property (nonatomic, strong) IBOutlet NSSlider *zoomSlider;
 
 //-(void)showBeforeAppearance;
 //-(void)showAfterAppearance;
@@ -77,5 +80,6 @@
 - (IBAction)removeIcons:(id)sender;
 - (IBAction)selectAll:(id)sender;
 - (void)selectionChanged;
+- (IBAction)zoomChanged:(id)sender;
 
 @end

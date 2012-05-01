@@ -50,6 +50,9 @@
 #import "AppDelegate.h"
 
 @implementation MyWindowController
+
+@synthesize viewController;
+@synthesize zoomSlider;
 @synthesize selectAllButton;
 @synthesize appearanceControl;
 @synthesize iconView;
@@ -148,7 +151,13 @@
     }
 
 }
-- (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser {
+
+- (IBAction)zoomChanged:(id)sender {
+    NSInteger value = [zoomSlider integerValue];
+    int scales[] = { 32, 64, 128, 512, 1024 } ;
+    int scale = scales[value];
+    [viewController zoomChanged: (CGFloat)scale];
+    PMLOG(1,@"zoom: %d", scale);
     
 }
 

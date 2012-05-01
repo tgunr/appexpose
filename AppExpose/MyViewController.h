@@ -49,6 +49,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface IconViewBox : NSBox
+@property (strong) IBOutlet NSTextField *labelField;
+@property (strong) IBOutlet NSImageView *imageView;
 @end
 
 @interface MyScrollView : NSScrollView {
@@ -64,25 +66,25 @@
 
 
 @interface MyViewController : NSViewController <NSCollectionViewDelegate> {
-	IBOutlet NSCollectionView *collectionView;
+	IBOutlet MyCollectionView *collectionView;
 	IBOutlet NSArrayController *arrayController;
     IBOutlet MyScrollView *scrollView;
     
-    NSCollectionViewItem *collectionViewItem;
+    MyCollectionViewItem *collectionViewItem;
     IconViewBox *iconViewBox;
+    
 	NSMutableArray             *images;
 	NSMutableArray             *contentArray;
-
 	NSUInteger sortingMode;
-
 	NSArray *savedAlternateColors;
 }
 
+@property(nonatomic, strong) IconViewBox *iconViewBox;
 @property(nonatomic, strong) IBOutlet MyScrollView *scrollView;
 @property(retain) NSMutableArray *images;
 @property(nonatomic, assign) NSUInteger sortingMode;
 @property(nonatomic, strong) NSMutableArray *contentArray;
-@property (strong) IBOutlet NSCollectionViewItem *collectionViewItem;
+@property(nonatomic, strong) IBOutlet MyCollectionViewItem *collectionViewItem;
 
 - (void)showBeforeAppearance;
 
@@ -97,5 +99,7 @@
 - (NSArray *)selectedIcons;
 
 - (void)selectAll: (id)sender;
+
+- (void) zoomChanged: (CGFloat) newValue;
 
 @end

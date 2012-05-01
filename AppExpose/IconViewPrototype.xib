@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">NSCollectionViewItem</string>
+				<string key="NSClassName">MyCollectionViewItem</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -40,7 +40,7 @@
 			</object>
 			<object class="NSBox" id="102288131">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">36</int>
+				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSView" id="687796720">
@@ -51,9 +51,9 @@
 							<object class="NSTextField" id="1055722922">
 								<reference key="NSNextResponder" ref="687796720"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{0, 16}, {160, 22}}</string>
+								<string key="NSFrame">{{0, 15}, {166, 22}}</string>
 								<reference key="NSSuperview" ref="687796720"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSWindow"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="354990199">
 									<int key="NSCellFlags">-2080244160</int>
@@ -74,7 +74,7 @@
 							</object>
 							<object class="NSImageView" id="551215551">
 								<reference key="NSNextResponder" ref="687796720"/>
-								<int key="NSvFlags">301</int>
+								<int key="NSvFlags">274</int>
 								<object class="NSMutableSet" key="NSDragTypes">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="NSArray" key="set.sortedObjects">
@@ -87,13 +87,19 @@
 										<string>NeXT TIFF v4.0 pasteboard type</string>
 									</object>
 								</object>
-								<string key="NSFrame">{{16, 46}, {128, 128}}</string>
+								<string key="NSFrame">{{16, 52}, {134, 118}}</string>
 								<reference key="NSSuperview" ref="687796720"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1055722922"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSImageCell" key="NSCell" id="63285884">
-									<int key="NSCellFlags">130560</int>
+									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">33554432</int>
+									<object class="NSFont" key="NSSupport">
+										<string key="NSName">LucidaGrande</string>
+										<double key="NSSize">13</double>
+										<int key="NSfFlags">1044</int>
+									</object>
 									<int key="NSAlign">0</int>
 									<int key="NSScale">0</int>
 									<int key="NSStyle">0</int>
@@ -102,13 +108,15 @@
 								<bool key="NSEditable">YES</bool>
 							</object>
 						</object>
-						<string key="NSFrameSize">{160, 191}</string>
+						<string key="NSFrame">{{1, 1}, {166, 188}}</string>
 						<reference key="NSSuperview" ref="102288131"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="551215551"/>
 					</object>
 				</object>
-				<string key="NSFrameSize">{160, 191}</string>
+				<string key="NSFrameSize">{168, 190}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="687796720"/>
 				<string key="NSOffsets">{0, 0}</string>
 				<object class="NSTextFieldCell" key="NSTitleCell">
@@ -131,9 +139,9 @@
 					</object>
 				</object>
 				<reference key="NSContentView" ref="687796720"/>
-				<int key="NSBorderType">0</int>
+				<int key="NSBorderType">1</int>
 				<int key="NSBoxType">4</int>
-				<int key="NSTitlePosition">2</int>
+				<int key="NSTitlePosition">0</int>
 				<bool key="NSTransparent">NO</bool>
 				<bool key="NSFullyTransparent">YES</bool>
 				<object class="NSColor" key="NSFillColor2">
@@ -172,6 +180,22 @@
 						</object>
 					</object>
 					<int key="connectionID">8</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">labelField</string>
+						<reference key="source" ref="102288131"/>
+						<reference key="destination" ref="1055722922"/>
+					</object>
+					<int key="connectionID">13</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">imageView</string>
+						<reference key="source" ref="102288131"/>
+						<reference key="destination" ref="551215551"/>
+					</object>
+					<int key="connectionID">14</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -285,6 +309,7 @@
 					<string>-2.IBPluginDependency</string>
 					<string>-3.IBPluginDependency</string>
 					<string>2.CustomClassName</string>
+					<string>2.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints</string>
 					<string>2.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
@@ -297,6 +322,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>IconViewBox</string>
+					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -316,9 +342,100 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">12</int>
+			<int key="maxID">14</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">IconViewBox</string>
+					<string key="superclassName">NSBox</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>imageView</string>
+							<string>labelField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSImageView</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>imageView</string>
+							<string>labelField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">imageView</string>
+								<string key="candidateClassName">NSImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">labelField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IconViewBox.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyCollectionViewItem</string>
+					<string key="superclassName">NSCollectionViewItem</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyCollectionViewItem.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSCollectionViewItem</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>imageView</string>
+							<string>textField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSImageView</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>imageView</string>
+							<string>textField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">imageView</string>
+								<string key="candidateClassName">NSImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">textField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSCollectionViewItem.h</string>
+					</object>
+				</object>
+			</object>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">

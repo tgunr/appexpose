@@ -71,6 +71,7 @@
 								<int key="NSvFlags">301</int>
 								<string key="NSFrameSize">{316, 214}</string>
 								<reference key="NSSuperview" ref="52813598"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="290874252"/>
 								<string key="NSMinGridSize">{0, 0}</string>
 								<string key="NSMaxGridSize">{0, 0}</string>
@@ -91,6 +92,7 @@
 						</object>
 						<string key="NSFrame">{{1, 1}, {316, 214}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="972803657"/>
 						<reference key="NSDocView" ref="972803657"/>
 						<object class="NSColor" key="NSBGColor">
@@ -104,6 +106,7 @@
 						<int key="NSvFlags">256</int>
 						<string key="NSFrame">{{302, 1}, {15, 208}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
+						<reference key="NSWindow"/>
 						<reference key="NSTarget" ref="236214384"/>
 						<string key="NSAction">_doScroller:</string>
 						<double key="NSPercent">0.4221106</double>
@@ -113,6 +116,7 @@
 						<int key="NSvFlags">256</int>
 						<string key="NSFrame">{{1, 200}, {310, 15}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="555227663"/>
 						<int key="NSsFlags">1</int>
 						<reference key="NSTarget" ref="236214384"/>
@@ -122,6 +126,7 @@
 				</object>
 				<string key="NSFrameSize">{318, 216}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="52813598"/>
 				<int key="NSsFlags">133170</int>
 				<reference key="NSVScroller" ref="555227663"/>
@@ -158,19 +163,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">collectionViewItem</string>
-						<reference key="source" ref="1023175836"/>
-						<reference key="destination" ref="828137133"/>
-					</object>
-					<int key="connectionID">381</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">scrollView</string>
 						<reference key="source" ref="1023175836"/>
 						<reference key="destination" ref="236214384"/>
 					</object>
 					<int key="connectionID">382</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">collectionViewItem</string>
+						<reference key="source" ref="1023175836"/>
+						<reference key="destination" ref="828137133"/>
+					</object>
+					<int key="connectionID">383</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -315,12 +320,14 @@
 					<string>-1.IBPluginDependency</string>
 					<string>-2.IBPluginDependency</string>
 					<string>-3.IBPluginDependency</string>
+					<string>289.CustomClassName</string>
 					<string>289.IBPluginDependency</string>
 					<string>296.IBPluginDependency</string>
 					<string>360.CustomClassName</string>
 					<string>360.IBPluginDependency</string>
 					<string>361.IBPluginDependency</string>
 					<string>362.IBPluginDependency</string>
+					<string>363.CustomClassName</string>
 					<string>363.IBCollectionViewIntegration.primaryColor</string>
 					<string>363.IBPluginDependency</string>
 				</object>
@@ -329,12 +336,14 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>MyCollectionViewItem</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>MyScrollView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>MyCollectionView</string>
 					<reference ref="766554903"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
@@ -351,9 +360,130 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">382</int>
+			<int key="maxID">383</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyCollectionView</string>
+					<string key="superclassName">NSCollectionView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyCollectionView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyCollectionViewItem</string>
+					<string key="superclassName">NSCollectionViewItem</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyCollectionViewItem.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyScrollView</string>
+					<string key="superclassName">NSScrollView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyScrollView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>arrayController</string>
+							<string>collectionView</string>
+							<string>collectionViewItem</string>
+							<string>scrollView</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSArrayController</string>
+							<string>NSCollectionView</string>
+							<string>NSCollectionViewItem</string>
+							<string>MyScrollView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>arrayController</string>
+							<string>collectionView</string>
+							<string>collectionViewItem</string>
+							<string>scrollView</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">arrayController</string>
+								<string key="candidateClassName">NSArrayController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">collectionView</string>
+								<string key="candidateClassName">NSCollectionView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">collectionViewItem</string>
+								<string key="candidateClassName">NSCollectionViewItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollView</string>
+								<string key="candidateClassName">MyScrollView</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSCollectionViewItem</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>imageView</string>
+							<string>textField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSImageView</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>imageView</string>
+							<string>textField</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">imageView</string>
+								<string key="candidateClassName">NSImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">textField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSCollectionViewItem.h</string>
+					</object>
+				</object>
+			</object>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
