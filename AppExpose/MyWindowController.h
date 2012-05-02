@@ -62,6 +62,7 @@
     IBOutlet IKImageBrowserView *iconsView;
     IBOutlet NSSegmentedControl *appearanceControl;
     IBOutlet NSSlider *zoomSlider;
+    NSProgressIndicator *progressIndicator;
 }
 
 @property (nonatomic, strong) MyViewController *viewController;
@@ -72,6 +73,7 @@
 @property (nonatomic, strong) IBOutlet IKImageBrowserView *iconsView;
 @property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
 @property (nonatomic, strong) IBOutlet NSSlider *zoomSlider;
+@property (strong) IBOutlet NSProgressIndicator *progressIndicator;
 
 //-(void)showBeforeAppearance;
 //-(void)showAfterAppearance;

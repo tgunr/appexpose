@@ -50,6 +50,7 @@
 #import "AppDelegate.h"
 
 @implementation MyWindowController
+@synthesize progressIndicator;
 
 @synthesize viewController;
 @synthesize zoomSlider;

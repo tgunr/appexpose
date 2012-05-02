@@ -33,6 +33,7 @@
 			<string>IKImageView</string>
 			<string>NSToolbar</string>
 			<string>NSUserDefaultsController</string>
+			<string>NSProgressIndicator</string>
 			<string>NSSegmentedCell</string>
 			<string>NSMenuItem</string>
 		</array>
@@ -1334,11 +1335,9 @@
 							<string key="NSToolbarItemPaletteLabel"/>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="830405703">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {66, 27}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:22</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="950062187">
@@ -1377,11 +1376,9 @@
 							<string key="NSToolbarItemPaletteLabel">Icon Search</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSSearchField" key="NSToolbarItemView" id="50736799">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {180, 19}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSearchFieldCell" key="NSCell" id="653777008">
 									<int key="NSCellFlags">343014976</int>
@@ -1467,11 +1464,9 @@
 							<string key="NSToolbarItemPaletteLabel"/>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="680664975">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {60, 27}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:22</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="863994196">
@@ -1508,11 +1503,9 @@
 							<string key="NSToolbarItemPaletteLabel"/>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="2798379">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {60, 27}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:22</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="1003332885">
@@ -1547,11 +1540,9 @@
 							<string key="NSToolbarItemPaletteLabel"/>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSSegmentedControl" key="NSToolbarItemView" id="23623200">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {100, 20}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSegmentedCell" key="NSCell" id="754266910">
 									<int key="NSCellFlags">67239424</int>
@@ -1660,7 +1651,7 @@
 							</object>
 						</object>
 					</dictionary>
-					<array class="NSMutableArray" key="NSToolbarIBAllowedItems">
+					<array key="NSToolbarIBAllowedItems">
 						<reference ref="624940196"/>
 						<reference ref="577222170"/>
 						<reference ref="10285496"/>
@@ -1742,7 +1733,7 @@
 							<int key="NSvFlags">274</int>
 							<string key="NSFrame">{{0, 42}, {704, 438}}</string>
 							<reference key="NSSuperview" ref="249289257"/>
-							<reference key="NSNextKeyView" ref="194457493"/>
+							<reference key="NSNextKeyView" ref="43901899"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 						<object class="NSSlider" id="194457493">
@@ -1768,6 +1759,17 @@
 								<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
 								<bool key="NSVertical">NO</bool>
 							</object>
+						</object>
+						<object class="NSProgressIndicator" id="43901899">
+							<reference key="NSNextResponder" ref="249289257"/>
+							<int key="NSvFlags">-2147482366</int>
+							<object class="NSPSMatrix" key="NSDrawMatrix"/>
+							<string key="NSFrame">{{19, 10}, {566, 12}}</string>
+							<reference key="NSSuperview" ref="249289257"/>
+							<reference key="NSNextKeyView" ref="194457493"/>
+							<string key="NSReuseIdentifierKey">_NS:926</string>
+							<int key="NSpiFlags">16650</int>
+							<double key="NSMaxValue">100</double>
 						</object>
 					</array>
 					<string key="NSFrameSize">{703, 504}</string>
@@ -2910,6 +2912,14 @@
 					</object>
 					<int key="connectionID">687</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">progressIndicator</string>
+						<reference key="source" ref="366419672"/>
+						<reference key="destination" ref="43901899"/>
+					</object>
+					<int key="connectionID">695</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -3930,6 +3940,7 @@
 							<reference ref="953235019"/>
 							<reference ref="370007590"/>
 							<reference ref="194457493"/>
+							<reference ref="43901899"/>
 						</array>
 						<reference key="parent" ref="929164190"/>
 						<string key="objectName">Content View</string>
@@ -3937,6 +3948,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">598</int>
 						<reference key="object" ref="370007590"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="249289257"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -4137,6 +4149,11 @@
 						<reference key="object" ref="238582864"/>
 						<reference key="parent" ref="194457493"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">694</int>
+						<reference key="object" ref="43901899"/>
+						<reference key="parent" ref="249289257"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4317,6 +4334,7 @@
 				<string key="674.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="683.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="684.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="694.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4333,7 +4351,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">693</int>
+			<int key="maxID">695</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

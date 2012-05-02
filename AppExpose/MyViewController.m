@@ -142,9 +142,6 @@
 
 	[self setSortingMode: 0];        // icon collection in ascending sort order
 
-    //    contentArray = [self collectFolders:root];
-//    [self gatherContents: root];
-//	[self setIcons: contentArray];
 	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
     NSIndexSet *indexes = [NSIndexSet indexSet];
     [collectionView setSelectionIndexes:indexes];
@@ -190,6 +187,9 @@
                         change:(NSDictionary*)change 
                        context:(void *)context
 {
+    [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:NO];
+    [[[[NSApp delegate] myWindowController] progressIndicator] startAnimation:self];
+
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
 	[NSThread detachNewThreadSelector:	@selector(collectFolders:)
@@ -243,24 +243,26 @@
                 }
             }
         }
+        [[[[NSApp delegate] myWindowController] progressIndicator] stopAnimation:self];
+        [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
     }
 }
 
-- (void)readFromURL: (NSURL *) url {
+- (void)readFromURL: (NSURL *) aURL {
 	AppEntry       *entry;
 	NSError        *error;
 	NSMutableArray *entryArray = [NSMutableArray array];
 
-	if (url) {
+	if (aURL) {
 		NSFileManager *fm = [NSFileManager defaultManager];
-		NSString *const path = [url path];
+		NSString *const path = [aURL path];
 		NSArray *dirItems = [fm contentsOfDirectoryAtPath: path error: &error];
 
 		int i = 0;
 		for (NSString *item in dirItems) {
 			i++;
-			NSURL *itemURL = [url URLByAppendingPathComponent: item];
+			NSURL *itemURL = [aURL URLByAppendingPathComponent: item];
 			entry = [[AppEntry alloc] initWithURL: itemURL];
 			[entryArray addObject: entry];
 		}
@@ -291,8 +293,8 @@
 		NSImage      *image      = [dictionary objectForKey: KEY_IMAGE];
 		NSString     *name       = [dictionary objectForKey: KEY_NAME];
 		if (image && name) {
-			NSURL *url = [temporaryDirectoryURL URLByAppendingPathComponent: [NSString stringWithFormat: @"%@.tiff", name]];
-			[urls addObject: url];
+			NSURL *aurl = [temporaryDirectoryURL URLByAppendingPathComponent: [NSString stringWithFormat: @"%@.tiff", name]];
+			[urls addObject: aurl];
 			[[image TIFFRepresentation] writeToURL: url atomically: YES];
 		}
 	}];
@@ -388,7 +390,7 @@
         }
         NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];
         for (AppEntry  *entry in tempArray) {
-            NSURL *url = [entry appURL];
+            NSURL *aURL = [entry appURL];
             BOOL ok = [entry setAttribute: CUSTOM_ICON_ID value: @""];
             if (!ok) {
                 NSError *error = [[entry xattr] resultError];
@@ -398,7 +400,7 @@
                 }
                 [entry deleteAttribute: CUSTOM_ICON_ID];
             }
-            ok = [ws setIcon: [entry iconImage] forFile: [url path] options: 0];
+            ok = [ws setIcon: [entry iconImage] forFile: [aURL path] options: 0];
             if (!ok) {
                 PMERR(1, @"Failed to set icon on: %@", url);
             }
@@ -418,11 +420,11 @@
     }];
     if ([indexes count]) {
         for (AppEntry *entry in contentArray) {
-            NSURL *url = [entry appURL];
+            NSURL *aURL = [entry appURL];
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
-                PMLOG(1, @"removing CustomIcon: %@", url);
-                NSURL         *customIconURL = [url URLByAppendingPathComponent: CUSTOM_ICON_NAME];
+                PMLOG(1, @"removing CustomIcon: %@", aURL);
+                NSURL         *customIconURL = [aURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
                 NSFileManager *fm            = [NSFileManager defaultManager];
                 BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
                 NSError *error;
@@ -468,8 +470,8 @@
 //    NSSize newSize = NSMakeSize(newValue, newValue);
 //    NSRect newRect = NSMakeRect(0.0, 0.0, (newValue + 20), (newValue + 42) );
                                 
-    NSArray *views = [collectionView subviews];
-    NSView *item = [views objectAtIndex:0];
+//    NSArray *views = [collectionView subviews];
+//    NSView *item = [views objectAtIndex:0];
 //    PMLOG(1,@"frame: %f %f", item.frame.size.width, item.frame.size.height);
 //    PMLOG(1,@"bounds: %f %f", item.bounds.size.width, item.bounds.size.height);
 
