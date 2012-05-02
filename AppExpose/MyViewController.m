@@ -99,6 +99,10 @@
 
 @implementation MyCollectionView
 
+- (void)awakeFromNib {
+    [self setSubviewSize: 128.0];
+}
+
 - (NSView *)hitTest: (NSPoint) aPoint {
     return nil;
 }
@@ -109,6 +113,11 @@
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
     
+}
+
+-(void)setSubviewSize:(CGFloat)theSubviewSize {
+    [self setMaxItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
+    [self setMinItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
 }
 
 @end
@@ -487,27 +496,33 @@
     NSRect newRect = NSMakeRect(0.0, 0.0, (newValue + 20), (newValue + 42) );
                                 
     NSArray *views = [collectionView subviews];
+    NSView *item = [views objectAtIndex:0];
+    PMLOG(1,@"frame: %f %f", item.frame.size.width, item.frame.size.height);
+    PMLOG(1,@"bounds: %f %f", item.bounds.size.width, item.bounds.size.height);
+
+    [collectionView setSubviewSize:newValue];
+
     for (IconViewBox *box in views) {
 //        [[box imageView] setFrameSize:newSize];
-        [box setFrameSize:newSize];
+//        [box setFrameSize:newSize];
     }
     
-	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
-	for (AppEntry  *entry in contentArray) {
-		if (entry != nil) {
-			NSDictionary *iconDictionary = [entry iconDictionary];
-			if (iconDictionary) {
-                [[iconDictionary objectForKey:KEY_IMAGE] setSize:newSize];
-				[[entry iconImage] setSize:newSize];
-				[[entry originalImage] setSize:newSize];
-                [tempArray addObject: iconDictionary];
-			}
-			else {
-				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
-			}
-		}
-	}
-	[self setImages: tempArray];
+//	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+//	for (AppEntry  *entry in contentArray) {
+//		if (entry != nil) {
+//			NSDictionary *iconDictionary = [entry iconDictionary];
+//			if (iconDictionary) {
+//                [[iconDictionary objectForKey:KEY_IMAGE] setSize:newSize];
+//				[[entry iconImage] setSize:newSize];
+//				[[entry originalImage] setSize:newSize];
+//                [tempArray addObject: iconDictionary];
+//			}
+//			else {
+//				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+//			}
+//		}
+//	}
+//	[self setImages: tempArray];
 //    [[collectionViewItem view] display];
 }
 

@@ -68,7 +68,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSCollectionView" id="972803657">
 								<reference key="NSNextResponder" ref="52813598"/>
-								<int key="NSvFlags">301</int>
+								<int key="NSvFlags">18</int>
 								<string key="NSFrameSize">{316, 214}</string>
 								<reference key="NSSuperview" ref="52813598"/>
 								<reference key="NSWindow"/>
@@ -82,6 +82,15 @@
 									<object class="NSColor" id="766554903">
 										<int key="NSColorSpace">1</int>
 										<bytes key="NSRGB">MCAwIDAgMAA</bytes>
+									</object>
+									<object class="NSColor">
+										<int key="NSColorSpace">6</int>
+										<string key="NSCatalogName">System</string>
+										<string key="NSColorName">controlAlternatingRowColor</string>
+										<object class="NSColor" key="NSColor">
+											<int key="NSColorSpace">3</int>
+											<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+										</object>
 									</object>
 								</object>
 								<bool key="NSSelectable">YES</bool>
@@ -404,8 +413,8 @@
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSArrayController</string>
-							<string>NSCollectionView</string>
-							<string>NSCollectionViewItem</string>
+							<string>MyCollectionView</string>
+							<string>MyCollectionViewItem</string>
 							<string>MyScrollView</string>
 						</object>
 					</object>
@@ -426,11 +435,11 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">collectionView</string>
-								<string key="candidateClassName">NSCollectionView</string>
+								<string key="candidateClassName">MyCollectionView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">collectionViewItem</string>
-								<string key="candidateClassName">NSCollectionViewItem</string>
+								<string key="candidateClassName">MyCollectionViewItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">scrollView</string>

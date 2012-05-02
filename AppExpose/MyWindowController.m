@@ -154,11 +154,10 @@
 
 - (IBAction)zoomChanged:(id)sender {
     NSInteger value = [zoomSlider integerValue];
-    int scales[] = { 32, 64, 128, 512, 1024 } ;
+    int scales[] = { 32, 64, 128, 256, 512, 1024 } ;
     int scale = scales[value];
-    [viewController zoomChanged: (CGFloat)scale];
-    PMLOG(1,@"zoom: %d", scale);
-    
+    PMLOG(1,@"zoom: %f", (CGFloat)value);
+    [viewController zoomChanged: (CGFloat)value];
 }
 
 @end
