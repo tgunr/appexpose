@@ -55,6 +55,23 @@
     kAuthorizationFlagInteractionAllowed |
     kAuthorizationFlagPreAuthorize;
 	
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
+	appDirectory = [paths objectAtIndex: 0];
+	if ([paths count] > 0) {
+		appDirectory = [paths objectAtIndex: 0];
+	}
+	appDirectory = [appDirectory stringByAppendingString: @"/"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL debug = [defaults boolForKey:@"debug"];
+    if (debug) {
+        appDirectory = @"/Users/davec/Applications/";
+    }
+    NSString *directory = [defaults stringForKey:@"path"];
+    if (directory) {
+        appDirectory = directory;
+    }
+	myWindowController.viewController.url = [NSURL fileURLWithPath: appDirectory];
+
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender

@@ -118,32 +118,33 @@
 @synthesize sortingMode;
 @synthesize contentArray;
 @synthesize scrollView;
+@synthesize url;
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
 
 - (void)awakeFromNib {
+    images = [[NSMutableArray alloc] init];
+    contentArray = [[NSMutableArray alloc] init];
+
+    [self addObserver:	self
+           forKeyPath:@"url"
+              options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+              context:NULL];
+
 	// save this for later when toggling between alternate colors
 	savedAlternateColors = [collectionView backgroundColors];
 
 	[self setSortingMode: 0];        // icon collection in ascending sort order
 
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
-	appDirectory = [paths objectAtIndex: 0];
-	if ([paths count] > 0) {
-		appDirectory = [paths objectAtIndex: 0];
-	}
-	appDirectory = [appDirectory stringByAppendingString: @"/"];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL debug = [defaults boolForKey:@"debug"];
-    if (debug) {
-        appDirectory = @"/Users/davec/Applications/";
-    }
-    NSString *directory = [defaults stringForKey:@"path"];
-    if (directory) {
-        appDirectory = directory;
-    }
-	NSURL *root = [NSURL fileURLWithPath: appDirectory];
-    contentArray = [self collectFolders:root];
-//    contentArray = [self gatherContents: root];
-	[self setIcons: contentArray];
+    //    contentArray = [self collectFolders:root];
+//    [self gatherContents: root];
+//	[self setIcons: contentArray];
 	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
     NSIndexSet *indexes = [NSIndexSet indexSet];
     [collectionView setSelectionIndexes:indexes];
@@ -155,60 +156,88 @@
 		[entry addToRootEntry: rootEntry];
 }
 
+- (void)setIcon: (AppEntry *)entry {
+    if (entry != nil) {
+        NSDictionary *iconDictionary = [entry iconDictionary];
+        if (iconDictionary) {
+            [arrayController addObject: iconDictionary];
+            [contentArray addObject: entry];
+        }
+        else {
+            PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+        }
+    }
+}
+
 - (void)setIcons: (NSMutableArray *) iconImages {
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in iconImages) {
-		if (entry != nil) {
-			NSDictionary *iconDictionary = [entry iconDictionary];
-			if (iconDictionary) {
-				[tempArray addObject: iconDictionary];
-			}
-			else {
-				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
-			}
-		}
+        if (entry != nil) {
+            NSDictionary *iconDictionary = [entry iconDictionary];
+            if (iconDictionary) {
+                [tempArray addObject: iconDictionary];
+            }
+            else {
+                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+            }
+        }
 	}
 	[self setImages: tempArray];
 }
 
-// -------------------------------------------------------------------------------
-//	gatherContents:inObject
-//
-//	Gathering the contents and their icons could be expensive.
-//	This method is being called on a separate thread to avoid blocking the UI.
-// -------------------------------------------------------------------------------
-- (NSMutableArray *)gatherContents: (NSURL *) url {
-	contentArray = [[NSMutableArray alloc] init];
+- (void)gatherContents:(NSURL *) directoryToScan {
+    @autoreleasepool {  
+        NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+        NSArray       *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath: [directoryToScan path] error: nil];
+        for (NSString *element in files) {
+            if (![[element pathExtension] isEqualToString: @"app"]) {
+                // we need to reconstruct the full path of the object since 'directoryContentsAtPath' only gives us the object name
+                NSString *pathStr = [[directoryToScan path] stringByAppendingPathComponent: element];
+                
+                // examine if this object is invisible (don't include in the array)
+                CFDictionaryRef values    = NULL;
+                CFStringRef     attrs[1]  = {kLSItemIsInvisible};
+                CFArrayRef      attrNames = CFArrayCreate(NULL, (const void **)attrs, 1, NULL);
+                
+                FSRef   fileRef;
+                Boolean isDirectory;
+                if (FSPathMakeRef((const UInt8 *)[pathStr fileSystemRepresentation], &fileRef, &isDirectory) == noErr) {
+                    if (LSCopyItemAttributes(&fileRef, kLSRolesViewer, attrNames, &values) == noErr) {
+                        if (values != NULL) {
+                            if (CFDictionaryGetValue(values, kLSItemIsInvisible) == kCFBooleanFalse) {
+                                // object is visible so add to our array
+                                AppEntry *entry = [[AppEntry alloc] initWithURL: [NSURL fileURLWithPath: pathStr]];
+                                [tempArray addObject: entry];
 
-	NSArray       *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath: [url path] error: nil];
-	for (NSString *element in files) {
-        if (![[element pathExtension] isEqualToString: @"app"]) {
-            // we need to reconstruct the full path of the object since 'directoryContentsAtPath' only gives us the object name
-            NSString *pathStr = [[url path] stringByAppendingPathComponent: element];
-            
-            // examine if this object is invisible (don't include in the array)
-            CFDictionaryRef values    = NULL;
-            CFStringRef     attrs[1]  = {kLSItemIsInvisible};
-            CFArrayRef      attrNames = CFArrayCreate(NULL, (const void **)attrs, 1, NULL);
-            
-            FSRef   fileRef;
-            Boolean isDirectory;
-            if (FSPathMakeRef((const UInt8 *)[pathStr fileSystemRepresentation], &fileRef, &isDirectory) == noErr) {
-                if (LSCopyItemAttributes(&fileRef, kLSRolesViewer, attrNames, &values) == noErr) {
-                    if (values != NULL) {
-                        if (CFDictionaryGetValue(values, kLSItemIsInvisible) == kCFBooleanFalse) {
-                            // object is visible so add to our array
-                            AppEntry *entry = [[AppEntry alloc] initWithURL: [NSURL fileURLWithPath: pathStr]];
-                            [contentArray addObject: entry];
+                                [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
+                            }
                         }
+                        CFRelease(values);
                     }
-                    CFRelease(values);
                 }
+                CFRelease(attrNames);
             }
-            CFRelease(attrNames);
         }
-	}
-	return contentArray;
+        [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
+    }
+}
+
+// -------------------------------------------------------------------------------
+//	observeValueForKeyPath:ofObject:change:context
+//
+//	Listen for changes in the file url.
+//	Given a url, obtain its contents and add only the invisible items to the collection.
+// -------------------------------------------------------------------------------
+- (void)observeValueForKeyPath:(NSString*)keyPath
+                      ofObject:(id)object 
+                        change:(NSDictionary*)change 
+                       context:(void *)context
+{
+	// build our directory contents on a separate thread,
+	// some portions are from disk which could get expensive depending on the size
+	[NSThread detachNewThreadSelector:	@selector(gatherContents:)
+                             toTarget:self		// we are the target
+                           withObject:url];
 }
 
 - (NSMutableArray *) collectFolders:(NSURL *) directoryToScan {

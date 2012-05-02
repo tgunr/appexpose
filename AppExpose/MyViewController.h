@@ -82,6 +82,8 @@
 	NSMutableArray             *contentArray;
 	NSUInteger sortingMode;
 	NSArray *savedAlternateColors;
+    NSURL						*url;
+
 }
 
 @property(nonatomic, strong) IconViewBox *iconViewBox;
@@ -90,6 +92,7 @@
 @property(nonatomic, assign) NSUInteger sortingMode;
 @property(nonatomic, strong) NSMutableArray *contentArray;
 @property(nonatomic, strong) IBOutlet NSCollectionViewItem *collectionViewItem;
+@property (readwrite, retain) NSURL *url;
 
 - (void)showBeforeAppearance;
 
