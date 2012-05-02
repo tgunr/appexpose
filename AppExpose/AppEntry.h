@@ -15,6 +15,7 @@
 #define ICON_SIZE 1024.0
 #define CUSTOM_ICON_NAME @"Icon\r"
 #define CUSTOM_ICON_ID @"com.polymicrosystems.appexpose.customicon"
+#define MAX_LEVEL 2
 
 @interface AppEntry : NSObject {
 	BOOL isLeaf;
@@ -38,6 +39,8 @@
 @property(nonatomic, assign) BOOL isApp;
 @property(nonatomic, assign) BOOL canAccess;
 @property(nonatomic, assign) BOOL hasCustomIcon;
+@property(nonatomic, assign, getter = hasMyCustomIcon) BOOL hasMyCustomIcon;
+@property(nonatomic, assign, getter = shouldSkipDescendents) BOOL skipDescendents;
 @property(nonatomic, copy) NSString              *name;
 @property(nonatomic, copy) NSURL                 *appURL;
 @property(nonatomic, strong) NSMutableArray      *childEntries;
@@ -60,7 +63,7 @@
 
 - (BOOL) isAnApp:(NSURL *) url;
 
-- (NSArray *)scanURLForIcons: (NSURL *) directoryToScan forEntry: (AppEntry *) appEntry;
+- (void)scanURLForIcons: (NSURL *) directoryToScan forEntry: (AppEntry *) appEntry;
 
 - (NSString *)pathWithName;
 

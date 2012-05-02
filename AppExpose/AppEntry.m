@@ -41,6 +41,8 @@
 @synthesize isFolder;
 @synthesize attributes;
 @synthesize xattr;
+@synthesize hasMyCustomIcon;
+@synthesize skipDescendents;
 
 + (AppEntry *) rootEntry {
     return [[self alloc] initRootWithURL:[NSURL fileURLWithPath:@"/"]];
@@ -168,7 +170,7 @@
         isApp         = [self isAnApp:url];
         canAccess     = [self userCanAccess];
         name          = [[url lastPathComponent] copy];
-        if ([xattr hasAttribute:CUSTOM_ICON_ID]) {
+        if (isFolder && [self hasMyCustomIcon]) {
             originalImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
         } else {
             originalImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
@@ -197,42 +199,64 @@
     return self;
 }
 
+- (BOOL)hasMyCustomIcon {
+    return [xattr hasAttribute:CUSTOM_ICON_ID]; 
+}
+
 - (BOOL) isNotSpecial {
     NSArray *specialNames = [NSArray arrayWithObjects:@"Utilities", nil];
     return ![specialNames containsObject:name];
 }
 
-- (NSArray *) scanURLForIcons:(NSURL *) directoryToScan forEntry:(AppEntry *) appEntry {
+- (BOOL) shouldSkipDescendents {
+    BOOL result = isFolder && [childEntries count] > 0;
+    return result;
+}
+
+- (void) scanURLForIcons:(NSURL *) directoryToScan forEntry:(AppEntry *) appEntry {
     NSFileManager *fm = [[NSFileManager alloc] init];
-    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsRegularFileKey, NSURLIsDirectoryKey, NSURLCustomIconKey, nil];
+    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsPackageKey, nil];
     NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
                                     includingPropertiesForKeys:fileKeys
                                                        options:NSDirectoryEnumerationSkipsHiddenFiles
-                                                  errorHandler:nil];
-
-    NSMutableArray *theArray = [NSMutableArray array];
+                                                  errorHandler:nil];    
     for (NSURL *theURL in dirEnumerator) {
-
+        
         // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
         NSString *fileName;
         [theURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL];
-
+        
         // Retrieve whether a directory. From NSURLIsDirectoryKey, also
         // cached during the enumeration.
-        NSNumber *isDirectory;
-        [theURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
-
+        NSNumber *isAFolder;
+        [theURL getResourceValue:&isAFolder forKey:NSURLIsDirectoryKey error:NULL];
+        
+        NSNumber *isSymLink;
+        [theURL getResourceValue:&isSymLink forKey:NSURLIsSymbolicLinkKey error:NULL];
+        
+        NSNumber *isPackage;
+        [theURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:NULL];
+        
+        NSImage *customIcon;
+        [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
+        
         // Ignore files under the app directory
-        if ([[theURL pathExtension] isEqualToString:@"app"]) {
-            AppEntry *entry = [[AppEntry alloc] initWithURL:theURL];
-            if ([appEntry addChildEntry:entry]) {
+        if ([isAFolder boolValue]) {
+            if ([isPackage boolValue]) {
+                AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
+                if ([entry isApp]) {
+                    PMLOG(2, @"adding: %@", theURL);
+                    if ([appEntry addChildEntry:entry]) {
+                        [dirEnumerator skipDescendents];
+                    }
+                } else
+                    [dirEnumerator skipDescendents];
+            }
+            if ([dirEnumerator level] > MAX_LEVEL) {
                 [dirEnumerator skipDescendents];
             }
-            else
-                  PMERR(1, @"Failed to add childEntry at: %@", [theURL path]);
         }
     }
-    return theArray;
 }
 
 - (BOOL) isALeaf:(NSURL *) url {

@@ -226,21 +226,21 @@
             
             NSImage *customIcon;
             [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
-            
-            BOOL hasCustom = NO;
-            
+                        
             // Ignore files under the app directory
             if ([isFolder boolValue]) {
-                if ([fm fileExistsAtPath:[theURL path]]) {
-                    hasCustom = YES;
+                if (![isPackage boolValue]) {
                     AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
                     if (![entry isApp]) {
                         PMLOG(2, @"adding: %@", theURL);
                         [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
                         [tempArray addObject: entry];
+                        if ([entry shouldSkipDescendents]) {
+                            [dirEnumerator skipDescendents];
+                        }
                     }
+                } else
                     [dirEnumerator skipDescendents];
-                }
             }
         }
         [[[[NSApp delegate] myWindowController] progressIndicator] stopAnimation:self];
