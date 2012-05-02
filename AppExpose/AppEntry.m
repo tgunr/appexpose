@@ -168,7 +168,11 @@
         isApp         = [self isAnApp:url];
         canAccess     = [self userCanAccess];
         name          = [[url lastPathComponent] copy];
-        originalImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+        if ([xattr hasAttribute:CUSTOM_ICON_ID]) {
+            originalImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+        } else {
+            originalImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+        }
         [originalImage setSize:NSMakeSize(ICON_SIZE, ICON_SIZE)];
         iconImage      = originalImage;
         if (isApp) {
