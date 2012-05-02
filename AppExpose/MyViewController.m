@@ -185,49 +185,6 @@
 	[self setImages: tempArray];
 }
 
-- (void)gatherContents:(NSURL *) directoryToScan {
-    @autoreleasepool {  
-        NSMutableArray *tempArray = [[NSMutableArray alloc] init];
-        NSArray       *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath: [directoryToScan path] error: nil];
-        for (NSString *element in files) {
-            if (![[element pathExtension] isEqualToString: @"app"]) {
-                // we need to reconstruct the full path of the object since 'directoryContentsAtPath' only gives us the object name
-                NSString *pathStr = [[directoryToScan path] stringByAppendingPathComponent: element];
-                
-                // examine if this object is invisible (don't include in the array)
-                CFDictionaryRef values    = NULL;
-                CFStringRef     attrs[1]  = {kLSItemIsInvisible};
-                CFArrayRef      attrNames = CFArrayCreate(NULL, (const void **)attrs, 1, NULL);
-                
-                FSRef   fileRef;
-                Boolean isDirectory;
-                if (FSPathMakeRef((const UInt8 *)[pathStr fileSystemRepresentation], &fileRef, &isDirectory) == noErr) {
-                    if (LSCopyItemAttributes(&fileRef, kLSRolesViewer, attrNames, &values) == noErr) {
-                        if (values != NULL) {
-                            if (CFDictionaryGetValue(values, kLSItemIsInvisible) == kCFBooleanFalse) {
-                                // object is visible so add to our array
-                                AppEntry *entry = [[AppEntry alloc] initWithURL: [NSURL fileURLWithPath: pathStr]];
-                                [tempArray addObject: entry];
-
-                                [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
-                            }
-                        }
-                        CFRelease(values);
-                    }
-                }
-                CFRelease(attrNames);
-            }
-        }
-        [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
-    }
-}
-
-// -------------------------------------------------------------------------------
-//	observeValueForKeyPath:ofObject:change:context
-//
-//	Listen for changes in the file url.
-//	Given a url, obtain its contents and add only the invisible items to the collection.
-// -------------------------------------------------------------------------------
 - (void)observeValueForKeyPath:(NSString*)keyPath
                       ofObject:(id)object 
                         change:(NSDictionary*)change 
@@ -235,56 +192,59 @@
 {
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
-	[NSThread detachNewThreadSelector:	@selector(gatherContents:)
+	[NSThread detachNewThreadSelector:	@selector(collectFolders:)
                              toTarget:self		// we are the target
                            withObject:url];
 }
 
-- (NSMutableArray *) collectFolders:(NSURL *) directoryToScan {
-    NSFileManager *fm = [[NSFileManager alloc] init];
-    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsDirectoryKey, NSURLCustomIconKey, nil];
-    NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
-                                    includingPropertiesForKeys:fileKeys
-                                                       options:NSDirectoryEnumerationSkipsHiddenFiles
-                                                  errorHandler:nil];
-
-    NSMutableArray *theArray = [NSMutableArray array];
-    for (NSURL *theURL in dirEnumerator) {
+- (void) collectFolders:(NSURL *) directoryToScan {
+    @autoreleasepool {  
+        NSFileManager *fm = [[NSFileManager alloc] init];
+        NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsDirectoryKey, NSURLCustomIconKey, nil];
+        NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
+                                        includingPropertiesForKeys:fileKeys
+                                                           options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                      errorHandler:nil];
         
-        // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
-        NSString *fileName;
-        [theURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL];
-        
-        // Retrieve whether a directory. From NSURLIsDirectoryKey, also
-        // cached during the enumeration.
-        NSNumber *isFolder;
-        [theURL getResourceValue:&isFolder forKey:NSURLIsDirectoryKey error:NULL];
-        
-        NSNumber *isSymLink;
-        [theURL getResourceValue:&isSymLink forKey:NSURLIsSymbolicLinkKey error:NULL];
-        
-        NSNumber *isPackage;
-        [theURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:NULL];
-        
-        NSImage *customIcon;
-        [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
-        
-        BOOL hasCustom = NO;
-        
-        // Ignore files under the app directory
-        if ([isFolder boolValue]) {
-            if ([fm fileExistsAtPath:[theURL path]]) {
-                hasCustom = YES;
-                AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
-                if (![entry isApp]) {
-                    PMLOG(2, @"adding: %@", theURL);
-                    [theArray addObject: entry];
+        NSMutableArray *tempArray = [NSMutableArray array];
+        for (NSURL *theURL in dirEnumerator) {
+            
+            // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
+            NSString *fileName;
+            [theURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL];
+            
+            // Retrieve whether a directory. From NSURLIsDirectoryKey, also
+            // cached during the enumeration.
+            NSNumber *isFolder;
+            [theURL getResourceValue:&isFolder forKey:NSURLIsDirectoryKey error:NULL];
+            
+            NSNumber *isSymLink;
+            [theURL getResourceValue:&isSymLink forKey:NSURLIsSymbolicLinkKey error:NULL];
+            
+            NSNumber *isPackage;
+            [theURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:NULL];
+            
+            NSImage *customIcon;
+            [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
+            
+            BOOL hasCustom = NO;
+            
+            // Ignore files under the app directory
+            if ([isFolder boolValue]) {
+                if ([fm fileExistsAtPath:[theURL path]]) {
+                    hasCustom = YES;
+                    AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
+                    if (![entry isApp]) {
+                        PMLOG(2, @"adding: %@", theURL);
+                        [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
+                        [tempArray addObject: entry];
+                    }
+                    [dirEnumerator skipDescendents];
                 }
-                [dirEnumerator skipDescendents];
             }
         }
+        [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
     }
-    return theArray;
 }
 
 - (void)readFromURL: (NSURL *) url {
@@ -372,7 +332,7 @@
 	}
 	[self setImages: tempArray];
     [collectionView setSelectionIndexes:indexes];
-     
+    [collectionView setSelectable:NO];
      // restore the scroll location
      [[scrollView documentView] scrollPoint:currentScrollPosition];
 }
@@ -390,6 +350,8 @@
 	}
 	[self setImages: tempArray];
     [collectionView setSelectionIndexes:indexes];
+    [collectionView setSelectable:YES];
+
     // restore the scroll location
     [[scrollView documentView] scrollPoint:currentScrollPosition];
 }
