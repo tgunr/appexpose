@@ -59,6 +59,7 @@
 // -------------------------------------------------------------------------------
 @synthesize labelField;
 @synthesize imageView;
+@synthesize selected;
 
 - (IconViewBox *)init {
     self = [super init];
@@ -72,12 +73,22 @@
     [[[[AppDelegate shared] myWindowController] viewController] setIconViewBox: self];
 }
 
-- (NSView *)hitTest: (NSPoint) aPoint {
+- (IconViewBox *)hitTest: (NSPoint) aPoint {
 	// don't allow any mouse clicks for subviews in this NSBox
     [[AppDelegate shared] selectionChanged];
-	return nil;
+	return self;
 }
 
+- (void)drawRect1:(NSRect)dirtyRect 
+{
+    if (selected) {
+        [[NSColor blueColor] set];
+        NSRectFill([self bounds]);
+    }
+}
+
+- (IBAction)iconSelected:(id)sender {
+}
 @end
 
 
@@ -104,10 +115,11 @@
 }
 
 - (NSView *)hitTest: (NSPoint) aPoint {
+    [[AppDelegate shared] selectionChanged];
     return nil;
 }
 
-- (void)didAddSubview:(NSView *)subview {
+- (void)didAddSubview:(IconViewBox *)subview {
     
 }
 
@@ -126,6 +138,13 @@
 
 - (NSView *)hitTest: (NSPoint) aPoint {
     return nil;
+}
+
+- (void)setSelected:(BOOL)flag
+{
+    [super setSelected:flag];
+    [(IconViewBox*)[self view] setSelected:flag];
+    [(IconViewBox*)[self view] setNeedsDisplay:YES];
 }
 
 @end
@@ -500,12 +519,15 @@
     PMLOG(1,@"frame: %f %f", item.frame.size.width, item.frame.size.height);
     PMLOG(1,@"bounds: %f %f", item.bounds.size.width, item.bounds.size.height);
 
-    [collectionView setSubviewSize:newValue];
+//    [collectionView setSubviewSize:newValue];
+        [collectionView setMaxItemSize:NSMakeSize(newValue,newValue)];
+        [collectionView setMinItemSize:NSMakeSize(newValue,newValue)];
+    
 
-    for (IconViewBox *box in views) {
+    //    for (IconViewBox *box in views) {
 //        [[box imageView] setFrameSize:newSize];
 //        [box setFrameSize:newSize];
-    }
+//    }
     
 //	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 //	for (AppEntry  *entry in contentArray) {

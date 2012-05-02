@@ -51,6 +51,10 @@
 @interface IconViewBox : NSBox
 @property (strong) IBOutlet NSTextField *labelField;
 @property (strong) IBOutlet NSImageView *imageView;
+@property (readwrite) BOOL selected;
+
+- (IBAction)iconSelected:(id)sender;
+
 @end
 
 @interface MyScrollView : NSScrollView {
@@ -62,15 +66,16 @@
 @end
 
 @interface MyCollectionViewItem : NSCollectionViewItem
+
 @end
 
 
 @interface MyViewController : NSViewController <NSCollectionViewDelegate> {
-	IBOutlet MyCollectionView *collectionView;
+	IBOutlet NSCollectionView *collectionView;
 	IBOutlet NSArrayController *arrayController;
     IBOutlet MyScrollView *scrollView;
     
-    MyCollectionViewItem *collectionViewItem;
+    NSCollectionViewItem *collectionViewItem;
     IconViewBox *iconViewBox;
     
 	NSMutableArray             *images;
@@ -84,7 +89,7 @@
 @property(retain) NSMutableArray *images;
 @property(nonatomic, assign) NSUInteger sortingMode;
 @property(nonatomic, strong) NSMutableArray *contentArray;
-@property(nonatomic, strong) IBOutlet MyCollectionViewItem *collectionViewItem;
+@property(nonatomic, strong) IBOutlet NSCollectionViewItem *collectionViewItem;
 
 - (void)showBeforeAppearance;
 
