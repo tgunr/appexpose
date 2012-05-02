@@ -270,7 +270,7 @@
 		752BC7D114B5A0F4009ACADB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 752BC7D414B5A0F4009ACADB /* Build configuration list for PBXProject "AppExpose" */;
 			compatibilityVersion = "Xcode 3.2";

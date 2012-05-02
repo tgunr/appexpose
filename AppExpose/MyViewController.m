@@ -511,8 +511,8 @@
 }
 
 - (void) zoomChanged: (CGFloat) newValue {
-    NSSize newSize = NSMakeSize(newValue, newValue);
-    NSRect newRect = NSMakeRect(0.0, 0.0, (newValue + 20), (newValue + 42) );
+//    NSSize newSize = NSMakeSize(newValue, newValue);
+//    NSRect newRect = NSMakeRect(0.0, 0.0, (newValue + 20), (newValue + 42) );
                                 
     NSArray *views = [collectionView subviews];
     NSView *item = [views objectAtIndex:0];
