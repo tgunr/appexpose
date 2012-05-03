@@ -50,6 +50,8 @@
 #import "AppDelegate.h"
 
 @implementation MyWindowController
+@synthesize selectAllToolBarItem;
+@synthesize restartFinder;
 @synthesize progressIndicator;
 
 @synthesize viewController;
@@ -60,6 +62,7 @@
 @synthesize iconsView;
 @synthesize removeButton;
 @synthesize applyButton;
+@synthesize finder;
 
 - (void)awakeFromNib
 {
@@ -123,7 +126,14 @@
 }
 
 - (IBAction)selectAll:(id)sender {
-    [viewController selectAll: sender];
+    NSString *label = [selectAllToolBarItem label];
+    if ([label isEqualToString:@"Select All"]) {
+        [selectAllToolBarItem setLabel:@"Select None"];
+        [viewController selectAll: sender];
+    } else {
+        [selectAllToolBarItem setLabel:@"Select All"];
+        [viewController selectNone: sender];
+    }
     [self selectionChanged];
 }
 
@@ -161,4 +171,27 @@
     [viewController zoomChanged: (CGFloat)value];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == @"QuitFinder")
+    {
+        if([keyPath isEqualToString:@"isTerminated"])
+        {
+            [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier:@"com.apple.finder" options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:NULL launchIdentifier:NULL];
+            [object removeObserver:self forKeyPath:@"isTerminated"];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (IBAction)restartFinder:(id)sender {
+    NSArray* apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"];
+    if([apps count])
+    {
+        finder = [apps objectAtIndex:0];
+        [finder addObserver:self forKeyPath:@"isTerminated" options:0 context:@"QuitFinder"];
+        [finder terminate];
+    }
+}
 @end

@@ -15,6 +15,11 @@
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
+		756DF6F81551D68600558DD4 /* Finder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F71551D68600558DD4 /* Finder.icns */; };
+		756DF6FA1551D8D600558DD4 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F91551D8D600558DD4 /* Folder.png */; };
+		756DF7001551E2EA00558DD4 /* before-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6FF1551E2EA00558DD4 /* before-32.png */; };
+		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
+		756DF7041551F32C00558DD4 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7031551F32C00558DD4 /* app.icns */; };
 		75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExpose.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
 		75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
@@ -100,6 +105,11 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		756DF6F71551D68600558DD4 /* Finder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Finder.icns; sourceTree = "<group>"; };
+		756DF6F91551D8D600558DD4 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
+		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
+		756DF7011551E35300558DD4 /* after-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "after-32.png"; sourceTree = "<group>"; };
+		756DF7031551F32C00558DD4 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = app.icns; sourceTree = "<group>"; };
 		75A01429154F2A1800AA6F70 /* AppExpose.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExpose.icns; sourceTree = SOURCE_ROOT; };
 		75A0142B154F34DA00AA6F70 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		75C8356C153DFC0D009021F4 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = xattr/xattr.xcodeproj; sourceTree = "<group>"; };
@@ -191,27 +201,41 @@
 				75F63682153923730079D063 /* MyWindowController.h */,
 				75F63683153923730079D063 /* MyWindowController.m */,
 				75F6367B153922C00079D063 /* Nibs */,
-				752BC7E514B5A0F4009ACADB /* Supporting Files */,
+				752BC7E514B5A0F4009ACADB /* Resources */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
 		};
-		752BC7E514B5A0F4009ACADB /* Supporting Files */ = {
+		752BC7E514B5A0F4009ACADB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				756DF7031551F32C00558DD4 /* app.icns */,
+				756DF7011551E35300558DD4 /* after-32.png */,
+				756DF6FF1551E2EA00558DD4 /* before-32.png */,
+				756DF6F91551D8D600558DD4 /* Folder.png */,
+				756DF6F71551D68600558DD4 /* Finder.icns */,
 				75F636861539279F0079D063 /* icons.plist */,
 				75D6280315504DDF00F41D7D /* Box.png */,
 				75A01429154F2A1800AA6F70 /* AppExpose.icns */,
 				75A0142B154F34DA00AA6F70 /* default.png */,
 				75C904971545C635004FC088 /* red-lock.png */,
 				75C9049B1545C6A3004FC088 /* redpadlock.png */,
+				756DF70515524DAC00558DD4 /* Support */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		756DF70515524DAC00558DD4 /* Support */ = {
+			isa = PBXGroup;
+			children = (
 				752BC7E614B5A0F4009ACADB /* AppExpose-Info.plist */,
 				752BC7E714B5A0F4009ACADB /* InfoPlist.strings */,
 				752BC7EA14B5A0F4009ACADB /* main.m */,
 				752BC7EC14B5A0F4009ACADB /* AppExpose-Prefix.pch */,
 				752BC7ED14B5A0F4009ACADB /* Credits.rtf */,
 			);
-			name = "Supporting Files";
+			name = Support;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		75C83582153DFF29009021F4 /* Products */ = {
@@ -238,7 +262,7 @@
 				75F6367C153922D50079D063 /* Collection.xib */,
 				752BC7F314B5A0F5009ACADB /* MainMenu.xib */,
 			);
-			name = Nibs;
+			path = Nibs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +363,11 @@
 				75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */,
 				75A0142C154F34DA00AA6F70 /* default.png in Resources */,
 				75D6280415504DDF00F41D7D /* Box.png in Resources */,
+				756DF6F81551D68600558DD4 /* Finder.icns in Resources */,
+				756DF6FA1551D8D600558DD4 /* Folder.png in Resources */,
+				756DF7001551E2EA00558DD4 /* before-32.png in Resources */,
+				756DF7021551E35300558DD4 /* after-32.png in Resources */,
+				756DF7041551F32C00558DD4 /* app.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +409,7 @@
 				752BC7E814B5A0F4009ACADB /* en */,
 			);
 			name = InfoPlist.strings;
+			path = Nibs;
 			sourceTree = "<group>";
 		};
 		752BC7ED14B5A0F4009ACADB /* Credits.rtf */ = {
@@ -388,6 +418,7 @@
 				752BC7EE14B5A0F4009ACADB /* en */,
 			);
 			name = Credits.rtf;
+			path = Nibs;
 			sourceTree = "<group>";
 		};
 		752BC7F314B5A0F5009ACADB /* MainMenu.xib */ = {

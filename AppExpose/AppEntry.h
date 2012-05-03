@@ -13,6 +13,7 @@
 #define KEY_IMAGE    @"icon"
 #define KEY_NAME    @"name"
 #define ICON_SIZE 1024.0
+#define DEFAULT_ICON_SIZE 128.0
 #define CUSTOM_ICON_NAME @"Icon\r"
 #define CUSTOM_ICON_ID @"com.polymicrosystems.appexpose.customicon"
 #define MAX_LEVEL 2

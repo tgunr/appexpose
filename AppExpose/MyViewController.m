@@ -159,6 +159,7 @@
         if (iconDictionary) {
             [arrayController addObject: iconDictionary];
             [contentArray addObject: entry];
+            [self zoomChanged:DEFAULT_ICON_SIZE];
         }
         else {
             PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
@@ -180,6 +181,7 @@
         }
 	}
 	[self setImages: tempArray];
+    
 }
 
 - (void)observeValueForKeyPath:(NSString*)keyPath
@@ -246,6 +248,7 @@
         [[[[NSApp delegate] myWindowController] progressIndicator] stopAnimation:self];
         [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
+        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
     }
 }
 
@@ -463,7 +466,12 @@
     NSRange range = {0, [contentArray count]};
     NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange: range];
     [collectionView setSelectionIndexes:indexes];
+    
+}
 
+- (void)selectNone: (id)sender {
+    NSIndexSet *indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
 }
 
 - (void) zoomChanged: (CGFloat) newValue {

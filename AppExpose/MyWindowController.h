@@ -63,6 +63,9 @@
     IBOutlet NSSegmentedControl *appearanceControl;
     IBOutlet NSSlider *zoomSlider;
     NSProgressIndicator *progressIndicator;
+    NSToolbarItem *restartFinder;
+    NSRunningApplication *finder;
+    NSToolbarItem *selectAllToolBarItem;
 }
 
 @property (nonatomic, strong) MyViewController *viewController;
@@ -73,7 +76,10 @@
 @property (nonatomic, strong) IBOutlet IKImageBrowserView *iconsView;
 @property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
 @property (nonatomic, strong) IBOutlet NSSlider *zoomSlider;
-@property (strong) IBOutlet NSProgressIndicator *progressIndicator;
+@property (nonatomic, strong) IBOutlet NSProgressIndicator *progressIndicator;
+@property (nonatomic, strong) IBOutlet NSToolbarItem *restartFinder;
+@property (nonatomic, strong) NSRunningApplication *finder;
+@property (strong) IBOutlet NSToolbarItem *selectAllToolBarItem;
 
 //-(void)showBeforeAppearance;
 //-(void)showAfterAppearance;
@@ -81,7 +87,8 @@
 - (IBAction)applyIcons:(id)sender;
 - (IBAction)removeIcons:(id)sender;
 - (IBAction)selectAll:(id)sender;
-- (void)selectionChanged;
 - (IBAction)zoomChanged:(id)sender;
+- (IBAction)restartFinder:(id)sender;
+- (void)selectionChanged;
 
 @end
