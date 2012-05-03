@@ -193,9 +193,6 @@
                                                     name, KEY_NAME,
                                                     nil];
     }
-    if (!canAccess && !isApp) {
-        [self badgeAsNoAccess];
-    }
     return self;
 }
 
@@ -205,7 +202,8 @@
 
 - (BOOL) isNotSpecial {
     NSArray *specialNames = [NSArray arrayWithObjects:@"Utilities", nil];
-    return ![specialNames containsObject:name];
+    BOOL result = [specialNames containsObject:name];
+    return !result;
 }
 
 - (BOOL) shouldSkipDescendents {
@@ -373,15 +371,15 @@
     NSPoint point       = {0.0, 0.0};
     NSSize  currentSize = [iconImage size];
     NSRect  currentRect = {point, currentSize};
-
+    
     // setup the badge image and size
     NSBundle *mb            = [NSBundle mainBundle];
     NSURL    *badgeImageURL = [mb URLForResource:@"red-lock" withExtension:@"png"];
     NSImage  *badgeImage    = [[NSImage alloc] initWithContentsOfURL:badgeImageURL];
     NSPoint badgePoint = {0.0, 0.0};
     NSSize  badgeSize  = NSMakeSize([iconImage size].width / 4.0, [iconImage size].height / 4.0);
-//	[badgeImage setSize: badgeSize];
-
+    //	[badgeImage setSize: badgeSize];
+    
     // draw current image badged
     NSImage *currentImageBadged = [[NSImage alloc] initWithSize:currentSize];
     [currentImageBadged lockFocus];
@@ -392,7 +390,7 @@
                   fraction:0.7];
     [currentImageBadged unlockFocus];
     iconImage = currentImageBadged;
-
+    
     // draw original image badged
     NSImage *originalImageBadged = [[NSImage alloc] initWithSize:currentSize];
     [originalImageBadged lockFocus];
@@ -403,7 +401,47 @@
                   fraction:0.7];
     [originalImageBadged unlockFocus];
     originalImage = originalImageBadged;
+    
+    // set dictionary with badge version
+    [iconDictionary setObject:iconImage forKey:KEY_IMAGE];
+}
 
+- (void) badgeAsFolder {
+    // Setup for the composite image with size same as the current icon
+    NSPoint point       = {0.0, 0.0};
+    NSSize  currentSize = [iconImage size];
+    NSRect  currentRect = {point, currentSize};
+    
+    // setup the badge image and size
+    NSBundle *mb            = [NSBundle mainBundle];
+    NSURL    *badgeImageURL = [mb URLForResource:@"Folder" withExtension:@"png"];
+    NSImage  *badgeImage    = [[NSImage alloc] initWithContentsOfURL:badgeImageURL];
+    NSPoint badgePoint = {0.0, 0.0};
+    NSSize  badgeSize  = NSMakeSize([iconImage size].width / 4.0, [iconImage size].height / 4.0);
+    //	[badgeImage setSize: badgeSize];
+    
+    // draw current image badged
+    NSImage *currentImageBadged = [[NSImage alloc] initWithSize:currentSize];
+    [currentImageBadged lockFocus];
+    [iconImage drawAtPoint:badgePoint fromRect:currentRect operation:NSCompositeSourceOver fraction:1.0];
+    [badgeImage drawInRect:NSMakeRect(0, 0, badgeSize.width, badgeSize.height)
+                  fromRect:NSZeroRect // Draws full image.
+                 operation:NSCompositeSourceOver
+                  fraction:0.7];
+    [currentImageBadged unlockFocus];
+    iconImage = currentImageBadged;
+    
+    // draw original image badged
+    NSImage *originalImageBadged = [[NSImage alloc] initWithSize:currentSize];
+    [originalImageBadged lockFocus];
+    [originalImage drawAtPoint:badgePoint fromRect:currentRect operation:NSCompositeSourceOver fraction:1.0];
+    [badgeImage drawInRect:NSMakeRect(0, 0, badgeSize.width, badgeSize.height)
+                  fromRect:NSZeroRect // Draws full image.
+                 operation:NSCompositeSourceOver
+                  fraction:0.7];
+    [originalImageBadged unlockFocus];
+    originalImage = originalImageBadged;
+    
     // set dictionary with badge version
     [iconDictionary setObject:iconImage forKey:KEY_IMAGE];
 }

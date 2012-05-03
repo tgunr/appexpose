@@ -28,14 +28,12 @@
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
 		75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049B1545C6A3004FC088 /* redpadlock.png */; };
 		75C9049F15461D09004FC088 /* CompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C9049E15461D09004FC088 /* CompositeView.m */; };
-		75D6280415504DDF00F41D7D /* Box.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D6280315504DDF00F41D7D /* Box.png */; };
 		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		75F636761538FFAC0079D063 /* AppEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F636751538FFAC0079D063 /* AppEntry.m */; };
 		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
 		75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367E153922E20079D063 /* IconViewPrototype.xib */; };
 		75F63684153923730079D063 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63681153923730079D063 /* MyViewController.m */; };
 		75F63685153923730079D063 /* MyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63683153923730079D063 /* MyWindowController.m */; };
-		75F636871539279F0079D063 /* icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75F636861539279F0079D063 /* icons.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,7 +116,6 @@
 		75C9049B1545C6A3004FC088 /* redpadlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpadlock.png; sourceTree = "<group>"; };
 		75C9049D15461D09004FC088 /* CompositeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeView.h; sourceTree = "<group>"; };
 		75C9049E15461D09004FC088 /* CompositeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompositeView.m; sourceTree = "<group>"; };
-		75D6280315504DDF00F41D7D /* Box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box.png; sourceTree = "<group>"; };
 		75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		75F636741538FFAC0079D063 /* AppEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEntry.h; sourceTree = "<group>"; };
 		75F636751538FFAC0079D063 /* AppEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppEntry.m; sourceTree = "<group>"; };
@@ -128,7 +125,6 @@
 		75F63681153923730079D063 /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		75F63682153923730079D063 /* MyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindowController.h; sourceTree = "<group>"; };
 		75F63683153923730079D063 /* MyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindowController.m; sourceTree = "<group>"; };
-		75F636861539279F0079D063 /* icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,8 +210,6 @@
 				756DF6FF1551E2EA00558DD4 /* before-32.png */,
 				756DF6F91551D8D600558DD4 /* Folder.png */,
 				756DF6F71551D68600558DD4 /* Finder.icns */,
-				75F636861539279F0079D063 /* icons.plist */,
-				75D6280315504DDF00F41D7D /* Box.png */,
 				75A01429154F2A1800AA6F70 /* AppExpose.icns */,
 				75A0142B154F34DA00AA6F70 /* default.png */,
 				75C904971545C635004FC088 /* red-lock.png */,
@@ -357,12 +351,10 @@
 				752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */,
 				75F6367D153922D50079D063 /* Collection.xib in Resources */,
 				75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */,
-				75F636871539279F0079D063 /* icons.plist in Resources */,
 				75C904991545C635004FC088 /* red-lock.png in Resources */,
 				75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */,
 				75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */,
 				75A0142C154F34DA00AA6F70 /* default.png in Resources */,
-				75D6280415504DDF00F41D7D /* Box.png in Resources */,
 				756DF6F81551D68600558DD4 /* Finder.icns in Resources */,
 				756DF6FA1551D8D600558DD4 /* Folder.png in Resources */,
 				756DF7001551E2EA00558DD4 /* before-32.png in Resources */,

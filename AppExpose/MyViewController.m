@@ -171,6 +171,13 @@
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in iconImages) {
         if (entry != nil) {
+            if ([entry isFolder] && [[entry childEntries] count] == 1 )
+                [entry badgeAsFolder];
+                
+            if (![entry canAccess] && ![entry isApp]) {
+                [entry badgeAsNoAccess];
+            }
+
             NSDictionary *iconDictionary = [entry iconDictionary];
             if (iconDictionary) {
                 [tempArray addObject: iconDictionary];
@@ -237,9 +244,7 @@
                         PMLOG(2, @"adding: %@", theURL);
                         [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
                         [tempArray addObject: entry];
-                        if ([entry shouldSkipDescendents]) {
-                            [dirEnumerator skipDescendents];
-                        }
+                        [dirEnumerator skipDescendents];
                     }
                 } else
                     [dirEnumerator skipDescendents];

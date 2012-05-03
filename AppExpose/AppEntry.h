@@ -84,4 +84,8 @@
 
 - (void)revertIcon;
 
+- (void) badgeAsNoAccess;
+
+- (void) badgeAsFolder;
+
 @end
