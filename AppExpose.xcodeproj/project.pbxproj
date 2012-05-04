@@ -149,7 +149,6 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
-				756DF7151553503400558DD4 /* FScript.framework */,
 				75C8356C153DFC0D009021F4 /* xattr.xcodeproj */,
 				75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
@@ -169,6 +168,7 @@
 		752BC7DD14B5A0F4009ACADB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				756DF7151553503400558DD4 /* FScript.framework */,
 				75C904881543042B004FC088 /* Security.framework */,
 				7528A12E153A94050077D483 /* Quartz.framework */,
 				752BC7DE14B5A0F4009ACADB /* Cocoa.framework */,

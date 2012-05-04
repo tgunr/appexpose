@@ -125,6 +125,17 @@
     [viewController removeIcons];
 }
 
+- (void)setSelectAllLabel {
+    NSArray *entries = [viewController selectedIcons]; 
+    NSUInteger numberSelected = [entries count];
+    NSUInteger numberOfCollection = [[viewController contentArray] count];
+    if (numberSelected == numberOfCollection) {
+        [selectAllToolBarItem setLabel:@"Select None"];
+    } else {
+        [selectAllToolBarItem setLabel:@"Select All"];
+    }
+}
+
 - (IBAction)selectAll:(id)sender {
     NSString *label = [selectAllToolBarItem label];
     if ([label isEqualToString:@"Select All"]) {
@@ -148,13 +159,15 @@
         }
         case 1: {
             NSArray *entries = [viewController selectedIcons]; 
-            if ([entries count]) {
+            NSUInteger numberEntries = [entries count];
+            if (numberEntries) {
                 [applyButton setEnabled:YES];
                 [removeButton setEnabled:YES];
             } else {
                 [applyButton setEnabled:NO];
                 [removeButton setEnabled:NO];
             }
+            [self setSelectAllLabel];
             break;
         }
         default:
