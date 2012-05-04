@@ -3,7 +3,7 @@
 //  AppExpose
 //
 //  Created by Dave Carlton on 1/5/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 PolyMicro Systems. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
