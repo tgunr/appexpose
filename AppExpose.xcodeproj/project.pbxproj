@@ -20,6 +20,7 @@
 		756DF7001551E2EA00558DD4 /* before-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6FF1551E2EA00558DD4 /* before-32.png */; };
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
 		756DF7041551F32C00558DD4 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7031551F32C00558DD4 /* app.icns */; };
+		756DF7161553503400558DD4 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 756DF7151553503400558DD4 /* FScript.framework */; };
 		75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExpose.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
 		75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
@@ -108,6 +109,7 @@
 		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
 		756DF7011551E35300558DD4 /* after-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "after-32.png"; sourceTree = "<group>"; };
 		756DF7031551F32C00558DD4 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = app.icns; sourceTree = "<group>"; };
+		756DF7151553503400558DD4 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = Library/Frameworks/FScript.framework; sourceTree = SDKROOT; };
 		75A01429154F2A1800AA6F70 /* AppExpose.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExpose.icns; sourceTree = SOURCE_ROOT; };
 		75A0142B154F34DA00AA6F70 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		75C8356C153DFC0D009021F4 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = xattr/xattr.xcodeproj; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				756DF7161553503400558DD4 /* FScript.framework in Frameworks */,
 				75C904891543042B004FC088 /* Security.framework in Frameworks */,
 				75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */,
 				7528A12F153A94050077D483 /* Quartz.framework in Frameworks */,
@@ -146,6 +149,7 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
+				756DF7151553503400558DD4 /* FScript.framework */,
 				75C8356C153DFC0D009021F4 /* xattr.xcodeproj */,
 				75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
@@ -431,7 +435,10 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/Debug\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/DerivedData/Build/Products/Debug\"",
+					/Library/Frameworks,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -460,7 +467,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/Debug\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/DerivedData/Build/Products/Debug\"",
+					/Library/Frameworks,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

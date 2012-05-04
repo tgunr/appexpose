@@ -348,11 +348,8 @@
 }
 
 - (BOOL) hasAttribute:(NSString *) string {
-    id result = [xattr hasKey:string];
-    if (result)
-        return YES;
-    else
-        return NO;
+    BOOL result = [xattr hasAttribute:string];
+    return result;
 }
 
 - (BOOL) deleteAttribute:(NSString *) string {
@@ -363,7 +360,7 @@
 }
 
 - (void) revertIcon {
-    iconImage = originalImage;
+    //    iconImage = originalImage;
 }
 
 - (void) badgeAsNoAccess {

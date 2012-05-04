@@ -372,12 +372,11 @@
 
 - (void)applyIcons {
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
-
     NSIndexSet *indexes = [collectionView selectionIndexes];
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [tempContentArray addObject:[contentArray objectAtIndex:idx]];
-    }];
     if ([indexes count]) {
+        [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+        }];
         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
         for (AppEntry  *entry in tempContentArray) {
             if (entry != nil) {
@@ -423,11 +422,11 @@
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
     
     NSIndexSet *indexes = [collectionView selectionIndexes];
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [tempContentArray addObject:[contentArray objectAtIndex:idx]];
-    }];
     if ([indexes count]) {
-        for (AppEntry *entry in contentArray) {
+        [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+        }];
+        for (AppEntry *entry in tempContentArray) {
             NSURL *aURL = [entry appURL];
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
