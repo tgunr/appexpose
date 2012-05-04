@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SandwichFillings</key>
+	<array>
+		<dict>
+			<key>Dictionary</key>
+			<dict/>
+			<key>Files</key>
+			<array>
+				<string>colourtag-theme-default.css</string>
+				<string>css</string>
+				<string>csshover.htc</string>
+				<string>files</string>
+				<string>handheld.css</string>
+				<string>ie6.css</string>
+				<string>images</string>
+				<string>javascript.js</string>
+				<string>png</string>
+				<string>Preview.html</string>
+				<string>print.css</string>
+				<string>resources</string>
+				<string>styles.css</string>
+				<string>Thumbnail.jpg</string>
+			</array>
+			<key>Subsandwiches</key>
+			<array/>
+		</dict>
+	</array>
+	<key>Type</key>
+	<string>RapidWeaver QuickLook Data</string>
+</dict>
+</plist>
