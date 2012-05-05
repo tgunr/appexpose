@@ -13,113 +13,13 @@
 				<dict>
 					<key>Alpha</key>
 					<dict/>
+					<key>Notes</key>
+					<dict/>
+					<key>Realmac Software '06</key>
+					<dict/>
 				</dict>
 				<key>CreditRapidWeaver</key>
 				<true/>
-				<key>CustomCSS</key>
-				<string>div.rounded-box {
-    width: 9em;
-    background-color: #EEEEEE;
-    margin: 3px;
-}
-div.top-left-corner, div.bottom-left-corner,
-div.top-right-corner, div.bottom-right-corner
-{position:absolute; width:20px; height:20px;
-background-color:#ffffff; overflow:hidden;}
-div.top-left-inside, div.bottom-left-inside,
-div.top-right-inside, div.bottom-right-inside
-{position:relative; font-size:150px; font-family:arial;
-color:#EEEEEE; line-height: 40px;}
-div.top-left-corner { top:0px; left:0px; }
-div.bottom-left-corner {bottom:0px; left:0px;}
-div.top-right-corner {top:0px; right:0px;}
-div.bottom-right-corner {bottom: 0px; right:0px;}
-div.top-left-inside {left:-8px;}
-div.bottom-left-inside {left:-8px; top:-17px;}
-div.top-right-inside {left:-25px;}
-div.bottom-right-inside {left:-25px; top:-17px;}
-div.box-contents {
-	position: relative; padding: 8px; color:#000;
-}
-
-.xsnazzy h1, .zsnazzy h1 {
-	margin:0; 
-	font-size:1.2em; 
-	padding:0 10px 5px 10px; 
-	border-bottom:1px solid #444;
-	}
-	.xsnazzy p, .zsnazzy p {
-	margin:0; 
-	padding:5px 10px; 
-	font-size:10px;
-	}
-	.xsnazzy {
-	background: transparent; 
-	width:240px; 
-	float:left; 
-	margin:0 3px;
-	}
-
-	.xtop, .xbottom {
-	display:block; 
-	background:transparent; 
-	font-size:1px;
-	}
-	.xb1, .xb2, .xb3, .xb4 {
-	display:block; 
-	overflow:hidden;
-	}
-	.xb1, .xb2, .xb3 {
-	height:1px;
-	}
-	.xb2, .xb3, .xb4 {
-	background:#fff; 
-	border-left:1px solid #444;
-	border-right:1px solid #444;
-	}
-	.xb1 {
-	margin:0 5px; 
-	background:#444;
-	}
-	.xb2 {
-	margin:0 3px;
-	border-width:0 2px;
-	}
-	.xb3 {
-	margin:0 2px;
-	}
-	.xb4 {
-	height:2px; 
-	margin:0 1px;
-	}
-
-	.xboxcontent {
-	display:block; 
-	border:0 solid #444; 
-	border-width:0 1px; 
-	height:auto;
-	}
-	* html .xboxcontent {
-	height:1px;
-	}
-
-	.color_a {
-	background:#c9ba65;
-	color:#fff;
-	}
-	.color_b {
-	background:#d4d8bd; 
-	color:#000;
-	}
-	.color_c {
-	background:#758279; 
-	color:#fff;
-	}
-	.color_d {
-	background:#b2ab9b; 
-	color:#000;
-	}
-</string>
 				<key>CustomCopyrightUsed</key>
 				<false/>
 				<key>CustomSiteTitleUsed</key>
@@ -137,7 +37,7 @@ div.box-contents {
 				<key>ImageFormat</key>
 				<string>Original</string>
 				<key>ImageQuality</key>
-				<string>Original</string>
+				<string>High</string>
 				<key>IndexFilename</key>
 				<string>index.html</string>
 				<key>OutputFormat</key>
@@ -148,14 +48,6 @@ div.box-contents {
 				<integer>1</integer>
 				<key>TextEncoding</key>
 				<string>utf-8</string>
-				<key>ThemeStyles</key>
-				<dict>
-					<key>Alpha</key>
-					<array>
-						<string>Sidebar.Right</string>
-						<string>Width.700px</string>
-					</array>
-				</dict>
 			</dict>
 			<key>Files</key>
 			<array/>

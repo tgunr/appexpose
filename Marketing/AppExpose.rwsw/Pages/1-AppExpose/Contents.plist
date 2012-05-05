@@ -8,29 +8,114 @@
 			<key>Dictionary</key>
 			<dict>
 				<key>ID</key>
-				<string>page0</string>
+				<string>page2</string>
 				<key>MostRecentlySelectedStyleName</key>
 				<string>Theme Default</string>
 				<key>PageTitle</key>
 				<string>AppExpose</string>
 				<key>PluginClassName</key>
-				<string>YHBlocksPlugin</string>
+				<string>YHStacksPlugin</string>
 				<key>PluginMetadata</key>
 				<dict>
 					<key>Author</key>
 					<string>Isaiah Carew - YourHead Software</string>
 					<key>Name</key>
-					<string>Blocks</string>
+					<string>Stacks</string>
 				</dict>
 				<key>PublishingManifest</key>
-				<dict/>
+				<dict>
+					<key>CreationDate</key>
+					<date>2012-05-05T00:02:17Z</date>
+					<key>DigestAlgorithm</key>
+					<string>MD5</string>
+					<key>DocumentGUID</key>
+					<string>A007FA9F-F272-4755-82D6-BD85C3DADA95</string>
+					<key>PageDigests</key>
+					<dict>
+						<key>apple-touch-icon.png</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							MjAmQ3pEJL1CEoPOdQ1p
+							rQ==
+							</data>
+							<key>Size</key>
+							<integer>6081</integer>
+						</dict>
+						<key>files/stacks_image_18.png</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							36wlI/R6POelPDlKfyO1
+							uQ==
+							</data>
+							<key>Size</key>
+							<integer>17602</integer>
+						</dict>
+						<key>files/stacks_image_8.png</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							DSftsqEpStvlr86f0gel
+							sQ==
+							</data>
+							<key>Size</key>
+							<integer>42512</integer>
+						</dict>
+						<key>files/stacks_page_page2.css</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							yWufogtMzfsvR9Yad/VL
+							eA==
+							</data>
+							<key>Size</key>
+							<integer>1386</integer>
+						</dict>
+						<key>files/stacks_page_page2.js</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							XKP5ix4oF4EJFn8nZJSI
+							Bg==
+							</data>
+							<key>Size</key>
+							<integer>445</integer>
+						</dict>
+						<key>index.html</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							5Mk72rmTjeGEeCOZsVs9
+							GA==
+							</data>
+							<key>Size</key>
+							<integer>6078</integer>
+						</dict>
+						<key>rw_common/version.txt</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							lznvxPASkudkyGyqWa81
+							Pg==
+							</data>
+							<key>Size</key>
+							<integer>4</integer>
+						</dict>
+					</dict>
+					<key>PageID</key>
+					<string>page2</string>
+					<key>SiteRoot</key>
+					<string></string>
+					<key>Version</key>
+					<integer>3</integer>
+				</dict>
 			</dict>
 			<key>Files</key>
-			<array>
-				<string>Data.archive</string>
-			</array>
+			<array/>
 			<key>Subsandwiches</key>
 			<array>
+				<string>Data</string>
 				<string>PageAttributes</string>
 			</array>
 		</dict>
