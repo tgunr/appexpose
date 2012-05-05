@@ -1,3 +1,6 @@
 [submodule "PMUtility"]
 	path = PMUtility
 	url = git@bitbucket.org:tgunr/pmutility.git
+[submodule "xattr"]
+	path = xattr
+	url = git@bitbucket.org:tgunr/xattr.git
