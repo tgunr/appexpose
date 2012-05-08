@@ -7,7 +7,7 @@
 #import "MyViewController.h"
 #import "MyWindowController.h"
 #import "AppEntry.h"
-#import <XATTR/xattr.h>
+#import "/Sources/Projects/AppExpose/xattr/xattr.h"
 
 @implementation IconViewBox
 

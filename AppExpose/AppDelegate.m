@@ -49,14 +49,14 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    OSStatus myStatus;
-    myStatus = AuthorizationCreate (NULL, kAuthorizationEmptyEnvironment,
-                                    kAuthorizationFlagDefaults, &myAuthorizationRef);
-    AuthorizationFlags myFlags;
-    myFlags = kAuthorizationFlagDefaults |
-    kAuthorizationFlagExtendRights |
-    kAuthorizationFlagInteractionAllowed |
-    kAuthorizationFlagPreAuthorize;
+//    OSStatus myStatus;
+//    myStatus = AuthorizationCreate (NULL, kAuthorizationEmptyEnvironment,
+//                                    kAuthorizationFlagDefaults, &myAuthorizationRef);
+//    AuthorizationFlags myFlags;
+//    myFlags = kAuthorizationFlagDefaults |
+//    kAuthorizationFlagExtendRights |
+//    kAuthorizationFlagInteractionAllowed |
+//    kAuthorizationFlagPreAuthorize;
 	
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
 	appDirectory = [paths objectAtIndex: 0];
