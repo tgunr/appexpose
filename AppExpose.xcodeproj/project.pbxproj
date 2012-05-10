@@ -102,6 +102,7 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		7562F6771559D82300D17B91 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AppExpose.entitlements; sourceTree = "<group>"; };
 		756DF6F71551D68600558DD4 /* Finder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Finder.icns; sourceTree = "<group>"; };
 		756DF6F91551D8D600558DD4 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		752BC7E414B5A0F4009ACADB /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
+				7562F6771559D82300D17B91 /* AppExpose.entitlements */,
 				75C9049D15461D09004FC088 /* CompositeView.h */,
 				75C9049E15461D09004FC088 /* CompositeView.m */,
 				75F636741538FFAC0079D063 /* AppEntry.h */,
@@ -494,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_ENTITLEMENTS = AppExpose/AppExpose.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
@@ -511,6 +514,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_ENTITLEMENTS = AppExpose/AppExpose.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
