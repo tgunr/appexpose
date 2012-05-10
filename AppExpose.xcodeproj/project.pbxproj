@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		751186C81559A12700D064F2 /* libpmutilitylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 751186C01559A10200D064F2 /* libpmutilitylib.a */; };
-		751186C91559A12700D064F2 /* libxattrlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 751186C31559A10200D064F2 /* libxattrlib.a */; };
+		751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		7528A12F153A94050077D483 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7528A12E153A94050077D483 /* Quartz.framework */; };
 		752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752BC7DE14B5A0F4009ACADB /* Cocoa.framework */; };
 		752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
@@ -24,10 +23,13 @@
 		756DF7161553503400558DD4 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 756DF7151553503400558DD4 /* FScript.framework */; };
 		75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExpose.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
+		75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
+		75C8358D153DFFBC009021F4 /* XATTR.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
 		75C904891543042B004FC088 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C904881543042B004FC088 /* Security.framework */; };
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
 		75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049B1545C6A3004FC088 /* redpadlock.png */; };
 		75C9049F15461D09004FC088 /* CompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C9049E15461D09004FC088 /* CompositeView.m */; };
+		75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
 		75F636761538FFAC0079D063 /* AppEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F636751538FFAC0079D063 /* AppEntry.m */; };
 		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
 		75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367E153922E20079D063 /* IconViewPrototype.xib */; };
@@ -36,34 +38,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		751186BF1559A10200D064F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 751186B91559A0E700D064F2;
-			remoteInfo = pmutilitylib;
-		};
-		751186C21559A10200D064F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 751186AF1559A08C00D064F2;
-			remoteInfo = xattrlib;
-		};
-		751186C41559A10900D064F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 751186AE1559A08C00D064F2;
-			remoteInfo = xattrlib;
-		};
-		751186C61559A10D00D064F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 751186B81559A0E700D064F2;
-			remoteInfo = pmutilitylib;
-		};
 		75C83586153DFF29009021F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
@@ -78,6 +52,13 @@
 			remoteGlobalIDString = 75C8355B153DFAB8009021F4;
 			remoteInfo = XATTR;
 		};
+		75C8358A153DFFAD009021F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 75C8355A153DFAB8009021F4;
+			remoteInfo = XATTR;
+		};
 		75F636651538E08B0079D063 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
@@ -85,7 +66,28 @@
 			remoteGlobalIDString = 7535D1CF14DF240C00613F39;
 			remoteInfo = PMUtility;
 		};
+		75F636691538E2390079D063 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7535D1CE14DF240C00613F39;
+			remoteInfo = PMUtility;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		751E7287153A7F60006C9F80 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				75C8358D153DFFBC009021F4 /* XATTR.framework in CopyFiles */,
+				751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7528A12E153A94050077D483 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -102,7 +104,6 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7562F6771559D82300D17B91 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AppExpose.entitlements; sourceTree = "<group>"; };
 		756DF6F71551D68600558DD4 /* Finder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Finder.icns; sourceTree = "<group>"; };
 		756DF6F91551D8D600558DD4 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
@@ -133,11 +134,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				751186C81559A12700D064F2 /* libpmutilitylib.a in Frameworks */,
-				751186C91559A12700D064F2 /* libxattrlib.a in Frameworks */,
 				756DF7161553503400558DD4 /* FScript.framework in Frameworks */,
 				75C904891543042B004FC088 /* Security.framework in Frameworks */,
+				75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */,
 				7528A12F153A94050077D483 /* Quartz.framework in Frameworks */,
+				75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */,
 				752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,7 +190,6 @@
 		752BC7E414B5A0F4009ACADB /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
-				7562F6771559D82300D17B91 /* AppExpose.entitlements */,
 				75C9049D15461D09004FC088 /* CompositeView.h */,
 				75C9049E15461D09004FC088 /* CompositeView.m */,
 				75F636741538FFAC0079D063 /* AppEntry.h */,
@@ -241,7 +241,6 @@
 			children = (
 				75C83587153DFF29009021F4 /* xattr */,
 				75C83589153DFF29009021F4 /* XATTR.framework */,
-				751186C31559A10200D064F2 /* libxattrlib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -250,7 +249,6 @@
 			isa = PBXGroup;
 			children = (
 				75F636661538E08B0079D063 /* PMUtility.framework */,
-				751186C01559A10200D064F2 /* libpmutilitylib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -275,12 +273,14 @@
 				752BC7D614B5A0F4009ACADB /* Sources */,
 				752BC7D714B5A0F4009ACADB /* Frameworks */,
 				752BC7D814B5A0F4009ACADB /* Resources */,
+				751E7287153A7F60006C9F80 /* CopyFiles */,
+				75356289155BB4590075C9C2 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				751186C71559A10D00D064F2 /* PBXTargetDependency */,
-				751186C51559A10900D064F2 /* PBXTargetDependency */,
+				75C8358B153DFFAD009021F4 /* PBXTargetDependency */,
+				75F6366A1538E2390079D063 /* PBXTargetDependency */,
 			);
 			name = AppExpose;
 			productName = AppExpose;
@@ -323,20 +323,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		751186C01559A10200D064F2 /* libpmutilitylib.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libpmutilitylib.a;
-			remoteRef = 751186BF1559A10200D064F2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		751186C31559A10200D064F2 /* libxattrlib.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libxattrlib.a;
-			remoteRef = 751186C21559A10200D064F2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		75C83587153DFF29009021F4 /* xattr */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -384,6 +370,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		75356289155BB4590075C9C2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "set -x\ncodesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XATTR.framework/Versions/A\ncodesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUtility.framework/Versions/A\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		752BC7D614B5A0F4009ACADB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -401,15 +403,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		751186C51559A10900D064F2 /* PBXTargetDependency */ = {
+		75C8358B153DFFAD009021F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = xattrlib;
-			targetProxy = 751186C41559A10900D064F2 /* PBXContainerItemProxy */;
+			name = XATTR;
+			targetProxy = 75C8358A153DFFAD009021F4 /* PBXContainerItemProxy */;
 		};
-		751186C71559A10D00D064F2 /* PBXTargetDependency */ = {
+		75F6366A1538E2390079D063 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = pmutilitylib;
-			targetProxy = 751186C61559A10D00D064F2 /* PBXContainerItemProxy */;
+			name = PMUtility;
+			targetProxy = 75F636691538E2390079D063 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -450,7 +452,6 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -479,7 +480,6 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -495,17 +495,13 @@
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_ENTITLEMENTS = AppExpose/AppExpose.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/** \"$(SRCROOT)/PMUtility/PMUtility\"";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -513,17 +509,14 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_ENTITLEMENTS = AppExpose/AppExpose.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/** \"$(SRCROOT)/PMUtility/PMUtility\"";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

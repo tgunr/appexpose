@@ -7,7 +7,7 @@
 //
 
 #import "AppEntry.h"
-#import "/Sources/Projects/AppExpose/xattr/xattr.h"
+#import <XATTR/xattr.h>
 #import "CompositeView.h"
 #import "AppDelegate.h"
 
@@ -122,7 +122,7 @@
         int count = MIN(9, numImages);
         BOOL stop = NO;
         NSPoint point;
-        //        CGFloat offset = resultImageSize.width / 8.0;
+//        CGFloat offset = resultImageSize.width / 8.0;
         CGFloat offset = resultImageSize.width * 0.64065;
         point.y = offset;
         PMLOG(2, @"name: %@ images: %d",name, numImages);
