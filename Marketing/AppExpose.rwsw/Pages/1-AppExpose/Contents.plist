@@ -25,7 +25,7 @@
 				<key>PublishingManifest</key>
 				<dict>
 					<key>CreationDate</key>
-					<date>2012-05-05T00:02:17Z</date>
+					<date>2012-05-05T18:14:26Z</date>
 					<key>DigestAlgorithm</key>
 					<string>MD5</string>
 					<key>DocumentGUID</key>
@@ -42,15 +42,25 @@
 							<key>Size</key>
 							<integer>6081</integer>
 						</dict>
-						<key>files/stacks_image_18.png</key>
+						<key>files/poster_27.png</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							36wlI/R6POelPDlKfyO1
-							uQ==
+							AQ1XLR8B8UyebRci7r0Z
+							aQ==
 							</data>
 							<key>Size</key>
-							<integer>17602</integer>
+							<integer>435563</integer>
+						</dict>
+						<key>files/stacks_image_31.png</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							jiTm7w24H7m5T8LgL4Qg
+							Ag==
+							</data>
+							<key>Size</key>
+							<integer>4999</integer>
 						</dict>
 						<key>files/stacks_image_8.png</key>
 						<dict>
@@ -66,38 +76,38 @@
 						<dict>
 							<key>Digest</key>
 							<data>
-							yWufogtMzfsvR9Yad/VL
-							eA==
+							tELAgRok7tgsBi91bi3q
+							bA==
 							</data>
 							<key>Size</key>
-							<integer>1386</integer>
+							<integer>16276</integer>
 						</dict>
 						<key>files/stacks_page_page2.js</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							XKP5ix4oF4EJFn8nZJSI
-							Bg==
+							/pq+fW8Qd7ioao8Q0JFl
+							Xg==
 							</data>
 							<key>Size</key>
-							<integer>445</integer>
+							<integer>60149</integer>
 						</dict>
 						<key>index.html</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							5Mk72rmTjeGEeCOZsVs9
-							GA==
+							UeGYActCgedNFGzWszVH
+							uA==
 							</data>
 							<key>Size</key>
-							<integer>6078</integer>
+							<integer>7405</integer>
 						</dict>
 						<key>rw_common/version.txt</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							lznvxPASkudkyGyqWa81
-							Pg==
+							N+zSdghICqNWmlEaY4yn
+							Tw==
 							</data>
 							<key>Size</key>
 							<integer>4</integer>
