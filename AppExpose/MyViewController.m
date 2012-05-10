@@ -33,15 +33,15 @@
 - (IconViewBox *)hitTest: (NSPoint) aPoint {
 	// don't allow any mouse clicks for subviews in this NSBox
     [[AppDelegate shared] selectionChanged];
+    selected = YES;
 	return self;
 }
 
-- (void)drawRect1:(NSRect)dirtyRect 
+- (void)drawRect:(NSRect)dirtyRect 
 {
-    if (selected) {
-        [[NSColor blueColor] set];
-        NSRectFill([self bounds]);
-    }
+    [super drawRect:dirtyRect];
+    [self setBoxType:NSBoxSecondary];
+    [self setBorderType:NSBezelBorder];
 }
 
 - (IBAction)iconSelected:(id)sender {
@@ -53,14 +53,14 @@
 
 - (void)awakeFromNib {
 	// set up the background gradient for this custom scrollView
-	//backgroundGradient = [[NSGradient alloc] initWithStartingColor:
-//			[NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: 0.898f alpha: 0.0f]
-//	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.4f]];
+	backgroundGradient = [[NSGradient alloc] initWithStartingColor:
+			[NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: 0.898f alpha: 0.0f]
+	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.4f]];
 }
 
 - (void)drawRect: (NSRect) rect {
 	// draw our special background as a gradient
-//	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
+	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
 }
 
 @end
