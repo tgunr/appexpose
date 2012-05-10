@@ -274,6 +274,7 @@
 				752BC7D714B5A0F4009ACADB /* Frameworks */,
 				752BC7D814B5A0F4009ACADB /* Resources */,
 				751E7287153A7F60006C9F80 /* CopyFiles */,
+				75356289155BB4590075C9C2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -368,6 +369,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		75356289155BB4590075C9C2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "set -x\ncodesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XATTR.framework/Versions/A\ncodesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUtility.framework/Versions/A\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		752BC7D614B5A0F4009ACADB /* Sources */ = {
