@@ -486,12 +486,13 @@
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -500,12 +501,13 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
