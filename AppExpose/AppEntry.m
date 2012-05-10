@@ -122,8 +122,8 @@
         int count = MIN(9, numImages);
         BOOL stop = NO;
         NSPoint point;
-        CGFloat offset = resultImageSize.width / 8.0;
-        offset = resultImageSize.width * 0.64065;
+//        CGFloat offset = resultImageSize.width / 8.0;
+        CGFloat offset = resultImageSize.width * 0.64065;
         point.y = offset;
         PMLOG(2, @"name: %@ images: %d",name, numImages);
 
