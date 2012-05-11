@@ -25,7 +25,7 @@
 				<key>PublishingManifest</key>
 				<dict>
 					<key>CreationDate</key>
-					<date>2012-05-05T18:14:26Z</date>
+					<date>2012-05-11T05:05:23Z</date>
 					<key>DigestAlgorithm</key>
 					<string>MD5</string>
 					<key>DocumentGUID</key>
@@ -96,11 +96,21 @@
 						<dict>
 							<key>Digest</key>
 							<data>
-							UeGYActCgedNFGzWszVH
-							uA==
+							cnAZbE+fplbVv+PpT5zk
+							fg==
 							</data>
 							<key>Size</key>
-							<integer>7405</integer>
+							<integer>7490</integer>
+						</dict>
+						<key>rw_common/images/AppExpose-64.png</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							MjAmQ3pEJL1CEoPOdQ1p
+							rQ==
+							</data>
+							<key>Size</key>
+							<integer>6081</integer>
 						</dict>
 						<key>rw_common/version.txt</key>
 						<dict>
