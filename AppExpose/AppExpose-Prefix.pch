@@ -6,5 +6,7 @@
     #import <Cocoa/Cocoa.h>
     #import <Quartz/Quartz.h>
     #import <AppKit/AppKit.h>
-    #import "/Sources/Projects/AppExpose/PMUtility/PMUtility/pm.h"
+    #import <PMUtility/PMUtility.h>
+    #import <XATTR/XATTR.h>
+
 #endif

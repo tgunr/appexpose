@@ -35,6 +35,8 @@
 		75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367E153922E20079D063 /* IconViewPrototype.xib */; };
 		75F63684153923730079D063 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63681153923730079D063 /* MyViewController.m */; };
 		75F63685153923730079D063 /* MyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63683153923730079D063 /* MyWindowController.m */; };
+		75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F4B215704C2300E15A10 /* ImageReducer.m */; };
+		75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F4B515704C6600E15A10 /* NSBezierPathAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +129,10 @@
 		75F63681153923730079D063 /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		75F63682153923730079D063 /* MyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindowController.h; sourceTree = "<group>"; };
 		75F63683153923730079D063 /* MyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindowController.m; sourceTree = "<group>"; };
+		75F6F4B115704C2300E15A10 /* ImageReducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReducer.h; sourceTree = "<group>"; };
+		75F6F4B215704C2300E15A10 /* ImageReducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageReducer.m; sourceTree = "<group>"; };
+		75F6F4B415704C6600E15A10 /* NSBezierPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBezierPathAdditions.h; sourceTree = "<group>"; };
+		75F6F4B515704C6600E15A10 /* NSBezierPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBezierPathAdditions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +196,10 @@
 		752BC7E414B5A0F4009ACADB /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
+				75F6F4B415704C6600E15A10 /* NSBezierPathAdditions.h */,
+				75F6F4B515704C6600E15A10 /* NSBezierPathAdditions.m */,
+				75F6F4B115704C2300E15A10 /* ImageReducer.h */,
+				75F6F4B215704C2300E15A10 /* ImageReducer.m */,
 				75C9049D15461D09004FC088 /* CompositeView.h */,
 				75C9049E15461D09004FC088 /* CompositeView.m */,
 				75F636741538FFAC0079D063 /* AppEntry.h */,
@@ -397,6 +407,8 @@
 				75F63684153923730079D063 /* MyViewController.m in Sources */,
 				75F63685153923730079D063 /* MyWindowController.m in Sources */,
 				75C9049F15461D09004FC088 /* CompositeView.m in Sources */,
+				75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */,
+				75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,9 +461,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -461,14 +474,14 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -476,28 +489,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -509,9 +525,11 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";

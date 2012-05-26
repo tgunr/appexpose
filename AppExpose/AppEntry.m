@@ -10,6 +10,7 @@
 #import <XATTR/xattr.h>
 #import "CompositeView.h"
 #import "AppDelegate.h"
+#import "ImageReducer.h"
 
 @interface NSImage (Dump)
 - (void) dump;
@@ -148,11 +149,41 @@
             point.y = (point.y - 256) - 32;
         }
         [resultImage unlockFocus];
+        ImageReducer *reducer = [[ImageReducer alloc] init];
+        [reducer setInputImage:[resultImage copy]];
+        [reducer setMaxPixelsWide: 512];
+        [reducer setMaxPixelsHigh: 512];
+        [reducer setScalesImage:YES];
+        [reducer setSharpensImage:NO];
+        [reducer setDrawBorder:NO];
+        [reducer setAddsShadow:NO];
+        NSBitmapImageRep *reduced = [reducer outputBitmapImageRep];
+        [resultImage addRepresentation:reduced];
+
+        [reducer setMaxPixelsWide: 256];
+        [reducer setMaxPixelsHigh: 256];
+        reduced = [reducer outputBitmapImageRep];
+        [resultImage addRepresentation:reduced];
+
+        [reducer setMaxPixelsWide: 128];
+        [reducer setMaxPixelsHigh: 128];
+        reduced = [reducer outputBitmapImageRep];
+        [resultImage addRepresentation:reduced];
+
+        [reducer setMaxPixelsWide: 64];
+        [reducer setMaxPixelsHigh: 64];
+        reduced = [reducer outputBitmapImageRep];
+        [resultImage addRepresentation:reduced];
+
+        [reducer setMaxPixelsWide: 32];
+        [reducer setMaxPixelsHigh: 32];
+        reduced = [reducer outputBitmapImageRep];
+        [resultImage addRepresentation:reduced];
+
     } else {
         AppEntry *entry          = [childEntries objectAtIndex:0];
         resultImage = [[entry iconImage] copy];
     }
-
     return resultImage;
 }
 
@@ -295,9 +326,10 @@
 - (BOOL)hasACustomIcon {
     NSFileManager *fm = [NSFileManager defaultManager];
     NSURL *customIconURL = [appURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
-    return [fm fileExistsAtPath:[customIconURL path]];
+    BOOL result = [fm fileExistsAtPath:[customIconURL path]];
+    return result;
 }
-
+    
 - (NSString *) pathWithName {
     NSString *path = [[appURL path] stringByAppendingPathComponent:name];
     return isLeaf ? path : [path stringByAppendingString:@"/"];
