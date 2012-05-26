@@ -13,6 +13,19 @@
 				<dict>
 					<key>Alpha</key>
 					<dict/>
+					<key>Manitoba</key>
+					<dict>
+						<key>%colour_header_border%</key>
+						<string>#FF6FCF</string>
+						<key>%colour_hover_text%</key>
+						<string>#8000FF</string>
+						<key>%colour_links%</key>
+						<string>#8000FF</string>
+						<key>%colour_menu%</key>
+						<string>#8000FF</string>
+						<key>%colour_slogan%</key>
+						<string>#CC66FF</string>
+					</dict>
 					<key>Notes</key>
 					<dict/>
 					<key>Realmac Software '06</key>
@@ -31,7 +44,7 @@
 				<key>FilenameExtension</key>
 				<string>html</string>
 				<key>HasCustomThemeStyle</key>
-				<true/>
+				<false/>
 				<key>Hidden</key>
 				<true/>
 				<key>ImageFormat</key>
@@ -48,6 +61,22 @@
 				<integer>1</integer>
 				<key>TextEncoding</key>
 				<string>utf-8</string>
+				<key>ThemeStyles</key>
+				<dict>
+					<key>Magnesium</key>
+					<array>
+						<string>Sidebar.Right</string>
+						<string>Styles.Pink</string>
+						<string>Width.Default Width (780px)</string>
+					</array>
+					<key>Manitoba</key>
+					<array>
+						<string>Header Alignment.Left</string>
+						<string>Icon Colour.Pink</string>
+						<string>Sidebar.Right</string>
+						<string>Width.1100px</string>
+					</array>
+				</dict>
 			</dict>
 			<key>Files</key>
 			<array/>

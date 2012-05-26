@@ -10,7 +10,7 @@
 				<key>ID</key>
 				<string>page2</string>
 				<key>MostRecentlySelectedStyleName</key>
-				<string>Theme Default</string>
+				<string>Custom Style</string>
 				<key>PageTitle</key>
 				<string>AppExpose</string>
 				<key>PluginClassName</key>
@@ -25,7 +25,7 @@
 				<key>PublishingManifest</key>
 				<dict>
 					<key>CreationDate</key>
-					<date>2012-05-11T05:05:23Z</date>
+					<date>2012-05-26T23:32:31Z</date>
 					<key>DigestAlgorithm</key>
 					<string>MD5</string>
 					<key>DocumentGUID</key>
@@ -42,7 +42,7 @@
 							<key>Size</key>
 							<integer>6081</integer>
 						</dict>
-						<key>files/poster_27.png</key>
+						<key>files/poster_41.png</key>
 						<dict>
 							<key>Digest</key>
 							<data>
@@ -52,42 +52,42 @@
 							<key>Size</key>
 							<integer>435563</integer>
 						</dict>
-						<key>files/stacks_image_31.png</key>
+						<key>files/stacks_image_14.png</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							jiTm7w24H7m5T8LgL4Qg
-							Ag==
+							64QD5QbgEWR6NagGR/w+
+							YQ==
 							</data>
 							<key>Size</key>
-							<integer>4999</integer>
+							<integer>7196</integer>
 						</dict>
 						<key>files/stacks_image_8.png</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							DSftsqEpStvlr86f0gel
-							sQ==
+							VwmqsGip0p/oQW/r2MQY
+							Wg==
 							</data>
 							<key>Size</key>
-							<integer>42512</integer>
+							<integer>13049</integer>
 						</dict>
 						<key>files/stacks_page_page2.css</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							tELAgRok7tgsBi91bi3q
-							bA==
+							k0Ow37AfvZZrXTeKBjCy
+							Cw==
 							</data>
 							<key>Size</key>
-							<integer>16276</integer>
+							<integer>15286</integer>
 						</dict>
 						<key>files/stacks_page_page2.js</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							/pq+fW8Qd7ioao8Q0JFl
-							Xg==
+							nOcgsC2mz6CzWFPN/+Kt
+							qQ==
 							</data>
 							<key>Size</key>
 							<integer>60149</integer>
@@ -96,28 +96,18 @@
 						<dict>
 							<key>Digest</key>
 							<data>
-							cnAZbE+fplbVv+PpT5zk
-							fg==
+							bxg8XTZIFGGSZ1FOIOHR
+							LQ==
 							</data>
 							<key>Size</key>
-							<integer>7490</integer>
-						</dict>
-						<key>rw_common/images/AppExpose-64.png</key>
-						<dict>
-							<key>Digest</key>
-							<data>
-							MjAmQ3pEJL1CEoPOdQ1p
-							rQ==
-							</data>
-							<key>Size</key>
-							<integer>6081</integer>
+							<integer>8439</integer>
 						</dict>
 						<key>rw_common/version.txt</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							N+zSdghICqNWmlEaY4yn
-							Tw==
+							lznvxPASkudkyGyqWa81
+							Pg==
 							</data>
 							<key>Size</key>
 							<integer>4</integer>

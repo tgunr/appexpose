@@ -10,7 +10,10 @@
 				<key>Changed</key>
 				<false/>
 				<key>ColourStyles</key>
-				<dict/>
+				<dict>
+					<key>Manitoba</key>
+					<dict/>
+				</dict>
 				<key>CreditRapidWeaver</key>
 				<true/>
 				<key>CustomCopyrightUsed</key>
@@ -24,7 +27,7 @@
 				<key>FilenameExtension</key>
 				<string>html</string>
 				<key>HasCustomThemeStyle</key>
-				<true/>
+				<false/>
 				<key>Hidden</key>
 				<true/>
 				<key>ImageFormat</key>
@@ -41,6 +44,16 @@
 				<integer>1</integer>
 				<key>TextEncoding</key>
 				<string>utf-8</string>
+				<key>ThemeStyles</key>
+				<dict>
+					<key>Manitoba</key>
+					<array>
+						<string>Header Alignment.Inline</string>
+						<string>Icon Colour.Green</string>
+						<string>Sidebar.Right</string>
+						<string>Width.800px</string>
+					</array>
+				</dict>
 			</dict>
 			<key>Files</key>
 			<array/>

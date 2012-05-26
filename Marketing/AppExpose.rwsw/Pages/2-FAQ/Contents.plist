@@ -25,7 +25,7 @@
 				<key>PublishingManifest</key>
 				<dict>
 					<key>CreationDate</key>
-					<date>2012-05-11T05:05:23Z</date>
+					<date>2012-05-25T21:40:45Z</date>
 					<key>DigestAlgorithm</key>
 					<string>MD5</string>
 					<key>DocumentGUID</key>
@@ -46,31 +46,31 @@
 						<dict>
 							<key>Digest</key>
 							<data>
-							DyxIoKy4ns1IscHFvRoH
-							2g==
+							5yqDIIfzr2bkXUxojoxq
+							bg==
 							</data>
 							<key>Size</key>
-							<integer>39858</integer>
+							<integer>41559</integer>
 						</dict>
 						<key>files/lastCreated.xml</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							n4VVrRSNMk6QxeUwY8f8
-							uA==
+							B+SsyQnCTfkeNy/q5Fr0
+							Rw==
 							</data>
 							<key>Size</key>
-							<integer>2640</integer>
+							<integer>2637</integer>
 						</dict>
 						<key>files/lastModified.xml</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							yzQ9nyWz3vxjdDn+dCb+
-							zQ==
+							fxYW7NHICJd+YRfu/Ru/
+							yQ==
 							</data>
 							<key>Size</key>
-							<integer>2640</integer>
+							<integer>2637</integer>
 						</dict>
 						<key>files/pdf.png</key>
 						<dict>
@@ -86,11 +86,11 @@
 						<dict>
 							<key>Digest</key>
 							<data>
-							sZ30hAW9zuGMhv9REddS
-							vg==
+							0IaFZUCTx+pT+jJk4z7/
+							vw==
 							</data>
 							<key>Size</key>
-							<integer>4083</integer>
+							<integer>4077</integer>
 						</dict>
 						<key>files/ss.js</key>
 						<dict>
@@ -116,11 +116,11 @@
 						<dict>
 							<key>Digest</key>
 							<data>
-							ILGregObUPR8ri34ntVO
-							tw==
+							u2es8+xeYlGk0rJeovA/
+							lQ==
 							</data>
 							<key>Size</key>
-							<integer>6719</integer>
+							<integer>7876</integer>
 						</dict>
 					</dict>
 					<key>PageID</key>

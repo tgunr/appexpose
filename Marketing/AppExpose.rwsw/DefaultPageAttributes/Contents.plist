@@ -8,7 +8,19 @@
 			<key>Dictionary</key>
 			<dict>
 				<key>ColourStyles</key>
-				<dict/>
+				<dict>
+					<key>Manitoba</key>
+					<dict>
+						<key>%colour_header_border%</key>
+						<string>#FF66FF</string>
+						<key>%colour_hover_text%</key>
+						<string>#FF66FF</string>
+						<key>%colour_links%</key>
+						<string>#8000FF</string>
+						<key>%colour_slogan%</key>
+						<string>#FF66FF</string>
+					</dict>
+				</dict>
 				<key>CreditRapidWeaver</key>
 				<true/>
 				<key>DefaultLinkTarget</key>
@@ -31,6 +43,16 @@
 				<integer>1</integer>
 				<key>TextEncoding</key>
 				<string>utf-8</string>
+				<key>ThemeStyles</key>
+				<dict>
+					<key>Manitoba</key>
+					<array>
+						<string>Header Alignment.Left</string>
+						<string>Icon Colour.Pink</string>
+						<string>Sidebar.Right</string>
+						<string>Width.1100px</string>
+					</array>
+				</dict>
 			</dict>
 			<key>Files</key>
 			<array/>
