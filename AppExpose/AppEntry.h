@@ -54,9 +54,9 @@
 
 + (AppEntry *)rootEntry;
 
-- (AppEntry *)initWithURL: (NSURL *) url;
+- (AppEntry *)initWithURL: (NSURL *) url NS_DESIGNATED_INITIALIZER;
 
-- (AppEntry *)initRootWithURL: (NSURL *) url;
+- (AppEntry *)initRootWithURL: (NSURL *) url NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)isALeaf: (NSURL *) url;
 
@@ -66,7 +66,7 @@
 
 - (void)scanURLForIcons: (NSURL *) directoryToScan forEntry: (AppEntry *) appEntry;
 
-- (NSString *)pathWithName;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pathWithName;
 
 - (NSComparisonResult)compare: (AppEntry *) other;
 

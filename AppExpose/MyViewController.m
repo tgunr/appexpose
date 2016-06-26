@@ -26,7 +26,7 @@
 }
     
 - (void)awakeFromNib {
-    [[[[AppDelegate shared] myWindowController] viewController] setIconViewBox: self];
+    [[AppDelegate shared] myWindowController].viewController.iconViewBox = self;
 }
 
 - (IconViewBox *)hitTest: (NSPoint) aPoint {
@@ -39,8 +39,8 @@
 - (void)drawRect:(NSRect)dirtyRect 
 {
     [super drawRect:dirtyRect];
-    [self setBoxType:NSBoxSecondary];
-    [self setBorderType:NSBezelBorder];
+    self.boxType = NSBoxSecondary;
+    self.borderType = NSBezelBorder;
 }
 
 - (IBAction)iconSelected:(id)sender {
@@ -59,7 +59,7 @@
 
 - (void)drawRect: (NSRect) rect {
 	// draw our special background as a gradient
-	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
+	[backgroundGradient drawInRect: self.documentVisibleRect angle: 90.0f];
 }
 
 @end
@@ -84,8 +84,8 @@
 }
 
 -(void)setSubviewSize:(CGFloat)theSubviewSize {
-    [self setMaxItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
-    [self setMinItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
+    self.maxItemSize = NSMakeSize(theSubviewSize,theSubviewSize);
+    self.minItemSize = NSMakeSize(theSubviewSize,theSubviewSize);
 }
 
 @end
@@ -98,9 +98,9 @@
 
 - (void)setSelected:(BOOL)flag
 {
-    [super setSelected:flag];
-    [(IconViewBox*)[self view] setSelected:flag];
-    [(IconViewBox*)[self view] setNeedsDisplay:YES];
+    super.selected = flag;
+    ((IconViewBox*)self.view).selected = flag;
+    [(IconViewBox*)self.view setNeedsDisplay:YES];
 }
 
 @end
@@ -119,7 +119,7 @@
 @synthesize scrollView;
 @synthesize url;
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -137,13 +137,13 @@
               context:NULL];
 
 	// save this for later when toggling between alternate colors
-	savedAlternateColors = [collectionView backgroundColors];
+	savedAlternateColors = collectionView.backgroundColors;
 
-	[self setSortingMode: 0];        // icon collection in ascending sort order
+	self.sortingMode = 0;        // icon collection in ascending sort order
 
 	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
     NSIndexSet *indexes = [NSIndexSet indexSet];
-    [collectionView setSelectionIndexes:indexes];
+    collectionView.selectionIndexes = indexes;
 }
 
 - (void)addEntries: (NSArray *) array {
@@ -154,7 +154,7 @@
 
 - (void)setIcon: (AppEntry *)entry {
     if (entry != nil) {
-        NSDictionary *iconDictionary = [entry iconDictionary];
+        NSDictionary *iconDictionary = entry.iconDictionary;
         if (iconDictionary) {
             [arrayController addObject: iconDictionary];
             [contentArray addObject: entry];
@@ -170,14 +170,14 @@
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in iconImages) {
         if (entry != nil) {
-            if ([entry isFolder] && [[entry childEntries] count] == 1 )
+            if (entry.isFolder && entry.childEntries.count == 1 )
                 [entry badgeAsFolder];
                 
-            if (![entry canAccess] && ![entry isApp]) {
+            if (!entry.canAccess && !entry.isApp) {
                 [entry badgeAsNoAccess];
             }
 
-            NSDictionary *iconDictionary = [entry iconDictionary];
+            NSDictionary *iconDictionary = entry.iconDictionary;
             if (iconDictionary) {
                 [tempArray addObject: iconDictionary];
             }
@@ -186,7 +186,7 @@
             }
         }
 	}
-	[self setImages: tempArray];
+	self.images = tempArray;
     
 }
 
@@ -195,8 +195,9 @@
                         change:(NSDictionary*)change 
                        context:(void *)context
 {
-    [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:NO];
-    [[[[NSApp delegate] myWindowController] progressIndicator] startAnimation:self];
+
+    [[[AppDelegate shared] myWindowController].progressIndicator startAnimation:self];
+    [[[AppDelegate shared] myWindowController].progressIndicator setHidden:NO];
 
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
@@ -208,7 +209,7 @@
 - (void) collectFolders:(NSURL *) directoryToScan {
     @autoreleasepool {  
         NSFileManager *fm = [[NSFileManager alloc] init];
-        NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsDirectoryKey, NSURLCustomIconKey, nil];
+        NSArray *fileKeys = @[NSURLIsDirectoryKey, NSURLCustomIconKey];
         NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
                                         includingPropertiesForKeys:fileKeys
                                                            options:NSDirectoryEnumerationSkipsHiddenFiles
@@ -236,10 +237,10 @@
             [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
                         
             // Ignore files under the app directory
-            if ([isFolder boolValue]) {
-                if (![isPackage boolValue]) {
+            if (isFolder.boolValue) {
+                if (!isPackage.boolValue) {
                     AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
-                    if (![entry isApp]) {
+                    if (!entry.isApp) {
                         PMLOG(2, @"adding: %@", theURL);
                         [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
                         [tempArray addObject: entry];
@@ -249,10 +250,10 @@
                     [dirEnumerator skipDescendents];
             }
         }
-        [[[[NSApp delegate] myWindowController] progressIndicator] stopAnimation:self];
-        [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:YES];
+        [[[AppDelegate shared] myWindowController].progressIndicator stopAnimation:self];
+        [[[AppDelegate shared] myWindowController].progressIndicator setHidden:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
-        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
+        collectionView.selectionIndexes = [NSIndexSet indexSet];
     }
 }
 
@@ -263,7 +264,7 @@
 
 	if (aURL) {
 		NSFileManager *fm = [NSFileManager defaultManager];
-		NSString *const path = [aURL path];
+		NSString *const path = aURL.path;
 		NSArray *dirItems = [fm contentsOfDirectoryAtPath: path error: &error];
 
 		int i = 0;
@@ -283,7 +284,7 @@
 	NSSortDescriptor *sort = [[NSSortDescriptor alloc]
 	                                            initWithKey: KEY_NAME ascending: (sortingMode == 0)
 			                                       selector: @selector(caseInsensitiveCompare:)];
-	[arrayController setSortDescriptors: [NSArray arrayWithObject: sort]];
+	arrayController.sortDescriptors = @[sort];
 }
 
 // -------------------------------------------------------------------------------
@@ -296,16 +297,16 @@
 	NSMutableArray *urls                  = [NSMutableArray array];
 	NSURL          *temporaryDirectoryURL = [NSURL fileURLWithPath: NSTemporaryDirectory() isDirectory: YES];
 	[indexes enumerateIndexesUsingBlock: ^(NSUInteger idx, BOOL *stop) {
-		NSDictionary *dictionary = [[cv content] objectAtIndex: idx];
-		NSImage      *image      = [dictionary objectForKey: KEY_IMAGE];
-		NSString     *name       = [dictionary objectForKey: KEY_NAME];
+		NSDictionary *dictionary = cv.content[idx];
+		NSImage      *image      = dictionary[KEY_IMAGE];
+		NSString     *name       = dictionary[KEY_NAME];
 		if (image && name) {
 			NSURL *aurl = [temporaryDirectoryURL URLByAppendingPathComponent: [NSString stringWithFormat: @"%@.tiff", name]];
 			[urls addObject: aurl];
-			[[image TIFFRepresentation] writeToURL: url atomically: YES];
+			[image.TIFFRepresentation writeToURL: url atomically: YES];
 		}
 	}];
-	if ([urls count] > 0) {
+	if (urls.count > 0) {
 		[pasteboard clearContents];
 		return [pasteboard writeObjects: urls];
 	}
@@ -315,21 +316,21 @@
 
 - (void)showBeforeAppearance {
     // get the current scroll position of the document view
-    NSPoint currentScrollPosition=[[scrollView contentView] bounds].origin;
-    NSIndexSet *indexes = [collectionView selectionIndexes];
+    NSPoint currentScrollPosition=scrollView.contentView.bounds.origin;
+    NSIndexSet *indexes = collectionView.selectionIndexes;
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
 		if (entry != nil) {
-			NSMutableDictionary *iconDictionary = [entry iconDictionary];
+			NSMutableDictionary *iconDictionary = entry.iconDictionary;
 			if (iconDictionary) {
-				NSImage *original = [entry originalImage];
-				NSImage *custom  = [entry iconImage];
+				NSImage *original = entry.originalImage;
+				NSImage *custom  = entry.iconImage;
 				if (custom == original)
 					[tempArray addObject: iconDictionary];
 				else {
 					NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 							                                                          original, KEY_IMAGE,
-							                                                          [entry name], KEY_NAME,
+							                                                          entry.name, KEY_NAME,
 							                                                          nil];
 					[tempArray addObject: newDictionary];
 				}
@@ -339,30 +340,30 @@
 			}
 		}
 	}
-	[self setImages: tempArray];
-    [collectionView setSelectionIndexes:indexes];
+	self.images = tempArray;
+    collectionView.selectionIndexes = indexes;
     [collectionView setSelectable:NO];
      // restore the scroll location
-     [[scrollView documentView] scrollPoint:currentScrollPosition];
+     [scrollView.documentView scrollPoint:currentScrollPosition];
 }
 
 - (void)showAfterAppearance {
     // get the current scroll position of the document view
-    NSPoint currentScrollPosition=[[scrollView contentView] bounds].origin;
-    NSIndexSet *indexes = [collectionView selectionIndexes];
+    NSPoint currentScrollPosition=scrollView.contentView.bounds.origin;
+    NSIndexSet *indexes = collectionView.selectionIndexes;
 	NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	for (AppEntry  *entry in contentArray) {
 		if (entry != nil) {
-			NSDictionary *iconDictionary = [entry iconDictionary];
+			NSDictionary *iconDictionary = entry.iconDictionary;
 			[tempArray addObject: iconDictionary];
 		}
 	}
-	[self setImages: tempArray];
-    [collectionView setSelectionIndexes:indexes];
+	self.images = tempArray;
+    collectionView.selectionIndexes = indexes;
     [collectionView setSelectable:YES];
 
     // restore the scroll location
-    [[scrollView documentView] scrollPoint:currentScrollPosition];
+    [scrollView.documentView scrollPoint:currentScrollPosition];
 }
 
 - (BOOL)askPermission: (NSURL *)url {
@@ -371,19 +372,19 @@
 
 - (void)applyIcons {
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
-    NSIndexSet *indexes = [collectionView selectionIndexes];
-    if ([indexes count]) {
+    NSIndexSet *indexes = collectionView.selectionIndexes;
+    if (indexes.count) {
         [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+            [tempContentArray addObject:contentArray[idx]];
         }];
         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
         for (AppEntry  *entry in tempContentArray) {
             if (entry != nil) {
-                if ([entry canAccess]) {
-                    NSMutableDictionary *iconDictionary = [entry iconDictionary];
+                if (entry.canAccess) {
+                    NSMutableDictionary *iconDictionary = entry.iconDictionary;
                     if (iconDictionary) {
-                        NSImage *original = [entry originalImage];
-                        NSImage *current  = [entry iconImage];
+                        NSImage *original = entry.originalImage;
+                        NSImage *current  = entry.iconImage;
                         if (current != original) {
                             PMLOG(1, @"Setting icon on: %@", [entry appURL]);
                             [tempArray addObject: entry];
@@ -396,43 +397,43 @@
         }
         NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];
         for (AppEntry  *entry in tempArray) {
-            NSURL *aURL = [entry appURL];
+            NSURL *aURL = entry.appURL;
             BOOL ok = [entry setAttribute: CUSTOM_ICON_ID value: @""];
             if (!ok) {
-                NSError *error = [[entry xattr] resultError];
-                if ([error code] == 13) {
+                NSError *error = entry.xattr.resultError;
+                if (error.code == 13) {
                     // Show ask permission
-                    ok = [self askPermission: [entry appURL]];
+                    ok = [self askPermission: entry.appURL];
                 }
                 [entry deleteAttribute: CUSTOM_ICON_ID];
             }
-            ok = [ws setIcon: [entry iconImage] forFile: [aURL path] options: 0];
+            ok = [ws setIcon: entry.iconImage forFile: aURL.path options: 0];
             if (!ok) {
                 PMLOG_ERR(1, @"Failed to set icon on: %@", url);
             }
         }
     }
     indexes = [NSIndexSet indexSet];
-    [collectionView setSelectionIndexes:indexes];
+    collectionView.selectionIndexes = indexes;
 }
 
 
 - (void)removeIcons {
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
     
-    NSIndexSet *indexes = [collectionView selectionIndexes];
-    if ([indexes count]) {
+    NSIndexSet *indexes = collectionView.selectionIndexes;
+    if (indexes.count) {
         [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+            [tempContentArray addObject:contentArray[idx]];
         }];
         for (AppEntry *entry in tempContentArray) {
-            NSURL *aURL = [entry appURL];
+            NSURL *aURL = entry.appURL;
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
                 PMLOG(1, @"removing CustomIcon: %@", aURL);
                 NSURL         *customIconURL = [aURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
                 NSFileManager *fm            = [NSFileManager defaultManager];
-                BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
+                BOOL ok = [fm fileExistsAtPath: customIconURL.path];
                 NSError *error;
                 if (ok)
                     [fm removeItemAtURL: customIconURL error: &error];
@@ -440,8 +441,8 @@
                 if (ok) {
                     [entry revertIcon];
                 } else {
-                    NSError *error = [[entry xattr] resultError];
-                    if ([error code] == 13) {
+                    NSError *error = entry.xattr.resultError;
+                    if (error.code == 13) {
                         // Show ask permission
                     } else {
                         NSLog(@"Error: %@", error);
@@ -453,28 +454,28 @@
         }
     }
     indexes = [NSIndexSet indexSet];
-    [collectionView setSelectionIndexes:indexes];
+    collectionView.selectionIndexes = indexes;
 }
 
 - (NSArray *)selectedIcons {
     NSMutableArray *tempContentArray = [[NSMutableArray alloc] init];
-    NSIndexSet *indexes = [collectionView selectionIndexes];
+    NSIndexSet *indexes = collectionView.selectionIndexes;
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [tempContentArray addObject:[contentArray objectAtIndex:idx]];
+        [tempContentArray addObject:contentArray[idx]];
     }];
     return tempContentArray;
 }
 
 - (void)selectAll: (id)sender {
-    NSRange range = {0, [contentArray count]};
+    NSRange range = {0, self.contentArray.count};
     NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange: range];
-    [collectionView setSelectionIndexes:indexes];
+    collectionView.selectionIndexes = indexes;
     
 }
 
 - (void)selectNone: (id)sender {
     NSIndexSet *indexes = [NSIndexSet indexSet];
-    [collectionView setSelectionIndexes:indexes];
+    collectionView.selectionIndexes = indexes;
 }
 
 - (void) zoomChanged: (CGFloat) newValue {
@@ -487,8 +488,8 @@
 //    PMLOG(1,@"bounds: %f %f", item.bounds.size.width, item.bounds.size.height);
 
 //    [collectionView setSubviewSize:newValue];
-        [collectionView setMaxItemSize:NSMakeSize(newValue,newValue)];
-        [collectionView setMinItemSize:NSMakeSize(newValue,newValue)];
+        collectionView.maxItemSize = NSMakeSize(newValue,newValue);
+        collectionView.minItemSize = NSMakeSize(newValue,newValue);
     
 
     //    for (IconViewBox *box in views) {

@@ -80,69 +80,59 @@
 
 #pragma mark *** Initializers ***
 
-- init;
-- initWithObservers;
+- (instancetype) init NS_DESIGNATED_INITIALIZER;
+- (instancetype) initWithObservers NS_DESIGNATED_INITIALIZER;
 
 #pragma mark -
 #pragma mark *** Input Image Accessors ***
 
-- (NSBitmapImageRep *)inputBitmapImageRep;
-- (void)setInputBitmapImageRep:(NSBitmapImageRep *)newInputBitmapImageRep;
+@property (NS_NONATOMIC_IOSONLY, copy) NSBitmapImageRep *inputBitmapImageRep;
 
 #pragma mark -
 #pragma mark *** Stage 1: Resampling Parameters ***
 
-- (BOOL)scalesImage;
-- (void)setScalesImage:(BOOL)flag;
+@property (NS_NONATOMIC_IOSONLY) BOOL scalesImage;
 
-- (int)maxPixelsWide;
-- (void)setMaxPixelsWide:(int)newMaxPixelsWide;
+@property (NS_NONATOMIC_IOSONLY) int maxPixelsWide;
 
-- (int)maxPixelsHigh;
-- (void)setMaxPixelsHigh:(int)newMaxPixelsHigh;
+@property (NS_NONATOMIC_IOSONLY) int maxPixelsHigh;
 
 #pragma mark -
 #pragma mark *** Stage 2: Sharpening Parameters ***
 
-- (BOOL)sharpensImage;
-- (void)setSharpensImage:(BOOL)flag;
+@property (NS_NONATOMIC_IOSONLY) BOOL sharpensImage;
 
 #pragma mark -
 #pragma mark *** Stage 3: Border and Background Parameters ***
 
-- (BOOL)drawBorder;
-- (void)setDrawBorder:(BOOL)flag;
+@property (NS_NONATOMIC_IOSONLY) BOOL drawBorder;
 
-- (float)borderCornerRadius;
-- (void)setBorderCornerRadius:(float)newBorderCornerRadius;
+@property (NS_NONATOMIC_IOSONLY) float borderCornerRadius;
 
-- (float)borderThickness;
-- (void)setBorderThickness:(float)newBorderThickness;
+@property (NS_NONATOMIC_IOSONLY) float borderThickness;
 
-- (NSColor *)borderColor;
-- (void)setBorderColor:(NSColor *)newBorderColor;
+@property (NS_NONATOMIC_IOSONLY, copy) NSColor *borderColor;
 
 #pragma mark -
 #pragma mark *** Stage 4: Shadow Parameters ***
 
-- (BOOL)addsShadow;
-- (void)setAddsShadow:(BOOL)flag;
+@property (NS_NONATOMIC_IOSONLY) BOOL addsShadow;
 
-- (NSShadow *)shadow;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSShadow *shadow;
 
 #pragma mark -
 #pragma mark *** Filter Accessors ***
 
-- (float)scaleFactor;
-- (CIFilter *)unsharpMaskFilter;
+@property (NS_NONATOMIC_IOSONLY, readonly) float scaleFactor;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) CIFilter *unsharpMaskFilter;
 
 #pragma mark -
 #pragma mark *** Output Image Accessors ***
 
-- (CIImage *)outputCIImage;
-- (NSBitmapImageRep *)outputBitmapImageRep;
-- (int)outputPixelsWide;
-- (int)outputPixelsHigh;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) CIImage *outputCIImage;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSBitmapImageRep *outputBitmapImageRep;
+@property (NS_NONATOMIC_IOSONLY, readonly) int outputPixelsWide;
+@property (NS_NONATOMIC_IOSONLY, readonly) int outputPixelsHigh;
 
 @end
 
@@ -151,5 +141,5 @@
 - (void)setInputImage:(NSImage *)newInputImage;
 
 // This is a convenience getter that wraps the outputBitmapImageRep in an NSImage.
-- (NSImage *)outputImage;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSImage *outputImage;
 @end

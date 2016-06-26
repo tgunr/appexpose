@@ -60,8 +60,8 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
 + (void)initialize {
     if (self == [ImageReducer class]) {
-        [self setKeys:[NSArray arrayWithObjects:@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow", nil] triggerChangeNotificationsForDependentKey:@"outputPixelsWide"];
-        [self setKeys:[NSArray arrayWithObjects:@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow", nil] triggerChangeNotificationsForDependentKey:@"outputPixelsHigh"];
+        [self setKeys:@[@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow"] triggerChangeNotificationsForDependentKey:@"outputPixelsWide"];
+        [self setKeys:@[@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow"] triggerChangeNotificationsForDependentKey:@"outputPixelsHigh"];
     }
 }
 
@@ -71,7 +71,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     }
 }
 
-- init {
+- (instancetype) init {
     self = [super init];
     if (self != nil) {
         scalesImage = YES;
@@ -84,8 +84,8 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
         borderColor = [NSColor whiteColor];
         addsShadow = YES;
         shadow = [[NSShadow alloc] init];
-        [shadow setShadowOffset:NSMakeSize(6, -4)];
-        [shadow setShadowBlurRadius:9.0];
+        shadow.shadowOffset = NSMakeSize(6, -4);
+        shadow.shadowBlurRadius = 9.0;
 
         scaleTransformFilter = [CIFilter filterWithName:@"CILanczosScaleTransform"];
         [scaleTransformFilter setDefaults];
@@ -98,7 +98,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     return self;
 }
 
-- initWithObservers {
+- (instancetype) initWithObservers {
     self = [super init];
     if (self != nil) {
         self = [self init];
@@ -254,8 +254,8 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     NSBitmapImageRep *sourceBitmap = [self inputBitmapImageRep];
     if (sourceBitmap != nil && [self scalesImage]) {
         // Determine scale factor needed to fit within size constraints.
-        float widthScale = (float)[self maxPixelsWide] / (float)[sourceBitmap pixelsWide];
-        float heightScale = (float)[self maxPixelsHigh] / (float)[sourceBitmap pixelsHigh];
+        float widthScale = (float)[self maxPixelsWide] / (float)sourceBitmap.pixelsWide;
+        float heightScale = (float)[self maxPixelsHigh] / (float)sourceBitmap.pixelsHigh;
         return MIN(1.0, MIN(widthScale, heightScale));
     } else {
         return 1.0;
@@ -276,7 +276,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     if (ciImage != nil) {
 
         // Get the CIImage's extents.  The filters we're using in this example should always produce an output image of finite extent, but in the general case one needs to account for the possibility of the output image being infinite in extent.
-        CGRect extent = [ciImage extent];
+        CGRect extent = ciImage.extent;
         if (CGRectIsInfinite(extent)) {
             extent.size.width = 1024;
             extent.size.height = 1024;
@@ -296,10 +296,10 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
         // Clear the bitmap to zero alpha.
         [[NSColor clearColor] set];
-        NSRectFill(NSMakeRect(0, 0, [bitmapImageRep pixelsWide], [bitmapImageRep pixelsHigh]));
+        NSRectFill(NSMakeRect(0, 0, bitmapImageRep.pixelsWide, bitmapImageRep.pixelsHigh));
 
         // Decide where the image will go.
-        CGRect imageDestinationRect = CGRectMake(0.0, [bitmapImageRep pixelsHigh] - extent.size.height, extent.size.width, extent.size.height);
+        CGRect imageDestinationRect = CGRectMake(0.0, bitmapImageRep.pixelsHigh - extent.size.height, extent.size.width, extent.size.height);
 
         // Create the path for the border (if any).
         NSBezierPath *borderPath = nil;
@@ -326,13 +326,13 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
         }
 
         // Get a CIContext from the NSGraphicsContext, and use it to draw the CIImage into the NSBitmapImageRep.
-        CIContext *ciContext = [nsContext CIContext];
+        CIContext *ciContext = nsContext.CIContext;
         [ciContext drawImage:ciImage atPoint:imageDestinationRect.origin fromRect:extent];
         [NSGraphicsContext restoreGraphicsState];
 
         // Draw the border path.
         if (drawBorder && borderPath) {
-            [borderPath setLineWidth:borderThickness];
+            borderPath.lineWidth = borderThickness;
             [borderColor set];
             [borderPath stroke];
         }
@@ -348,9 +348,9 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 - (int)outputPixelsWide {
     int result;
     if (addsShadow) {
-        result = ceil([self scaleFactor] * [[self inputBitmapImageRep] pixelsWide] + fabs([shadow shadowOffset].width) + [shadow shadowBlurRadius]);
+        result = ceil([self scaleFactor] * [self inputBitmapImageRep].pixelsWide + fabs(shadow.shadowOffset.width) + shadow.shadowBlurRadius);
     } else {
-        result = floor([self scaleFactor] * [[self inputBitmapImageRep] pixelsWide]);
+        result = floor([self scaleFactor] * [self inputBitmapImageRep].pixelsWide);
     }
     return result;
 }
@@ -358,9 +358,9 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 - (int)outputPixelsHigh {
     int result;
     if (addsShadow) {
-        result = ceil([self scaleFactor] * [[self inputBitmapImageRep] pixelsHigh] + fabs([shadow shadowOffset].height) + [shadow shadowBlurRadius]);
+        result = ceil([self scaleFactor] * [self inputBitmapImageRep].pixelsHigh + fabs(shadow.shadowOffset.height) + shadow.shadowBlurRadius);
     } else {
-        result = floor([self scaleFactor] * [[self inputBitmapImageRep] pixelsHigh]);
+        result = floor([self scaleFactor] * [self inputBitmapImageRep].pixelsHigh);
     }
     return result;
 }
@@ -382,7 +382,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     if ([self inputBitmapImageRep] != nil) {
         CIImage *outputCIImage = [self outputCIImage];
         if (outputCIImage != nil) {
-            CGRect extent = [outputCIImage extent];
+            CGRect extent = outputCIImage.extent;
             if (CGRectIsInfinite(extent)) {
                 NSLog(@"*** OUTPUT IMAGE HAS INFINITE EXTENT ***");
             } else {
@@ -405,7 +405,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     [self clearFilterChain];
 
     if ([self scalesImage]) {
-        [scaleTransformFilter setValue:[NSNumber numberWithFloat:[self scaleFactor]] forKey:@"inputScale"];
+        [scaleTransformFilter setValue:@([self scaleFactor]) forKey:@"inputScale"];
         [self addFilter:scaleTransformFilter];
     }
 
@@ -429,7 +429,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
 static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage) {
     // See if the NSImage has an NSBitmapImageRep.  If so, return the first NSBitmapImageRep encountered.  An NSImage that is initialized by loading the contents of a bitmap image file (such as JPEG, TIFF, or PNG) and, not subsequently rescaled, will usually have a single NSBitmapImageRep.
-    NSEnumerator *enumerator = [[nsImage representations] objectEnumerator];
+    NSEnumerator *enumerator = [nsImage.representations objectEnumerator];
     NSImageRep *representation;
     while (representation = [enumerator nextObject]) {
         if ([representation isKindOfClass:[NSBitmapImageRep class]]) {
@@ -438,7 +438,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage) {
     }
 
     // If we didn't find an NSBitmapImageRep (perhaps because we received a PDF image), we can create one using one of two approaches: (1) lock focus on the NSImage, and create the bitmap using -[NSBitmapImageRep initWithFocusedViewRect:], or (2) (Tiger and later) create an NSBitmapImageRep, and an NSGraphicsContext that draws into it using +[NSGraphicsContext graphicsContextWithBitmapImageRep:], and composite the NSImage into the bitmap graphics context.  We'll use approach (1) here, since it is simple and supported on all versions of Mac OS X.
-    NSSize size = [nsImage size];
+    NSSize size = nsImage.size;
     [nsImage lockFocus];
     NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0, 0, size.width, size.height)];
     [nsImage unlockFocus];

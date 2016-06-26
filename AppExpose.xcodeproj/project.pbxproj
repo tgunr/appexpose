@@ -39,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		75A1A2421D205323005CAEA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 751186AF1559A08C00D064F2;
+			remoteInfo = xattrlib;
+		};
 		75BFB9371821ED2700E1D784 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
@@ -254,6 +261,7 @@
 			children = (
 				75C83587153DFF29009021F4 /* xattr */,
 				75C83589153DFF29009021F4 /* XATTR.framework */,
+				75A1A2431D205323005CAEA5 /* libxattrlib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -337,6 +345,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		75A1A2431D205323005CAEA5 /* libxattrlib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libxattrlib.a;
+			remoteRef = 75A1A2421D205323005CAEA5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		75BFB9381821ED2700E1D784 /* libpmutility.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -492,7 +507,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -513,14 +528,14 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"",
@@ -543,7 +558,7 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

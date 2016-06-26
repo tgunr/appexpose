@@ -25,7 +25,7 @@
 @property (strong)  IBOutlet NSBrowser *appBrowser;
 @property (strong)  IBOutlet NSSegmentedControl *iconAppearance;
 
-+ (id)shared;
++ (AppDelegate*)shared;
 - (IBAction)openReadMe:(id)sender;
 - (void)selectionChanged;
 

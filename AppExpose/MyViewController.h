@@ -61,7 +61,7 @@
 
 - (void)removeIcons;
 
-- (NSArray *)selectedIcons;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *selectedIcons;
 
 - (void)selectAll: (id)sender;
 - (void)selectNone: (id)sender;

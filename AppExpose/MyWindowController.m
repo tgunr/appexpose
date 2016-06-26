@@ -66,20 +66,20 @@
 
 - (void)awakeFromNib
 {
-    [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
-    [[self window] setContentBorderThickness:30 forEdge:NSMinYEdge];
+    [self.window setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
+    [self.window setContentBorderThickness:30 forEdge:NSMinYEdge];
     
     // load our nib that contains the collection view
     [self willChangeValueForKey:@"viewController"];
     viewController = [[MyViewController alloc] initWithNibName:@"Collection" bundle:nil];
     [self didChangeValueForKey:@"viewController"];
     
-    [myTargetView addSubview:[viewController view]];
+    [myTargetView addSubview:viewController.view];
     
     // make sure we resize the viewController's view to match its super view
-    [[viewController view] setFrame:[myTargetView bounds]];
+    viewController.view.frame = myTargetView.bounds;
     
-    [viewController setSortingMode:0];		// ascending sort order
+    viewController.sortingMode = 0;		// ascending sort order
     [[AppDelegate shared] setMyWindowController:self];
     [applyButton setEnabled:NO];
     [removeButton setEnabled:NO];
@@ -127,29 +127,29 @@
 
 - (void)setSelectAllLabel {
     NSArray *entries = [viewController selectedIcons]; 
-    NSUInteger numberSelected = [entries count];
-    NSUInteger numberOfCollection = [[viewController contentArray] count];
+    NSUInteger numberSelected = entries.count;
+    NSUInteger numberOfCollection = viewController.contentArray.count;
     if (numberSelected == numberOfCollection) {
-        [selectAllToolBarItem setLabel:@"Select None"];
+        selectAllToolBarItem.label = @"Select None";
     } else {
-        [selectAllToolBarItem setLabel:@"Select All"];
+        selectAllToolBarItem.label = @"Select All";
     }
 }
 
 - (IBAction)selectAll:(id)sender {
-    NSString *label = [selectAllToolBarItem label];
+    NSString *label = selectAllToolBarItem.label;
     if ([label isEqualToString:@"Select All"]) {
-        [selectAllToolBarItem setLabel:@"Select None"];
+        selectAllToolBarItem.label = @"Select None";
         [viewController selectAll: sender];
     } else {
-        [selectAllToolBarItem setLabel:@"Select All"];
+        selectAllToolBarItem.label = @"Select All";
         [viewController selectNone: sender];
     }
     [self selectionChanged];
 }
 
 - (void)selectionChanged {
-    NSInteger segment = [appearanceControl selectedSegment];
+    NSInteger segment = appearanceControl.selectedSegment;
     switch (segment) {
         case 0: {
             [applyButton setEnabled:NO];
@@ -159,7 +159,7 @@
         }
         case 1: {
             NSArray *entries = [viewController selectedIcons]; 
-            NSUInteger numberEntries = [entries count];
+            NSUInteger numberEntries = entries.count;
             if (numberEntries) {
                 [applyButton setEnabled:YES];
                 [removeButton setEnabled:YES];
@@ -177,7 +177,7 @@
 }
 
 - (IBAction)zoomChanged:(id)sender {
-    NSInteger value = [zoomSlider integerValue];
+    NSInteger value = zoomSlider.integerValue;
 //    int scales[] = { 32, 64, 128, 256, 512, 1024 } ;
 //    int scale = scales[value];
     PMLOG(2,@"zoom: %f", (CGFloat)value);
@@ -200,9 +200,9 @@
 
 - (IBAction)restartFinder:(id)sender {
     NSArray* apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"];
-    if([apps count])
+    if(apps.count)
     {
-        finder = [apps objectAtIndex:0];
+        finder = apps[0];
         [finder addObserver:self forKeyPath:@"isTerminated" options:0 context:@"QuitFinder"];
         [finder terminate];
     }

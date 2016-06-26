@@ -27,7 +27,7 @@
 @synthesize appBrowser;
 @synthesize iconAppearance;
 
-+ (id)shared
++ (AppDelegate*)shared
 {
     static dispatch_once_t onceQueue;
     static AppDelegate *appDelegate = nil;
@@ -36,7 +36,7 @@
     return appDelegate;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
 	    rootEntry = [AppEntry rootEntry];
@@ -56,9 +56,9 @@
 //    kAuthorizationFlagPreAuthorize;
 	
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
-	appDirectory = [paths objectAtIndex: 0];
-	if ([paths count] > 0) {
-		appDirectory = [paths objectAtIndex: 0];
+	appDirectory = paths[0];
+	if (paths.count > 0) {
+		appDirectory = paths[0];
 	}
 	appDirectory = [appDirectory stringByAppendingString: @"/"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -90,19 +90,19 @@
 }
 
 - (NSInteger)browser:(NSBrowser *)browser numberOfChildrenOfItem:(id)item {
-    return [[(AppEntry *)item childEntries] count];
+    return ((AppEntry *)item).childEntries.count;
 }
 
 - (id)browser:(NSBrowser *)browser child:(NSInteger)index ofItem:(id)item {
-    return [[(AppEntry *)item childEntries] objectAtIndex:index];
+    return ((AppEntry *)item).childEntries[index];
 }
 
 - (BOOL)browser:(NSBrowser *)browser isLeafItem:(id)item {
-    return [(AppEntry *)item isLeaf];
+    return ((AppEntry *)item).isLeaf;
 }
 
 - (id)browser:(NSBrowser *)browser objectValueForItem:(id)item {
-    return [(AppEntry *)item name];
+    return ((AppEntry *)item).name;
 }
 
 - (void)selectionChanged {

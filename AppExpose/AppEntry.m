@@ -19,7 +19,7 @@
 @implementation NSImage (Dump)
 
 - (void) dump {
-    NSBitmapImageRep *imageRep = [[self representations] objectAtIndex:0];
+    NSBitmapImageRep *imageRep = self.representations[0];
     NSData           *data     = [imageRep representationUsingType:NSPNGFileType properties:nil];
     [data writeToFile:@"/tmp/image.png" atomically:NO];
 }
@@ -55,8 +55,8 @@
         appURL         = [url copy];
         isLeaf         = YES;
         isApp          = NO;
-        name           = [[url lastPathComponent] copy];
-        originalImage  = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+        name           = [url.lastPathComponent copy];
+        originalImage  = [[NSWorkspace sharedWorkspace] iconForFile:appURL.path];
         iconImage      = originalImage;
         iconDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                     iconImage, KEY_IMAGE,
@@ -75,7 +75,7 @@
     [path addClip];
 
     //set the size
-    [image setSize:imageFrame.size];
+    image.size = imageFrame.size;
 
     //draw the image
     [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES
@@ -96,8 +96,8 @@
     path = [NSBezierPath bezierPathWithRoundedRect:dirtyRect xRadius:stroke yRadius:stroke];
 	color = [NSColor colorWithCalibratedRed:(CGFloat)0.8 green:(CGFloat)0.8 blue:(CGFloat)0.8 alpha:(CGFloat)1.0];
 	[color setStroke];
-	[path setLineWidth:stroke];
-	[path setLineCapStyle:NSSquareLineCapStyle];
+	path.lineWidth = stroke;
+	path.lineCapStyle = NSSquareLineCapStyle;
 	[[NSGraphicsContext currentContext] saveGraphicsState];
 	[path addClip];
 	[path stroke];
@@ -105,7 +105,7 @@
 }
 
 - (NSImage *) composeIcons {
-    NSInteger numImages = [childEntries count];
+    NSInteger numImages = childEntries.count;
     NSSize resultImageSize = NSMakeSize(ICON_SIZE, ICON_SIZE);
     NSImage *resultImage = [[NSImage alloc] initWithSize:resultImageSize];
 
@@ -116,7 +116,7 @@
 
         NSSize  littleIconSize = NSMakeSize((resultImageSize.width / 4.0), (resultImageSize.height / 4.0) );
         [resultImage lockFocus];
-        [bgImage setSize:NSMakeSize(resultImageSize.width - 64, resultImageSize.height - 64)];
+        bgImage.size = NSMakeSize(resultImageSize.width - 64, resultImageSize.height - 64);
         [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
         [self drawRect:NSMakeRect(0.0, 0.0, ICON_SIZE, ICON_SIZE)];
         int i, j;
@@ -131,9 +131,9 @@
         for (i = 0; i < 3; i++) {
             point.x = offset;
             for (j=0; j < 3; j++) {
-                AppEntry *entry          = [childEntries objectAtIndex:(i*3)+j];
-                NSImage  *imageToCompose = [[entry iconImage] copy];
-                [imageToCompose setSize:littleIconSize];
+                AppEntry *entry          = childEntries[(i*3)+j];
+                NSImage  *imageToCompose = [entry.iconImage copy];
+                imageToCompose.size = littleIconSize;
                 PMLOG(2, @"point: %f,%f", point.x, point.y);
                 [imageToCompose drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
                 count--;
@@ -181,8 +181,8 @@
         [resultImage addRepresentation:reduced];
 
     } else {
-        AppEntry *entry          = [childEntries objectAtIndex:0];
-        resultImage = [[entry iconImage] copy];
+        AppEntry *entry          = childEntries[0];
+        resultImage = [entry.iconImage copy];
     }
     return resultImage;
 }
@@ -193,20 +193,20 @@
         NSError       *error;
         NSFileManager *fm = [[NSFileManager alloc] init];
         appURL        = [url copy];
-        attributes    = [fm attributesOfItemAtPath:[url path] error:&error];
+        attributes    = [fm attributesOfItemAtPath:url.path error:&error];
         xattr         = [[XATTR alloc] initWithURL:url options:nofollow];
         isLeaf        = [self isALeaf:url];
         isFolder      = [self isAFolder:url];
         hasCustomIcon = [self hasACustomIcon];
         isApp         = [self isAnApp:url];
         canAccess     = [self userCanAccess];
-        name          = [[url lastPathComponent] copy];
-        if (isFolder && [self hasMyCustomIcon]) {
+        name          = [url.lastPathComponent copy];
+        if (isFolder && self.hasMyCustomIcon) {
             originalImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
         } else {
-            originalImage = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
+            originalImage = [[NSWorkspace sharedWorkspace] iconForFile:appURL.path];
         }
-        [originalImage setSize:NSMakeSize(ICON_SIZE, ICON_SIZE)];
+        originalImage.size = NSMakeSize(ICON_SIZE, ICON_SIZE);
         iconImage      = originalImage;
         if (isApp) {
             isLeaf = NO;
@@ -214,7 +214,7 @@
             childEntries = [[NSMutableArray alloc] init];
             if (isFolder && [self isNotSpecial]) {
                 [self scanURLForIcons:url forEntry:self];
-                if ([childEntries count]) {
+                if (childEntries.count) {
                     iconImage = [self composeIcons];
                 }
             }
@@ -232,19 +232,19 @@
 }
 
 - (BOOL) isNotSpecial {
-    NSArray *specialNames = [NSArray arrayWithObjects:@"Utilities", nil];
+    NSArray *specialNames = @[@"Utilities"];
     BOOL result = [specialNames containsObject:name];
     return !result;
 }
 
 - (BOOL) shouldSkipDescendents {
-    BOOL result = isFolder && [childEntries count] > 0;
+    BOOL result = isFolder && childEntries.count > 0;
     return result;
 }
 
 - (void) scanURLForIcons:(NSURL *) directoryToScan forEntry:(AppEntry *) appEntry {
     NSFileManager *fm = [[NSFileManager alloc] init];
-    NSArray *fileKeys = [NSArray arrayWithObjects:NSURLIsPackageKey, nil];
+    NSArray *fileKeys = @[NSURLIsPackageKey];
     NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:directoryToScan
                                     includingPropertiesForKeys:fileKeys
                                                        options:NSDirectoryEnumerationSkipsHiddenFiles
@@ -270,10 +270,10 @@
         [theURL getResourceValue:&customIcon forKey:NSURLCustomIconKey error:NULL];
         
         // Ignore files under the app directory
-        if ([isAFolder boolValue]) {
-            if ([isPackage boolValue]) {
+        if (isAFolder.boolValue) {
+            if (isPackage.boolValue) {
                 AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
-                if ([entry isApp]) {
+                if (entry.isApp) {
                     PMLOG(2, @"adding: %@", theURL);
                     if ([appEntry addChildEntry:entry]) {
                         [dirEnumerator skipDescendents];
@@ -281,7 +281,7 @@
                 } else
                     [dirEnumerator skipDescendents];
             }
-            if ([dirEnumerator level] > MAX_LEVEL) {
+            if (dirEnumerator.level > MAX_LEVEL) {
                 [dirEnumerator skipDescendents];
             }
         }
@@ -289,18 +289,18 @@
 }
 
 - (BOOL) isALeaf:(NSURL *) url {
-    NSString *fileType = [attributes objectForKey:NSFileType];
+    NSString *fileType = attributes[NSFileType];
     if ([fileType isEqualToString:NSFileTypeDirectory])
         return NO; // folders are not leafs
     if ([fileType isEqualToString:NSFileTypeSymbolicLink])
         return NO; // symlinks can't be a leaf for now
-    if ([[url pathExtension] isEqualToString:@"app"])
+    if ([url.pathExtension isEqualToString:@"app"])
         return NO; // nor are Apps
     return YES;
 }
 
 - (BOOL) isAFolder:(NSURL *) url {
-    NSString      *fileType       = [attributes objectForKey:NSFileType];
+    NSString      *fileType       = attributes[NSFileType];
     if ([fileType isEqualToString:NSFileTypeSymbolicLink])
         return NO; // symlinks can't be a folder for now
     return [fileType isEqualToString:NSFileTypeDirectory] ? YES : NO;
@@ -308,13 +308,13 @@
 
 - (BOOL) isAnApp:(NSURL *) url {
     NSWorkspace *ws = [NSWorkspace sharedWorkspace];
-    BOOL result = [ws isFilePackageAtPath:[url path]];
+    BOOL result = [ws isFilePackageAtPath:url.path];
     return result;
 }
 
 - (BOOL) userCanAccess {
     NSFileManager *fm = [NSFileManager defaultManager];
-    BOOL result1 = [fm isWritableFileAtPath:[appURL path]];
+    BOOL result1 = [fm isWritableFileAtPath:appURL.path];
     NSError *error;
     BOOL result2 = [appURL checkResourceIsReachableAndReturnError:&error];
     if (!result1 || !result2) {
@@ -326,17 +326,17 @@
 - (BOOL)hasACustomIcon {
     NSFileManager *fm = [NSFileManager defaultManager];
     NSURL *customIconURL = [appURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
-    BOOL result = [fm fileExistsAtPath:[customIconURL path]];
+    BOOL result = [fm fileExistsAtPath:customIconURL.path];
     return result;
 }
     
 - (NSString *) pathWithName {
-    NSString *path = [[appURL path] stringByAppendingPathComponent:name];
+    NSString *path = [appURL.path stringByAppendingPathComponent:name];
     return isLeaf ? path : [path stringByAppendingString:@"/"];
 }
 
 - (NSComparisonResult) compare:(AppEntry *) other {
-    return [[self name] localizedCaseInsensitiveCompare:[other name]];
+    return [self.name localizedCaseInsensitiveCompare:other.name];
 }
 
 - (BOOL) addChildEntry:(AppEntry *) entry {
@@ -350,7 +350,7 @@
 - (AppEntry *) childDirectoryEntryWithName:(NSString *) str createIfNotPresent:(BOOL) flag {
     AppEntry      *childEntry = nil;
     for (AppEntry *entry in childEntries) {
-        if ([[entry name] isEqualToString:str] && ![entry isLeaf]) {
+        if ([entry.name isEqualToString:str] && !entry.isLeaf) {
             childEntry = (AppEntry *) entry;
             break;
         }
@@ -366,7 +366,7 @@
 
 - (BOOL) addToRootEntry:(AppEntry *) rootEntry {
     AppEntry      *directoryEntry = rootEntry;
-    NSArray       *components     = [appURL pathComponents];
+    NSArray       *components     = appURL.pathComponents;
     for (NSString *component in components) {
         if (![@"/" isEqualToString:component])
             directoryEntry = [directoryEntry childDirectoryEntryWithName:component createIfNotPresent:YES];
@@ -398,7 +398,7 @@
 - (void) badgeAsNoAccess {
     // Setup for the composite image with size same as the current icon
     NSPoint point       = {0.0, 0.0};
-    NSSize  currentSize = [iconImage size];
+    NSSize  currentSize = iconImage.size;
     NSRect  currentRect = {point, currentSize};
     
     // setup the badge image and size
@@ -406,7 +406,7 @@
     NSURL    *badgeImageURL = [mb URLForResource:@"red-lock" withExtension:@"png"];
     NSImage  *badgeImage    = [[NSImage alloc] initWithContentsOfURL:badgeImageURL];
     NSPoint badgePoint = {0.0, 0.0};
-    NSSize  badgeSize  = NSMakeSize([iconImage size].width / 4.0, [iconImage size].height / 4.0);
+    NSSize  badgeSize  = NSMakeSize(iconImage.size.width / 4.0, iconImage.size.height / 4.0);
     //	[badgeImage setSize: badgeSize];
     
     // draw current image badged
@@ -432,13 +432,13 @@
     originalImage = originalImageBadged;
     
     // set dictionary with badge version
-    [iconDictionary setObject:iconImage forKey:KEY_IMAGE];
+    iconDictionary[KEY_IMAGE] = iconImage;
 }
 
 - (void) badgeAsFolder {
     // Setup for the composite image with size same as the current icon
     NSPoint point       = {0.0, 0.0};
-    NSSize  currentSize = [iconImage size];
+    NSSize  currentSize = iconImage.size;
     NSRect  currentRect = {point, currentSize};
     
     // setup the badge image and size
@@ -446,7 +446,7 @@
     NSURL    *badgeImageURL = [mb URLForResource:@"Folder" withExtension:@"png"];
     NSImage  *badgeImage    = [[NSImage alloc] initWithContentsOfURL:badgeImageURL];
     NSPoint badgePoint = {0.0, 0.0};
-    NSSize  badgeSize  = NSMakeSize([iconImage size].width / 4.0, [iconImage size].height / 4.0);
+    NSSize  badgeSize  = NSMakeSize(iconImage.size.width / 4.0, iconImage.size.height / 4.0);
     //	[badgeImage setSize: badgeSize];
     
     // draw current image badged
@@ -472,7 +472,7 @@
     originalImage = originalImageBadged;
     
     // set dictionary with badge version
-    [iconDictionary setObject:iconImage forKey:KEY_IMAGE];
+    iconDictionary[KEY_IMAGE] = iconImage;
 }
 
 @end

@@ -17,7 +17,7 @@ const CGFloat kMyViewHeight = (CGFloat)32.0;
 - (void)drawRect:(NSRect)dirtyRect
 {
 	NSRect imageBounds = NSMakeRect((CGFloat)0.0, (CGFloat)0.0, kMyViewWidth, kMyViewHeight);
-	NSRect bounds = [self bounds];
+	NSRect bounds = self.bounds;
 	NSAffineTransform *transform;
 	CGFloat alignStroke;
 	CGFloat resolution;
@@ -25,7 +25,7 @@ const CGFloat kMyViewHeight = (CGFloat)32.0;
 	NSRect drawRect;
 	NSColor *color;
 	CGFloat stroke;
-	resolution = [[self window] userSpaceScaleFactor] * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
+	resolution = [self.window userSpaceScaleFactor] * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
 	
 	[[NSGraphicsContext currentContext] saveGraphicsState];
 	transform = [NSAffineTransform transform];
@@ -43,7 +43,7 @@ const CGFloat kMyViewHeight = (CGFloat)32.0;
 	drawRect.size.width = (CGFloat)round(resolution * drawRect.size.width) / resolution;
 	drawRect.size.height = (CGFloat)round(resolution * drawRect.size.height) / resolution;
 	[path appendBezierPathWithRoundedRect:drawRect xRadius:(CGFloat)4.0 yRadius:(CGFloat)4.0];
-	[path setWindingRule:NSEvenOddWindingRule];
+	path.windingRule = NSEvenOddWindingRule;
 	color = [NSColor colorWithCalibratedRed:(CGFloat)0.0 green:(CGFloat)0.0 blue:(CGFloat)0.0 alpha:(CGFloat)1.0];
 	[color setStroke];
 	stroke = (CGFloat)3.0;
@@ -55,8 +55,8 @@ const CGFloat kMyViewHeight = (CGFloat)32.0;
 	}
 	stroke /= resolution;
 	stroke *= (CGFloat)2.0;
-	[path setLineWidth:stroke];
-	[path setLineCapStyle:NSSquareLineCapStyle];
+	path.lineWidth = stroke;
+	path.lineCapStyle = NSSquareLineCapStyle;
 	[[NSGraphicsContext currentContext] saveGraphicsState];
 	[path addClip];
 	[path stroke];
@@ -70,7 +70,7 @@ const CGFloat kMyViewHeight = (CGFloat)32.0;
 	drawRect.size.width = (CGFloat)round(resolution * drawRect.size.width) / resolution;
 	drawRect.size.height = (CGFloat)round(resolution * drawRect.size.height) / resolution;
 	[path appendBezierPathWithRoundedRect:drawRect xRadius:(CGFloat)8.0 yRadius:(CGFloat)8.0];
-	[path setWindingRule:NSEvenOddWindingRule];
+	path.windingRule = NSEvenOddWindingRule;
 	color = [NSColor colorWithCalibratedRed:(CGFloat)0.298 green:(CGFloat)0.298 blue:(CGFloat)0.298 alpha:(CGFloat)1.0];
 	[color setStroke];
 	stroke = (CGFloat)5.0;
@@ -82,8 +82,8 @@ const CGFloat kMyViewHeight = (CGFloat)32.0;
 	}
 	stroke /= resolution;
 	stroke *= (CGFloat)2.0;
-	[path setLineWidth:stroke];
-	[path setLineCapStyle:NSSquareLineCapStyle];
+	path.lineWidth = stroke;
+	path.lineCapStyle = NSSquareLineCapStyle;
 	[[NSGraphicsContext currentContext] saveGraphicsState];
 	[path addClip];
 	[path stroke];
