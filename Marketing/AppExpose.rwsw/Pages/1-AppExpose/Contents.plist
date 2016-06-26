@@ -25,7 +25,7 @@
 				<key>PublishingManifest</key>
 				<dict>
 					<key>CreationDate</key>
-					<date>2012-05-26T23:32:31Z</date>
+					<date>2012-06-12T20:28:55Z</date>
 					<key>DigestAlgorithm</key>
 					<string>MD5</string>
 					<key>DocumentGUID</key>
@@ -62,52 +62,52 @@
 							<key>Size</key>
 							<integer>7196</integer>
 						</dict>
-						<key>files/stacks_image_8.png</key>
-						<dict>
-							<key>Digest</key>
-							<data>
-							VwmqsGip0p/oQW/r2MQY
-							Wg==
-							</data>
-							<key>Size</key>
-							<integer>13049</integer>
-						</dict>
 						<key>files/stacks_page_page2.css</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							k0Ow37AfvZZrXTeKBjCy
-							Cw==
+							RVoasFYvBM17Q63Wvu0q
+							Ng==
 							</data>
 							<key>Size</key>
-							<integer>15286</integer>
+							<integer>13372</integer>
 						</dict>
 						<key>files/stacks_page_page2.js</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							nOcgsC2mz6CzWFPN/+Kt
-							qQ==
+							LAsUzDSONMBYPWlwCoIt
+							BQ==
 							</data>
 							<key>Size</key>
-							<integer>60149</integer>
+							<integer>60232</integer>
 						</dict>
 						<key>index.html</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							bxg8XTZIFGGSZ1FOIOHR
-							LQ==
+							HvQzGC7GbZ7pKnB1pd4N
+							uA==
 							</data>
 							<key>Size</key>
-							<integer>8439</integer>
+							<integer>9913</integer>
+						</dict>
+						<key>rw_common/images/AppExpose-256.png</key>
+						<dict>
+							<key>Digest</key>
+							<data>
+							+2SDDlkdBjms49GYvPCe
+							3g==
+							</data>
+							<key>Size</key>
+							<integer>36111</integer>
 						</dict>
 						<key>rw_common/version.txt</key>
 						<dict>
 							<key>Digest</key>
 							<data>
-							lznvxPASkudkyGyqWa81
-							Pg==
+							N+zSdghICqNWmlEaY4yn
+							Tw==
 							</data>
 							<key>Size</key>
 							<integer>4</integer>

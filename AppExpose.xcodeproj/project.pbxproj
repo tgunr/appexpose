@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		751E7288153A7F69006C9F80 /* PMUtility.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75F636661538E08B0079D063 /* PMUtility.framework */; };
-		7528A12F153A94050077D483 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7528A12E153A94050077D483 /* Quartz.framework */; };
-		752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752BC7DE14B5A0F4009ACADB /* Cocoa.framework */; };
 		752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
 		752BC7EB14B5A0F4009ACADB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7EA14B5A0F4009ACADB /* main.m */; };
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
@@ -21,9 +19,11 @@
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
 		75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExpose.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
+		75A1A23C1D1E2742005CAEA5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A1A23B1D1E2742005CAEA5 /* Security.framework */; };
+		75A1A23E1D1E274F005CAEA5 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A1A23D1D1E274F005CAEA5 /* Quartz.framework */; };
+		75A1A2401D1E275B005CAEA5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A1A23F1D1E275B005CAEA5 /* Cocoa.framework */; };
 		75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
 		75C8358D153DFFBC009021F4 /* XATTR.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
-		75C904891543042B004FC088 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C904881543042B004FC088 /* Security.framework */; };
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
 		75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049B1545C6A3004FC088 /* redpadlock.png */; };
 		75C9049F15461D09004FC088 /* CompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C9049E15461D09004FC088 /* CompositeView.m */; };
@@ -39,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		75BFB9371821ED2700E1D784 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 754C47EE15DC2DF100316C67;
+			remoteInfo = pmutility;
+		};
 		75C83586153DFF29009021F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
@@ -91,9 +98,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7528A12E153A94050077D483 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		752BC7DA14B5A0F4009ACADB /* AppExpose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExpose.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		752BC7DE14B5A0F4009ACADB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		752BC7E214B5A0F4009ACADB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		752BC7E314B5A0F4009ACADB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -109,11 +114,12 @@
 		756DF6F91551D8D600558DD4 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
 		756DF7011551E35300558DD4 /* after-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "after-32.png"; sourceTree = "<group>"; };
-		756DF7151553503400558DD4 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = Library/Frameworks/FScript.framework; sourceTree = SDKROOT; };
 		75A01429154F2A1800AA6F70 /* AppExpose.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExpose.icns; sourceTree = SOURCE_ROOT; };
 		75A0142B154F34DA00AA6F70 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		75A1A23B1D1E2742005CAEA5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		75A1A23D1D1E274F005CAEA5 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
+		75A1A23F1D1E275B005CAEA5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		75C8356C153DFC0D009021F4 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = xattr/xattr.xcodeproj; sourceTree = "<group>"; };
-		75C904881543042B004FC088 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		75C904971545C635004FC088 /* red-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-lock.png"; sourceTree = "<group>"; };
 		75C9049B1545C6A3004FC088 /* redpadlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpadlock.png; sourceTree = "<group>"; };
 		75C9049D15461D09004FC088 /* CompositeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeView.h; sourceTree = "<group>"; };
@@ -139,11 +145,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75C904891543042B004FC088 /* Security.framework in Frameworks */,
+				75A1A2401D1E275B005CAEA5 /* Cocoa.framework in Frameworks */,
+				75A1A23E1D1E274F005CAEA5 /* Quartz.framework in Frameworks */,
+				75A1A23C1D1E2742005CAEA5 /* Security.framework in Frameworks */,
 				75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */,
-				7528A12F153A94050077D483 /* Quartz.framework in Frameworks */,
 				75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */,
-				752BC7DF14B5A0F4009ACADB /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,10 +178,9 @@
 		752BC7DD14B5A0F4009ACADB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				756DF7151553503400558DD4 /* FScript.framework */,
-				75C904881543042B004FC088 /* Security.framework */,
-				7528A12E153A94050077D483 /* Quartz.framework */,
-				752BC7DE14B5A0F4009ACADB /* Cocoa.framework */,
+				75A1A23F1D1E275B005CAEA5 /* Cocoa.framework */,
+				75A1A23D1D1E274F005CAEA5 /* Quartz.framework */,
+				75A1A23B1D1E2742005CAEA5 /* Security.framework */,
 				752BC7E014B5A0F4009ACADB /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -257,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				75F636661538E08B0079D063 /* PMUtility.framework */,
+				75BFB9381821ED2700E1D784 /* libpmutility.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -331,6 +337,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		75BFB9381821ED2700E1D784 /* libpmutility.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpmutility.a;
+			remoteRef = 75BFB9371821ED2700E1D784 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		75C83587153DFF29009021F4 /* xattr */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -390,7 +403,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "set -x\ncodesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XATTR.framework/Versions/A\ncodesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUtility.framework/Versions/A\n";
+			shellScript = "#set -x\n#codesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XATTR.framework/Versions/A\n#codesign -f -v -s \"3rd Party Mac Developer Application: polyMicro Systems\" ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUtility.framework/Versions/A\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -479,7 +492,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -500,21 +513,28 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"",
+					"/Applications/F-Script20100614/FScript.framework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -523,15 +543,18 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};

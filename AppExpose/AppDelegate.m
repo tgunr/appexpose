@@ -9,10 +9,6 @@
 #import "AppDelegate.h"
 #import "AppEntry.h"
 #import "MyWindowController.h"
-#ifdef DEBUG
-#warning Using FSCRIPT 
-#import "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/Library/Frameworks/FScript.framework/Headers/FScript.h"
-#endif
 
 @interface AppDelegate ()
 
@@ -75,9 +71,6 @@
         appDirectory = directory;
     }
 	myWindowController.viewController.url = [NSURL fileURLWithPath: appDirectory];
-#ifdef DEBUG
-    [[NSApp mainMenu] addItem:[[FScriptMenuItem alloc] init]];
-#endif
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender

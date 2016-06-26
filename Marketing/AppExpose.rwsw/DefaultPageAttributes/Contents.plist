@@ -9,6 +9,11 @@
 			<dict>
 				<key>ColourStyles</key>
 				<dict>
+					<key>D Scribe 2</key>
+					<dict>
+						<key>%colour_body_background%</key>
+						<string>#465D6D</string>
+					</dict>
 					<key>Manitoba</key>
 					<dict>
 						<key>%colour_header_border%</key>
@@ -45,6 +50,22 @@
 				<string>utf-8</string>
 				<key>ThemeStyles</key>
 				<dict>
+					<key>D Scribe 2</key>
+					<array>
+						<string>Background.Strip 3</string>
+						<string>Badge.No Image</string>
+						<string>Banner Effects.None</string>
+						<string>Banner Image.Banner 1</string>
+						<string>Header Font.Lucida Grande</string>
+						<string>Navigation Style.30px Nav Only</string>
+						<string>Navigation Tabs.5 Tabs</string>
+						<string>Page Glow.On</string>
+						<string>Search.Disable</string>
+						<string>Sidebar.None</string>
+						<string>Slide Setup.Disable</string>
+						<string>Text Font.Helvetica</string>
+						<string>Title Size.Medium</string>
+					</array>
 					<key>Manitoba</key>
 					<array>
 						<string>Header Alignment.Left</string>
