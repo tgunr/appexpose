@@ -408,7 +408,7 @@
             }
             ok = [ws setIcon: [entry iconImage] forFile: [aURL path] options: 0];
             if (!ok) {
-                PMERR(1, @"Failed to set icon on: %@", url);
+                PMLOG_ERR(1, @"Failed to set icon on: %@", url);
             }
         }
     }

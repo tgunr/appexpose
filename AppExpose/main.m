@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        pmLOGSetVerbose(1);
+        PMLOG_SetVerbose(1);
         return NSApplicationMain(argc, (const char **)argv);
     }
 }
