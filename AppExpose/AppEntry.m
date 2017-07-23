@@ -19,7 +19,7 @@
 @implementation NSImage (Dump)
 
 - (void) dump {
-    NSBitmapImageRep *imageRep = [[self representations] objectAtIndex:0];
+    NSBitmapImageRep *imageRep = (NSBitmapImageRep *)[[self representations] objectAtIndex:0];
     NSData           *data     = [imageRep representationUsingType:NSPNGFileType properties:nil];
     [data writeToFile:@"/tmp/image.png" atomically:NO];
 }
