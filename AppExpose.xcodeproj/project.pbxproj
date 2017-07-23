@@ -13,15 +13,15 @@
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
+		7538C6211D215ACE00A96CB7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538C6201D215ACE00A96CB7 /* Cocoa.framework */; };
+		7538C6231D215ADB00A96CB7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538C6221D215ADB00A96CB7 /* Quartz.framework */; };
+		7538C6251D215AED00A96CB7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538C6241D215AED00A96CB7 /* Security.framework */; };
 		756DF6F81551D68600558DD4 /* Finder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F71551D68600558DD4 /* Finder.icns */; };
 		756DF6FA1551D8D600558DD4 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F91551D8D600558DD4 /* Folder.png */; };
 		756DF7001551E2EA00558DD4 /* before-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6FF1551E2EA00558DD4 /* before-32.png */; };
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
 		75A0142A154F2A1800AA6F70 /* AppExpose.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExpose.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
-		75A1A23C1D1E2742005CAEA5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A1A23B1D1E2742005CAEA5 /* Security.framework */; };
-		75A1A23E1D1E274F005CAEA5 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A1A23D1D1E274F005CAEA5 /* Quartz.framework */; };
-		75A1A2401D1E275B005CAEA5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A1A23F1D1E275B005CAEA5 /* Cocoa.framework */; };
 		75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
 		75C8358D153DFFBC009021F4 /* XATTR.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75C83589153DFF29009021F4 /* XATTR.framework */; };
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
@@ -117,6 +117,9 @@
 		752BC7F014B5A0F4009ACADB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		752BC7F114B5A0F4009ACADB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		752BC7F414B5A0F5009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		7538C6201D215ACE00A96CB7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		7538C6221D215ADB00A96CB7 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		7538C6241D215AED00A96CB7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		756DF6F71551D68600558DD4 /* Finder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Finder.icns; sourceTree = "<group>"; };
 		756DF6F91551D8D600558DD4 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
@@ -152,9 +155,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75A1A2401D1E275B005CAEA5 /* Cocoa.framework in Frameworks */,
-				75A1A23E1D1E274F005CAEA5 /* Quartz.framework in Frameworks */,
-				75A1A23C1D1E2742005CAEA5 /* Security.framework in Frameworks */,
+				7538C6251D215AED00A96CB7 /* Security.framework in Frameworks */,
+				7538C6231D215ADB00A96CB7 /* Quartz.framework in Frameworks */,
+				7538C6211D215ACE00A96CB7 /* Cocoa.framework in Frameworks */,
 				75C8358C153DFFB5009021F4 /* XATTR.framework in Frameworks */,
 				75F6366B1538E2410079D063 /* PMUtility.framework in Frameworks */,
 			);
@@ -185,6 +188,9 @@
 		752BC7DD14B5A0F4009ACADB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7538C6241D215AED00A96CB7 /* Security.framework */,
+				7538C6221D215ADB00A96CB7 /* Quartz.framework */,
+				7538C6201D215ACE00A96CB7 /* Cocoa.framework */,
 				75A1A23F1D1E275B005CAEA5 /* Cocoa.framework */,
 				75A1A23D1D1E274F005CAEA5 /* Quartz.framework */,
 				75A1A23B1D1E2742005CAEA5 /* Security.framework */,
@@ -316,6 +322,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
+				TargetAttributes = {
+					752BC7D914B5A0F4009ACADB = {
+						LastSwiftMigration = 0800;
+					};
+				};
 			};
 			buildConfigurationList = 752BC7D414B5A0F4009ACADB /* Build configuration list for PBXProject "AppExpose" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -550,6 +561,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -570,6 +582,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
 			};
