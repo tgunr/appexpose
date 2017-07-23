@@ -195,8 +195,8 @@
                         change:(NSDictionary*)change 
                        context:(void *)context
 {
-    [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:NO];
-    [[[[NSApp delegate] myWindowController] progressIndicator] startAnimation:self];
+    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:NO];
+    [[[[AppDelegate shared] myWindowController] progressIndicator] startAnimation:self];
 
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
@@ -249,8 +249,8 @@
                     [dirEnumerator skipDescendents];
             }
         }
-        [[[[NSApp delegate] myWindowController] progressIndicator] stopAnimation:self];
-        [[[[NSApp delegate] myWindowController] progressIndicator] setHidden:YES];
+        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
+        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
         [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
     }
