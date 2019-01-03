@@ -39,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7512926B21DE766B00248D07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75C8356C153DFC0D009021F4 /* xattr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 751186AF1559A08C00D064F2;
+			remoteInfo = xattrlib;
+		};
 		75BFB9371821ED2700E1D784 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75F6365E1538E08B0079D063 /* PMUtility.xcodeproj */;
@@ -254,6 +261,7 @@
 			children = (
 				75C83587153DFF29009021F4 /* xattr */,
 				75C83589153DFF29009021F4 /* XATTR.framework */,
+				7512926C21DE766B00248D07 /* libxattrlib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -337,6 +345,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		7512926C21DE766B00248D07 /* libxattrlib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libxattrlib.a;
+			remoteRef = 7512926B21DE766B00248D07 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		75BFB9381821ED2700E1D784 /* libpmutility.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -472,7 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
@@ -490,9 +505,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -500,7 +515,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -512,15 +527,14 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"",
@@ -531,7 +545,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -543,7 +556,6 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -551,7 +563,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExpose-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;

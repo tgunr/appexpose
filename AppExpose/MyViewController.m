@@ -249,10 +249,10 @@
                     [dirEnumerator skipDescendents];
             }
         }
-        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
+//        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
+//        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
-        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
+//        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
     }
 }
 
