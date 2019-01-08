@@ -535,7 +535,6 @@
 		752BC7F914B5A0F5009ACADB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"",
 					"/Applications/F-Script20100614/FScript.framework",
@@ -547,6 +546,7 @@
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
@@ -556,7 +556,6 @@
 		752BC7FA14B5A0F5009ACADB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/DerivedData/Build/Products/$(CONFIGURATION)\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExpose/AppExpose-Prefix.pch";
@@ -565,6 +564,7 @@
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/xattr/**";
 				WRAPPER_EXTENSION = app;
