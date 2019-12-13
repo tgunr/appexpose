@@ -261,7 +261,7 @@
 			children = (
 				75C83587153DFF29009021F4 /* xattr */,
 				75C83589153DFF29009021F4 /* XATTR.framework */,
-				7512926C21DE766B00248D07 /* libxattrlib.a */,
+				7512926C21DE766B00248D07 /* libxattrlib.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -322,6 +322,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 752BC7CF14B5A0F4009ACADB;
@@ -345,10 +346,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		7512926C21DE766B00248D07 /* libxattrlib.a */ = {
+		7512926C21DE766B00248D07 /* libxattrlib.dylib */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libxattrlib.a;
+			fileType = "compiled.mach-o.dylib";
+			path = libxattrlib.dylib;
 			remoteRef = 7512926B21DE766B00248D07 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
