@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -623,7 +623,8 @@
                                     <action selector="performMiniaturize:" target="-1" id="37"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom" id="239">
+                            <menuItem title="Zoom" keyEquivalent="" id="239">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="240"/>
                                 </connections>
@@ -658,7 +659,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="550" y="450" width="735" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1577"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
             <value key="minSize" type="size" width="500" height="330"/>
             <view key="contentView" id="597" userLabel="Content View">
                 <rect key="frame" x="0.0" y="0.0" width="735" height="500"/>
@@ -676,7 +677,7 @@
                         <rect key="frame" x="0.0" y="485" width="735" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="601">
-                            <font key="font" metaFont="smallSystem"/>
+                            <font key="font" metaFont="menu" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -711,7 +712,7 @@
                             <rect key="frame" x="0.0" y="14" width="180" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <searchFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" bezelStyle="round" id="611">
-                                <font key="font" metaFont="smallSystem"/>
+                                <font key="font" metaFont="menu" size="11"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
@@ -858,7 +859,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="272" y="199" width="276" height="378"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1577"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
             <view key="contentView" id="650">
                 <rect key="frame" x="0.0" y="0.0" width="276" height="378"/>
                 <autoresizingMask key="autoresizingMask"/>

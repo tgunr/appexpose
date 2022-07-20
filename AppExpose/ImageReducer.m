@@ -280,7 +280,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
         if (CGRectIsInfinite(extent)) {
             extent.size.width = 1024;
             extent.size.height = 1024;
-            NSLog(@"-[%@ %s] Trimmed infinite rect to arbitrary finite rect", self, _cmd);
+            NSLog(@"-[%@ %@] Trimmed infinite rect to arbitrary finite rect", self, NSStringFromSelector(_cmd));
         }
 
         // Compute size of output bitmap.

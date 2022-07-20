@@ -11,6 +11,7 @@
 		75A1A2531D20782C005CAEA5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A1A2521D20782C005CAEA5 /* ViewController.swift */; };
 		75A1A2551D20782C005CAEA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A1A2541D20782C005CAEA5 /* Assets.xcassets */; };
 		75A1A2581D20782C005CAEA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A1A2561D20782C005CAEA5 /* Main.storyboard */; };
+		75A619762429BED40061ECDD /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A619752429BED40061ECDD /* AppEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		75A1A2641D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75A1A26D1D20782C005CAEA5 /* appIconsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appIconsUITests.swift; sourceTree = "<group>"; };
 		75A1A26F1D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75A619752429BED40061ECDD /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				75A1A2541D20782C005CAEA5 /* Assets.xcassets */,
 				75A1A2561D20782C005CAEA5 /* Main.storyboard */,
 				75A1A2591D20782C005CAEA5 /* Info.plist */,
+				75A619752429BED40061ECDD /* AppEntry.swift */,
 			);
 			path = appIcons;
 			sourceTree = "<group>";
@@ -127,6 +130,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -159,6 +163,7 @@
 			files = (
 				75A1A2531D20782C005CAEA5 /* ViewController.swift in Sources */,
 				75A1A2511D20782C005CAEA5 /* AppDelegate.swift in Sources */,
+				75A619762429BED40061ECDD /* AppEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

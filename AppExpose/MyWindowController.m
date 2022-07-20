@@ -180,7 +180,7 @@
     NSInteger value = [zoomSlider integerValue];
 //    int scales[] = { 32, 64, 128, 256, 512, 1024 } ;
 //    int scale = scales[value];
-    PMLOG(2,@"zoom: %f", (CGFloat)value);
+    PMLOG_DEBUG(@"zoom: %f", (CGFloat)value);
     [viewController zoomChanged: (CGFloat)value];
 }
 

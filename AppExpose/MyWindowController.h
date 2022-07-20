@@ -59,7 +59,7 @@
     IBOutlet NSButton *removeButton;
     IBOutlet NSButton *selectAllButton;
     IBOutlet IKImageView *iconView;
-    IBOutlet IKImageBrowserView *iconsView;
+    IBOutlet NSCollectionView *iconsView;
     IBOutlet NSSegmentedControl *appearanceControl;
     IBOutlet NSSlider *zoomSlider;
     NSProgressIndicator *progressIndicator;
@@ -73,7 +73,7 @@
 @property (nonatomic, strong) IBOutlet NSButton *removeButton;
 @property (nonatomic, strong) IBOutlet NSButton *selectAllButton;
 @property (nonatomic, strong) IBOutlet IKImageView *iconView;
-@property (nonatomic, strong) IBOutlet IKImageBrowserView *iconsView;
+@property (nonatomic, strong) IBOutlet NSCollectionView *iconsView;
 @property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
 @property (nonatomic, strong) IBOutlet NSSlider *zoomSlider;
 @property (nonatomic, strong) IBOutlet NSProgressIndicator *progressIndicator;

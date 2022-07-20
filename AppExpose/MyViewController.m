@@ -200,7 +200,8 @@
 
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
-	[NSThread detachNewThreadSelector:	@selector(collectFolders:)
+    PMLOG_SetVerbose(PMLogLevelDebug);
+    [NSThread detachNewThreadSelector:	@selector(collectFolders:)
                              toTarget:self		// we are the target
                            withObject:url];
 }
@@ -240,7 +241,7 @@
                 if (![isPackage boolValue]) {
                     AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
                     if (![entry isApp]) {
-                        PMLOG(2, @"adding: %@", theURL);
+                        PMLOG_DEBUG(@"adding: %@", theURL);
                         [self performSelectorOnMainThread:@selector(setIcon:) withObject:entry waitUntilDone:YES];
                         [tempArray addObject: entry];
                         [dirEnumerator skipDescendents];

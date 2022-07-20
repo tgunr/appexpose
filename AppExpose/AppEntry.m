@@ -19,8 +19,8 @@
 @implementation NSImage (Dump)
 
 - (void) dump {
-    NSBitmapImageRep *imageRep = (NSBitmapImageRep *)[[self representations] objectAtIndex:0];
-    NSData           *data     = [imageRep representationUsingType:NSPNGFileType properties:nil];
+    NSBitmapImageRep *imgRep = (NSBitmapImageRep *)[[self representations] objectAtIndex: 0];
+    NSData *data = [imgRep representationUsingType: NSPNGFileType properties: nil];
     [data writeToFile:@"/tmp/image.png" atomically:NO];
 }
 
@@ -120,13 +120,13 @@
         [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.8];
         [self drawRect:NSMakeRect(0.0, 0.0, ICON_SIZE, ICON_SIZE)];
         int i, j;
-        int count = MIN(9, numImages);
+        long count = MIN(9, numImages);
         BOOL stop = NO;
         NSPoint point;
 //        CGFloat offset = resultImageSize.width / 8.0;
         CGFloat offset = resultImageSize.width * 0.64065;
         point.y = offset;
-        PMLOG(2, @"name: %@ images: %d",name, numImages);
+        PMLOG_DEBUG(@"name: %@ images: %d",name, numImages);
 
         for (i = 0; i < 3; i++) {
             point.x = offset;
@@ -134,7 +134,7 @@
                 AppEntry *entry          = [childEntries objectAtIndex:(i*3)+j];
                 NSImage  *imageToCompose = [[entry iconImage] copy];
                 [imageToCompose setSize:littleIconSize];
-                PMLOG(2, @"point: %f,%f", point.x, point.y);
+                PMLOG_DEBUG(@"point: %f,%f", point.x, point.y);
                 [imageToCompose drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
                 count--;
                 if (count == 0) {

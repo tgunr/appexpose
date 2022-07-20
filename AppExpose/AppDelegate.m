@@ -66,6 +66,7 @@
     if (debug) {
         appDirectory = @"/Users/davec/Applications/";
     }
+    appDirectory = @"/Applications/";
     NSString *directory = [defaults stringForKey:@"path"];
     if (directory) {
         appDirectory = directory;
