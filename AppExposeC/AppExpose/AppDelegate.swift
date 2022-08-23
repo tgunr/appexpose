@@ -1,0 +1,114 @@
+//  Converted to Swift 5.6.1 by Swiftify v5.6.26165 - https://swiftify.com/
+//
+//  AppDelegate.swift
+//  AppExpose
+//
+//  Created by Dave Carlton on 1/5/12.
+//  Copyright (c) 2012 PolyMicro Systems. All rights reserved.
+//
+
+import Cocoa
+
+@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate {
+    var myAuthorizationRef: AuthorizationRef?
+
+
+
+
+
+
+    private var appDirectory: String?
+    private var dirItems: [AnyHashable]?
+    private var dirPath: String?
+    private var rootEntry: AppEntry?
+
+    @IBOutlet var myWindowController: MyWindowController!
+    @IBOutlet var window: NSWindow!
+    @IBOutlet var iconCollection: NSCollectionView!
+    @IBOutlet var appBrowser: NSBrowser!
+    @IBOutlet var iconAppearance: NSSegmentedControl!
+
+    static let sharedAppDelegate: AppDelegate? = {
+        var appDelegate = self.init()
+        return appDelegate
+    }()
+
+    class func shared() -> Any? {
+
+        // `dispatch_once()` call was converted to a static variable initializer
+        return sharedAppDelegate
+    }
+
+    override init() {
+        super.init()
+        rootEntry = .root()
+    }
+
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        //    OSStatus myStatus;
+        //    myStatus = AuthorizationCreate (NULL, kAuthorizationEmptyEnvironment,
+        //                                    kAuthorizationFlagDefaults, &myAuthorizationRef);
+        //    AuthorizationFlags myFlags;
+        //    myFlags = kAuthorizationFlagDefaults |
+        //    kAuthorizationFlagExtendRights |
+        //    kAuthorizationFlagInteractionAllowed |
+        //    kAuthorizationFlagPreAuthorize;
+
+        let paths = FileManager.default.urls(for: .applicationDirectory, in: .systemDomainMask).map(\.path)
+        appDirectory = paths[0]
+        if paths.count > 0 {
+            appDirectory = paths[0]
+        }
+        appDirectory = (appDirectory ?? "") + "/"
+        let defaults = UserDefaults.standard
+        let debug = defaults.bool(forKey: "debug")
+        if debug {
+            appDirectory = "/Volumes/Applications/"
+        }
+        appDirectory = "/Applications/"
+        #if DEBUG
+        appDirectory = "/Volumes/Applications"
+        #endif
+        let directory = defaults.string(forKey: "path")
+        if let directory = directory {
+            appDirectory = directory
+        }
+        myWindowController.viewController?.url = URL(fileURLWithPath: appDirectory ?? "")
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+
+    @IBAction func openReadMe(_ sender: Any) {
+        let fullPath = Bundle.main.path(forResource: "ReadMe", ofType: "txt")
+        NSWorkspace.shared.openFile(fullPath ?? "")
+    }
+
+    // MARK: NSBrowser Data Source Methods
+
+    func rootItem(for browser: NSBrowser) -> Any? {
+        return rootEntry
+    }
+
+    func browser(_ browser: NSBrowser, numberOfChildrenOfItem item: Any?) -> Int {
+        return (item as? AppEntry)?.childEntries?.count ?? 0
+    }
+
+    func browser(_ browser: NSBrowser, child index: Int, ofItem item: Any?) -> Any {
+        return ((item as? AppEntry)?.childEntries?[index])!
+    }
+
+    func browser(_ browser: NSBrowser, isLeafItem item: Any?) -> Bool {
+        return (item as? AppEntry)?.isLeaf ?? false
+    }
+
+    func browser(_ browser: NSBrowser, objectValueForItem item: Any?) -> Any? {
+        return (item as? AppEntry)?.name
+    }
+
+    func selectionChanged() {
+        myWindowController.selectionChanged()
+    }
+}
