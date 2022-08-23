@@ -304,6 +304,7 @@
 				GCC_PREFIX_HEADER = "AppExposeSwift-Prefix.pch";
 				INFOPLIST_FILE = appIcons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appIcons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -323,6 +324,7 @@
 				GCC_PREFIX_HEADER = "AppExposeSwift-Prefix.pch";
 				INFOPLIST_FILE = appIcons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appIcons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
