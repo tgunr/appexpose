@@ -7,7 +7,7 @@
 //
 
 #import "AppEntry.h"
-#import "XATTR/xattr.h"
+#import "xattr/xattr.h"
 #import "CompositeView.h"
 #import "AppDelegate.h"
 #import "ImageReducer.h"
