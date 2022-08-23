@@ -5,6 +5,6 @@
       location = "group:AppExposeC/AppExposeC.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:AppExpose/AppExpose.xcodeproj">
+      location = "group:AppExposeS/AppExposeS.xcodeproj">
    </FileRef>
 </Workspace>
