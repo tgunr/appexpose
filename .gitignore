@@ -6,3 +6,5 @@ AppExposeC/DerivedData
 *.xcbkptlist
 *.xcuserdata
 AppExposeC/AppExposeC.xcodeproj/project.xcworkspace/xcuserdata/davec.xcuserdatad
+AppExposeSwift/DerivedData
+AppExposeC.backup
