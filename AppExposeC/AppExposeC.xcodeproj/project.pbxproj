@@ -72,19 +72,19 @@
 			remoteGlobalIDString = 759BC1921F27CC0E008DF41B;
 			remoteInfo = xattrlib;
 		};
-		753C0A6828B502A800DE1D87 /* PBXContainerItemProxy */ = {
+		753C0A7C28B5150900DE1D87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 753C0A5928B501BE00DE1D87 /* xattr.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 7589631C1F27B6EB005C9ED8;
-			remoteInfo = All;
+			remoteGlobalIDString = 75C8355A153DFAB8009021F4;
+			remoteInfo = XATTR;
 		};
-		753C0A6A28B502AD00DE1D87 /* PBXContainerItemProxy */ = {
+		753C0A7E28B5150E00DE1D87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 753C0A4F28B501A900DE1D87 /* PMUtility.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 757F4F9C15FCF709008753DA;
-			remoteInfo = "PMUtility Aggragate";
+			remoteGlobalIDString = 7535D1CE14DF240C00613F39;
+			remoteInfo = PMUtility;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -297,8 +297,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				753C0A6B28B502AD00DE1D87 /* PBXTargetDependency */,
-				753C0A6928B502A800DE1D87 /* PBXTargetDependency */,
+				753C0A7F28B5150E00DE1D87 /* PBXTargetDependency */,
+				753C0A7D28B5150900DE1D87 /* PBXTargetDependency */,
 			);
 			name = AppExposeC;
 			productName = AppExpose;
@@ -445,15 +445,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		753C0A6928B502A800DE1D87 /* PBXTargetDependency */ = {
+		753C0A7D28B5150900DE1D87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = All;
-			targetProxy = 753C0A6828B502A800DE1D87 /* PBXContainerItemProxy */;
+			name = XATTR;
+			targetProxy = 753C0A7C28B5150900DE1D87 /* PBXContainerItemProxy */;
 		};
-		753C0A6B28B502AD00DE1D87 /* PBXTargetDependency */ = {
+		753C0A7F28B5150E00DE1D87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "PMUtility Aggragate";
-			targetProxy = 753C0A6A28B502AD00DE1D87 /* PBXContainerItemProxy */;
+			name = PMUtility;
+			targetProxy = 753C0A7E28B5150E00DE1D87 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
