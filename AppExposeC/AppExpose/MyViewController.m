@@ -7,6 +7,8 @@
 #import "MyViewController.h"
 #import "MyWindowController.h"
 #import "AppEntry.h"
+#import "PMUtility/pmUtility.h"
+#import "xattr/xattr.h"
 
 @implementation IconViewBox
 

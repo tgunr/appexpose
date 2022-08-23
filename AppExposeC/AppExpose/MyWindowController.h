@@ -58,7 +58,7 @@
     IBOutlet NSButton *applyButton;
     IBOutlet NSButton *removeButton;
     IBOutlet NSButton *selectAllButton;
-    IBOutlet IKImageView *iconView;
+    IBOutlet NSImageView *iconView;
     IBOutlet NSCollectionView *iconsView;
     IBOutlet NSSegmentedControl *appearanceControl;
     IBOutlet NSSlider *zoomSlider;
@@ -72,7 +72,7 @@
 @property (nonatomic, strong) IBOutlet NSButton *applyButton;
 @property (nonatomic, strong) IBOutlet NSButton *removeButton;
 @property (nonatomic, strong) IBOutlet NSButton *selectAllButton;
-@property (nonatomic, strong) IBOutlet IKImageView *iconView;
+@property (nonatomic, strong) IBOutlet NSImageView *iconView;
 @property (nonatomic, strong) IBOutlet NSCollectionView *iconsView;
 @property (nonatomic, strong) IBOutlet NSSegmentedControl *appearanceControl;
 @property (nonatomic, strong) IBOutlet NSSlider *zoomSlider;

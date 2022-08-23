@@ -46,6 +46,7 @@
 #import "ImageReducer.h"
 #import "NSBezierPathAdditions.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Quartz/Quartz.h>
 
 static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
