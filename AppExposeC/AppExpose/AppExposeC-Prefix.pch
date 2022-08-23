@@ -6,7 +6,6 @@
     #import <Cocoa/Cocoa.h>
     #import <Quartz/Quartz.h>
     #import <AppKit/AppKit.h>
-//    #import <PMUtility/PMUtility.h>
-//    #import <XATTR/XATTR.h>
-
+    #import <PMUtility/pmUtility.h>
+    #import <xattr/xattr.h>
 #endif
