@@ -1,3 +1,6 @@
 .idea
 ScriptingBridgeFinder
 build
+AppExpose/DerivedData
+AppExposeC/DerivedData
+*.xcbkptlist
