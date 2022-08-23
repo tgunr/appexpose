@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B" : 0,
+    "2D188259364E909A6688B4077F742123CCC9E56D" : 0,
+    "69458C7A151E565472FB3136516E319CAE7C4077" : 0,
+    "9AC619E8EE2BC65C7ED3E5C8D34055ADA7FFF648" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AD6E18AE-9906-4709-B9DC-9EAFFD11D99D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B" : "AppExposeC\/",
+    "2D188259364E909A6688B4077F742123CCC9E56D" : "AppExposeC\/PMUtility\/",
+    "69458C7A151E565472FB3136516E319CAE7C4077" : "..\/..\/usr",
+    "9AC619E8EE2BC65C7ED3E5C8D34055ADA7FFF648" : "AppExposeC\/xattr\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "AppExposeC",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "AppExposeC.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@bitbucket.org:tgunr\/pmutility.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2D188259364E909A6688B4077F742123CCC9E56D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@bitbucket.org:tgunr\/usr.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "69458C7A151E565472FB3136516E319CAE7C4077"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@bitbucket.org:tgunr\/xattr.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9AC619E8EE2BC65C7ED3E5C8D34055ADA7FFF648"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git@bitbucket.org:tgunr\/appexpose.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B" : 9223372036854775807,
+    "9AC619E8EE2BC65C7ED3E5C8D34055ADA7FFF648" : 9223372036854775807,
+    "2D188259364E909A6688B4077F742123CCC9E56D" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A13E0B39-72F4-4880-AE4A-408A4013D8BE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B" : "AppExpose\/",
+    "9AC619E8EE2BC65C7ED3E5C8D34055ADA7FFF648" : "AppExpose\/xattr\/",
+    "2D188259364E909A6688B4077F742123CCC9E56D" : "AppExpose\/PMUtility\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "AppExpose",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "AppExpose.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:tgunr\/pmutility.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2D188259364E909A6688B4077F742123CCC9E56D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:tgunr\/xattr.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9AC619E8EE2BC65C7ED3E5C8D34055ADA7FFF648"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:tgunr\/appexpose.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F0C175FF315ECDD40BE46A7DC869F51ECFE0116B"
+    }
+  ]
+}
