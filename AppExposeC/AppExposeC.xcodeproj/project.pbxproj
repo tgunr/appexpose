@@ -34,7 +34,6 @@
 		75FE04A928B2778800129B47 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04A828B2778800129B47 /* Security.framework */; };
 		75FE04AB28B2779900129B47 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04AA28B2779900129B47 /* Quartz.framework */; };
 		75FE04AD28B277A500129B47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04AC28B277A500129B47 /* Cocoa.framework */; };
-		E54E4107BC5A0CD03D907FD1 /* AppExposeC-Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1E4932A63CAB7423767B10 /* AppExposeC-Prefix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,9 +101,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0A1E4932A63CAB7423767B10 /* AppExposeC-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeC-Prefix.swift"; sourceTree = "<group>"; };
-		28B045E0BAA2EABF8E40C335 /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Swiftify.README.md; sourceTree = "<group>"; };
-		56CC4973A60797968061B9DC /* AppExposeC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Bridging-Header.h"; sourceTree = "<group>"; };
 		752BC7DA14B5A0F4009ACADB /* AppExposeC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		752BC7E214B5A0F4009ACADB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -171,9 +167,6 @@
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
 				752BC7DD14B5A0F4009ACADB /* Frameworks */,
 				752BC7DB14B5A0F4009ACADB /* Products */,
-				0A1E4932A63CAB7423767B10 /* AppExposeC-Prefix.swift */,
-				56CC4973A60797968061B9DC /* AppExposeC-Bridging-Header.h */,
-				28B045E0BAA2EABF8E40C335 /* Swiftify.README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -446,7 +439,6 @@
 				75C9049F15461D09004FC088 /* CompositeView.m in Sources */,
 				75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */,
 				75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */,
-				E54E4107BC5A0CD03D907FD1 /* AppExposeC-Prefix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,7 +599,6 @@
 				DEVELOPMENT_TEAM = BG856GB4D8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AppExpose/AppExposeC-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
@@ -617,7 +608,6 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
@@ -634,7 +624,6 @@
 				DEVELOPMENT_TEAM = BG856GB4D8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AppExpose/AppExposeC-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
@@ -644,7 +633,6 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
