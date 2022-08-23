@@ -4,3 +4,4 @@ build
 AppExpose/DerivedData
 AppExposeC/DerivedData
 *.xcbkptlist
+*.xcuserdata
