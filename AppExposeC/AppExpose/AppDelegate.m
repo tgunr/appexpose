@@ -64,9 +64,12 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL debug = [defaults boolForKey:@"debug"];
     if (debug) {
-        appDirectory = @"/Users/davec/Applications/";
+        appDirectory = @"/Volumes/Applications/";
     }
     appDirectory = @"/Applications/";
+#ifdef DEBUG
+    appDirectory = @"/Volumes/Applications";
+#endif
     NSString *directory = [defaults stringForKey:@"path"];
     if (directory) {
         appDirectory = directory;
