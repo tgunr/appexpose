@@ -9,15 +9,23 @@ import SwiftUI
 
 @main
 struct MyApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var model = AppFolders()
     var body: some Scene {
-        WindowGroup {
-
+        WindowGroup(String("AppExpose"), id: "root") {
+            //            ExampleView().frame(maxWidth: .infinity, maxHeight: .infinity)
             ToolbarView().frame(maxWidth: .infinity, maxHeight: .infinity)
+            ContentView(appDelegate: appDelegate)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-        }.commands {
-            // This is optional, but adds menu items for toolbar customization
-            ToolbarCommands()
         }
+        Settings {
+            PreferencesView(model: model)
+        }
+//        }.commands {
+            // This is optional, but adds menu items for toolbar customization
+//            ToolbarCommands()
+//        }
     }
 }
 
@@ -27,8 +35,8 @@ struct ToolbarView: View {
     @State private var remove = false
     @State private var selectAll = false
     var body: some View {
-        
-        Color.clear
+        Text("Top")
+//        Color.clear
             .toolbar(id: "mytb") {
                 ToolbarItem(id: "before", placement: .automatic) {
                     Button(action: before, label: {
@@ -65,7 +73,7 @@ struct ToolbarView: View {
                 }
 
             }
-            .navigationTitle("AppsExposed")
+            .navigationTitle("Application Folders")
         
     }
     
@@ -75,5 +83,24 @@ struct ToolbarView: View {
     
     func after() {
         
+    }
+}
+
+func before() {
+    
+}
+
+struct ToolbarView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            ToolbarView()
+        }
+        .toolbar(id: "mytb") {
+            ToolbarItem(id: "before", placement: .automatic) {
+                Button(action: before, label: {
+                    Text("Before")
+                    Image(systemName: "arrowshape.turn.up.left.circle.fill") })
+            }
+        }
     }
 }
