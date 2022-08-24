@@ -7,18 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		75A1A2511D20782C005CAEA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A1A2501D20782C005CAEA5 /* AppDelegate.swift */; };
+		754582B028B583DF002A8EB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AF28B5835E002A8EB1 /* AppDelegate.swift */; };
+		754582B128B583DF002A8EB1 /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AC28B5835E002A8EB1 /* AppEntry.swift */; };
+		754582B228B583DF002A8EB1 /* CompositeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AA28B5835E002A8EB1 /* CompositeView.swift */; };
+		754582B328B583DF002A8EB1 /* ImageReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582A928B5835E002A8EB1 /* ImageReducer.swift */; };
+		754582B428B583DF002A8EB1 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AD28B5835E002A8EB1 /* MyViewController.swift */; };
+		754582B528B583DF002A8EB1 /* MyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AB28B5835E002A8EB1 /* MyWindowController.swift */; };
+		754582B628B583DF002A8EB1 /* NSBezierPathAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AE28B5835E002A8EB1 /* NSBezierPathAdditions.swift */; };
 		75A1A2531D20782C005CAEA5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A1A2521D20782C005CAEA5 /* ViewController.swift */; };
 		75A1A2551D20782C005CAEA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A1A2541D20782C005CAEA5 /* Assets.xcassets */; };
 		75A1A2581D20782C005CAEA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A1A2561D20782C005CAEA5 /* Main.storyboard */; };
-		75A619762429BED40061ECDD /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A619752429BED40061ECDD /* AppEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		458F43AC82B55A62031CE519 /* AppExposeSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeSwift-Bridging-Header.h"; sourceTree = "<group>"; };
-		752A4865A22B4B8B4813173B /* AppExposeSwift-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeSwift-Prefix.swift"; sourceTree = "<group>"; };
+		754582A928B5835E002A8EB1 /* ImageReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageReducer.swift; path = ../AppExposeC/AppExpose/ImageReducer.swift; sourceTree = "<group>"; };
+		754582AA28B5835E002A8EB1 /* CompositeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompositeView.swift; path = ../AppExposeC/AppExpose/CompositeView.swift; sourceTree = "<group>"; };
+		754582AB28B5835E002A8EB1 /* MyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyWindowController.swift; path = ../AppExposeC/AppExpose/MyWindowController.swift; sourceTree = "<group>"; };
+		754582AC28B5835E002A8EB1 /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppEntry.swift; path = ../AppExposeC/AppExpose/AppEntry.swift; sourceTree = "<group>"; };
+		754582AD28B5835E002A8EB1 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyViewController.swift; path = ../AppExposeC/AppExpose/MyViewController.swift; sourceTree = "<group>"; };
+		754582AE28B5835E002A8EB1 /* NSBezierPathAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NSBezierPathAdditions.swift; path = ../AppExposeC/AppExpose/NSBezierPathAdditions.swift; sourceTree = "<group>"; };
+		754582AF28B5835E002A8EB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppExposeC/AppExpose/AppDelegate.swift; sourceTree = "<group>"; };
 		75A1A24D1D20782C005CAEA5 /* AppExposeSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		75A1A2501D20782C005CAEA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75A1A2521D20782C005CAEA5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		75A1A2541D20782C005CAEA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75A1A2571D20782C005CAEA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -27,9 +36,6 @@
 		75A1A2641D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75A1A26D1D20782C005CAEA5 /* appIconsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appIconsUITests.swift; sourceTree = "<group>"; };
 		75A1A26F1D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		75A619752429BED40061ECDD /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
-		F5E64012AF7421255317161F /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Swiftify.README.md; sourceTree = "<group>"; };
-		FE56425590082B38A3301E3E /* AppExposeSwift-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeSwift-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,14 +52,17 @@
 		75A1A2441D20782C005CAEA5 = {
 			isa = PBXGroup;
 			children = (
+				754582AF28B5835E002A8EB1 /* AppDelegate.swift */,
+				754582AC28B5835E002A8EB1 /* AppEntry.swift */,
+				754582AA28B5835E002A8EB1 /* CompositeView.swift */,
+				754582A928B5835E002A8EB1 /* ImageReducer.swift */,
+				754582AD28B5835E002A8EB1 /* MyViewController.swift */,
+				754582AB28B5835E002A8EB1 /* MyWindowController.swift */,
+				754582AE28B5835E002A8EB1 /* NSBezierPathAdditions.swift */,
 				75A1A24F1D20782C005CAEA5 /* appIcons */,
 				75A1A2611D20782C005CAEA5 /* appIconsTests */,
 				75A1A26C1D20782C005CAEA5 /* appIconsUITests */,
 				75A1A24E1D20782C005CAEA5 /* Products */,
-				FE56425590082B38A3301E3E /* AppExposeSwift-Prefix.pch */,
-				752A4865A22B4B8B4813173B /* AppExposeSwift-Prefix.swift */,
-				458F43AC82B55A62031CE519 /* AppExposeSwift-Bridging-Header.h */,
-				F5E64012AF7421255317161F /* Swiftify.README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,12 +77,10 @@
 		75A1A24F1D20782C005CAEA5 /* appIcons */ = {
 			isa = PBXGroup;
 			children = (
-				75A1A2501D20782C005CAEA5 /* AppDelegate.swift */,
 				75A1A2521D20782C005CAEA5 /* ViewController.swift */,
 				75A1A2541D20782C005CAEA5 /* Assets.xcassets */,
 				75A1A2561D20782C005CAEA5 /* Main.storyboard */,
 				75A1A2591D20782C005CAEA5 /* Info.plist */,
-				75A619752429BED40061ECDD /* AppEntry.swift */,
 			);
 			path = appIcons;
 			sourceTree = "<group>";
@@ -168,9 +175,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				754582B028B583DF002A8EB1 /* AppDelegate.swift in Sources */,
+				754582B128B583DF002A8EB1 /* AppEntry.swift in Sources */,
+				754582B228B583DF002A8EB1 /* CompositeView.swift in Sources */,
+				754582B328B583DF002A8EB1 /* ImageReducer.swift in Sources */,
+				754582B428B583DF002A8EB1 /* MyViewController.swift in Sources */,
+				754582B528B583DF002A8EB1 /* MyWindowController.swift in Sources */,
+				754582B628B583DF002A8EB1 /* NSBezierPathAdditions.swift in Sources */,
 				75A1A2531D20782C005CAEA5 /* ViewController.swift in Sources */,
-				75A1A2511D20782C005CAEA5 /* AppDelegate.swift in Sources */,
-				75A619762429BED40061ECDD /* AppEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
