@@ -4,6 +4,4 @@ build
 AppExpose/DerivedData
 AppExposeC/DerivedData
 *.xcbkptlist
-*.xcuserdata
-AppExposeC/AppExposeC.xcodeproj/project.xcworkspace/xcuserdata/davec.xcuserdatad
-AppExposeC/AppExposeC.xcodeproj/xcuserdata/
+*/xcuserdataAppExposeC/AppExposeC.xcodeproj/xcuserdata/
