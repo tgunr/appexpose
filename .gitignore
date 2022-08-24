@@ -3,9 +3,7 @@ ScriptingBridgeFinder
 build
 AppExpose/DerivedData
 AppExposeC/DerivedData
-*.xcbkptlist
-*.xcuserdata
-AppExposeC/AppExposeC.xcodeproj/project.xcworkspace/xcuserdata/davec.xcuserdatad
 AppExposeSwift/DerivedData
 AppExposeC.backup
-AppExposeSwift/AppExposeSwift.xcodeproj/project.xcworkspace/xcuserdata/davec.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcbkptlist
+*/*.xcuserdata
