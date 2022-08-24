@@ -46,6 +46,7 @@
 #import "ImageReducer.h"
 #import "NSBezierPathAdditions.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Quartz/Quartz.h>
 
 static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
@@ -58,11 +59,26 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
 @implementation ImageReducer
 
-+ (void)initialize {
-    if (self == [ImageReducer class]) {
-        [self setKeys:[NSArray arrayWithObjects:@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow", nil] triggerChangeNotificationsForDependentKey:@"outputPixelsWide"];
-        [self setKeys:[NSArray arrayWithObjects:@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow", nil] triggerChangeNotificationsForDependentKey:@"outputPixelsHigh"];
+//+ (void)initialize {
+//    if (self == [ImageReducer class]) {
+//        [self setKeys:[NSArray arrayWithObjects:@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow", nil]];
+//         [self setKeys:[NSArray arrayWithObjects:@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow", nil]];
+//    }
+//}
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+ 
+    NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+ 
+    if ([key isEqualToString:@"outputPixelsWide"]) {
+        NSArray *affectingKeys = @[@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow"];
+        keyPaths = [keyPaths setByAddingObjectsFromArray:affectingKeys];
     }
+    if ([key isEqualToString:@"outputPixelsHigh"]) {
+        NSArray *affectingKeys = @[@"inputBitmapImageRep", @"maxPixelsWide", @"maxPixelsHigh", @"addsShadow"];
+        keyPaths = [keyPaths setByAddingObjectsFromArray:affectingKeys];
+    }
+    return keyPaths;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -327,7 +343,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
         // Get a CIContext from the NSGraphicsContext, and use it to draw the CIImage into the NSBitmapImageRep.
         CIContext *ciContext = [nsContext CIContext];
-        [ciContext drawImage:ciImage atPoint:imageDestinationRect.origin fromRect:extent];
+        [ciContext drawImage:ciImage inRect:imageDestinationRect fromRect:extent];
         [NSGraphicsContext restoreGraphicsState];
 
         // Draw the border path.

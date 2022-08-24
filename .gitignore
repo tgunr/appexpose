@@ -1,4 +1,9 @@
 .idea
 ScriptingBridgeFinder
 build
-AppExposeC/AppExposeC.xcodeproj/project.xcworkspace/xcuserdata/davec.xcuserdatad/UserInterfaceState.xcuserstate
+AppExpose/DerivedData
+AppExposeC/DerivedData
+*.xcbkptlist
+*.xcuserdata
+AppExposeC/AppExposeC.xcodeproj/project.xcworkspace/xcuserdata/davec.xcuserdatad
+AppExposeC/AppExposeC.xcodeproj/xcuserdata/
