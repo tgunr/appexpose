@@ -69,4 +69,6 @@
 - (void) zoomChanged: (CGFloat) newValue;
 
 - (void) stopProgress;
+- (void) stopOnMainThread;
+
 @end

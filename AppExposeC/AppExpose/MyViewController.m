@@ -139,10 +139,12 @@
            forKeyPath:@"url"
               options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
               context:NULL];
-    [self addObserver:self
-           forKeyPath:@"showProgress"
-              options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
-              context:NULL];
+   
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(stopProgress:)
+     name:@"stopprogress"
+     object:nil];
 //    SEL selector = NSSelectorFromString(@"stopProgress:");
 //
 //    [[NSNotificationCenter defaultCenter] addObserver:self
@@ -223,7 +225,7 @@
 
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
-//    [self startProgress];
+    [self startProgress];
     self->showProgress = true;
     PMLOG_SetVerbose(PMLogLevelDebug);
     [NSThread detachNewThreadSelector:	@selector(collectFolders:)
@@ -231,7 +233,12 @@
                            withObject:url];
 }
 
-- (void) stopProgress {
+- (void) stopProgress:(NSNotification *) notification {
+    SEL select = NSSelectorFromString(@"stopOnMainThread");
+    [self performSelectorOnMainThread:select withObject:nil waitUntilDone:YES];
+}
+
+- (void) stopOnMainThread {
     [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
     [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
 }
@@ -284,7 +291,9 @@
 //        SEL selector = NSSelectorFromString(@"stopProgress:");
 //        [self performSelectorOnMainThread:selector withObject:nil waitUntilDone:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
-        self->showProgress = false;
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:@"stopprogress"
+            object:self];
     }
 }
 
