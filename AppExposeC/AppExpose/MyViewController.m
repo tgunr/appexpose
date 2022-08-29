@@ -73,6 +73,7 @@
             [arrayController addObject: iconDictionary];
             [contentArray addObject: entry];
             [self zoomChanged:DEFAULT_ICON_SIZE];
+            [self selectNone:self];
         }
         else {
             PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
@@ -101,7 +102,6 @@
         }
 	}
 	[self setImages: tempArray];
-    
 }
 
 - (void)startProgress {
