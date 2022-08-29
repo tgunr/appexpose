@@ -12,12 +12,6 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var myAuthorizationRef: AuthorizationRef?
-
-
-
-
-
-
     private var appDirectory: String?
     private var dirItems: [AnyHashable]?
     private var dirPath: String?
@@ -29,20 +23,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var appBrowser: NSBrowser!
     @IBOutlet var iconAppearance: NSSegmentedControl!
 
-    static let sharedAppDelegate: AppDelegate? = {
-        var appDelegate = self.init()
-        return appDelegate
-    }()
-
-    class func shared() -> Any? {
-
-        // `dispatch_once()` call was converted to a static variable initializer
-        return sharedAppDelegate
-    }
+    static let shared: AppDelegate = AppDelegate()
 
     override init() {
         super.init()
-        rootEntry = .root()
+        rootEntry = AppEntry(rootWithURL: URL(string: "/Applications"))
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -83,7 +68,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func openReadMe(_ sender: Any) {
         let fullPath = Bundle.main.path(forResource: "ReadMe", ofType: "txt")
-        NSWorkspace.shared.openFile(fullPath ?? "")
+        if let path = fullPath {
+            NSWorkspace.shared.open(URL(string: path)!)
+        }
     }
 
     // MARK: NSBrowser Data Source Methods
@@ -93,11 +80,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func browser(_ browser: NSBrowser, numberOfChildrenOfItem item: Any?) -> Int {
-        return (item as? AppEntry)?.childEntries?.count ?? 0
+        return (item as? AppEntry)?.childEntries.count ?? 0
     }
 
     func browser(_ browser: NSBrowser, child index: Int, ofItem item: Any?) -> Any {
-        return ((item as? AppEntry)?.childEntries?[index])!
+        return ((item as? AppEntry)?.childEntries[index])!
     }
 
     func browser(_ browser: NSBrowser, isLeafItem item: Any?) -> Bool {

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		752BC7E914B5A0F4009ACADB = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
+		752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
 		752BC7EB14B5A0F4009ACADB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7EA14B5A0F4009ACADB /* main.m */; };
-		752BC7EF14B5A0F4009ACADB = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
+		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
-		752BC7F514B5A0F5009ACADB = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
+		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
 		753C0A6C28B5050700DE1D87 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A6328B501BE00DE1D87 /* XATTR.framework */; };
 		753C0A6D28B5051100DE1D87 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A5628B501A900DE1D87 /* PMUtility.framework */; };
 		756DF6F81551D68600558DD4 /* Finder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F71551D68600558DD4 /* Finder.icns */; };
@@ -104,7 +104,7 @@
 /* Begin PBXFileReference section */
 		0191488AA8E58696A0D86806 /* AppExposeC-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeC-Prefix.swift"; sourceTree = "<group>"; };
 		67884ED4B3AB2CA3A5DD255A /* AppExposeC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Bridging-Header.h"; sourceTree = "<group>"; };
-		6AFA45B7977F120C8770B9FB /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swiftify.README.md; sourceTree = "<group>"; };
+		6AFA45B7977F120C8770B9FB /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Swiftify.README.md; sourceTree = "<group>"; };
 		752BC7DA14B5A0F4009ACADB /* AppExposeC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		752BC7E214B5A0F4009ACADB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -337,7 +337,7 @@
 				en,
 			);
 			mainGroup = 752BC7CF14B5A0F4009ACADB;
-			productRefGroup = 752BC7DB14B5A0F4009ACADB;
+			productRefGroup = 752BC7DB14B5A0F4009ACADB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -399,9 +399,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				752BC7E914B5A0F4009ACADB,
-				752BC7EF14B5A0F4009ACADB,
-				752BC7F514B5A0F5009ACADB,
+				752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */,
+				752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */,
+				752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */,
 				75F6367D153922D50079D063 /* Collection.xib in Resources */,
 				75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */,
 				75C904991545C635004FC088 /* red-lock.png in Resources */,
@@ -546,7 +546,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -594,7 +593,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -613,7 +611,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -640,7 +638,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

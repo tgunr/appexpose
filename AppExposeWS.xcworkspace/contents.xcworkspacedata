@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:xattr/xattr.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PMUtility/PMUtility.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AppExposeSwift/AppExposeSwift.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:AppExposeC/AppExposeC.xcodeproj">
    </FileRef>
    <FileRef

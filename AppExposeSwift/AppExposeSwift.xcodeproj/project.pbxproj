@@ -7,20 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		754582B028B583DF002A8EB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AF28B5835E002A8EB1 /* AppDelegate.swift */; };
-		754582B128B583DF002A8EB1 /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AC28B5835E002A8EB1 /* AppEntry.swift */; };
-		754582B228B583DF002A8EB1 /* CompositeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AA28B5835E002A8EB1 /* CompositeView.swift */; };
-		754582B328B583DF002A8EB1 /* ImageReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582A928B5835E002A8EB1 /* ImageReducer.swift */; };
-		754582B428B583DF002A8EB1 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AD28B5835E002A8EB1 /* MyViewController.swift */; };
-		754582B528B583DF002A8EB1 /* MyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AB28B5835E002A8EB1 /* MyWindowController.swift */; };
-		754582B628B583DF002A8EB1 /* NSBezierPathAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754582AE28B5835E002A8EB1 /* NSBezierPathAdditions.swift */; };
-		75A1A2531D20782C005CAEA5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A1A2521D20782C005CAEA5 /* ViewController.swift */; };
 		75A1A2551D20782C005CAEA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A1A2541D20782C005CAEA5 /* Assets.xcassets */; };
 		75A1A2581D20782C005CAEA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A1A2561D20782C005CAEA5 /* Main.storyboard */; };
+		75A2E41628BD06E1009C4BB7 /* ImageReducer.h in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E41428BD06E1009C4BB7 /* ImageReducer.h */; };
+		75A2E41728BD06E1009C4BB7 /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E41528BD06E1009C4BB7 /* ImageReducer.m */; };
+		75B7911628B8DC1900ACC27B /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75B7911528B8DC1900ACC27B /* PMUtility.framework */; };
+		75B7911728B8DC1900ACC27B /* PMUtility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 75B7911528B8DC1900ACC27B /* PMUtility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		75B7911B28B8DF5300ACC27B /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75B7911928B8DF4600ACC27B /* XATTR.framework */; };
+		75B7911C28B8DF5300ACC27B /* XATTR.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 75B7911928B8DF4600ACC27B /* XATTR.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		75B7911828B8DC1900ACC27B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				75B7911C28B8DF5300ACC27B /* XATTR.framework in Embed Frameworks */,
+				75B7911728B8DC1900ACC27B /* PMUtility.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		754582A928B5835E002A8EB1 /* ImageReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageReducer.swift; path = ../AppExposeC/AppExpose/ImageReducer.swift; sourceTree = "<group>"; };
 		754582AA28B5835E002A8EB1 /* CompositeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompositeView.swift; path = ../AppExposeC/AppExpose/CompositeView.swift; sourceTree = "<group>"; };
 		754582AB28B5835E002A8EB1 /* MyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyWindowController.swift; path = ../AppExposeC/AppExpose/MyWindowController.swift; sourceTree = "<group>"; };
 		754582AC28B5835E002A8EB1 /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppEntry.swift; path = ../AppExposeC/AppExpose/AppEntry.swift; sourceTree = "<group>"; };
@@ -28,7 +40,6 @@
 		754582AE28B5835E002A8EB1 /* NSBezierPathAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NSBezierPathAdditions.swift; path = ../AppExposeC/AppExpose/NSBezierPathAdditions.swift; sourceTree = "<group>"; };
 		754582AF28B5835E002A8EB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppExposeC/AppExpose/AppDelegate.swift; sourceTree = "<group>"; };
 		75A1A24D1D20782C005CAEA5 /* AppExposeSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		75A1A2521D20782C005CAEA5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		75A1A2541D20782C005CAEA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75A1A2571D20782C005CAEA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75A1A2591D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +47,12 @@
 		75A1A2641D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75A1A26D1D20782C005CAEA5 /* appIconsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appIconsUITests.swift; sourceTree = "<group>"; };
 		75A1A26F1D20782C005CAEA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75A2E40728BBB6A4009C4BB7 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AppExposePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		75A2E41428BD06E1009C4BB7 /* ImageReducer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageReducer.h; path = ../AppExposeC/AppExpose/ImageReducer.h; sourceTree = "<group>"; };
+		75A2E41528BD06E1009C4BB7 /* ImageReducer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ImageReducer.m; path = ../AppExposeC/AppExpose/ImageReducer.m; sourceTree = "<group>"; };
+		75B790FD28B8D7C000ACC27B /* AppExposeSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		75B7911528B8DC1900ACC27B /* PMUtility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PMUtility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75B7911928B8DF4600ACC27B /* XATTR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XATTR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75B7911B28B8DF5300ACC27B /* XATTR.framework in Frameworks */,
+				75B7911628B8DC1900ACC27B /* PMUtility.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,10 +71,12 @@
 		75A1A2441D20782C005CAEA5 = {
 			isa = PBXGroup;
 			children = (
+				75A2E41428BD06E1009C4BB7 /* ImageReducer.h */,
+				75A2E41528BD06E1009C4BB7 /* ImageReducer.m */,
+				75A2E40728BBB6A4009C4BB7 /* AppExposePlayground.playground */,
 				754582AF28B5835E002A8EB1 /* AppDelegate.swift */,
 				754582AC28B5835E002A8EB1 /* AppEntry.swift */,
 				754582AA28B5835E002A8EB1 /* CompositeView.swift */,
-				754582A928B5835E002A8EB1 /* ImageReducer.swift */,
 				754582AD28B5835E002A8EB1 /* MyViewController.swift */,
 				754582AB28B5835E002A8EB1 /* MyWindowController.swift */,
 				754582AE28B5835E002A8EB1 /* NSBezierPathAdditions.swift */,
@@ -63,6 +84,8 @@
 				75A1A2611D20782C005CAEA5 /* appIconsTests */,
 				75A1A26C1D20782C005CAEA5 /* appIconsUITests */,
 				75A1A24E1D20782C005CAEA5 /* Products */,
+				75B790FD28B8D7C000ACC27B /* AppExposeSwift-Bridging-Header.h */,
+				75B7910D28B8D86500ACC27B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,7 +100,6 @@
 		75A1A24F1D20782C005CAEA5 /* appIcons */ = {
 			isa = PBXGroup;
 			children = (
-				75A1A2521D20782C005CAEA5 /* ViewController.swift */,
 				75A1A2541D20782C005CAEA5 /* Assets.xcassets */,
 				75A1A2561D20782C005CAEA5 /* Main.storyboard */,
 				75A1A2591D20782C005CAEA5 /* Info.plist */,
@@ -103,6 +125,15 @@
 			path = appIconsUITests;
 			sourceTree = "<group>";
 		};
+		75B7910D28B8D86500ACC27B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75B7911928B8DF4600ACC27B /* XATTR.framework */,
+				75B7911528B8DC1900ACC27B /* PMUtility.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -113,6 +144,7 @@
 				75A1A2491D20782C005CAEA5 /* Sources */,
 				75A1A24A1D20782C005CAEA5 /* Frameworks */,
 				75A1A24B1D20782C005CAEA5 /* Resources */,
+				75B7911828B8DC1900ACC27B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -136,7 +168,7 @@
 					75A1A24C1D20782C005CAEA5 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = BG856GB4D8;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1400;
 					};
 				};
 			};
@@ -175,14 +207,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				754582B028B583DF002A8EB1 /* AppDelegate.swift in Sources */,
-				754582B128B583DF002A8EB1 /* AppEntry.swift in Sources */,
-				754582B228B583DF002A8EB1 /* CompositeView.swift in Sources */,
-				754582B328B583DF002A8EB1 /* ImageReducer.swift in Sources */,
-				754582B428B583DF002A8EB1 /* MyViewController.swift in Sources */,
-				754582B528B583DF002A8EB1 /* MyWindowController.swift in Sources */,
-				754582B628B583DF002A8EB1 /* NSBezierPathAdditions.swift in Sources */,
-				75A1A2531D20782C005CAEA5 /* ViewController.swift in Sources */,
+				75A2E41628BD06E1009C4BB7 /* ImageReducer.h in Sources */,
+				75A2E41728BD06E1009C4BB7 /* ImageReducer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,19 +339,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = BG856GB4D8;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Volumes/Data/Users/davec/Work/AppExpose/PMUtility/PMUtility,
+					/Volumes/Data/Users/davec/Work/AppExpose/xattr,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExposeSwift-Prefix.pch";
 				INFOPLIST_FILE = appIcons/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AppExpose;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appIcons;
+				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 			};
@@ -335,19 +370,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = BG856GB4D8;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Volumes/Data/Users/davec/Work/AppExpose/PMUtility/PMUtility,
+					/Volumes/Data/Users/davec/Work/AppExpose/xattr,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppExposeSwift-Prefix.pch";
 				INFOPLIST_FILE = appIcons/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AppExpose;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appIcons;
+				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeSwift-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 			};

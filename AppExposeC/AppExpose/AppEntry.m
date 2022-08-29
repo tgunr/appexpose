@@ -117,7 +117,7 @@
         NSSize  littleIconSize = NSMakeSize((resultImageSize.width / 4.0), (resultImageSize.height / 4.0) );
         [resultImage lockFocus];
         [bgImage setSize:NSMakeSize(resultImageSize.width - 64, resultImageSize.height - 64)];
-        [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:.8];
+//        [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:.8];
         [self drawRect:NSMakeRect(0.0, 0.0, ICON_SIZE, ICON_SIZE)];
         int i, j;
         long count = MIN(9, numImages);

@@ -26,7 +26,7 @@ class MyView: NSView {
         var color: NSColor?
         var stroke: CGFloat
         //    resolution = [[self window] userSpaceScaleFactor] * (CGFloat)0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
-        let f = window.backingScaleFactor
+        let f = window?.backingScaleFactor
         resolution = f * CGFloat(0.5) * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height)
 
         NSGraphicsContext.current?.saveGraphicsState()
@@ -45,7 +45,7 @@ class MyView: NSView {
         drawRect.size.width = CGFloat(round(resolution * drawRect.size.width)) / resolution
         drawRect.size.height = CGFloat(round(resolution * drawRect.size.height)) / resolution
         path?.appendRoundedRect(drawRect, xRadius: CGFloat(4.0), yRadius: CGFloat(4.0))
-        path?.windingRule = NSEvenOddWindingRule
+        path?.windingRule = evenOdd
         color = NSColor(calibratedRed: CGFloat(0.0), green: CGFloat(0.0), blue: CGFloat(0.0), alpha: CGFloat(1.0))
         color?.setStroke()
         stroke = CGFloat(3.0)
@@ -58,7 +58,7 @@ class MyView: NSView {
         stroke /= resolution
         stroke *= CGFloat(2.0)
         path?.lineWidth = stroke
-        path?.lineCapStyle = NSSquareLineCapStyle
+        path?.lineCapStyle = NSBezierPath.LineCapStyle.square
         NSGraphicsContext.current?.saveGraphicsState()
         path?.addClip()
         path?.stroke()
@@ -72,7 +72,7 @@ class MyView: NSView {
         drawRect.size.width = CGFloat(round(resolution * drawRect.size.width)) / resolution
         drawRect.size.height = CGFloat(round(resolution * drawRect.size.height)) / resolution
         path?.appendRoundedRect(drawRect, xRadius: CGFloat(8.0), yRadius: CGFloat(8.0))
-        path?.windingRule = NSEvenOddWindingRule
+        path?.windingRule = evenOdd
         color = NSColor(calibratedRed: CGFloat(0.298), green: CGFloat(0.298), blue: CGFloat(0.298), alpha: CGFloat(1.0))
         color?.setStroke()
         stroke = CGFloat(5.0)
@@ -85,7 +85,7 @@ class MyView: NSView {
         stroke /= resolution
         stroke *= CGFloat(2.0)
         path?.lineWidth = stroke
-        path?.lineCapStyle = NSSquareLineCapStyle
+        path?.lineCapStyle = NSBezierPath.LineCapStyle.square
         NSGraphicsContext.current?.saveGraphicsState()
         path?.addClip()
         path?.stroke()

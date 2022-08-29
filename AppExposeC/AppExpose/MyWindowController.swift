@@ -48,7 +48,7 @@
  */
 
 import Cocoa
-import PMUtility
+//import PMUtility
 
 class MyWindowController: NSWindowController {
 
@@ -80,12 +80,11 @@ class MyWindowController: NSWindowController {
     @IBOutlet var selectAllToolBarItem: NSToolbarItem!
 
     override func awakeFromNib() {
-        window.setAutorecalculatesContentBorderThickness(true, for: .minY)
-        window.setContentBorderThickness(30, for: .minY)
+        window?.setAutorecalculatesContentBorderThickness(true, for: .minY)
+        window?.setContentBorderThickness(30, for: .minY)
 
         // load our nib that contains the collection view
         willChangeValue(forKey: "viewController")
-        viewController = MyViewController(nibName: "Collection", bundle: nil)
         didChangeValue(forKey: "viewController")
 
         if let view = viewController?.view {
@@ -96,7 +95,7 @@ class MyWindowController: NSWindowController {
         viewController?.view.frame = myTargetView.bounds
 
         viewController?.sortingMode = 0 // ascending sort order
-        AppDelegate.shared()?.myWindowController = self
+        AppDelegate.shared.myWindowController = self
         applyButton.isEnabled = false
         removeButton.isEnabled = false
 
@@ -116,7 +115,7 @@ class MyWindowController: NSWindowController {
     //}
     //
     @IBAction func changeAppearance(_ sender: Any) {
-        let segment = sender.selectedSegment
+        let segment = (sender as AnyObject).selectedSegment
         switch segment {
         case 0:
             viewController?.showBeforeAppearance()
@@ -190,20 +189,20 @@ class MyWindowController: NSWindowController {
         let value = zoomSlider.integerValue
         //    int scales[] = { 32, 64, 128, 256, 512, 1024 } ;
         //    int scale = scales[value];
-        PMLOG_DEBUG("zoom: %f", CGFloat(value))
+//        PMLOG_DEBUG("zoom: %f", CGFloat(value))
         viewController?.zoomChanged(CGFloat(value))
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if context == "QuitFinder" {
-            if keyPath == "isTerminated" {
-                NSWorkspace.shared.launchApplication(withBundleIdentifier: "com.apple.finder", options: .default, additionalEventParamDescriptor: nil, launchIdentifier: nil)
-                (object as? NSArray)?.removeObserver(self, forKeyPath: "isTerminated")
-            }
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
-    }
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        if context as! String == "QuitFinder" {
+//            if keyPath == "isTerminated" {
+//                NSWorkspace.shared.launchApplication(withBundleIdentifier: "com.apple.finder", options: .default, additionalEventParamDescriptor: nil, launchIdentifier: nil)
+//                (object as? NSArray)?.removeObserver(self, forKeyPath: "isTerminated")
+//            }
+//        } else {
+//            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+//        }
+//    }
 
     @IBAction func restartFinder(_ sender: Any) {
         let apps = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.finder")

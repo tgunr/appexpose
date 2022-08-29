@@ -110,6 +110,7 @@
 @implementation MyViewController {
 	id appDirectory;
 	AppEntry *rootEntry;
+    BOOL showProgress;
 
 }
 
@@ -125,6 +126,7 @@
 {
     self = [super init];
     if (self) {
+        showProgress = true;
     }
     return self;
 }
@@ -133,11 +135,27 @@
     images = [[NSMutableArray alloc] init];
     contentArray = [[NSMutableArray alloc] init];
 
-    [self addObserver:	self
+    [self addObserver:self
            forKeyPath:@"url"
               options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
               context:NULL];
-
+    [self addObserver:self
+           forKeyPath:@"showProgress"
+              options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+              context:NULL];
+//    SEL selector = NSSelectorFromString(@"stopProgress:");
+//
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:selector
+//                                                 name:@"stopProgress"
+//                                               object:self];
+//    [[NSNotificationCenter defaultCenter] addObserver:self forKeyPath:@"stopProgress" options:0 context:@"stop"];
+//    [[NSNotificationCenter defaultCenter] addObserverForName:@"stopProgress" object:nil queue:nil usingBlock:^(NSNotification *notification) {
+//        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
+//        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
+//        [self->collectionView setSelectionIndexes:[NSIndexSet indexSet]];
+//    }];
+    
 	// save this for later when toggling between alternate colors
 	savedAlternateColors = [collectionView backgroundColors];
 
@@ -192,20 +210,30 @@
     
 }
 
+- (void)startProgress {
+    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:NO];
+    [[[[AppDelegate shared] myWindowController] progressIndicator] startAnimation:self];
+}
+
 - (void)observeValueForKeyPath:(NSString*)keyPath
                       ofObject:(id)object 
                         change:(NSDictionary*)change 
                        context:(void *)context
 {
-    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:NO];
-    [[[[AppDelegate shared] myWindowController] progressIndicator] startAnimation:self];
 
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
+//    [self startProgress];
+    self->showProgress = true;
     PMLOG_SetVerbose(PMLogLevelDebug);
     [NSThread detachNewThreadSelector:	@selector(collectFolders:)
                              toTarget:self		// we are the target
                            withObject:url];
+}
+
+- (void) stopProgress {
+    [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
+    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
 }
 
 - (void) collectFolders:(NSURL *) directoryToScan {
@@ -216,7 +244,7 @@
                                         includingPropertiesForKeys:fileKeys
                                                            options:NSDirectoryEnumerationSkipsHiddenFiles
                                                       errorHandler:nil];
-        
+
         NSMutableArray *tempArray = [NSMutableArray array];
         for (NSURL *theURL in dirEnumerator) {
             
@@ -252,10 +280,11 @@
                     [dirEnumerator skipDescendents];
             }
         }
-//        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-//        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
+//#pragma GCC diagnostic ignored "-Wundeclared-selector"
+//        SEL selector = NSSelectorFromString(@"stopProgress:");
+//        [self performSelectorOnMainThread:selector withObject:nil waitUntilDone:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
-//        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
+        self->showProgress = false;
     }
 }
 
