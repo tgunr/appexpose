@@ -8,16 +8,12 @@
 //
 
 import Cocoa
+import Foundation
 
 @objcMembers
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var myAuthorizationRef: AuthorizationRef?
-
-
-
-
-
 
     private var appDirectory: String = ""
     private var dirItems: [AnyHashable] = []
@@ -30,16 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var appBrowser: NSBrowser!
     @IBOutlet var iconAppearance: NSSegmentedControl!
 
-    static let sharedAppDelegate: AppDelegate? = {
-        var appDelegate = self.init()
-        return appDelegate
-    }()
-
-    class func shared() -> Any? {
-
-        // `dispatch_once()` call was converted to a static variable initializer
-        return sharedAppDelegate
-    }
+    static let shared = AppDelegate()
 
     override init() {
         super.init()
@@ -93,22 +80,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return rootEntry
     }
 
-    func browser(_ browser: NSBrowser, numberOfChildrenOfItem item: Any?) -> Int {
-        return (item as? AppEntry)?.childEntries().count() ?? 0
-    }
-
-    func browser(_ browser: NSBrowser, child index: Int, ofItem item: Any?) -> Any {
-        return ((item as? AppEntry)?.childEntries()[index])!
-    }
-
-    func browser(_ browser: NSBrowser, isLeafItem item: Any?) -> Bool {
-        return (item as? AppEntry)?.isLeaf() ?? false
-    }
-
-    func browser(_ browser: NSBrowser, objectValueForItem item: Any?) -> Any? {
-        return (item as? AppEntry)?.name()
-    }
-
+//    func browser(_ browser: NSBrowser, numberOfChildrenOfItem item: Any?) -> Int {
+//        return (item as? AppEntry)?.childEntries().count() ?? 0
+//    }
+//
+//    func browser(_ browser: NSBrowser, child index: Int, ofItem item: Any?) -> Any {
+//        return ((item as? AppEntry)?.childEntries()[index])!
+//    }
+//
+//    func browser(_ browser: NSBrowser, isLeafItem item: Any?) -> Bool {
+//        return (item as? AppEntry)?.isLeaf() ?? false
+//    }
+//
+//    func browser(_ browser: NSBrowser, objectValueForItem item: Any?) -> Any? {
+//        return (item as? AppEntry)?.name()
+//    }
+//
     func selectionChanged() {
         myWindowController.selectionChanged()
     }
