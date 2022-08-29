@@ -829,7 +829,7 @@
             </connections>
             <point key="canvasLocation" x="36" y="6"/>
         </window>
-        <customObject id="494" customClass="AppDelegate">
+        <customObject id="494" customClass="AppDelegate" customModule="AppExposeC" customModuleProvider="target">
             <connections>
                 <outlet property="myWindowController" destination="614" id="671"/>
                 <outlet property="window" destination="595" id="615"/>

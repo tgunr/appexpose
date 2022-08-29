@@ -17,6 +17,9 @@
 // • Add `@class MySwiftClass` to your .h files that depend on the Swift code;
 // • No need to import the Swift Bridging Header (`AppExposeC-Swift.h`), since it's already being imported from the .pch file.
 
+#import "AppEntry.h"
+#import "MyWindowController.h"
+#import <Cocoa/Cocoa.h>
 
 // End Swiftify generated imports
 // -----------------------------------------------------------------------------

@@ -6,5 +6,5 @@
     // to make it accessible from all Objective-C source files.
     // NOTE: if Xcode complains that the `ProjectName-Swift.h` file does not exist,
     // comment out the following line until the project compiles successfully.
-//    #import "AppExposeC-Swift.h"
+    #import "AppExposeC-Swift.h"
 #endif

@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AppDelegate.h"
 #import "MyScrollView.h"
 #import "IconViewBox.h"
 #import "MyWindowController.h"

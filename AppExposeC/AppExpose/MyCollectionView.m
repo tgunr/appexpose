@@ -7,7 +7,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MyCollectionView.h"
-#import "AppDelegate.h"
 #import "IconViewBox.h"
 
 @implementation MyCollectionView

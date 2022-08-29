@@ -10,7 +10,6 @@
 #import "xattr/xattr.h"
 #import "PMUtility/pmUtility.h"
 #import "CompositeView.h"
-#import "AppDelegate.h"
 #import "ImageReducer.h"
 
 @interface NSImage (Dump)

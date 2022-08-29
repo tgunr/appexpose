@@ -3,7 +3,6 @@
  Abstract: Controls the collection view of icons.
  */
 
-#import "AppDelegate.h"
 #import "MyViewController.h"
 #import "MyWindowController.h"
 #import "AppEntry.h"
