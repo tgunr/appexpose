@@ -9,109 +9,13 @@
 #import "AppEntry.h"
 #import "PMUtility/pmUtility.h"
 #import "xattr/xattr.h"
-
-@implementation IconViewBox
-
-// -------------------------------------------------------------------------------
-//	hitTest:aPoint
-// -------------------------------------------------------------------------------
-@synthesize labelField;
-@synthesize imageView;
-@synthesize selected;
-
-- (IconViewBox *)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-    
-- (void)awakeFromNib {
-    [[[[AppDelegate shared] myWindowController] viewController] setIconViewBox: self];
-}
-
-- (IconViewBox *)hitTest: (NSPoint) aPoint {
-	// don't allow any mouse clicks for subviews in this NSBox
-    [[AppDelegate shared] selectionChanged];
-    selected = YES;
-	return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect 
-{
-    [super drawRect:dirtyRect];
-    [self setBoxType:NSBoxSecondary];
-    [self setBorderType:NSBezelBorder];
-}
-
-- (IBAction)iconSelected:(id)sender {
-}
-@end
-
-
-@implementation MyScrollView
-
-- (void)awakeFromNib {
-	// set up the background gradient for this custom scrollView
-	backgroundGradient = [[NSGradient alloc] initWithStartingColor:
-			[NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: 0.898f alpha: 0.0f]
-	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.4f]];
-}
-
-- (void)drawRect: (NSRect) rect {
-	// draw our special background as a gradient
-	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
-}
-
-@end
-
-@implementation MyCollectionView
-
-- (void)awakeFromNib {
-    [self setSubviewSize: 128.0];
-}
-
-- (NSView *)hitTest: (NSPoint) aPoint {
-    [[AppDelegate shared] selectionChanged];
-    return nil;
-}
-
-- (void)didAddSubview:(IconViewBox *)subview {
-    
-}
-
-- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
-    
-}
-
--(void)setSubviewSize:(CGFloat)theSubviewSize {
-    [self setMaxItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
-    [self setMinItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
-}
-
-@end
-
-@implementation MyCollectionViewItem
-
-- (NSView *)hitTest: (NSPoint) aPoint {
-    return nil;
-}
-
-- (void)setSelected:(BOOL)flag
-{
-    [super setSelected:flag];
-    [(IconViewBox*)[self view] setSelected:flag];
-    [(IconViewBox*)[self view] setNeedsDisplay:YES];
-}
-
-@end
+#import "IconViewBox.h"
 
 @implementation MyViewController {
 	id appDirectory;
 	AppEntry *rootEntry;
     BOOL showProgress;
-
+    
 }
 
 @synthesize iconViewBox;
@@ -145,18 +49,6 @@
      selector:@selector(stopProgress:)
      name:@"stopprogress"
      object:nil];
-//    SEL selector = NSSelectorFromString(@"stopProgress:");
-//
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:selector
-//                                                 name:@"stopProgress"
-//                                               object:self];
-//    [[NSNotificationCenter defaultCenter] addObserver:self forKeyPath:@"stopProgress" options:0 context:@"stop"];
-//    [[NSNotificationCenter defaultCenter] addObserverForName:@"stopProgress" object:nil queue:nil usingBlock:^(NSNotification *notification) {
-//        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-//        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
-//        [self->collectionView setSelectionIndexes:[NSIndexSet indexSet]];
-//    }];
     
 	// save this for later when toggling between alternate colors
 	savedAlternateColors = [collectionView backgroundColors];

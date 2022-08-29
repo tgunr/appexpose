@@ -20,6 +20,10 @@
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
 		75A0142A154F2A1800AA6F70 /* AppExposeC.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExposeC.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
+		75A2E42028BD5AA1009C4BB7 /* IconViewBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E41F28BD5AA1009C4BB7 /* IconViewBox.m */; };
+		75A2E42828BD5BCF009C4BB7 /* MyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E42728BD5BCF009C4BB7 /* MyScrollView.m */; };
+		75A2E42C28BD5D23009C4BB7 /* MyCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E42B28BD5D23009C4BB7 /* MyCollectionView.m */; };
+		75A2E42F28BD5D5F009C4BB7 /* MyCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E42E28BD5D5F009C4BB7 /* MyCollectionViewItem.m */; };
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
 		75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049B1545C6A3004FC088 /* redpadlock.png */; };
 		75C9049F15461D09004FC088 /* CompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C9049E15461D09004FC088 /* CompositeView.m */; };
@@ -125,6 +129,14 @@
 		756DF7011551E35300558DD4 /* after-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "after-32.png"; sourceTree = "<group>"; };
 		75A01429154F2A1800AA6F70 /* AppExposeC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExposeC.icns; sourceTree = SOURCE_ROOT; };
 		75A0142B154F34DA00AA6F70 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		75A2E41F28BD5AA1009C4BB7 /* IconViewBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconViewBox.m; sourceTree = "<group>"; };
+		75A2E42628BD5B42009C4BB7 /* IconViewBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconViewBox.h; sourceTree = "<group>"; };
+		75A2E42728BD5BCF009C4BB7 /* MyScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScrollView.m; sourceTree = "<group>"; };
+		75A2E42928BD5C28009C4BB7 /* MyScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScrollView.h; sourceTree = "<group>"; };
+		75A2E42A28BD5D06009C4BB7 /* MyCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionView.h; sourceTree = "<group>"; };
+		75A2E42B28BD5D23009C4BB7 /* MyCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionView.m; sourceTree = "<group>"; };
+		75A2E42D28BD5D47009C4BB7 /* MyCollectionViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewItem.h; sourceTree = "<group>"; };
+		75A2E42E28BD5D5F009C4BB7 /* MyCollectionViewItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewItem.m; sourceTree = "<group>"; };
 		75C904971545C635004FC088 /* red-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-lock.png"; sourceTree = "<group>"; };
 		75C9049B1545C6A3004FC088 /* redpadlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpadlock.png; sourceTree = "<group>"; };
 		75C9049D15461D09004FC088 /* CompositeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeView.h; sourceTree = "<group>"; };
@@ -227,6 +239,14 @@
 				75F63683153923730079D063 /* MyWindowController.m */,
 				75F6367B153922C00079D063 /* Nibs */,
 				752BC7E514B5A0F4009ACADB /* Resources */,
+				75A2E41F28BD5AA1009C4BB7 /* IconViewBox.m */,
+				75A2E42628BD5B42009C4BB7 /* IconViewBox.h */,
+				75A2E42728BD5BCF009C4BB7 /* MyScrollView.m */,
+				75A2E42928BD5C28009C4BB7 /* MyScrollView.h */,
+				75A2E42A28BD5D06009C4BB7 /* MyCollectionView.h */,
+				75A2E42B28BD5D23009C4BB7 /* MyCollectionView.m */,
+				75A2E42D28BD5D47009C4BB7 /* MyCollectionViewItem.h */,
+				75A2E42E28BD5D5F009C4BB7 /* MyCollectionViewItem.m */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -442,13 +462,17 @@
 			files = (
 				752BC7EB14B5A0F4009ACADB /* main.m in Sources */,
 				752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */,
+				75A2E42C28BD5D23009C4BB7 /* MyCollectionView.m in Sources */,
+				75A2E42828BD5BCF009C4BB7 /* MyScrollView.m in Sources */,
 				75F636761538FFAC0079D063 /* AppEntry.m in Sources */,
 				75F63684153923730079D063 /* MyViewController.m in Sources */,
 				75F63685153923730079D063 /* MyWindowController.m in Sources */,
 				75C9049F15461D09004FC088 /* CompositeView.m in Sources */,
 				75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */,
+				75A2E42028BD5AA1009C4BB7 /* IconViewBox.m in Sources */,
 				75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */,
 				F493480EA16343F22F07A563 /* AppExposeC-Prefix.swift in Sources */,
+				75A2E42F28BD5D5F009C4BB7 /* MyCollectionViewItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
