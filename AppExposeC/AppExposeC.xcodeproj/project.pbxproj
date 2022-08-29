@@ -38,7 +38,6 @@
 		75FE04A928B2778800129B47 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04A828B2778800129B47 /* Security.framework */; };
 		75FE04AB28B2779900129B47 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04AA28B2779900129B47 /* Quartz.framework */; };
 		75FE04AD28B277A500129B47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04AC28B277A500129B47 /* Cocoa.framework */; };
-		F493480EA16343F22F07A563 /* AppExposeC-Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0191488AA8E58696A0D86806 /* AppExposeC-Prefix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,9 +105,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0191488AA8E58696A0D86806 /* AppExposeC-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeC-Prefix.swift"; sourceTree = "<group>"; };
-		67884ED4B3AB2CA3A5DD255A /* AppExposeC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Bridging-Header.h"; sourceTree = "<group>"; };
-		6AFA45B7977F120C8770B9FB /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Swiftify.README.md; sourceTree = "<group>"; };
 		752BC7DA14B5A0F4009ACADB /* AppExposeC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		752BC7E214B5A0F4009ACADB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -157,7 +153,6 @@
 		75FE04A828B2778800129B47 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		75FE04AA28B2779900129B47 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		75FE04AC28B277A500129B47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		9C6348B2817EB93E41901E85 /* AppExposeC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,10 +179,6 @@
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
 				752BC7DD14B5A0F4009ACADB /* Frameworks */,
 				752BC7DB14B5A0F4009ACADB /* Products */,
-				9C6348B2817EB93E41901E85 /* AppExposeC-Prefix.pch */,
-				0191488AA8E58696A0D86806 /* AppExposeC-Prefix.swift */,
-				67884ED4B3AB2CA3A5DD255A /* AppExposeC-Bridging-Header.h */,
-				6AFA45B7977F120C8770B9FB /* Swiftify.README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -471,7 +462,6 @@
 				75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */,
 				75A2E42028BD5AA1009C4BB7 /* IconViewBox.m in Sources */,
 				75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */,
-				F493480EA16343F22F07A563 /* AppExposeC-Prefix.swift in Sources */,
 				75A2E42F28BD5D5F009C4BB7 /* MyCollectionViewItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
