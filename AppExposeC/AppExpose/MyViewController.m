@@ -38,12 +38,11 @@
     [collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
     NSIndexSet *indexes = [NSIndexSet indexSet];
     [collectionView setSelectionIndexes:indexes];
+    images = [[NSMutableArray alloc] init];
+    contentArray = [[NSMutableArray alloc] init];
 }
 
 - (void)awakeFromNib {
-    images = [[NSMutableArray alloc] init];
-    contentArray = [[NSMutableArray alloc] init];
-
     [self addObserver:self
            forKeyPath:@"url"
               options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
@@ -59,7 +58,6 @@
 	savedAlternateColors = [collectionView backgroundColors];
 
 	[self setSortingMode: 0];        // icon collection in ascending sort order
-
     [self resetView];
 }
 
