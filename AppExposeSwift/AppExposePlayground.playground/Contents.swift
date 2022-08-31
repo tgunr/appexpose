@@ -29,7 +29,7 @@ class AppEntry: NSObject {
     var name: String?
     var appURL: URL?
     var childEntries: [AppEntry] = [ ]
-//    var iconDictionary: [String : NSImage]?
+    //    var iconDictionary: [String : NSImage]?
     var icons: [NSImage]?
     var appImage: NSImage?
     var originalImage: NSImage?
@@ -38,10 +38,11 @@ class AppEntry: NSObject {
     var xattr: XATTR?
     
     class func root() -> AppEntry? {
-        return self.init(rootWithURL: URL(fileURLWithPath: "/"))
+        let root = self.init(rootWithURL: URL(fileURLWithPath: "/"))
+        return root
     }
     
-    required init?(rootWithURL url: URL?) {
+    required init(rootWithURL url: URL?) {
         super.init()
         appURL = url
         isLeaf = true
@@ -51,7 +52,7 @@ class AppEntry: NSObject {
         appImage = originalImage
         icons = []
     }
-    
+}
     func draw(_ image: NSImage?, withFrame imageFrame: NSRect) {
         // [super drawImage:image withFrame:imageFrame inView:controlView];
         
