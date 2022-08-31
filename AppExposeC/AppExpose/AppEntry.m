@@ -232,8 +232,14 @@
 
 - (BOOL) isNotSpecial {
     NSArray *specialNames = [NSArray arrayWithObjects:@"Utilities", nil];
-    BOOL result = [specialNames containsObject:name];
-    return !result;
+    NSArray *components = [appURL pathComponents];
+    if ([components[0] isEqualToString:@"/"] &&
+        [components[1] isEqualToString:@"System"] &&
+        [components[2] isEqualToString:@"Applications"] &&
+        [specialNames containsObject: components[3]])
+        return false;
+    else
+        return true;
 }
 
 - (BOOL) shouldSkipDescendents {
