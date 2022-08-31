@@ -36,6 +36,7 @@
 @synthesize hasCustomIcon;
 @synthesize isSpecial;
 @synthesize name;
+@synthesize fullName;
 @synthesize appURL;
 @synthesize childEntries;
 @synthesize iconImage;
@@ -59,6 +60,7 @@
         isApp          = NO;
         isSpecial      = NO;
         name           = [[url lastPathComponent] copy];
+        fullName       = [url path];
         originalImage  = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
         iconImage      = originalImage;
         iconDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -202,6 +204,7 @@
         isApp         = [self isAnApp:url];
         canAccess     = [self userCanAccess];
         name          = [[url lastPathComponent] copy];
+        fullName      = [url path];
         if (isFolder && [self hasMyCustomIcon]) {
             originalImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
         } else {

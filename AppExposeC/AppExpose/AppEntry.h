@@ -44,6 +44,7 @@
 @property(nonatomic, assign, getter = hasMyCustomIcon) BOOL hasMyCustomIcon;
 @property(nonatomic, assign, getter = shouldSkipDescendents) BOOL skipDescendents;
 @property(nonatomic, copy) NSString              *name;
+@property(nonatomic, copy) NSString              *fullName;
 @property(nonatomic, copy) NSURL                 *appURL;
 @property(nonatomic, strong) NSMutableArray      *childEntries;
 @property(nonatomic, strong) NSMutableDictionary *iconDictionary;
