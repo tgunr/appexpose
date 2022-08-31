@@ -10,18 +10,18 @@ import SwiftUI
 @main
 struct MyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var model = AppFolders()
+//    @StateObject private var model = AppFolders()
     var body: some Scene {
         WindowGroup(String("AppExpose"), id: "root") {
             //            ExampleView().frame(maxWidth: .infinity, maxHeight: .infinity)
             ToolbarView().frame(maxWidth: .infinity, maxHeight: .infinity)
-            ContentView(appDelegate: appDelegate)
+            ContentView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         }
-        Settings {
-            PreferencesView(model: model)
-        }
+//        Settings {
+//            PreferencesView(model: model)
+//        }
 //        }.commands {
             // This is optional, but adds menu items for toolbar customization
 //            ToolbarCommands()

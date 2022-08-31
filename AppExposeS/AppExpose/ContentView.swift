@@ -14,6 +14,17 @@ struct TopBarView: View {
         
     var body: some View {
         NavigationView {
+            VStack {
+                Text("Application Folders")
+                List {
+                    Text("Folder")
+                    Text("Folder")
+                    Text("Folder")
+                    Text("Folder")
+                    Text("Folder")
+                    Text("Folder")
+                }
+            }
         }
                 .toolbar(content: {
                     Text("Offline").foregroundColor(.red)
@@ -47,6 +58,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        TopBarView()
     }
 }

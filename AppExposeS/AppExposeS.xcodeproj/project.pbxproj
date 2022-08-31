@@ -11,6 +11,10 @@
 		75234E8728B2617F00512430 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75234E8628B2617F00512430 /* ContentView.swift */; };
 		75234E8928B2618100512430 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8828B2618100512430 /* Assets.xcassets */; };
 		75234E8C28B2618100512430 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8B28B2618100512430 /* Preview Assets.xcassets */; };
+		75C78EE428BE389200801110 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C78EE328BE389200801110 /* AppDelegate.swift */; };
+		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
+		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
+		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,8 @@
 		75234E8828B2618100512430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75234E8B28B2618100512430 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
+		75C78EE328BE389200801110 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppExposeC/AppExpose/AppDelegate.swift; sourceTree = "<group>"; };
+		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +33,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C78EEE28BE4DE700801110 /* Helm in Frameworks */,
+				75C78EF028BE4DE700801110 /* Playground in Frameworks */,
+				75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,6 +45,7 @@
 		75234E7828B2617F00512430 = {
 			isa = PBXGroup;
 			children = (
+				75C78EE528BE3B8400801110 /* AppExposePlayground.playground */,
 				75234E8328B2617F00512430 /* AppExpose */,
 				75234E8228B2617F00512430 /* Products */,
 			);
@@ -54,6 +64,7 @@
 			children = (
 				75234E8428B2617F00512430 /* AppExposeApp.swift */,
 				75234E8628B2617F00512430 /* ContentView.swift */,
+				75C78EE328BE389200801110 /* AppDelegate.swift */,
 				75234E8828B2618100512430 /* Assets.xcassets */,
 				75234E8D28B2618100512430 /* AppExpose.entitlements */,
 				75234E8A28B2618100512430 /* Preview Content */,
@@ -85,6 +96,11 @@
 			dependencies = (
 			);
 			name = AppExposeS;
+			packageProductDependencies = (
+				75C78EEA28BE4D5300801110 /* ExtendedAttributes */,
+				75C78EED28BE4DE700801110 /* Helm */,
+				75C78EEF28BE4DE700801110 /* Playground */,
+			);
 			productName = AppExpose;
 			productReference = 75234E8128B2617F00512430 /* AppExposeS.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +129,10 @@
 				Base,
 			);
 			mainGroup = 75234E7828B2617F00512430;
+			packageReferences = (
+				75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */,
+				75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */,
+			);
 			productRefGroup = 75234E8228B2617F00512430 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C78EE428BE389200801110 /* AppDelegate.swift in Sources */,
 				75234E8728B2617F00512430 /* ContentView.swift in Sources */,
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
 			);
@@ -344,6 +365,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amosavian/ExtendedAttributes.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/valentinradu/Helm";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		75C78EEA28BE4D5300801110 /* ExtendedAttributes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */;
+			productName = ExtendedAttributes;
+		};
+		75C78EED28BE4DE700801110 /* Helm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */;
+			productName = Helm;
+		};
+		75C78EEF28BE4DE700801110 /* Playground */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */;
+			productName = Playground;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 75234E7928B2617F00512430 /* Project object */;
 }
