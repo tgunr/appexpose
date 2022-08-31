@@ -14,8 +14,8 @@ import Foundation
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var myAuthorizationRef: AuthorizationRef?
-
-    private var appDirectory: String = ""
+    var appDirectory: String = ""
+    
     private var dirItems: [AnyHashable] = []
     private var dirPath: String = ""
     private var rootEntry: AppEntry?
@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         rootEntry = .root()
     }
 
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func setAppDirectory() {
         //    OSStatus myStatus;
         //    myStatus = AuthorizationCreate (NULL, kAuthorizationEmptyEnvironment,
         //                                    kAuthorizationFlagDefaults, &myAuthorizationRef);
@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //    kAuthorizationFlagExtendRights |
         //    kAuthorizationFlagInteractionAllowed |
         //    kAuthorizationFlagPreAuthorize;
-
+        
         let paths: [String] = FileManager.default.urls(for: .applicationDirectory, in: .systemDomainMask).map(\.path)
         appDirectory = paths[0]
         if paths.count > 0 {
@@ -58,6 +58,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let directory = directory {
             appDirectory = directory
         }
+    }
+    
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        setAppDirectory()
         myWindowController.viewController.url = URL(fileURLWithPath: appDirectory)
     }
 

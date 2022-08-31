@@ -34,6 +34,12 @@
     return self;
 }
 
+- (void) resetView {
+    [collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
+    NSIndexSet *indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
+}
+
 - (void)awakeFromNib {
     images = [[NSMutableArray alloc] init];
     contentArray = [[NSMutableArray alloc] init];
@@ -54,9 +60,7 @@
 
 	[self setSortingMode: 0];        // icon collection in ascending sort order
 
-	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
-    NSIndexSet *indexes = [NSIndexSet indexSet];
-    [collectionView setSelectionIndexes:indexes];
+    [self resetView];
 }
 
 - (void)addEntries: (NSArray *) array {
@@ -118,7 +122,6 @@
 	// some portions are from disk which could get expensive depending on the size
     [self startProgress];
     self->showProgress = true;
-    PMLOG_SetVerbose(PMLogLevelDebug);
     [NSThread detachNewThreadSelector:	@selector(collectFolders:)
                              toTarget:self		// we are the target
                            withObject:url];

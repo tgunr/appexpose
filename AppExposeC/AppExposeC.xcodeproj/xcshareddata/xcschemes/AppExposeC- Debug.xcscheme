@@ -61,7 +61,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-path /Volumes/Applications"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

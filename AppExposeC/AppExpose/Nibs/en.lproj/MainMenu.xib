@@ -809,12 +809,26 @@
                             </connections>
                         </button>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="FEA131A3-E36F-45F8-A4E7-C8CB65E88659" label="" paletteLabel="Refresh" image="NSRefreshTemplate" sizingBehavior="auto" id="u1V-vn-JVE">
+                        <nil key="toolTip"/>
+                        <button key="view" verticalHuggingPriority="750" id="ibc-HR-udq">
+                            <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="emo-X8-w1u">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="refreshWindow:" target="614" id="wmz-MZ-ceG"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="1359999A-DBDB-48F3-822F-EB692F27483A" label="" paletteLabel="" id="729">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="220" height="25"/>
-                        <size key="maxSize" width="300" height="25"/>
+                        <size key="minSize" width="220" height="23"/>
+                        <size key="maxSize" width="300" height="26"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="727">
-                            <rect key="frame" x="0.0" y="14" width="222" height="25"/>
+                            <rect key="frame" x="0.0" y="14" width="232" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="728">
                                 <font key="font" metaFont="system"/>
@@ -830,6 +844,7 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="u1V-vn-JVE"/>
                     <toolbarItem reference="729"/>
                     <toolbarItem reference="607"/>
                     <toolbarItem reference="714"/>
@@ -861,6 +876,7 @@
                 <outlet property="iconsView" destination="665" id="667"/>
                 <outlet property="myTargetView" destination="598" id="618"/>
                 <outlet property="progressIndicator" destination="694" id="695"/>
+                <outlet property="refreshWindow" destination="u1V-vn-JVE" id="oVT-bD-ZQo"/>
                 <outlet property="removeButton" destination="715" id="735"/>
                 <outlet property="restartFinder" destination="723" id="739"/>
                 <outlet property="selectAllButton" destination="721" id="734"/>
@@ -903,6 +919,7 @@
         <image name="Finder" width="512" height="512"/>
         <image name="Folder" width="286" height="224"/>
         <image name="NSMultipleDocuments" width="32" height="32"/>
+        <image name="NSRefreshTemplate" width="18" height="21"/>
         <image name="after-32" width="32" height="32"/>
         <image name="app" width="128" height="128"/>
         <image name="before-32" width="32" height="32"/>

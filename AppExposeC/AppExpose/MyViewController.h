@@ -49,5 +49,6 @@
 - (void)selectNone: (id)sender;
 
 - (void) zoomChanged: (CGFloat) newValue;
+- (void) resetView;
 
 @end

@@ -48,6 +48,9 @@
 
 #import "MyWindowController.h"
 #import "PMUtility/pmUtility.h"
+#import "AppExposeC-Swift.h"
+#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @implementation MyWindowController
 @synthesize selectAllToolBarItem;
@@ -206,5 +209,12 @@
         [finder addObserver:self forKeyPath:@"isTerminated" options:0 context:@"QuitFinder"];
         [finder terminate];
     }
+}
+
+- (IBAction)refreshWindow:(NSToolbarItem *)sender {
+    [[AppDelegate shared] setAppDirectory];
+    NSString *dir = [[AppDelegate shared] appDirectory];
+    [viewController resetView];
+    viewController.url = [NSURL fileURLWithPath: dir];
 }
 @end

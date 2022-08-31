@@ -90,5 +90,6 @@
 - (IBAction)zoomChanged:(id)sender;
 - (IBAction)restartFinder:(id)sender;
 - (void)selectionChanged;
+@property (weak) IBOutlet NSToolbarItem *refreshWindow;
 
 @end
