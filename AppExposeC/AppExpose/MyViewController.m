@@ -87,7 +87,8 @@
 	for (AppEntry  *entry in iconImages) {
         if (entry != nil) {
             if ([entry isFolder] && [[entry childEntries] count] == 1 )
-                [entry badgeAsFolder];
+                if ([entry isSpecial])
+                    [entry badgeAsFolder];
                 
             if (![entry canAccess] && ![entry isApp]) {
                 [entry badgeAsNoAccess];

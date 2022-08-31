@@ -34,6 +34,7 @@
 @synthesize isApp;
 @synthesize canAccess;
 @synthesize hasCustomIcon;
+@synthesize isSpecial;
 @synthesize name;
 @synthesize appURL;
 @synthesize childEntries;
@@ -56,6 +57,7 @@
         appURL         = [url copy];
         isLeaf         = YES;
         isApp          = NO;
+        isSpecial      = NO;
         name           = [[url lastPathComponent] copy];
         originalImage  = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
         iconImage      = originalImage;
@@ -236,10 +238,15 @@
     if ([components[0] isEqualToString:@"/"] &&
         [components[1] isEqualToString:@"System"] &&
         [components[2] isEqualToString:@"Applications"] &&
-        [specialNames containsObject: components[3]])
+        [specialNames containsObject: components[3]]) {
+        self.isSpecial = false;
         return false;
+    }
     else
+    {
+        self.isSpecial = false;
         return true;
+    }
 }
 
 - (BOOL) shouldSkipDescendents {

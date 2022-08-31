@@ -40,6 +40,7 @@
 @property(nonatomic, assign) BOOL isApp;
 @property(nonatomic, assign) BOOL canAccess;
 @property(nonatomic, assign) BOOL hasCustomIcon;
+@property(nonatomic, assign) BOOL isSpecial;
 @property(nonatomic, assign, getter = hasMyCustomIcon) BOOL hasMyCustomIcon;
 @property(nonatomic, assign, getter = shouldSkipDescendents) BOOL skipDescendents;
 @property(nonatomic, copy) NSString              *name;
