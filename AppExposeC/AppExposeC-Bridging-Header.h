@@ -20,6 +20,7 @@
 #import "AppEntry.h"
 #import "MyWindowController.h"
 #import <Cocoa/Cocoa.h>
+#import <PMUtility/PMUtility.h>
 
 // End Swiftify generated imports
 // -----------------------------------------------------------------------------
