@@ -52,12 +52,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let defaults: UserDefaults? = UserDefaults.standard
         let debug: Bool = defaults?.bool(forKey: "debug") ?? false
         if debug {
-            appDirectory = "/Volumes/Applications/"
+            PMLOG_SetVerbose(PMLogLevelDebug);
         }
-        appDirectory = "/Applications/"
-        #if DEBUG
-        appDirectory = "/Volumes/Applications"
-        #endif
         let directory: String? = defaults?.string(forKey: "path")
         if let directory = directory {
             appDirectory = directory
