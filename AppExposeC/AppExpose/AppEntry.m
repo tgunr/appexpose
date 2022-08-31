@@ -279,7 +279,7 @@
             if ([isPackage boolValue]) {
                 AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
                 if ([entry isApp]) {
-                    PMLOG(2, @"adding: %@", theURL);
+                    PMLOG_DEBUG(@"adding: %@", theURL);
                     if ([appEntry addChildEntry:entry]) {
                         [dirEnumerator skipDescendents];
                     }
@@ -323,7 +323,7 @@
     NSError *error;
     BOOL result2 = [appURL checkResourceIsReachableAndReturnError:&error];
     if (!result1 || !result2) {
-        PMLOG(2, @"no access: %@", appURL);
+        PMLOG_DEBUG(@"no access: %@", appURL);
     }
     return result1 && result2;
 }

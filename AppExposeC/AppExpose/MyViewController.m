@@ -75,7 +75,7 @@
             [self selectNone:self];
         }
         else {
-            PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+            PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
         }
     }
 }
@@ -96,7 +96,7 @@
                 [tempArray addObject: iconDictionary];
             }
             else {
-                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+                PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
             }
         }
 	}
@@ -178,9 +178,6 @@
                     [dirEnumerator skipDescendents];
             }
         }
-//#pragma GCC diagnostic ignored "-Wundeclared-selector"
-//        SEL selector = NSSelectorFromString(@"stopProgress:");
-//        [self performSelectorOnMainThread:selector withObject:nil waitUntilDone:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
         [[NSNotificationCenter defaultCenter]
             postNotificationName:@"stopprogress"
@@ -267,7 +264,7 @@
 				}
 			}
 			else {
-				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+				PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
 			}
 		}
 	}
@@ -317,13 +314,13 @@
                         NSImage *original = [entry originalImage];
                         NSImage *current  = [entry iconImage];
                         if (current != original) {
-                            PMLOG(1, @"Setting icon on: %@", [entry appURL]);
+                            PMLOG_DEBUG(@"Setting icon on: %@", [entry appURL]);
                             [tempArray addObject: entry];
                         }
                     } else 
-                        PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+                        PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
                 } else
-                    PMLOG(1, @"Skipping non-accessible url: %@", [[entry appURL] path]);
+                    PMLOG_DEBUG(@"Skipping non-accessible url: %@", [[entry appURL] path]);
             }
         }
         NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];
@@ -361,7 +358,7 @@
             NSURL *aURL = [entry appURL];
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
-                PMLOG(1, @"removing CustomIcon: %@", aURL);
+                PMLOG_DEBUG(@"removing CustomIcon: %@", aURL);
                 NSURL         *customIconURL = [aURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
                 NSFileManager *fm            = [NSFileManager defaultManager];
                 BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
@@ -439,7 +436,7 @@
 //                [tempArray addObject: iconDictionary];
 //			}
 //			else {
-//				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+//				PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
 //			}
 //		}
 //	}
