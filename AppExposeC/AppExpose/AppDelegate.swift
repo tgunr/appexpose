@@ -52,12 +52,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let defaults: UserDefaults? = UserDefaults.standard
         let debug: Bool = defaults?.bool(forKey: "debug") ?? false
         if debug {
-            PMLOG_SetVerbose(PMLogLevelDebug);
+            PMLOG_SetVerbose(PMLogLevelEmerg);
         }
         let directory: String? = defaults?.string(forKey: "path")
         if let directory = directory {
             appDirectory = directory
         }
+        pmLOGSELF(self);
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {

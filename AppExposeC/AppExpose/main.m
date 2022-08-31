@@ -11,7 +11,6 @@
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        PMLOG_SetVerbose(1);
         return NSApplicationMain(argc, (const char **)argv);
     }
 }
