@@ -4,7 +4,6 @@
  */
 
 #import "MyViewController.h"
-#import "MyWindowController.h"
 #import "AppEntry.h"
 #import "PMUtility/pmUtility.h"
 #import "xattr/xattr.h"
@@ -107,8 +106,8 @@
 }
 
 - (void)startProgress {
-    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:NO];
-    [[[[AppDelegate shared] myWindowController] progressIndicator] startAnimation:self];
+    [[[[AppDelegate shared] windowController] progressIndicator] setHidden:NO];
+    [[[[AppDelegate shared] windowController] progressIndicator] startAnimation:self];
 }
 
 - (void)observeValueForKeyPath:(NSString*)keyPath
@@ -132,8 +131,8 @@
 }
 
 - (void) stopOnMainThread {
-    [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
+    [[[[AppDelegate shared] windowController] progressIndicator] stopAnimation:self];
+    [[[[AppDelegate shared] windowController] progressIndicator] setHidden:YES];
 }
 
 - (void) collectFolders:(NSURL *) directoryToScan {

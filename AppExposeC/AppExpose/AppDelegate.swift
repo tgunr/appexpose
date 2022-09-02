@@ -9,6 +9,7 @@
 
 import Cocoa
 import Foundation
+//import PMUtility
 
 @objcMembers
 @NSApplicationMain
@@ -20,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var dirPath: String = ""
     private var rootEntry: AppEntry?
 
-    @IBOutlet var myWindowController: MyWindowController!
+    @IBOutlet var windowController: MyWindowController!
     @IBOutlet var window: NSWindow!
     @IBOutlet var iconCollection: NSCollectionView!
     @IBOutlet var appBrowser: NSBrowser!
@@ -63,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setAppDirectory()
-        myWindowController.viewController.url = URL(fileURLWithPath: appDirectory)
+        windowController.viewController!.url = URL(fileURLWithPath: appDirectory)
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -98,6 +99,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //    }
 //
     func selectionChanged() {
-        myWindowController.selectionChanged()
+        windowController.selectionChanged()
     }
 }

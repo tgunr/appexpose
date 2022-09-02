@@ -811,7 +811,7 @@
                     <toolbarItem implicitItemIdentifier="FEA131A3-E36F-45F8-A4E7-C8CB65E88659" label="" paletteLabel="Refresh" image="NSRefreshTemplate" sizingBehavior="auto" id="u1V-vn-JVE">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="ibc-HR-udq">
-                            <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                            <rect key="frame" x="2" y="14" width="44" height="32"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="emo-X8-w1u">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -863,11 +863,11 @@
         </window>
         <customObject id="494" customClass="AppDelegate" customModule="AppExposeC" customModuleProvider="target">
             <connections>
-                <outlet property="myWindowController" destination="614" id="671"/>
                 <outlet property="window" destination="595" id="615"/>
+                <outlet property="windowController" destination="614" id="671"/>
             </connections>
         </customObject>
-        <customObject id="614" userLabel="WindowController" customClass="MyWindowController">
+        <customObject id="614" userLabel="WindowController" customClass="MyWindowController" customModule="AppExposeC">
             <connections>
                 <outlet property="appearanceControl" destination="727" id="730"/>
                 <outlet property="applyButton" destination="712" id="737"/>

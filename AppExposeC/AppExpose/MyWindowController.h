@@ -48,8 +48,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "MyViewController.h"
-
 @interface MyWindowController : NSWindowController
 {
     MyViewController *viewController;
@@ -93,3 +91,4 @@
 @property (weak) IBOutlet NSToolbarItem *refreshWindow;
 
 @end
+
