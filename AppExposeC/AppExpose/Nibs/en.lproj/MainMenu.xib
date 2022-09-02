@@ -867,14 +867,14 @@
                 <outlet property="windowController" destination="614" id="671"/>
             </connections>
         </customObject>
-        <customObject id="614" userLabel="WindowController" customClass="MyWindowController" customModule="AppExposeC">
+        <customObject id="614" userLabel="WindowController" customClass="MyWindowController" customModule="AppExposeC" customModuleProvider="target">
             <connections>
                 <outlet property="appearanceControl" destination="727" id="730"/>
-                <outlet property="applyButton" destination="712" id="737"/>
+                <outlet property="applyButton" destination="712" id="N6c-Yu-V3P"/>
                 <outlet property="myTargetView" destination="598" id="618"/>
                 <outlet property="progressIndicator" destination="694" id="695"/>
                 <outlet property="refreshWindow" destination="u1V-vn-JVE" id="oVT-bD-ZQo"/>
-                <outlet property="removeButton" destination="715" id="735"/>
+                <outlet property="removeButton" destination="715" id="2PI-sl-fYW"/>
                 <outlet property="restartFinder" destination="723" id="739"/>
                 <outlet property="selectAllButton" destination="721" id="734"/>
                 <outlet property="selectAllToolBarItem" destination="720" id="740"/>

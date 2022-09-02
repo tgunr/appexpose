@@ -115,8 +115,8 @@ class MyWindowController: NSWindowController {
     @IBOutlet var myTargetView: NSView!
     @IBOutlet var selectionField: NSTextField!
     var viewController: MyViewController?
-    @IBOutlet var applyButton: NSButton!
-    @IBOutlet var removeButton: NSButton!
+    @IBOutlet weak var applyButton: NSButton!
+    @IBOutlet weak var removeButton: NSButton!
     @IBOutlet var selectAllButton: NSButton!
     @IBOutlet var iconView: NSImageView!
     @IBOutlet var iconsView: NSCollectionView!
@@ -164,12 +164,12 @@ class MyWindowController: NSWindowController {
         switch segment {
         case 0:
             viewController!.showBeforeAppearance()
-            applyButton.state = NSControl.StateValue.off
-            removeButton.state = NSControl.StateValue.off
-            selectAllButton.state = NSControl.StateValue.off
+            applyButton.isEnabled = false
+            removeButton.isEnabled = false
+            selectAllButton.isEnabled = false
         case 1:
             viewController!.showAfterAppearance()
-            selectAllButton.state = NSControl.StateValue.on
+            selectAllButton.isEnabled = true
         default:
             break
         }
@@ -210,18 +210,18 @@ class MyWindowController: NSWindowController {
         let segment: Int = appearanceControl.selectedSegment
         switch segment {
         case 0:
-            applyButton.state = NSControl.StateValue.off
-            removeButton.state = NSControl.StateValue.off
-            selectAllButton.state = NSControl.StateValue.off
+            applyButton.isEnabled = false
+            removeButton.isEnabled = false
+            selectAllButton.isEnabled = false
         case 1:
             let entries = viewController!.selectedIcons()
             let numberEntries: Int = entries!.count
             if numberEntries != 0 {
-                applyButton.state = NSControl.StateValue.on
-                removeButton.state = NSControl.StateValue.on
+                applyButton.isEnabled = true
+                removeButton.isEnabled = true
             } else {
-                applyButton.state = NSControl.StateValue.off
-                removeButton.state = NSControl.StateValue.off
+                applyButton.isEnabled = false
+                removeButton.isEnabled = false
             }
             setSelectAllLabel()
         default:
