@@ -18,7 +18,8 @@
 // • No need to import the Swift Bridging Header (`AppExposeC-Swift.h`), since it's already being imported from the .pch file.
 
 #import "AppEntry.h"
-#import "MyWindowController.h"
+//#import "MyWindowController.h"
+#import "MyViewController.h"
 #import <Cocoa/Cocoa.h>
 #import <PMUtility/PMUtility.h>
 
