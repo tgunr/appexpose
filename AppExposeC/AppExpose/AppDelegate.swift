@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func openReadMe(_ sender: Any) {
         let fullPath: String? = Bundle.main.path(forResource: "ReadMe", ofType: "txt")
-        NSWorkspace.shared.openFile(fullPath ?? "")
+        NSWorkspace.shared.open(URL(string: fullPath!)!)
     }
 
     // MARK: NSBrowser Data Source Methods

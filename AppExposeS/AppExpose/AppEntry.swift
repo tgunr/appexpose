@@ -36,7 +36,7 @@ class AppEntry: NSObject {
     var name: String?
     var appURL: URL?
     var childEntries: [AppEntry] = [ ]
-    //    var iconDictionary: [String : NSImage]?
+    var iconDictionary: [String : NSImage]?
     var icons: [NSImage]?
     var appImage: NSImage?
     var originalImage: NSImage?
@@ -115,7 +115,7 @@ class AppEntry: NSObject {
             draw(NSRect(x: 0.0, y: 0.0, width: CGFloat(ICON_SIZE), height: CGFloat(ICON_SIZE)))
             var count = Int(min(9, numImages))
             var stop = false
-            var point: NSPoint
+            var point: NSPoint = NSPoint(x: 0.0, y: 0.0)
             //        CGFloat offset = resultImageSize.width / 8.0;
             let offset = resultImageSize.width * 0.64065
             point.y = offset
@@ -144,41 +144,41 @@ class AppEntry: NSObject {
             resultImage.unlockFocus()
             let reducer = ImageReducer()
             reducer?.setInputImage(resultImage)
-            reducer.maxPixelsWide = 512
-            reducer.maxPixelsHigh = 512
-            reducer.scalesImage = true
-            reducer.sharpensImage = false
-            reducer.drawBorder = false
-            reducer.addsShadow = false
-            var reduced = reducer.outputBitmapImageRep()
+            reducer?.setMaxPixelsWide(512)
+            reducer?.setMaxPixelsHigh(512)
+            reducer?.setScalesImage(true)
+            reducer?.setSharpensImage(false)
+            reducer?.setDrawBorder(true)
+            reducer?.setAddsShadow(true)
+            var reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
             
-            reducer.maxPixelsWide = 256
-            reducer.maxPixelsHigh = 256
-            reduced = reducer.outputBitmapImageRep()
+            reducer?.setMaxPixelsWide(256)
+            reducer?.setMaxPixelsHigh(256)
+            reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
             
-            reducer.maxPixelsWide = 128
-            reducer.maxPixelsHigh = 128
-            reduced = reducer.outputBitmapImageRep()
+            reducer?.setMaxPixelsWide(128)
+            reducer?.setMaxPixelsHigh(128)
+            reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
             
-            reducer.maxPixelsWide = 64
-            reducer.maxPixelsHigh = 64
-            reduced = reducer.outputBitmapImageRep()
+            reducer?.setMaxPixelsWide(64)
+            reducer?.setMaxPixelsHigh(64)
+            reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
             
-            reducer.maxPixelsWide = 32
-            reducer.maxPixelsHigh = 32
-            reduced = reducer.outputBitmapImageRep()
+            reducer?.setMaxPixelsWide(32)
+            reducer?.setMaxPixelsHigh(32)
+            reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
@@ -200,7 +200,7 @@ class AppEntry: NSObject {
         } catch {
         }
         if let url = url {
-            xattr = XATTR(path: url.path(), options: nofollow)
+            xattr = XATTR(path: url.path(), options: XATTROptions.nofollow)
         }
         isLeaf = isALeaf(url)
         isFolder = isAFolder(url)
@@ -228,9 +228,7 @@ class AppEntry: NSObject {
         }
         if let iconImage = appImage {
             iconDictionary = [
-                KEY_IMAGE : iconImage,
-                KEY_NAME : name ?? ""
-            ]
+                KEY_IMAGE : iconImage            ]
         }
     }
     
@@ -360,12 +358,12 @@ class AppEntry: NSObject {
                     dirEnumerator.skipDescendents()
                 }
             }
-            return appEntry
-            //        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-            //        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
-            performSelector(onMainThread: Selector(("setIcons:")), with: tempArray, waitUntilDone: true)
-            //        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
         }
+        //        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
+        //        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
+        performSelector(onMainThread: Selector(("setIcons:")), with: tempArray, waitUntilDone: true)
+        //        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
+        return appEntry
     }
     
     func folderHasCustomIcon(path: String) -> Bool {
@@ -404,7 +402,7 @@ class AppEntry: NSObject {
             childEntry = AppEntry(
                 url: URL(
                     string: URL(fileURLWithPath: pathWithName() ?? "").appendingPathComponent(str ?? "").path + "/"))
-            addChildEntry(childEntry)
+            let r = addChildEntry(childEntry)
         }
         return childEntry
     }
@@ -421,8 +419,8 @@ class AppEntry: NSObject {
     }
     
     func setAttribute(_ xAttribute: String!, value xValue: String!) -> Bool {
-        let ok = xattr?.setAttribute(xAttribute, value: xValue) ?? false
-        return ok
+        xattr?.setAttribute(xAttribute, value: xValue)
+        return true
     }
     
     func hasAttribute(_ string: String?) -> Bool {

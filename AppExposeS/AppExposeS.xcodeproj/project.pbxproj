@@ -46,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		751D7F2B28C5E16400D70079 /* AppExposeS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeS-Prefix.pch"; sourceTree = "<group>"; };
+		751D7F2C28C5E16400D70079 /* AppExposeS-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeS-Prefix.swift"; sourceTree = "<group>"; };
 		75234E8128B2617F00512430 /* AppExposeS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75234E8428B2617F00512430 /* AppExposeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExposeApp.swift; sourceTree = "<group>"; };
 		75234E8628B2617F00512430 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,8 +58,6 @@
 		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		75E4E3CD28C50B6B00099C3F /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
 		75E4E3CF28C50C3E00099C3F /* AppExposeS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppExposeS-Bridging-Header.h"; sourceTree = "<group>"; };
-		75E4E3D228C50D9800099C3F /* AppExposeC-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeC-Prefix.swift"; sourceTree = "<group>"; };
-		75E4E3D328C50DAC00099C3F /* AppExposeC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Prefix.pch"; sourceTree = "<group>"; };
 		75E4E3D428C50E0400099C3F /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Swiftify.README.md; sourceTree = "<group>"; };
 		75E4E3D628C50E6C00099C3F /* PMUtility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PMUtility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = ../PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
@@ -84,10 +84,10 @@
 		75234E7828B2617F00512430 = {
 			isa = PBXGroup;
 			children = (
+				751D7F2B28C5E16400D70079 /* AppExposeS-Prefix.pch */,
+				751D7F2C28C5E16400D70079 /* AppExposeS-Prefix.swift */,
 				75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */,
 				75E4E3CF28C50C3E00099C3F /* AppExposeS-Bridging-Header.h */,
-				75E4E3D228C50D9800099C3F /* AppExposeC-Prefix.swift */,
-				75E4E3D328C50DAC00099C3F /* AppExposeC-Prefix.pch */,
 				75E4E3D428C50E0400099C3F /* Swiftify.README.md */,
 				75C78EE528BE3B8400801110 /* AppExposePlayground.playground */,
 				75234E8328B2617F00512430 /* AppExpose */,
