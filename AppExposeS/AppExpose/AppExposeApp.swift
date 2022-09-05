@@ -6,18 +6,25 @@
 //
 
 import SwiftUI
+import AppKit
+
+class appData : NSObject , ObservableObject {
+    static let shared = appData()
+    @Published var folders = Array<String>()
+    var progress : Progress?
+    override init() {
+    }
+}
 
 @main
 struct MyApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-//    @StateObject private var model = AppFolders()
-    var body: some Scene {
-        WindowGroup(String("AppExpose"), id: "root") {
-            //            ExampleView().frame(maxWidth: .infinity, maxHeight: .infinity)
-            ToolbarView().frame(maxWidth: .infinity, maxHeight: .infinity)
+//    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @EnvironmentObject private var appDelegate: AppDelegate
+   var body: some Scene {
+        WindowGroup {
             ContentView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-
+                .environmentObject(appData.shared)
         }
 //        Settings {
 //            PreferencesView(model: model)

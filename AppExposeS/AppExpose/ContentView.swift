@@ -7,13 +7,16 @@
 
 import SwiftUI
 
-struct TopBarView: View {
+struct ContentView: View {
+    @AppStorage("title") var currentShortcutTitle: String?
+    //    @AppStorage("appFolders") var appFolders: [String]
+    
     @State private var val: Double = 0.7
     @State private var bold = true
     @State private var italic = false
-        
+    
     var body: some View {
-        NavigationView {
+        ScrollViewReader { proxy in
             VStack {
                 Text("Application Folders")
                 List {
@@ -23,41 +26,29 @@ struct TopBarView: View {
                     Text("Folder")
                     Text("Folder")
                     Text("Folder")
+                    Button(action: { connect() }) {
+                        Text("Done", comment: "Button title to dismiss rewards sheet")
+                    }
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button(action: { connect() }) {
+                        Text("Done", comment: "Button title to dismiss rewards sheet")
+                    }
+                }
+            }
+            .navigationTitle("AppExpose")
         }
-                .toolbar(content: {
-                    Text("Offline").foregroundColor(.red)
-                    
-                    Button(action: connect, label: { Image(systemName: "network") })
-                    
-                    Slider(value: $val, in: 0...1, label: { Text("Volume")})
-                        .frame(width: 200)
-                    
-                    Toggle(isOn: $bold, label: { Text("B").fontWeight(.heavy) })
-                    
-                    Toggle(isOn: $italic, label: { Text("I").italic() })
-                })
-                .navigationTitle("My Application")
-            
-        }
+    }
     
     func connect() {
         
     }
 }
 
-struct ContentView: View {
-    var body: some View {
-            TopBarView()
-        
-    }
-}
-
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        TopBarView()
+        ContentView()
     }
 }
