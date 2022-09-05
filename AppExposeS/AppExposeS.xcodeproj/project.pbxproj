@@ -108,9 +108,9 @@
 		75234E7828B2617F00512430 = {
 			isa = PBXGroup;
 			children = (
+				75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */,
 				751D7F2B28C5E16400D70079 /* AppExposeS-Prefix.pch */,
 				751D7F2C28C5E16400D70079 /* AppExposeS-Prefix.swift */,
-				75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */,
 				75E4E3CF28C50C3E00099C3F /* AppExposeS-Bridging-Header.h */,
 				75E4E3D428C50E0400099C3F /* Swiftify.README.md */,
 				75C78EE528BE3B8400801110 /* AppExposePlayground.playground */,
