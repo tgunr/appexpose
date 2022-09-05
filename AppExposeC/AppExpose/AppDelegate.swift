@@ -13,7 +13,7 @@ import Foundation
 
 @objcMembers
 //@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var myAuthorizationRef: AuthorizationRef?
     var appDirectory: String = ""
     
