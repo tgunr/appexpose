@@ -12,7 +12,7 @@ import Foundation
 //import PMUtility
 
 @objcMembers
-@NSApplicationMain
+//@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var myAuthorizationRef: AuthorizationRef?
     var appDirectory: String = ""
@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var dirPath: String = ""
     private var rootEntry: AppEntry?
 
-    @IBOutlet var windowController: MyWindowController!
+//    @IBOutlet var windowController: MyWindowController!
     @IBOutlet var window: NSWindow!
     @IBOutlet var iconCollection: NSCollectionView!
     @IBOutlet var appBrowser: NSBrowser!
@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setAppDirectory()
-        windowController.viewController!.url = URL(fileURLWithPath: appDirectory)
+//        windowController.viewController!.url = URL(fileURLWithPath: appDirectory)
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -98,7 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        return (item as? AppEntry)?.name()
 //    }
 //
-    func selectionChanged() {
-        windowController.selectionChanged()
-    }
+//    func selectionChanged() {
+//        windowController.selectionChanged()
+//    }
 }

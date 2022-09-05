@@ -15,7 +15,35 @@
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
+		75E4E3CE28C50B6B00099C3F /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4E3CD28C50B6B00099C3F /* AppEntry.swift */; };
+		75E4E3E428C50EC100099C3F /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E4E3DF28C50EA500099C3F /* PMUtility.framework */; };
+		75E4E3EA28C5142D00099C3F /* XATTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4E3E928C5142D00099C3F /* XATTR.swift */; };
+		75E4E3F028C515B000099C3F /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E4E3EF28C515B000099C3F /* ImageReducer.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		75E4E3DE28C50EA500099C3F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7535D1CF14DF240C00613F39;
+			remoteInfo = PMUtility;
+		};
+		75E4E3E028C50EA500099C3F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 754C47EE15DC2DF100316C67;
+			remoteInfo = pmutility;
+		};
+		75E4E3E228C50EB100099C3F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7535D1CE14DF240C00613F39;
+			remoteInfo = PMUtility;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		75234E8128B2617F00512430 /* AppExposeS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,7 +53,17 @@
 		75234E8B28B2618100512430 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
 		75C78EE328BE389200801110 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppExposeC/AppExpose/AppDelegate.swift; sourceTree = "<group>"; };
-		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; };
+		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		75E4E3CD28C50B6B00099C3F /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
+		75E4E3CF28C50C3E00099C3F /* AppExposeS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppExposeS-Bridging-Header.h"; sourceTree = "<group>"; };
+		75E4E3D228C50D9800099C3F /* AppExposeC-Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExposeC-Prefix.swift"; sourceTree = "<group>"; };
+		75E4E3D328C50DAC00099C3F /* AppExposeC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Prefix.pch"; sourceTree = "<group>"; };
+		75E4E3D428C50E0400099C3F /* Swiftify.README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Swiftify.README.md; sourceTree = "<group>"; };
+		75E4E3D628C50E6C00099C3F /* PMUtility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PMUtility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = ../PMUtility/PMUtility.xcodeproj; sourceTree = "<group>"; };
+		75E4E3E928C5142D00099C3F /* XATTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XATTR.swift; sourceTree = "<group>"; };
+		75E4E3EE28C515B000099C3F /* ImageReducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageReducer.h; path = ../../AppExposeC/AppExpose/ImageReducer.h; sourceTree = "<group>"; };
+		75E4E3EF28C515B000099C3F /* ImageReducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageReducer.m; path = ../../AppExposeC/AppExpose/ImageReducer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75E4E3E428C50EC100099C3F /* PMUtility.framework in Frameworks */,
 				75C78EEE28BE4DE700801110 /* Helm in Frameworks */,
 				75C78EF028BE4DE700801110 /* Playground in Frameworks */,
 				75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */,
@@ -45,9 +84,15 @@
 		75234E7828B2617F00512430 = {
 			isa = PBXGroup;
 			children = (
+				75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */,
+				75E4E3CF28C50C3E00099C3F /* AppExposeS-Bridging-Header.h */,
+				75E4E3D228C50D9800099C3F /* AppExposeC-Prefix.swift */,
+				75E4E3D328C50DAC00099C3F /* AppExposeC-Prefix.pch */,
+				75E4E3D428C50E0400099C3F /* Swiftify.README.md */,
 				75C78EE528BE3B8400801110 /* AppExposePlayground.playground */,
 				75234E8328B2617F00512430 /* AppExpose */,
 				75234E8228B2617F00512430 /* Products */,
+				75E4E3D528C50E6C00099C3F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,12 +107,16 @@
 		75234E8328B2617F00512430 /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
+				75E4E3EE28C515B000099C3F /* ImageReducer.h */,
+				75E4E3EF28C515B000099C3F /* ImageReducer.m */,
+				75E4E3E928C5142D00099C3F /* XATTR.swift */,
 				75234E8428B2617F00512430 /* AppExposeApp.swift */,
 				75234E8628B2617F00512430 /* ContentView.swift */,
 				75C78EE328BE389200801110 /* AppDelegate.swift */,
 				75234E8828B2618100512430 /* Assets.xcassets */,
 				75234E8D28B2618100512430 /* AppExpose.entitlements */,
 				75234E8A28B2618100512430 /* Preview Content */,
+				75E4E3CD28C50B6B00099C3F /* AppEntry.swift */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -78,6 +127,23 @@
 				75234E8B28B2618100512430 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		75E4E3D528C50E6C00099C3F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75E4E3D628C50E6C00099C3F /* PMUtility.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		75E4E3D928C50EA500099C3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75E4E3DF28C50EA500099C3F /* PMUtility.framework */,
+				75E4E3E128C50EA500099C3F /* libpmutility.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,6 +160,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				75E4E3E328C50EB100099C3F /* PBXTargetDependency */,
 			);
 			name = AppExposeS;
 			packageProductDependencies = (
@@ -135,12 +202,35 @@
 			);
 			productRefGroup = 75234E8228B2617F00512430 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 75E4E3D928C50EA500099C3F /* Products */;
+					ProjectRef = 75E4E3D828C50EA500099C3F /* PMUtility.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				75234E8028B2617F00512430 /* AppExposeS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		75E4E3DF28C50EA500099C3F /* PMUtility.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PMUtility.framework;
+			remoteRef = 75E4E3DE28C50EA500099C3F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		75E4E3E128C50EA500099C3F /* libpmutility.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpmutility.a;
+			remoteRef = 75E4E3E028C50EA500099C3F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		75234E7F28B2617F00512430 /* Resources */ = {
@@ -159,13 +249,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75E4E3CE28C50B6B00099C3F /* AppEntry.swift in Sources */,
 				75C78EE428BE389200801110 /* AppDelegate.swift in Sources */,
+				75E4E3F028C515B000099C3F /* ImageReducer.m in Sources */,
 				75234E8728B2617F00512430 /* ContentView.swift in Sources */,
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
+				75E4E3EA28C5142D00099C3F /* XATTR.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		75E4E3E328C50EB100099C3F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PMUtility;
+			targetProxy = 75E4E3E228C50EB100099C3F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		75234E8E28B2618100512430 /* Debug */ = {
@@ -308,6 +409,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -339,6 +441,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
