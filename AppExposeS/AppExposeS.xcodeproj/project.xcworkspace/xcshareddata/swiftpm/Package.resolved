@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "extendedattributes",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/amosavian/ExtendedAttributes.git",
+      "state" : {
+        "revision" : "075e545e2f128482fa377c825bfa0e4f0e266419",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "helm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/valentinradu/Helm",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9e83233160174813b620e734d6e43018e123ed25"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections.git",
+      "state" : {
+        "revision" : "f504716c27d2e5d4144fa4794b12129301d17729",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 2
+}
