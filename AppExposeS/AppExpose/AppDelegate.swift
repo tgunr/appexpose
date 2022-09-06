@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     @Published var isActive: Bool = true
