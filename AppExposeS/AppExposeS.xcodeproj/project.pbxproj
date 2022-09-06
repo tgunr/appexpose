@@ -12,6 +12,13 @@
 		75234E8728B2617F00512430 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75234E8628B2617F00512430 /* ContentView.swift */; };
 		75234E8928B2618100512430 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8828B2618100512430 /* Assets.xcassets */; };
 		75234E8C28B2618100512430 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8B28B2618100512430 /* Preview Assets.xcassets */; };
+		7587491228C76E1000CDFEA8 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7587491128C76E1000CDFEA8 /* SidebarView.swift */; };
+		7587491428C76EDB00CDFEA8 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7587491328C76EDB00CDFEA8 /* WelcomeView.swift */; };
+		7587491A28C7851300CDFEA8 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 7587491528C7851300CDFEA8 /* red-lock.png */; };
+		7587491B28C7851300CDFEA8 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 7587491628C7851300CDFEA8 /* redpadlock.png */; };
+		7587491C28C7851300CDFEA8 /* Finder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7587491728C7851300CDFEA8 /* Finder.icns */; };
+		7587491D28C7851300CDFEA8 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 7587491828C7851300CDFEA8 /* Folder.png */; };
+		7587491E28C7851300CDFEA8 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7587491928C7851300CDFEA8 /* default.png */; };
 		75C78EE428BE389200801110 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C78EE328BE389200801110 /* AppDelegate.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
@@ -57,6 +64,13 @@
 		75234E8828B2618100512430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75234E8B28B2618100512430 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Preview Assets.xcassets"; path = "Preview Content/Preview Assets.xcassets"; sourceTree = "<group>"; };
 		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
+		7587491128C76E1000CDFEA8 /* SidebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		7587491328C76EDB00CDFEA8 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		7587491528C7851300CDFEA8 /* red-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-lock.png"; sourceTree = "<group>"; };
+		7587491628C7851300CDFEA8 /* redpadlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpadlock.png; sourceTree = "<group>"; };
+		7587491728C7851300CDFEA8 /* Finder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Finder.icns; sourceTree = "<group>"; };
+		7587491828C7851300CDFEA8 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
+		7587491928C7851300CDFEA8 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		75C78EE328BE389200801110 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppExposeC/AppExpose/AppDelegate.swift; sourceTree = "<group>"; };
 		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		75E4E3CD28C50B6B00099C3F /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
@@ -98,6 +112,11 @@
 		751D7F2E28C5F7D800D70079 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7587491928C7851300CDFEA8 /* default.png */,
+				7587491728C7851300CDFEA8 /* Finder.icns */,
+				7587491828C7851300CDFEA8 /* Folder.png */,
+				7587491528C7851300CDFEA8 /* red-lock.png */,
+				7587491628C7851300CDFEA8 /* redpadlock.png */,
 				75234E8A28B2618100512430 /* Preview Content */,
 				75234E8828B2618100512430 /* Assets.xcassets */,
 				75234E8D28B2618100512430 /* AppExpose.entitlements */,
@@ -131,6 +150,7 @@
 		75234E8328B2617F00512430 /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
+				7587491128C76E1000CDFEA8 /* SidebarView.swift */,
 				751D7F2D28C5F79C00D70079 /* ObjC */,
 				75234E8428B2617F00512430 /* AppExposeApp.swift */,
 				75C78EE328BE389200801110 /* AppDelegate.swift */,
@@ -138,6 +158,7 @@
 				75E4E3CD28C50B6B00099C3F /* AppEntry.swift */,
 				75E4E3E928C5142D00099C3F /* XATTR.swift */,
 				751D7F2E28C5F7D800D70079 /* Resources */,
+				7587491328C76EDB00CDFEA8 /* WelcomeView.swift */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -259,7 +280,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				75234E8C28B2618100512430 /* Preview Assets.xcassets in Resources */,
+				7587491A28C7851300CDFEA8 /* red-lock.png in Resources */,
+				7587491E28C7851300CDFEA8 /* default.png in Resources */,
+				7587491C28C7851300CDFEA8 /* Finder.icns in Resources */,
+				7587491B28C7851300CDFEA8 /* redpadlock.png in Resources */,
 				75234E8928B2618100512430 /* Assets.xcassets in Resources */,
+				7587491D28C7851300CDFEA8 /* Folder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,8 +297,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				75E4E3CE28C50B6B00099C3F /* AppEntry.swift in Sources */,
+				7587491228C76E1000CDFEA8 /* SidebarView.swift in Sources */,
 				75C78EE428BE389200801110 /* AppDelegate.swift in Sources */,
 				7521188A28C5FA24000F9FA7 /* NSBezierPathAdditions.m in Sources */,
+				7587491428C76EDB00CDFEA8 /* WelcomeView.swift in Sources */,
 				75E4E3F028C515B000099C3F /* ImageReducer.m in Sources */,
 				75234E8728B2617F00512430 /* ContentView.swift in Sources */,
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
