@@ -17,7 +17,6 @@
 		756DF7001551E2EA00558DD4 /* before-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6FF1551E2EA00558DD4 /* before-32.png */; };
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
 		75882ECA28C22C9200065C3E /* MyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75882EC928C22C9200065C3E /* MyWindowController.swift */; };
-		75882EE128C27F2100065C3E /* AppExposeC-Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75882EDE28C27F2100065C3E /* AppExposeC-Prefix.swift */; };
 		75882EE228C27F2100065C3E /* Swiftify.README.md in Resources */ = {isa = PBXBuildFile; fileRef = 75882EDF28C27F2100065C3E /* Swiftify.README.md */; };
 		75A0142A154F2A1800AA6F70 /* AppExposeC.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExposeC.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
@@ -123,7 +122,7 @@
 		756DF7011551E35300558DD4 /* after-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "after-32.png"; sourceTree = "<group>"; };
 		75882EC928C22C9200065C3E /* MyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWindowController.swift; sourceTree = "<group>"; };
 		75882EDD28C27F2100065C3E /* AppExposeC-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Prefix.pch"; sourceTree = "<group>"; };
-		75882EDE28C27F2100065C3E /* AppExposeC-Prefix.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; fileEncoding = 4; name = "AppExposeC-Prefix.swift"; path = "/Volumes/imacHD/Users/davec/Work/AppExpose/AppExposeC/AppExposeC-Prefix.swift"; sourceTree = "<absolute>"; };
+		75882EDE28C27F2100065C3E /* AppExposeC */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; fileEncoding = 4; name = AppExposeC; path = /Volumes/imacHD/Users/davec/Dropbox/Sources/Products/AppExpose/AppExposeC; sourceTree = "<absolute>"; };
 		75882EDF28C27F2100065C3E /* Swiftify.README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; fileEncoding = 4; path = Swiftify.README.md; sourceTree = "<group>"; };
 		75882EE028C27F2100065C3E /* AppExposeC-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Bridging-Header.h"; sourceTree = "<group>"; };
 		75882EE428C27F5100065C3E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -181,7 +180,7 @@
 			children = (
 				75882EE028C27F2100065C3E /* AppExposeC-Bridging-Header.h */,
 				75882EDD28C27F2100065C3E /* AppExposeC-Prefix.pch */,
-				75882EDE28C27F2100065C3E /* AppExposeC-Prefix.swift */,
+				75882EDE28C27F2100065C3E /* AppExposeC */,
 				75882EDF28C27F2100065C3E /* Swiftify.README.md */,
 				753C0A5928B501BE00DE1D87 /* xattr.xcodeproj */,
 				753C0A4F28B501A900DE1D87 /* PMUtility.xcodeproj */,
@@ -454,7 +453,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				75A2E42C28BD5D23009C4BB7 /* MyCollectionView.m in Sources */,
-				75882EE128C27F2100065C3E /* AppExposeC-Prefix.swift in Sources */,
 				75882ECA28C22C9200065C3E /* MyWindowController.swift in Sources */,
 				75A2E42828BD5BCF009C4BB7 /* MyScrollView.m in Sources */,
 				75C78ED128BD6CF500801110 /* AppDelegate.swift in Sources */,
@@ -627,7 +625,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -654,7 +652,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -11,8 +11,9 @@ import Cocoa
 import Foundation
 //import PMUtility
 
+@available(macOS 10.15, *)
 @objcMembers
-//@NSApplicationMain
+@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var myAuthorizationRef: AuthorizationRef?
     var appDirectory: String = ""
@@ -21,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var dirPath: String = ""
     private var rootEntry: AppEntry?
 
-//    @IBOutlet var windowController: MyWindowController!
+    @IBOutlet var windowController: MyWindowController!
     @IBOutlet var window: NSWindow!
     @IBOutlet var iconCollection: NSCollectionView!
     @IBOutlet var appBrowser: NSBrowser!
@@ -98,7 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 //        return (item as? AppEntry)?.name()
 //    }
 //
-//    func selectionChanged() {
-//        windowController.selectionChanged()
-//    }
+    func selectionChanged() {
+        windowController.selectionChanged()
+    }
 }
