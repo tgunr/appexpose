@@ -402,7 +402,7 @@ class AppEntry: NSObject {
             childEntry = AppEntry(
                 url: URL(
                     string: URL(fileURLWithPath: pathWithName() ?? "").appendingPathComponent(str ?? "").path + "/"))
-            let r = addChildEntry(childEntry)
+            _ = addChildEntry(childEntry)
         }
         return childEntry
     }
