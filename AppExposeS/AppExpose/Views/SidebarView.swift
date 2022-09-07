@@ -25,16 +25,13 @@ struct SidebarView: View {
                     .fontWeight(.bold)
                 Group{
                     NavigationLink(destination: ContentView()) {
-                        Label("Home", systemImage: "house")
+                        Label("/Applications", systemImage: "folder")
                     }
                     NavigationLink(destination: ContentView()) {
-                        Label("Websites", systemImage: "globe")
+                        Label("~/Applications", systemImage: "folder")
                     }
                     NavigationLink(destination: ContentView()) {
-                        Label("Domains", systemImage: "link")
-                    }
-                    NavigationLink(destination: ContentView()) {
-                        Label("Templates", systemImage: "rectangle.stack")
+                        Label("/Volumes/Applications", systemImage: "folder")
                     }
                 }
                 
@@ -45,12 +42,9 @@ struct SidebarView: View {
                     .fontWeight(.bold)
                 Group {
                     NavigationLink(destination: ContentView()) {
-                        Label("My Account", systemImage: "person")
-                    }
-                    NavigationLink(destination: ContentView()) {
                         Label("Notifications", systemImage: "bell")
                     }
-                    NavigationLink(destination: ContentView()) {
+                    NavigationLink(destination: SettingsView()) {
                         Label("Settings", systemImage: "gear")
                     }
                 }
