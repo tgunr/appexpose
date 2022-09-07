@@ -4,3 +4,7 @@
 [submodule "xattr"]
 	path = xattr
 	url = git@bitbucket.org:tgunr/xattr.git
+[submodule "FileSelectorView"]
+	path = FileSelectorView
+	url = /Volumes/imacHD/Users/davec/Dropbox/Sources/SwiftUI/FileSelectorView
+	branch = main

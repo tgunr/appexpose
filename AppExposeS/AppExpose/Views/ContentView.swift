@@ -8,37 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("title") var currentShortcutTitle: String?
-    //    @AppStorage("appFolders") var appFolders: [String]
-    
-    @State private var val: Double = 0.7
-    @State private var bold = true
-    @State private var italic = false
-    
+    @AppStorage("itemsString") var appFolders = [""]
+    @State var selectedItem: String? = nil
+
     var body: some View {
         ScrollViewReader { proxy in
-            VStack {
-                Text("Application Folders")
-                List {
-                    Text("Folder")
-                    Text("Folder")
-                    Text("Folder")
-                    Text("Folder")
-                    Text("Folder")
-                    Text("Folder")
-                    Button(action: { connect() }) {
-                        Text("Done", comment: "Button title to dismiss rewards sheet")
+            NavigationStack {
+                Form {
+                    List(selection: $selectedItem) {
+                        ForEach(appFolders, id: \.self) {
+                            let fname = $0
+                            HStack {
+                                Text(fname)
+                            }
+                        }
                     }
+                    .onDeleteCommand(perform: ({
+                        if
+                            let sel = self.selectedItem,
+                            let idx = self.appFolders.firstIndex(of: sel) {
+                            print("delete: \(sel)")
+                            self.appFolders.remove(at: idx)
+                        }
+                    }))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .animation(.default, value: selectedItem)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
-                    Button(action: { connect() }) {
-                        Text("Done", comment: "Button title to dismiss rewards sheet")
-                    }
-                }
-            }
-            .navigationTitle("AppExpose")
         }
     }
     
