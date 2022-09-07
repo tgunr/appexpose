@@ -13,7 +13,7 @@ struct AppFoldersViews: View {
     var body: some View {
         ForEach(appFolders, id: \.self) {
             let fname = $0
-            NavigationLink(destination: ContentView()) {
+            NavigationLink( destination: AppFolderView(folder: fname)) {
                 Label(fname, systemImage: "folder")
             }
         }

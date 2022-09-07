@@ -49,6 +49,11 @@ class AppEntry: NSObject {
         return root
     }
     
+    class func collect(from: URL) -> [AppEntry] {
+        let start: AppEntry = AppEntry.collectFolders(from)
+        return start.childEntries
+    }
+    
     required init(rootWithURL url: URL?) {
         super.init()
         appURL = url
@@ -220,7 +225,7 @@ class AppEntry: NSObject {
         } else {
             childEntries = []
             if isFolder && isNotSpecial() {
-                scanURL(forIcons: url, for: self)
+                scanURL()
                 if (childEntries.count) != 0 {
                     appImage = composeIcons()
                 }
@@ -277,6 +282,7 @@ class AppEntry: NSObject {
         }
         if !result1 || !result2 {
             //            PMLOG(2, "no access: %@", appURL)
+            print("no access: \(String(describing: appURL?.absoluteString))")
         }
         return result1 && result2
     }
@@ -288,10 +294,13 @@ class AppEntry: NSObject {
         return result
     }
     
-    func scanURL(forIcons directoryToScan: URL?, for appEntry: AppEntry?) {
+    /// Looks in the directoryToScan items which are directories or packages. If found an entry is created and checked if it is an application.
+    /// If so, the entry is added as a child entry. If the item was a package, no further recursion is needed as packages are not applications per say.
+    /// The folder being scanned is limited by the value in MAX_LEVEL
+    func scanURL() {
         let fm = FileManager.default
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
-        let directoryEnumerator = fm.enumerator(at: directoryToScan!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
+        let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
         
         for case let fileURL as URL in directoryEnumerator {
             // Retrieve the directory property
@@ -361,7 +370,7 @@ class AppEntry: NSObject {
         }
         //        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
         //        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
-        performSelector(onMainThread: Selector(("setIcons:")), with: tempArray, waitUntilDone: true)
+//        performSelector(onMainThread: Selector(("setIcons:")), with: tempArray, waitUntilDone: true)
         //        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
         return appEntry
     }

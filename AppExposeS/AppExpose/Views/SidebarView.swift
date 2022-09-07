@@ -24,7 +24,7 @@ struct SidebarView: View {
                     }
 
                 Divider()
-                NavigationLink(destination: WelcomeView()) {
+                NavigationLink(destination: HelpView()) {
                     Label("Help", systemImage: "gear.badge.questionmark")
                 }
 
