@@ -23,6 +23,7 @@
 		752C5ABC28C8D20500057685 /* Directory in Frameworks */ = {isa = PBXBuildFile; productRef = 752C5ABB28C8D20500057685 /* Directory */; };
 		752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC228C8D90000057685 /* DirectorySelectorView.swift */; };
 		752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC428C8E2C500057685 /* ToolBarView.swift */; };
+		752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
@@ -49,6 +50,7 @@
 		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
 		752C5AC228C8D90000057685 /* DirectorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DirectorySelectorView.swift; path = ../../../FileSelectorView/Sources/FileSelectorView/DirectorySelectorView.swift; sourceTree = "<group>"; };
 		752C5AC428C8E2C500057685 /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
+		752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFoldersViews.swift; sourceTree = "<group>"; };
 		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +98,7 @@
 				75234E8628B2617F00512430 /* ContentView.swift */,
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
 				752C5AC428C8E2C500057685 /* ToolBarView.swift */,
+				752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */,
 				752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */,
 				750EECF428C7CC4B00A174BB /* WelcomeView.swift in Sources */,
 				750EECEE28C7CBF300A174BB /* AppDelegate.swift in Sources */,

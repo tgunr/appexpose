@@ -38,29 +38,9 @@ struct SettingsView: View {
 
     func update(url: URL?) {
         if let aURL = url {
-            var thePrefix = "file://"
+            let thePrefix = "file://"
             let path = aURL.absoluteString.replacingOccurrences(of: thePrefix, with: "")
             appFolders.append(path)
-        }
-    }
-}
-
-struct SettingsView1: View {
-    @AppStorage("itemsString") var appFolders = [""]
-    @State private var location: String = ""
-
-    var body: some View {
-        VStack {
-            Text("appFolders: \(String(describing: appFolders))")
-//            ForEach(appFolders, content: loc in {
-//                Text("loc: \(loc)")
-//            })
-//            List(appFolders) { loc in
-//                Text("loc: \(loc)")
-//            }
-            Form {
-                TextField("Location", text: $location, prompt: Text("enter application folder"))
-            }
         }
     }
 }

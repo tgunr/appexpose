@@ -11,59 +11,30 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @AppStorage("itemsString") var appFolders = [""]
-    @State var selectedItem: String? = nil
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: WelcomeView()) {
-                    Label("Welcome", systemImage: "star")
-                }
-
-                Spacer()
-
                 Text("LOCATIONS")
                     .font(.system(size: 10))
                     .fontWeight(.bold)
                 Group {
-                    ForEach(appFolders, id: \.self) {
-                        let fname = $0
-                        NavigationLink(destination: ContentView()) {
-                            Label(fname, systemImage: "folder")
-                        }
-                    }
-                    .onDeleteCommand(perform: ({
-                        if
-                            let sel = self.selectedItem,
-                            let idx = self.appFolders.firstIndex(of: sel) {
-                            print("delete: \(sel)")
-                            self.appFolders.remove(at: idx)
-                        }
-                    }))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .animation(.default, value: selectedItem)
+                    AppFoldersViews()
                 }
-
-                Spacer()
 
                 Text("SETTINGS")
                     .font(.system(size: 10))
                     .fontWeight(.bold)
                 Group {
-//                    NavigationLink(destination: ContentView()) {
-//                        Label("Notifications", systemImage: "bell")
-//                    }
                     NavigationLink(destination: SettingsView()) {
                         Label("Add Location", systemImage: "gear")
                     }
                 }
-
-                Spacer()
-
+                
                 Divider()
-                NavigationLink(destination: ContentView()) {
-                    Label("Sign Out", systemImage: "arrow.backward")
+                NavigationLink(destination: WelcomeView()) {
+                    Label("Help", systemImage: "gear.badge.questionmark")
                 }
+
             }
             .listStyle(SidebarListStyle())
             .navigationTitle("Explore")
