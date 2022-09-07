@@ -20,6 +20,9 @@
 		75234E8728B2617F00512430 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75234E8628B2617F00512430 /* ContentView.swift */; };
 		75234E8928B2618100512430 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8828B2618100512430 /* Assets.xcassets */; };
 		75234E8C28B2618100512430 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8B28B2618100512430 /* Preview Assets.xcassets */; };
+		752C5ABC28C8D20500057685 /* Directory in Frameworks */ = {isa = PBXBuildFile; productRef = 752C5ABB28C8D20500057685 /* Directory */; };
+		752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC228C8D90000057685 /* DirectorySelectorView.swift */; };
+		752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC428C8E2C500057685 /* ToolBarView.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
@@ -44,6 +47,8 @@
 		75234E8828B2618100512430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75234E8B28B2618100512430 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
+		752C5AC228C8D90000057685 /* DirectorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DirectorySelectorView.swift; path = ../../../FileSelectorView/Sources/FileSelectorView/DirectorySelectorView.swift; sourceTree = "<group>"; };
+		752C5AC428C8E2C500057685 /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,6 +59,7 @@
 			files = (
 				75C78EEE28BE4DE700801110 /* Helm in Frameworks */,
 				75C78EF028BE4DE700801110 /* Playground in Frameworks */,
+				752C5ABC28C8D20500057685 /* Directory in Frameworks */,
 				75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +95,7 @@
 				750EECF028C7CC4B00A174BB /* WelcomeView.swift */,
 				75234E8628B2617F00512430 /* ContentView.swift */,
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
+				752C5AC428C8E2C500057685 /* ToolBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -96,6 +103,7 @@
 		750EED0528C7D11A00A174BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				752C5AC228C8D90000057685 /* DirectorySelectorView.swift */,
 				750EECF228C7CC4B00A174BB /* XATTR.swift */,
 				750EECF128C7CC4B00A174BB /* AppEntry.swift */,
 				750EED0628C7D83200A174BB /* Extensions.swift */,
@@ -162,6 +170,7 @@
 				75C78EEA28BE4D5300801110 /* ExtendedAttributes */,
 				75C78EED28BE4DE700801110 /* Helm */,
 				75C78EEF28BE4DE700801110 /* Playground */,
+				752C5ABB28C8D20500057685 /* Directory */,
 			);
 			productName = AppExpose;
 			productReference = 75234E8128B2617F00512430 /* AppExposeS.app */;
@@ -198,6 +207,7 @@
 			packageReferences = (
 				75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */,
 				75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */,
+				752C5ABA28C8D20500057685 /* XCRemoteSwiftPackageReference "Directory" */,
 			);
 			productRefGroup = 75234E8228B2617F00512430 /* Products */;
 			projectDirPath = "";
@@ -225,12 +235,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */,
 				750EECF428C7CC4B00A174BB /* WelcomeView.swift in Sources */,
 				750EECEE28C7CBF300A174BB /* AppDelegate.swift in Sources */,
 				750EECF528C7CC4B00A174BB /* AppEntry.swift in Sources */,
 				750EECF328C7CC4B00A174BB /* SidebarView.swift in Sources */,
 				75234E8728B2617F00512430 /* ContentView.swift in Sources */,
 				750EED0128C7CEDD00A174BB /* SettingsView.swift in Sources */,
+				752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */,
 				750EECF628C7CC4B00A174BB /* XATTR.swift in Sources */,
 				750EECFC28C7CC7F00A174BB /* ImageReducer.m in Sources */,
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
@@ -450,6 +462,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		752C5ABA28C8D20500057685 /* XCRemoteSwiftPackageReference "Directory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nashysolutions/Directory.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/amosavian/ExtendedAttributes.git";
@@ -469,6 +489,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		752C5ABB28C8D20500057685 /* Directory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 752C5ABA28C8D20500057685 /* XCRemoteSwiftPackageReference "Directory" */;
+			productName = Directory;
+		};
 		75C78EEA28BE4D5300801110 /* ExtendedAttributes */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */;

@@ -20,13 +20,27 @@ struct SettingsView: View {
 //        var folders = appFolders.map({ AppFolder(path: $0) })
         NavigationStack {
             Form {
-                Section(header: Text("Application Folder"), content: ({
+                Section(header: Text("Application Folder")) {
                     HStack(alignment: .firstTextBaseline) {
-                       Text("Location:")
-                       DirectorySelectorView(url: self.$fileURL)
-                   }
-                }))
+                        Text("Location:")
+                        DirectorySelectorView(url: self.$fileURL)
+                            .onChange(of: fileURL, perform: { value in
+                                update(url: value)
+                            })
+                    }
+                }
             }
+            .onSubmit {
+                self.update(url: fileURL)
+            }
+        }
+    }
+
+    func update(url: URL?) {
+        if let aURL = url {
+            var thePrefix = "file://"
+            let path = aURL.absoluteString.replacingOccurrences(of: thePrefix, with: "")
+            appFolders.append(path)
         }
     }
 }
