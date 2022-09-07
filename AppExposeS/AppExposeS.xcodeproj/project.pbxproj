@@ -14,6 +14,8 @@
 		750EECF628C7CC4B00A174BB /* XATTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECF228C7CC4B00A174BB /* XATTR.swift */; };
 		750EECFC28C7CC7F00A174BB /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFB28C7CC7F00A174BB /* ImageReducer.m */; };
 		750EECFF28C7CD1200A174BB /* NSBezierPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFD28C7CD1200A174BB /* NSBezierPathAdditions.m */; };
+		750EED0128C7CEDD00A174BB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EED0028C7CEDD00A174BB /* SettingsView.swift */; };
+		750EED0728C7D83200A174BB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EED0628C7D83200A174BB /* Extensions.swift */; };
 		75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75234E8428B2617F00512430 /* AppExposeApp.swift */; };
 		75234E8728B2617F00512430 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75234E8628B2617F00512430 /* ContentView.swift */; };
 		75234E8928B2618100512430 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75234E8828B2618100512430 /* Assets.xcassets */; };
@@ -30,16 +32,18 @@
 		750EECF128C7CC4B00A174BB /* AppEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
 		750EECF228C7CC4B00A174BB /* XATTR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XATTR.swift; sourceTree = "<group>"; };
 		750EECF928C7CC7F00A174BB /* AppExposeS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AppExposeS-Bridging-Header.h"; path = "AppExpose/AppExposeS-Bridging-Header.h"; sourceTree = "<group>"; };
-		750EECFA28C7CC7F00A174BB /* ImageReducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageReducer.h; path = ObjC/ImageReducer.h; sourceTree = "<group>"; };
-		750EECFB28C7CC7F00A174BB /* ImageReducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageReducer.m; path = ObjC/ImageReducer.m; sourceTree = "<group>"; };
-		750EECFD28C7CD1200A174BB /* NSBezierPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBezierPathAdditions.m; path = ObjC/NSBezierPathAdditions.m; sourceTree = "<group>"; };
-		750EECFE28C7CD1200A174BB /* NSBezierPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBezierPathAdditions.h; path = ObjC/NSBezierPathAdditions.h; sourceTree = "<group>"; };
+		750EECFA28C7CC7F00A174BB /* ImageReducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReducer.h; sourceTree = "<group>"; };
+		750EECFB28C7CC7F00A174BB /* ImageReducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageReducer.m; sourceTree = "<group>"; };
+		750EECFD28C7CD1200A174BB /* NSBezierPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBezierPathAdditions.m; sourceTree = "<group>"; };
+		750EECFE28C7CD1200A174BB /* NSBezierPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBezierPathAdditions.h; sourceTree = "<group>"; };
+		750EED0028C7CEDD00A174BB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		750EED0628C7D83200A174BB /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		75234E8128B2617F00512430 /* AppExposeS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75234E8428B2617F00512430 /* AppExposeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExposeApp.swift; sourceTree = "<group>"; };
 		75234E8628B2617F00512430 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		75234E8828B2618100512430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		75234E8828B2618100512430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75234E8B28B2618100512430 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AppExpose.entitlements; path = Resources/AppExpose.entitlements; sourceTree = "<group>"; };
+		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
 		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +61,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		750EED0228C7CFCB00A174BB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				75234E8828B2618100512430 /* Assets.xcassets */,
+				75234E8D28B2618100512430 /* AppExpose.entitlements */,
+				75234E8A28B2618100512430 /* Preview Content */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		750EED0328C7D03D00A174BB /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				750EECFE28C7CD1200A174BB /* NSBezierPathAdditions.h */,
+				750EECFD28C7CD1200A174BB /* NSBezierPathAdditions.m */,
+				750EECFA28C7CC7F00A174BB /* ImageReducer.h */,
+				750EECFB28C7CC7F00A174BB /* ImageReducer.m */,
+			);
+			path = ObjC;
+			sourceTree = "<group>";
+		};
+		750EED0428C7D09400A174BB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				750EECEF28C7CC4B00A174BB /* SidebarView.swift */,
+				750EECF028C7CC4B00A174BB /* WelcomeView.swift */,
+				75234E8628B2617F00512430 /* ContentView.swift */,
+				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		750EED0528C7D11A00A174BB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				750EECF228C7CC4B00A174BB /* XATTR.swift */,
+				750EECF128C7CC4B00A174BB /* AppEntry.swift */,
+				750EED0628C7D83200A174BB /* Extensions.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		75234E7828B2617F00512430 = {
 			isa = PBXGroup;
 			children = (
@@ -78,20 +124,12 @@
 		75234E8328B2617F00512430 /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
-				750EECFE28C7CD1200A174BB /* NSBezierPathAdditions.h */,
-				750EECFD28C7CD1200A174BB /* NSBezierPathAdditions.m */,
-				750EECFA28C7CC7F00A174BB /* ImageReducer.h */,
-				750EECFB28C7CC7F00A174BB /* ImageReducer.m */,
-				750EECF128C7CC4B00A174BB /* AppEntry.swift */,
-				750EECEF28C7CC4B00A174BB /* SidebarView.swift */,
-				750EECF028C7CC4B00A174BB /* WelcomeView.swift */,
-				750EECF228C7CC4B00A174BB /* XATTR.swift */,
-				750EECED28C7CBF300A174BB /* AppDelegate.swift */,
 				75234E8428B2617F00512430 /* AppExposeApp.swift */,
-				75234E8628B2617F00512430 /* ContentView.swift */,
-				75234E8828B2618100512430 /* Assets.xcassets */,
-				75234E8D28B2618100512430 /* AppExpose.entitlements */,
-				75234E8A28B2618100512430 /* Preview Content */,
+				750EECED28C7CBF300A174BB /* AppDelegate.swift */,
+				750EED0328C7D03D00A174BB /* ObjC */,
+				750EED0528C7D11A00A174BB /* Classes */,
+				750EED0428C7D09400A174BB /* Views */,
+				750EED0228C7CFCB00A174BB /* Resources */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -101,8 +139,7 @@
 			children = (
 				75234E8B28B2618100512430 /* Preview Assets.xcassets */,
 			);
-			name = "Preview Content";
-			path = "Resources/Preview Content";
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,9 +230,11 @@
 				750EECF528C7CC4B00A174BB /* AppEntry.swift in Sources */,
 				750EECF328C7CC4B00A174BB /* SidebarView.swift in Sources */,
 				75234E8728B2617F00512430 /* ContentView.swift in Sources */,
+				750EED0128C7CEDD00A174BB /* SettingsView.swift in Sources */,
 				750EECF628C7CC4B00A174BB /* XATTR.swift in Sources */,
 				750EECFC28C7CC7F00A174BB /* ImageReducer.m in Sources */,
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
+				750EED0728C7D83200A174BB /* Extensions.swift in Sources */,
 				750EECFF28C7CD1200A174BB /* NSBezierPathAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
