@@ -18,7 +18,7 @@ struct SettingsView: View {
 
     var body: some View {
 //        var folders = appFolders.map({ AppFolder(path: $0) })
-        NavigationStack {
+//        NavigationStack {
             Form {
                 Section(header: Text("Application Folder")) {
                     HStack(alignment: .firstTextBaseline) {
@@ -33,7 +33,7 @@ struct SettingsView: View {
             .onSubmit {
                 self.update(url: fileURL)
             }
-        }
+//        }
     }
 
     func update(url: URL?) {

@@ -17,19 +17,12 @@ struct SidebarView: View {
                 Text("LOCATIONS")
                     .font(.system(size: 10))
                     .fontWeight(.bold)
-                Group {
                     AppFoldersViews()
-                }
-
-                Text("SETTINGS")
-                    .font(.system(size: 10))
-                    .fontWeight(.bold)
-                Group {
+                Divider()
                     NavigationLink(destination: SettingsView()) {
-                        Label("Add Location", systemImage: "gear")
+                        Label("Settings", systemImage: "gear")
                     }
-                }
-                
+
                 Divider()
                 NavigationLink(destination: WelcomeView()) {
                     Label("Help", systemImage: "gear.badge.questionmark")
@@ -46,8 +39,6 @@ struct SidebarView: View {
                     })
                 }
             }
-
-            ContentView()
         }
     }
 }
