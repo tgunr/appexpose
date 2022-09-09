@@ -95,11 +95,11 @@
 		750EED0428C7D09400A174BB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				752C5AC428C8E2C500057685 /* ToolBarView.swift */,
 				750EECEF28C7CC4B00A174BB /* SidebarView.swift */,
 				750EECF028C7CC4B00A174BB /* Help.swift */,
 				75234E8628B2617F00512430 /* ContentView.swift */,
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
-				752C5AC428C8E2C500057685 /* ToolBarView.swift */,
 				752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
 			);

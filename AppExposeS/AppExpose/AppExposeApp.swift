@@ -8,9 +8,13 @@
 import AppKit
 import SwiftUI
 
-class appData: NSObject, ObservableObject {
-    static let shared = appData()
+class AppData: NSObject, ObservableObject {
+    static let shared = AppData()
     @Published var folders = Array<String>()
+    @State var iconSize: Double = 32.0
+    @State var bold = true
+    @State var remove = false
+    @State var selectAll = false
     var progress: Progress?
     override init() {
     }
@@ -23,9 +27,10 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ToolbarView()
-            SidebarView()
+                .environmentObject(AppData.shared)
+          SidebarView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .environmentObject(appData.shared)
+                .environmentObject(AppData.shared)
         }
 //        Settings {
 //            PreferencesView(model: model)

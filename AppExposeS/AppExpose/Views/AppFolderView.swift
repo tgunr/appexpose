@@ -34,7 +34,8 @@ extension View {
 struct AppFolderView: View {
     var folder: String
     @StateObject private var appFolder = AppFolder()
-
+    @EnvironmentObject var appData: AppData
+    
     init(folder: String) {
         self.folder = folder
         //        if let u = URL(string: folder) {
@@ -51,10 +52,22 @@ struct AppFolderView: View {
             }
         List {
             if let m = appFolder.model {
-                let e = m.childEntries
-                ForEach(e, id: \.self) { entry in
-                    if let n = entry.appURL?.absoluteString {
-                        Text(n)
+                let entries = m.childEntries
+                ForEach(entries, id: \.self) { entry in
+                    if let entryURL = entry.appURL?.absoluteString {
+                        Text(entryURL)
+                    }
+                    if let oImage = entry.originalImage {
+                        let w = appData.$iconSize
+                        let wi = Int(w)
+                        let h = appData.$iconSize
+
+                        var imageRect = CGRect(x: 0, y: 0, width: w, height: h)
+                        let imageRef = oImage.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+                        Image(imageRef!,
+                              scale: 1.0,
+                              orientation: .up,
+                              label: Text("Locomotive"))
                     }
                 }
             }

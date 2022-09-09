@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct ToolbarView: View {
-    @State private var size: Double = 0.7
-    @State private var bold = true
-    @State private var remove = false
-    @State private var selectAll = false
+    @EnvironmentObject var appData: AppData
     var body: some View {
         NavigationStack {
             //        Color.clear
@@ -32,25 +29,25 @@ struct ToolbarView: View {
             }
 
             ToolbarItem(id: "size", placement: .automatic) {
-                Slider(value: $size, in: 0 ... 1, label: { Text("Size") })
+                Slider(value: appData.$iconSize, in: 0 ... 1, label: { Text("Size") })
                     .frame(width: 100)
             }
 
             ToolbarItem(id: "apply", placement: .automatic) {
-                Toggle(isOn: $bold, label: {
+                Toggle(isOn: appData.$bold, label: {
                     Image(systemName: "square.and.arrow.down.on.square.fill")
                     Text("Apply").fontWeight(.heavy)
                 })
             }
 
             ToolbarItem(id: "remove", placement: .automatic) {
-                Toggle(isOn: $remove, label: {
+                Toggle(isOn: appData.$remove, label: {
                     Image(systemName: "trash")
                     Text("Remove").italic()
                 })
             }
             ToolbarItem(id: "selectAll", placement: .automatic) {
-                Toggle(isOn: $selectAll, label: {
+                Toggle(isOn: appData.$selectAll, label: {
                     Image(systemName: "filemenu.and.selection")
                     Text("Select All").italic()
                 })
