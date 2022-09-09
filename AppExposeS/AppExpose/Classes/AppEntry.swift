@@ -20,6 +20,10 @@ let CUSTOM_ICON_NAME = "Icon\r"
 let CUSTOM_ICON_ID = "com.polymicrosystems.appexpose.customicon"
 let MAX_LEVEL = 2
 
+class AppFolder: ObservableObject {
+    @Published var model: AppEntry?
+}
+
 class AppEntry: NSObject {
     var childIcons: [AnyHashable]?
     var isLeaf = false
@@ -49,9 +53,9 @@ class AppEntry: NSObject {
         return root
     }
     
-    class func collect(from: URL) -> [AppEntry] {
+    class func collect(from: URL) -> AppEntry {
         let start: AppEntry = AppEntry.collectFolders(from)
-        return start.childEntries
+        return start
     }
     
     required init(rootWithURL url: URL?) {
@@ -64,6 +68,49 @@ class AppEntry: NSObject {
         appImage = originalImage
         icons = []
     }
+
+    init(url: URL?) {
+        super.init()
+        let fm = FileManager()
+        appURL = url
+        do {
+            attributes = try fm.attributesOfItem(atPath: url?.path ?? "")
+        } catch {
+            print("attributes: FAIL")
+        }
+        if let url = url {
+            xattr = XATTR(path: url.path(), options: XATTROptions.nofollow)
+        }
+        isLeaf = isALeaf(url)
+        isFolder = isAFolder(url)
+        hasCustomIcon = hasACustomIcon()
+        isApp = isAnApp(url)
+        canAccess = userCanAccess()
+        name = url?.lastPathComponent
+        if isFolder && hasMyCustomIcon {
+            originalImage = NSWorkspace.shared.icon(for: UTType.folder)
+        } else {
+            originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
+        }
+        originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+        appImage = originalImage
+        if isApp {
+            isLeaf = false
+        } else {
+            childEntries = []
+            if isFolder && isNotSpecial() {
+                scanURL()
+                if (childEntries.count) != 0 {
+                    appImage = composeIcons()
+                }
+            }
+        }
+        if let iconImage = appImage {
+            iconDictionary = [
+                KEY_IMAGE : iconImage            ]
+        }
+    }
+    
 
     func draw(_ image: NSImage?, withFrame imageFrame: NSRect) {
         // [super drawImage:image withFrame:imageFrame inView:controlView];
@@ -196,47 +243,6 @@ class AppEntry: NSObject {
         return resultImage
     }
     
-    init(url: URL?) {
-        super.init()
-        let fm = FileManager()
-        appURL = url
-        do {
-            attributes = try fm.attributesOfItem(atPath: url?.path ?? "")
-        } catch {
-        }
-        if let url = url {
-            xattr = XATTR(path: url.path(), options: XATTROptions.nofollow)
-        }
-        isLeaf = isALeaf(url)
-        isFolder = isAFolder(url)
-        hasCustomIcon = hasACustomIcon()
-        isApp = isAnApp(url)
-        canAccess = userCanAccess()
-        name = url?.lastPathComponent
-        if isFolder && hasMyCustomIcon {
-            originalImage = NSWorkspace.shared.icon(for: UTType.folder)
-        } else {
-            originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
-        }
-        originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
-        appImage = originalImage
-        if isApp {
-            isLeaf = false
-        } else {
-            childEntries = []
-            if isFolder && isNotSpecial() {
-                scanURL()
-                if (childEntries.count) != 0 {
-                    appImage = composeIcons()
-                }
-            }
-        }
-        if let iconImage = appImage {
-            iconDictionary = [
-                KEY_IMAGE : iconImage            ]
-        }
-    }
-    
     func isALeaf(_ url: URL?) -> Bool {
         let fileType = attributes[FileAttributeKey.type] as! String
         
@@ -279,6 +285,7 @@ class AppEntry: NSObject {
         do {
             result2 = ((try appURL?.checkResourceIsReachable()) != nil)
         } catch {
+            print("checkResourceIsReachable: FAIL")
         }
         if !result1 || !result2 {
             //            PMLOG(2, "no access: %@", appURL)
