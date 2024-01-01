@@ -3,7 +3,7 @@
     {
       "identity" : "extendedattributes",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/amosavian/ExtendedAttributes",
+      "location" : "https://github.com/amosavian/ExtendedAttributes.git",
       "state" : {
         "revision" : "075e545e2f128482fa377c825bfa0e4f0e266419",
         "version" : "1.0.0"
