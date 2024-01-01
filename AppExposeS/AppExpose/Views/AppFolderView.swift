@@ -35,13 +35,14 @@ struct AppFolderView: View {
     var folder: String
     @StateObject private var appFolder = AppFolder()
     @EnvironmentObject var appData: AppData
+    @Binding var iconSize: Double?
     
-    init(folder: String) {
-        self.folder = folder
-        //        if let u = URL(string: folder) {
-        //            appFolder.model = AppEntry.collect(from: u)
-        //        }
-    }
+//    init(folder: String) {
+//        self.folder = folder
+//        //        if let u = URL(string: folder) {
+//        //            appFolder.model = AppEntry.collect(from: u)
+//        //        }
+//    }
 
     var body: some View {
         Text("\(folder)")
@@ -58,11 +59,11 @@ struct AppFolderView: View {
                         Text(entryURL)
                     }
                     if let oImage = entry.originalImage {
-                        let w = appData.$iconSize
+                        let w = appData.iconSize
                         let wi = Int(w)
-                        let h = appData.$iconSize
-
-                        var imageRect = CGRect(x: 0, y: 0, width: w, height: h)
+                        let h = appData.iconSize
+                        let hi = Int(h)
+                        var imageRect = CGRect(x: 0, y: 0, width: wi, height: hi)
                         let imageRef = oImage.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
                         Image(imageRef!,
                               scale: 1.0,
@@ -77,6 +78,6 @@ struct AppFolderView: View {
 
 struct AppFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        AppFolderView(folder: "one")
+        AppFolderView(folder: "one", iconSize: .constant(32.0))
     }
 }

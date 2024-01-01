@@ -24,11 +24,11 @@ class AppData: NSObject, ObservableObject {
 struct MyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 //    @EnvironmentObject private var appDelegate: AppDelegate
-    var body: some Scene {
+    @State private var iconSize: Double? = 32.0
+   var body: some Scene {
         WindowGroup {
-            ToolbarView()
-                .environmentObject(AppData.shared)
-          SidebarView()
+            ToolbarView(iconSize: $iconSize)
+            SidebarView(iconSize: $iconSize)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .environmentObject(AppData.shared)
         }
@@ -41,5 +41,3 @@ struct MyApp: App {
 //        }
     }
 }
-
-
