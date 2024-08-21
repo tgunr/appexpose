@@ -11,14 +11,15 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @Binding var iconSize: Double?
+    @EnvironmentObject var appData: AppData
+
     var body: some View {
         NavigationView {
             List {
                 Text("LOCATIONS")
                     .font(.system(size: 10))
                     .fontWeight(.bold)
-                AppFoldersViews(iconSize: $iconSize)
+                AppFoldersViews()
                 Divider()
                     NavigationLink(destination: SettingsView()) {
                         Label("Settings", systemImage: "gear")
@@ -51,6 +52,6 @@ func toggleSidebar() {
 
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView(iconSize: .constant(32.0))
+        SidebarView()
     }
 }

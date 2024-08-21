@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ToolbarView: View {
 //    @EnvironmentObject var appData: AppData
-    @State var iconSize: Double = 32.0
+    @State private var iconSize: Double = 32.0
+    
     var body: some View {
         NavigationStack {
             //        Color.clear

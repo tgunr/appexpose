@@ -1,5 +1,24 @@
 {
+  "originHash" : "75aca5d1201f721dda96f34fce67e5ae2de3157299301bc5dcd95f59d4ac2b86",
   "pins" : [
+    {
+      "identity" : "cache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nashysolutions/Cache.git",
+      "state" : {
+        "revision" : "12b577aa115eeba4ec5a841e9f005709e01052ca",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "directory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nashysolutions/Directory.git",
+      "state" : {
+        "revision" : "c55f8a61b3feb9a9e349a9747569f43157c56bdb",
+        "version" : "5.0.0"
+      }
+    },
     {
       "identity" : "extendedattributes",
       "kind" : "remoteSourceControl",
@@ -7,6 +26,15 @@
       "state" : {
         "revision" : "075e545e2f128482fa377c825bfa0e4f0e266419",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "files",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/Files",
+      "state" : {
+        "revision" : "d273b5b7025d386feef79ef6bad7de762e106eaf",
+        "version" : "4.2.0"
       }
     },
     {
@@ -28,5 +56,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -10,8 +10,8 @@ import SwiftUI
 
 class AppData: NSObject, ObservableObject {
     static let shared = AppData()
+    var iconSize: Double = 32.0
     @Published var folders = Array<String>()
-    @State var iconSize: Double = 32.0
     @State var bold = true
     @State var remove = false
     @State var selectAll = false
@@ -25,10 +25,10 @@ struct MyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 //    @EnvironmentObject private var appDelegate: AppDelegate
     @State private var iconSize: Double? = 32.0
-   var body: some Scene {
+    var body: some Scene {
         WindowGroup {
-            ToolbarView(iconSize: $iconSize)
-            SidebarView(iconSize: $iconSize)
+            ToolbarView()
+            SidebarView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .environmentObject(AppData.shared)
         }

@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct AppFoldersViews: View {
+    @EnvironmentObject var appData: AppData
     @AppStorage("itemsString") var appFolders = [""]
     @State var selectedItem: String? = nil
-    @Binding var iconSize: Double?
     
     var body: some View {
         ForEach(appFolders, id: \.self) {
             let fname = $0
-            NavigationLink( destination: AppFolderView(folder: fname, iconSize: $iconSize)) {
+            NavigationLink( destination: AppFolderView(folder: fname)) {
                 Label(fname, systemImage: "folder")
             }
         }
@@ -34,6 +34,6 @@ struct AppFoldersViews: View {
 
 struct AppFoldersViews_Previews: PreviewProvider {
     static var previews: some View {
-        AppFoldersViews(iconSize: .constant(32.0))
+        AppFoldersViews()
     }
 }

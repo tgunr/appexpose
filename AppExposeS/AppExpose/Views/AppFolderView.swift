@@ -35,7 +35,6 @@ struct AppFolderView: View {
     var folder: String
     @StateObject private var appFolder = AppFolder()
     @EnvironmentObject var appData: AppData
-    @Binding var iconSize: Double?
     
 //    init(folder: String) {
 //        self.folder = folder
@@ -78,6 +77,6 @@ struct AppFolderView: View {
 
 struct AppFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        AppFolderView(folder: "one", iconSize: .constant(32.0))
+        AppFolderView(folder: "one")
     }
 }
