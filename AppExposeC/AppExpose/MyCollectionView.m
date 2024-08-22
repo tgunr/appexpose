@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "MyCollectionView.h"
 #import "IconViewBox.h"
+#import "AppExposeC-Swift.h"
 
 @implementation MyCollectionView
 

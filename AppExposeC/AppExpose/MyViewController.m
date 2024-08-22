@@ -8,6 +8,7 @@
 #import "PMUtility/pmUtility.h"
 #import "xattr/xattr.h"
 #import "IconViewBox.h"
+#import "AppExposeC-Swift.h"
 
 @implementation MyViewController {
 	id appDirectory;
