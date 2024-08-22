@@ -9,6 +9,9 @@ import Foundation
 import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
+    // create a shared instance of the AppDelegate
+    static let shared = AppDelegate()
+
     @Published var isActive: Bool = true
     
     func applicationDidResignActive(_ notification: Notification) {

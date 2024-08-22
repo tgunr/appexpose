@@ -23,7 +23,6 @@ class AppData: NSObject, ObservableObject {
 @main
 struct MyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-//    @EnvironmentObject private var appDelegate: AppDelegate
     @State private var iconSize: Double? = 32.0
     var body: some Scene {
         WindowGroup {

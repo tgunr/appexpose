@@ -546,3 +546,14 @@ class AppEntry: NSObject {
 //        iconDictionary?[KEY_IMAGE] = appImage
     }
 }
+
+extension NSImage {
+    func dump() {
+        let imageRep: NSBitmapImageRep? = representations[0] as? NSBitmapImageRep
+        let imageData = imageRep?.representation(
+            using: NSBitmapImageRep.FileType.png,
+                properties: [:])
+        let url = URL.init(string: "/tmp/image.png")
+        try! imageData!.write(to: url!, options: [])
+    }
+}
