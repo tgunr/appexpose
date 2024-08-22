@@ -12,12 +12,12 @@
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
 		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
-		753C0A6C28B5050700DE1D87 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A6328B501BE00DE1D87 /* XATTR.framework */; };
-		753C0A6D28B5051100DE1D87 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A5628B501A900DE1D87 /* PMUtility.framework */; };
 		756DF6F81551D68600558DD4 /* Finder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F71551D68600558DD4 /* Finder.icns */; };
 		756DF6FA1551D8D600558DD4 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F91551D8D600558DD4 /* Folder.png */; };
 		756DF7001551E2EA00558DD4 /* before-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6FF1551E2EA00558DD4 /* before-32.png */; };
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
+		758FD2762C77760C00878379 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A5628B501A900DE1D87 /* PMUtility.framework */; };
+		758FD2772C77761700878379 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A6328B501BE00DE1D87 /* XATTR.framework */; };
 		75A0142A154F2A1800AA6F70 /* AppExposeC.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExposeC.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
@@ -148,8 +148,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				753C0A6D28B5051100DE1D87 /* PMUtility.framework in Frameworks */,
-				753C0A6C28B5050700DE1D87 /* XATTR.framework in Frameworks */,
+				758FD2772C77761700878379 /* XATTR.framework in Frameworks */,
+				758FD2762C77760C00878379 /* PMUtility.framework in Frameworks */,
 				75FE04AD28B277A500129B47 /* Cocoa.framework in Frameworks */,
 				75FE04AB28B2779900129B47 /* Quartz.framework in Frameworks */,
 				75FE04A928B2778800129B47 /* Security.framework in Frameworks */,
