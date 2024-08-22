@@ -7,5 +7,4 @@
 #import "ImageReducer.h"
 #import "IconViewBox.h"
 #import "MyScrollView.h"
-#import "MyViewController.h"
 #import "MyCollectionView.h"
