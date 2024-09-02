@@ -287,6 +287,7 @@ class AppEntry: NSObject {
         } catch {
             print("checkResourceIsReachable: FAIL")
         }
+        return result2
         if !result1 || !result2 {
             //            PMLOG(2, "no access: %@", appURL)
             print("no access: \(String(describing: appURL?.absoluteString))")
