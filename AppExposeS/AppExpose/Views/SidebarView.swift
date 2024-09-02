@@ -21,15 +21,14 @@ struct SidebarView: View {
                     .fontWeight(.bold)
                 AppFoldersViews()
                 Divider()
-                    NavigationLink(destination: SettingsView()) {
-                        Label("Settings", systemImage: "gear")
-                    }
+                NavigationLink(destination: SettingsView()) {
+                    Label("Settings", systemImage: "gear")
+                }
 
                 Divider()
                 NavigationLink(destination: HelpView()) {
                     Label("Help", systemImage: "gear.badge.questionmark")
                 }
-
             }
             .listStyle(SidebarListStyle())
             .navigationTitle("Explore")

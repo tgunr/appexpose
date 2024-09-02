@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-//struct AppFolder: Identifiable, Hashable {
+// struct AppFolder: Identifiable, Hashable {
 //    let id = UUID()
 //    let path: String
-//}
+// }
 
 struct SettingsView: View {
     @AppStorage("itemsString") var appFolders = [""]
@@ -20,20 +20,20 @@ struct SettingsView: View {
 //        var folders = appFolders.map({ AppFolder(path: $0) })
 //        NavigationStack {
         ContentView()
-            Form {
-                Section(header: Text("Application Folder")) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("Location:")
-                        DirectorySelectorView(url: self.$fileURL)
-                            .onChange(of: fileURL, perform: { value in
-                                update(url: value)
-                            })
-                    }
+        Form {
+            Section(header: Text("Application Folder")) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Location:")
+                    DirectorySelectorView(url: self.$fileURL)
+                        .onChange(of: fileURL, perform: { value in
+                            update(url: value)
+                        })
                 }
             }
-            .onSubmit {
-                self.update(url: fileURL)
-            }
+        }
+        .onSubmit {
+            self.update(url: fileURL)
+        }
 //        }
     }
 
