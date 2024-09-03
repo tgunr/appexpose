@@ -51,15 +51,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             appDirectory = paths[0]
         }
         appDirectory = appDirectory + "/"
-        let defaults: UserDefaults? = UserDefaults.standard
-        let debug: Bool = defaults?.bool(forKey: "debug") ?? false
-        if debug {
-            PMLOG_SetVerbose(PMLogLevelEmerg);
-        }
-        let directory: String? = defaults?.string(forKey: "path")
-        if let directory = directory {
-            appDirectory = directory
-        }
+//        let defaults: UserDefaults? = UserDefaults.standard
+//        let debug: Bool = defaults?.bool(forKey: "debug") ?? false
+//        if debug {
+//            PMLOG_SetVerbose(PMLogLevelEmerg);
+//        }
+//        let directory: String? = defaults?.string(forKey: "path")
+//        if let directory = directory {
+            appDirectory = "/Applications"
+//        }
         pmLOGSELF(self);
     }
     
