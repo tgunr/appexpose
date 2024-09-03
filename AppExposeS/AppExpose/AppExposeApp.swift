@@ -10,8 +10,6 @@ import OSLog
 import SwiftUI
 
 let logid = "appexpose"
-let inlog = SymLog<AppLogCategory>(category: "internal", subsystemColor: .violet)
-let uilog = SymLog<AppLogCategory>(category: "ui", subsystemColor: .green)
 let logCategories: [String: OSLog.logColor] = [
     "entry": .black,
     "appear": .white,
@@ -25,8 +23,8 @@ let logCategories: [String: OSLog.logColor] = [
 ]
 
 let symlog = createLogger("app", subsystem: logid, subsystemColor: .black, categories: logCategories)
-let uiview = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
-let storekit = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
+let uilog = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
+let storelog = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
 
 class AppData: NSObject, ObservableObject {
     static let shared = AppData()

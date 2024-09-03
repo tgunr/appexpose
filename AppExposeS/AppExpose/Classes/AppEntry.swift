@@ -24,7 +24,7 @@ class AppFolder: ObservableObject {
     @Published var model: AppEntry?
 }
 
-class AppEntry: NSObject {
+class AppEntry: NSObject, Identifiable, ObservableObject {
     var childIcons: [AnyHashable]?
     var isLeaf = false
     var isApp = false
@@ -41,7 +41,7 @@ class AppEntry: NSObject {
 
     var name: String?
     var appURL: URL?
-    var childEntries: [AppEntry] = []
+    @Published var childEntries: [AppEntry] = []
     var iconDictionary: [String: NSImage]?
     var icons: [NSImage]?
     var appImage: NSImage?
@@ -311,7 +311,8 @@ class AppEntry: NSObject {
         let fm = FileManager.default
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
         let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
-
+        var newEntries: [AppEntry] = []
+        
         for case let fileURL as URL in directoryEnumerator {
             // Retrieve the directory property
             guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
@@ -334,12 +335,16 @@ class AppEntry: NSObject {
                     } else {
                         directoryEnumerator.skipDescendents()
                     }
+                    newEntries.append(entry)
                 }
                 if (directoryEnumerator.level) > MAX_LEVEL {
                     directoryEnumerator.skipDescendents()
                 }
             }
         }
+        symlog.value("scanURL: Found \(newEntries.count) entries")
+        childEntries.append(contentsOf: newEntries)
+        symlog.value("scanURL: childEntries count after append: \(childEntries.count)")
     }
 
     class func collectFolders(_ directoryToScan: URL?) -> AppEntry {

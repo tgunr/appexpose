@@ -43,7 +43,10 @@ struct AppFoldersViews: View {
         .task {
             symlog.info("Fetching Apps")
             let appsURL = URL(fileURLWithPath: "/Applications")
-            self.appEntry = AppEntry(url: appsURL)
+            DispatchQueue.main.async {
+                self.appEntry = AppEntry(url: appsURL)
+                symlog.value("AppEntry created with \(self.appEntry?.childEntries.count ?? 0) child entries")
+            }
         }
 //        .onDeleteCommand(perform: ({
 //            if
