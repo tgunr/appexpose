@@ -146,7 +146,10 @@ class MyWindowController: NSWindowController {
         AppDelegate.shared.windowController = self
         applyButton.isEnabled = false
         removeButton.isEnabled = false
-        
+        AppDelegate.shared.setAppDirectory()
+        let dir = AppDelegate.shared.appDirectory
+        viewController!.resetView()
+        viewController!.url = URL(fileURLWithPath: dir)
     }
     
     //-(void)showBeforeAppearance {
