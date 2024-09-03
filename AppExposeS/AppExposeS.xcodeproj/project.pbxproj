@@ -32,6 +32,7 @@
 		752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC228C8D90000057685 /* DirectorySelectorView.swift */; };
 		752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC428C8E2C500057685 /* ToolBarView.swift */; };
 		752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */; };
+		757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757422B42C865A6C00CB8A0C /* SymLog.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
@@ -126,6 +127,7 @@
 		752C5AC228C8D90000057685 /* DirectorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DirectorySelectorView.swift; path = ../../../FileSelectorView/Sources/FileSelectorView/DirectorySelectorView.swift; sourceTree = "<group>"; };
 		752C5AC428C8E2C500057685 /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFoldersViews.swift; sourceTree = "<group>"; };
+		757422B42C865A6C00CB8A0C /* SymLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymLog.swift; sourceTree = "<group>"; };
 		758FD2362C77673400878379 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = ../pmutility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		758FD2462C7769AC00878379 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = ../xattr/xattr.xcodeproj; sourceTree = "<group>"; };
 		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -207,6 +209,7 @@
 		750EED0528C7D11A00A174BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				757422B42C865A6C00CB8A0C /* SymLog.swift */,
 				752C5AC228C8D90000057685 /* DirectorySelectorView.swift */,
 				750EECF228C7CC4B00A174BB /* XATTR.swift */,
 				750EECF128C7CC4B00A174BB /* AppEntry.swift */,
@@ -426,6 +429,7 @@
 				750EED0728C7D83200A174BB /* Extensions.swift in Sources */,
 				75009A4A2C765F140098B6C5 /* MyCollectionViewItem.m in Sources */,
 				75009A392C765B080098B6C5 /* CompositeView.m in Sources */,
+				757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */,
 				75009A452C765D730098B6C5 /* MyCollectionView.m in Sources */,
 				750EECFF28C7CD1200A174BB /* NSBezierPathAdditions.m in Sources */,
 				75009A3F2C765D270098B6C5 /* MyScrollView.m in Sources */,
@@ -587,7 +591,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.AppExpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -623,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.AppExpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
