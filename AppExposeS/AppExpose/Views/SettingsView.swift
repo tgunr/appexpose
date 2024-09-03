@@ -19,6 +19,7 @@ struct SettingsView: View {
     var body: some View {
 //        var folders = appFolders.map({ AppFolder(path: $0) })
 //        NavigationStack {
+        let _ = symlog.info("SettingsView")
         ContentView()
         Form {
             Section(header: Text("Application Folder")) {

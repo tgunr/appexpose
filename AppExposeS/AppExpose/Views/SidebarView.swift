@@ -14,12 +14,12 @@ struct SidebarView: View {
     @EnvironmentObject var appData: AppData
 
     var body: some View {
+        let _ = symlog.debug("SidebarView")
         NavigationView {
             List {
                 Text("LOCATIONS")
                     .font(.system(size: 10))
                     .fontWeight(.bold)
-                AppFoldersViews()
                 Divider()
                 NavigationLink(destination: SettingsView()) {
                     Label("Settings", systemImage: "gear")

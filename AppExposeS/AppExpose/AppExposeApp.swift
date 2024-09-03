@@ -6,7 +6,27 @@
 //
 
 import AppKit
+import OSLog
 import SwiftUI
+
+let logid = "appexpose"
+let inlog = SymLog<AppLogCategory>(category: "internal", subsystemColor: .violet)
+let uilog = SymLog<AppLogCategory>(category: "ui", subsystemColor: .green)
+let logCategories: [String: OSLog.logColor] = [
+    "entry": .black,
+    "appear": .white,
+    "log": .brown,
+    "value": .violet,
+    "info": .blue,
+    "notice": .green,
+    "change": .yellow,
+    "warning": .orange,
+    "error": .red,
+]
+
+let symlog = createLogger("app", subsystem: logid, subsystemColor: .black, categories: logCategories)
+let uiview = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
+let storekit = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
 
 class AppData: NSObject, ObservableObject {
     static let shared = AppData()
@@ -28,9 +48,10 @@ struct MyApp: App {
         WindowGroup {
             ToolbarView()
             SidebarView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .environmentObject(AppData.shared)
+            AppFoldersViews()
         }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environmentObject(AppData.shared)
 
 //        Settings {
 //            PreferencesView(model: model)
@@ -41,4 +62,3 @@ struct MyApp: App {
 //        }
     }
 }
-

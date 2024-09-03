@@ -5,12 +5,12 @@
 //  Created by Dave Carlton on 9/4/22.
 //
 
+import AppKit
 import Cocoa
 import Foundation
-import AppKit
 import UniformTypeIdentifiers
-//import PMUtility
-//import xattr
+// import PMUtility
+// import xattr
 
 let KEY_IMAGE = "icon"
 let KEY_NAME = "name"
@@ -33,31 +33,33 @@ class AppEntry: NSObject {
     var hasMyCustomIcon: Bool {
         return xattr?.hasAttribute(CUSTOM_ICON_ID) ?? false
     }
+
     var skipDescendents: Bool {
         let result = isFolder && (childEntries.count > 0)
         return result
     }
+
     var name: String?
     var appURL: URL?
-    var childEntries: [AppEntry] = [ ]
-    var iconDictionary: [String : NSImage]?
+    var childEntries: [AppEntry] = []
+    var iconDictionary: [String: NSImage]?
     var icons: [NSImage]?
     var appImage: NSImage?
     var originalImage: NSImage?
     var isFolder = false
-    var attributes: [FileAttributeKey : Any] = [ : ]
+    var attributes: [FileAttributeKey: Any] = [:]
     var xattr: XATTR?
-    
+
     class func root() -> AppEntry? {
         let root = self.init(rootWithURL: URL(fileURLWithPath: "/"))
         return root
     }
-    
+
     class func collect(from: URL) -> AppEntry {
         let start: AppEntry = AppEntry.collectFolders(from)
         return start
     }
-    
+
     required init(rootWithURL url: URL?) {
         super.init()
         appURL = url
@@ -70,6 +72,7 @@ class AppEntry: NSObject {
     }
 
     init(url: URL?) {
+        symlog.debug("\(#function) url: \(url?.path ?? "null")")
         super.init()
         let fm = FileManager()
         appURL = url
@@ -107,34 +110,33 @@ class AppEntry: NSObject {
         }
         if let iconImage = appImage {
             iconDictionary = [
-                KEY_IMAGE : iconImage            ]
+                KEY_IMAGE: iconImage]
         }
     }
-    
 
     func draw(_ image: NSImage?, withFrame imageFrame: NSRect) {
         // [super drawImage:image withFrame:imageFrame inView:controlView];
-        
+
         NSGraphicsContext.saveGraphicsState()
-        
+
         let path = NSBezierPath(roundedRect: imageFrame, xRadius: 5, yRadius: 5)
         path.addClip()
-        
-        //set the size
+
+        // set the size
         image?.size = imageFrame.size
-        
-        //draw the image
+
+        // draw the image
         image?.draw(in: imageFrame, from: .zero, operation: .sourceOver, fraction: 1.0, respectFlipped: true, hints: nil)
         NSGraphicsContext.restoreGraphicsState()
     }
-    
+
     func draw(_ dirtyRect: NSRect) {
         var path: NSBezierPath?
         var color: NSColor?
         var stroke: CGFloat
-        
+
         // Box
-        
+
         stroke = dirtyRect.size.width / 10.0
         path = NSBezierPath(roundedRect: dirtyRect, xRadius: stroke, yRadius: stroke)
         color = NSColor(calibratedRed: CGFloat(0.8), green: CGFloat(0.8), blue: CGFloat(0.8), alpha: CGFloat(1.0))
@@ -146,20 +148,20 @@ class AppEntry: NSObject {
         path?.stroke()
         NSGraphicsContext.current?.restoreGraphicsState()
     }
-    
+
     func composeIcons() -> NSImage? {
         let numImages = childEntries.count
         let resultImageSize = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
         var resultImage = NSImage(size: resultImageSize)
-        
+
         if numImages > 1 {
             let mb = Bundle.main
             let bgImageURL = mb.url(forResource: "default", withExtension: "png")
-            var bgImage: NSImage? = nil
+            var bgImage: NSImage?
             if let bgImageURL = bgImageURL {
                 bgImage = NSImage(contentsOf: bgImageURL)
             }
-            
+
             let littleIconSize = NSMakeSize(resultImageSize.width / 4.0, resultImageSize.height / 4.0)
             resultImage.lockFocus()
             bgImage?.size = NSMakeSize(resultImageSize.width - 64, resultImageSize.height - 64)
@@ -172,10 +174,10 @@ class AppEntry: NSObject {
             let offset = resultImageSize.width * 0.64065
             point.y = offset
             //            PMLOG_DEBUG("name: %@ images: %d", name, numImages)
-            
-            for i in 0..<3 {
+
+            for i in 0 ..< 3 {
                 point.x = offset
-                for j in 0..<3 {
+                for j in 0 ..< 3 {
                     let entry = childEntries[(i * 3) + j]
                     let imageToCompose = entry.appImage
                     imageToCompose?.size = littleIconSize
@@ -206,28 +208,28 @@ class AppEntry: NSObject {
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
-            
+
             reducer?.setMaxPixelsWide(256)
             reducer?.setMaxPixelsHigh(256)
             reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
-            
+
             reducer?.setMaxPixelsWide(128)
             reducer?.setMaxPixelsHigh(128)
             reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
-            
+
             reducer?.setMaxPixelsWide(64)
             reducer?.setMaxPixelsHigh(64)
             reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
                 resultImage.addRepresentation(reduced)
             }
-            
+
             reducer?.setMaxPixelsWide(32)
             reducer?.setMaxPixelsHigh(32)
             reduced = reducer?.outputBitmapImageRep()
@@ -242,10 +244,10 @@ class AppEntry: NSObject {
         }
         return resultImage
     }
-    
+
     func isALeaf(_ url: URL?) -> Bool {
         let fileType = attributes[FileAttributeKey.type] as! String
-        
+
         if fileType == "NSFileTypeDirectory" {
             return false // folders are not leafs
         }
@@ -257,7 +259,7 @@ class AppEntry: NSObject {
         }
         return true
     }
-    
+
     func isAFolder(_ url: URL?) -> Bool {
         let fileType = attributes[FileAttributeKey.type] as? String
         if fileType == "NSFileTypeSymbolicLink" {
@@ -265,19 +267,19 @@ class AppEntry: NSObject {
         }
         return (fileType == "NSFileTypeDirectory") ? true : false
     }
-    
+
     func isAnApp(_ url: URL?) -> Bool {
         let ws = NSWorkspace.shared
         let result = ws.isFilePackage(atPath: url?.path ?? "")
         return result
     }
-    
+
     func isNotSpecial() -> Bool {
         let specialNames = ["Utilities"]
         let result = specialNames.contains(name ?? "")
         return !result
     }
-    
+
     func userCanAccess() -> Bool {
         let fm = FileManager.default
         let result1 = fm.isWritableFile(atPath: (appURL?.path())!)
@@ -294,14 +296,14 @@ class AppEntry: NSObject {
         }
         return result1 && result2
     }
-    
+
     func hasACustomIcon() -> Bool {
         let fm = FileManager.default
         let customIconURL = appURL?.appendingPathComponent(CUSTOM_ICON_NAME)
         let result = fm.fileExists(atPath: customIconURL!.path)
         return result
     }
-    
+
     /// Looks in the directoryToScan items which are directories or packages. If found an entry is created and checked if it is an application.
     /// If so, the entry is added as a child entry. If the item was a package, no further recursion is needed as packages are not applications per say.
     /// The folder being scanned is limited by the value in MAX_LEVEL
@@ -309,15 +311,15 @@ class AppEntry: NSObject {
         let fm = FileManager.default
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
         let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
-        
+
         for case let fileURL as URL in directoryEnumerator {
             // Retrieve the directory property
             guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
                   let isDirectory = resourceValues.isDirectory,
                   //                      let isSymLink = resourceValues.isSymbolicLink,
                   let isPackage = resourceValues.isPackage
-                    //                      let isCustom = resourceValues.customIcon,
-                    //                      let fileName = resourceValues.name
+            //                      let isCustom = resourceValues.customIcon,
+            //                      let fileName = resourceValues.name
             else {
                 continue
             }
@@ -325,7 +327,7 @@ class AppEntry: NSObject {
                 if isPackage {
                     let entry = AppEntry(url: fileURL)
                     if entry.isApp {
-                        //                        PMLOG(2, "adding: %@", fileURL)
+//                        PMLOG(2, "adding: %@", fileURL)
                         if entry.addChildEntry(entry) {
                             directoryEnumerator.skipDescendents()
                         }
@@ -333,32 +335,32 @@ class AppEntry: NSObject {
                         directoryEnumerator.skipDescendents()
                     }
                 }
-                if (directoryEnumerator.level ) > MAX_LEVEL {
+                if (directoryEnumerator.level) > MAX_LEVEL {
                     directoryEnumerator.skipDescendents()
                 }
             }
         }
     }
-    
+
     class func collectFolders(_ directoryToScan: URL?) -> AppEntry {
         let appEntry = AppEntry(url: directoryToScan)
         let fm = FileManager()
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
         let dirEnumerator = fm.enumerator(at: directoryToScan!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
         let tempArray: [AnyHashable] = []
-        
+
         for case let fileURL as URL in dirEnumerator {
             // Retrieve the directory property
             guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
                   let isDirectory = resourceValues.isDirectory,
                   //                      let isSymLink = resourceValues.isSymbolicLink,
                   let isPackage = resourceValues.isPackage
-                    //                      let isCustom = resourceValues.customIcon,
-                    //                      let fileName = resourceValues.name
+            //                      let isCustom = resourceValues.customIcon,
+            //                      let fileName = resourceValues.name
             else {
                 continue
             }
-            
+
             if isDirectory {
                 if isPackage {
                     let entry = AppEntry(url: fileURL)
@@ -371,7 +373,7 @@ class AppEntry: NSObject {
                         dirEnumerator.skipDescendents()
                     }
                 }
-                if (dirEnumerator.level ) > MAX_LEVEL {
+                if (dirEnumerator.level) > MAX_LEVEL {
                     dirEnumerator.skipDescendents()
                 }
             }
@@ -382,33 +384,33 @@ class AppEntry: NSObject {
         //        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
         return appEntry
     }
-    
+
     func folderHasCustomIcon(path: String) -> Bool {
         let iconPath = NSString.path(withComponents: [path, "Icon\r"])
         let r = FileManager.default.fileExists(atPath: iconPath)
         return r
     }
-    
+
     func pathWithName() -> String? {
         let path = URL(fileURLWithPath: appURL?.path ?? "").appendingPathComponent(name ?? "").path
         return isLeaf ? path : path + "/"
     }
-    
+
     func compare(_ other: AppEntry?) -> ComparisonResult {
         return name?.localizedCaseInsensitiveCompare(other?.name ?? "") ?? ComparisonResult.orderedSame
     }
-    
+
     func addChildEntry(_ entry: AppEntry?) -> Bool {
         if let entry = entry {
-            self.childEntries.append(entry)
+            childEntries.append(entry)
             return true
         } else {
             return false
         }
     }
-    
+
     func childDirectoryEntry(withName str: String?, createIfNotPresent flag: Bool) -> AppEntry? {
-        var childEntry: AppEntry? = nil
+        var childEntry: AppEntry?
         for entry in childEntries {
             if (entry.name == str) && !entry.isLeaf {
                 childEntry = entry
@@ -423,7 +425,7 @@ class AppEntry: NSObject {
         }
         return childEntry
     }
-    
+
     func add(toRootEntry rootEntry: AppEntry?) -> Bool {
         var directoryEntry = rootEntry
         let components = appURL?.pathComponents
@@ -434,17 +436,17 @@ class AppEntry: NSObject {
         }
         return Bool((directoryEntry != nil ? directoryEntry?.addChildEntry(self) : false) ?? false)
     }
-    
+
     func setAttribute(_ xAttribute: String!, value xValue: String!) -> Bool {
         xattr?.setAttribute(xAttribute, value: xValue)
         return true
     }
-    
+
     func hasAttribute(_ string: String?) -> Bool {
         let result = xattr?.hasAttribute(string) ?? false
         return result
     }
-    
+
     func deleteAttribute(_ string: String?) -> Bool {
         var ok = false
         if hasAttribute(string) {
@@ -452,28 +454,28 @@ class AppEntry: NSObject {
         }
         return ok
     }
-    
+
     func revertIcon() {
         //    iconImage = originalImage;
     }
-    
+
     func badgeAsNoAccess() {
         // Setup for the composite image with size same as the current icon
         let point = NSPoint(x: 0.0, y: 0.0)
         let currentSize = appImage?.size
         let currentRect = NSRect(origin: point, size: currentSize!)
-        
+
         // setup the badge image and size
         let mb = Bundle.main
         let badgeImageURL = mb.url(forResource: "red-lock", withExtension: "png")
-        var badgeImage: NSImage? = nil
+        var badgeImage: NSImage?
         if let badgeImageURL = badgeImageURL {
             badgeImage = NSImage(contentsOf: badgeImageURL)
         }
         let badgePoint = NSPoint(x: 0.0, y: 0.0)
         let badgeSize = NSMakeSize((appImage?.size.width ?? 0.0) / 4.0, (appImage?.size.height ?? 0.0) / 4.0)
         //    [badgeImage setSize: badgeSize];
-        
+
         // draw current image badged
         let currentImageBadged = NSImage(size: currentSize ?? NSSize.zero)
         currentImageBadged.lockFocus()
@@ -485,7 +487,7 @@ class AppEntry: NSObject {
             fraction: 0.7)
         currentImageBadged.unlockFocus()
         appImage = currentImageBadged
-        
+
         // draw original image badged
         let originalImageBadged = NSImage(size: currentSize ?? NSSize.zero)
         originalImageBadged.lockFocus()
@@ -497,28 +499,28 @@ class AppEntry: NSObject {
             fraction: 0.7)
         originalImageBadged.unlockFocus()
         originalImage = originalImageBadged
-        
+
         // set dictionary with badge version
 //        iconDictionary?[KEY_IMAGE] = appImage
     }
-    
+
     func badgeAsFolder() {
         // Setup for the composite image with size same as the current icon
         let point = NSPoint(x: 0.0, y: 0.0)
         let currentSize = appImage?.size
         let currentRect = NSRect(origin: point, size: currentSize!)
-        
+
         // setup the badge image and size
         let mb = Bundle.main
         let badgeImageURL = mb.url(forResource: "Folder", withExtension: "png")
-        var badgeImage: NSImage? = nil
+        var badgeImage: NSImage?
         if let badgeImageURL = badgeImageURL {
             badgeImage = NSImage(contentsOf: badgeImageURL)
         }
         let badgePoint = NSPoint(x: 0.0, y: 0.0)
         let badgeSize = NSMakeSize((appImage?.size.width ?? 0.0) / 4.0, (appImage?.size.height ?? 0.0) / 4.0)
         //    [badgeImage setSize: badgeSize];
-        
+
         // draw current image badged
         let currentImageBadged = NSImage(size: currentSize ?? NSSize.zero)
         currentImageBadged.lockFocus()
@@ -530,7 +532,7 @@ class AppEntry: NSObject {
             fraction: 0.7)
         currentImageBadged.unlockFocus()
         appImage = currentImageBadged
-        
+
         // draw original image badged
         let originalImageBadged = NSImage(size: currentSize ?? NSSize.zero)
         originalImageBadged.lockFocus()
@@ -542,7 +544,7 @@ class AppEntry: NSObject {
             fraction: 0.7)
         originalImageBadged.unlockFocus()
         originalImage = originalImageBadged
-        
+
         // set dictionary with badge version
 //        iconDictionary?[KEY_IMAGE] = appImage
     }
@@ -553,8 +555,8 @@ extension NSImage {
         let imageRep: NSBitmapImageRep? = representations[0] as? NSBitmapImageRep
         let imageData = imageRep?.representation(
             using: NSBitmapImageRep.FileType.png,
-                properties: [:])
-        let url = URL.init(string: "/tmp/image.png")
+            properties: [:])
+        let url = URL(string: "/tmp/image.png")
         try! imageData!.write(to: url!, options: [])
     }
 }

@@ -12,6 +12,7 @@ struct ToolbarView: View {
     @State private var iconSize: Double = 32.0
     
     var body: some View {
+        let _ = symlog.info("ToolbarView")
         NavigationStack {
 //                    Color.clear
         }

@@ -12,19 +12,36 @@ struct AppFoldersViews: View {
     @State var appEntry: AppEntry?
     @State var selectedItem: String? = nil
     
-    init() {
-        let appsURL = URL(fileURLWithPath: "/Applications")
-        self.appEntry = AppEntry(url: appsURL)
-    }
+//    init() {
+//        let appsURL = URL(fileURLWithPath: "/Applications")
+//        self.appEntry = AppEntry(url: appsURL)
+//    }
     
     var body: some View {
-        ForEach(appEntry?.childEntries ?? [], id: \.self) {
-            let fname = $0.name
-            NavigationLink( destination: AppFolderView(folder: fname!)) {
-                Label(fname!, systemImage: "folder")
+        let _ = symlog.debug("AppFoldersViews")
+        VStack {
+            if appEntry == nil {
+                ProgressView()
+            } else {
+                if appEntry!.childEntries.isEmpty {
+                    Text("No Applications Found")
+                } else {
+                    Text("Applications")
+                        .font(.title)
+                        .padding(.bottom, 5)
+                    List {
+                        ForEach(appEntry!.childEntries, id: \.self) {
+                            let fname = $0.name
+                            NavigationLink( destination: AppFolderView(folder: fname!)) {
+                                Label(fname!, systemImage: "folder")
+                            }
+                        }
+                    }
+                }
             }
         }
         .task {
+            symlog.info("Fetching Apps")
             let appsURL = URL(fileURLWithPath: "/Applications")
             self.appEntry = AppEntry(url: appsURL)
         }
