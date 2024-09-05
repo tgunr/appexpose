@@ -9,43 +9,67 @@ import SwiftUI
 
 struct AppFoldersViews: View {
     @EnvironmentObject var appData: AppData
-    @State var appEntry: AppEntry?
+    @State var appEntries: [AppEntry] = []
     @State var selectedItem: String? = nil
-    
+
 //    init() {
 //        let appsURL = URL(fileURLWithPath: "/Applications")
 //        self.appEntry = AppEntry(url: appsURL)
 //    }
-    
+
     var body: some View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
-            if appEntry == nil {
+            if appEntries == nil {
                 ProgressView()
             } else {
-                if appEntry!.childEntries.isEmpty {
+                if appEntries.isEmpty {
                     Text("No Applications Found")
                 } else {
                     Text("Applications")
                         .font(.title)
                         .padding(.bottom, 5)
-                    List {
-                        ForEach(appEntry!.childEntries, id: \.self) {
-                            let fname = $0.name
-                            NavigationLink( destination: AppFolderView(folder: fname!)) {
-                                Label(fname!, systemImage: "folder")
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                            ForEach(appEntries, id: \.self) { entry in
+                                let fname = entry.name
+                                NavigationLink(destination: AppFolderView(folder: fname!)) {
+                                    VStack {
+                                        if let appImage = entry.appImage {
+                                            Image(nsImage: appImage)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 50, height: 50)
+                                        } else {
+                                            Image(systemName: "folder")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 50, height: 50)
+                                        }
+                                        Text(fname!)
+                                            .lineLimit(2)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .frame(width: 150, height: 100)
+                                    .padding()
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(10)
+                                }
                             }
                         }
+                        .padding()
                     }
                 }
             }
         }
         .task {
             symlog.info("Fetching Apps")
-            let appsURL = URL(fileURLWithPath: "/Applications")
+//            let appsURL = URL(fileURLWithPath: "/Applications")
+            let appsPath = "/Applications"
             DispatchQueue.main.async {
-                self.appEntry = AppEntry(url: appsURL)
-                symlog.value("AppEntry created with \(self.appEntry?.childEntries.count ?? 0) child entries")
+                let app = AppEntry(name: appsPath)
+                appEntries = app.scanApplications(atPath: appsPath, currentDirectory: nil)
+                symlog.value("AppEntry created with \(self.appEntries.count) child entries")
             }
         }
 //        .onDeleteCommand(perform: ({

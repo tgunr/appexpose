@@ -45,14 +45,9 @@ struct AppFolderView: View {
 
     var body: some View {
         Text("\(folder)")
-            .onLoad {
-                if let u = URL(string: folder) {
-                    appFolder.model = AppEntry.collect(from: u)
-                }
-            }
         List {
             if let m = appFolder.model {
-                let entries = m.childEntries
+                let entries = m.children
                 ForEach(entries, id: \.self) { entry in
                     if let entryURL = entry.appURL?.absoluteString {
                         Text(entryURL)

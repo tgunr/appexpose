@@ -30,18 +30,19 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     var isApp = false
     var canAccess = false
     var hasCustomIcon = false
+    var originalFolderIcon: NSImage?
     var hasMyCustomIcon: Bool {
         return xattr?.hasAttribute(CUSTOM_ICON_ID) ?? false
     }
 
     var skipDescendents: Bool {
-        let result = isFolder && (childEntries.count > 0)
+        let result = isFolder && (children.count > 0)
         return result
     }
 
     var name: String?
     var appURL: URL?
-    @Published var childEntries: [AppEntry] = []
+    @Published var children = [AppEntry]()
     var iconDictionary: [String: NSImage]?
     var icons: [NSImage]?
     var appImage: NSImage?
@@ -49,25 +50,41 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     var isFolder = false
     var attributes: [FileAttributeKey: Any] = [:]
     var xattr: XATTR?
+    var processedURLs = Set<URL>()
 
     class func root() -> AppEntry? {
-        let root = self.init(rootWithURL: URL(fileURLWithPath: "/"))
+        let root = self.init(withURL: URL(fileURLWithPath: "/"))
         return root
     }
 
-    class func collect(from: URL) -> AppEntry {
-        let start: AppEntry = AppEntry.collectFolders(from)
-        return start
+    init(name: String) {
+        self.name = name
     }
 
-    required init(rootWithURL url: URL?) {
+    required init(withURL url: URL) {
         super.init()
         appURL = url
-        isLeaf = true
-        isApp = false
+        symlog.value("\(#function) url: \(url.path)")
+        do {
+            attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            xattr = XATTR(path: url.path, options: XATTROptions.nofollow)
+            isLeaf = isALeaf(appURL)
+            isFolder = isAFolder(appURL)
+            hasCustomIcon = hasACustomIcon()
+            isApp = isAnApp(appURL)
+            canAccess = userCanAccess()
+            if isFolder && hasMyCustomIcon {
+                originalImage = NSWorkspace.shared.icon(for: UTType.folder)
+            } else {
+                originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
+            }
+            originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+            appImage = originalImage
+        } catch {
+            symlog.error("attributes: FAIL")
+        }
         name = appURL?.lastPathComponent
-        originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
-        appImage = originalImage
+        // Check if the item is a folder or application
         icons = []
     }
 
@@ -79,7 +96,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         do {
             attributes = try fm.attributesOfItem(atPath: url?.path ?? "")
         } catch {
-            print("attributes: FAIL")
+            symlog.error("attributes: FAIL")
         }
         if let url = url {
             xattr = XATTR(path: url.path(), options: XATTROptions.nofollow)
@@ -100,10 +117,10 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         if isApp {
             isLeaf = false
         } else {
-            childEntries = []
+            children = []
             if isFolder && isNotSpecial() {
                 scanURL()
-                if (childEntries.count) != 0 {
+                if (children.count) != 0 {
                     appImage = composeIcons()
                 }
             }
@@ -111,6 +128,109 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         if let iconImage = appImage {
             iconDictionary = [
                 KEY_IMAGE: iconImage]
+        }
+    }
+
+    func scanApplications(atPath: String?, currentDirectory: String?) -> [AppEntry] {
+        var entries: [AppEntry] = []
+
+        guard let currentDir = atPath ?? currentDirectory else { return entries }
+        let fm = FileManager.default
+
+        do {
+//            let contents = try fm.contentsOfDirectory(atPath: currentDir)
+            let keys = [URLResourceKey.nameKey, URLResourceKey.isDirectoryKey, URLResourceKey.isPackageKey]
+            let contents = try fm.contentsOfDirectory(at: URL(fileURLWithPath: currentDir), includingPropertiesForKeys: keys, options: .skipsHiddenFiles)
+
+            for item in contents {
+                if item.path.hasSuffix("Applications") || item.path.hasSuffix(".Trash") { continue }
+
+                let fullPath = item.path
+                let directoryEntry = AppEntry(withURL: item)
+                // Check if the item is a folder or application
+
+                if directoryEntry.isApp {
+                    directoryEntry.isLeaf = false
+//                    directoryEntry.appImage = NSImage(size: NSSize(width: 50, height: 50))
+//                    directoryEntry.appImage?.lockFocus()
+//                    let iconURL = URL(fileURLWithPath: fullPath)
+//                        .appendingPathComponent("Contents")
+//                        .appendingPathComponent("Resources")
+//                        .appendingPathComponent("\(item).icns")
+//                    if let image = NSImage(contentsOf: iconURL) {
+//                        directoryEntry.appImage = image
+//                    } else {
+//                        symlog.error("Failed to load icon for \(item)")
+//                    }
+//                    directoryEntry.appImage?.unlockFocus()
+                    entries.append(directoryEntry)
+                    symlog.value("Added \(item) to entries")
+                    continue
+                }
+
+                if directoryEntry.isFolder && directoryEntry.isNotSpecial() {
+                    let subDirEntries = scanApplications(atPath: nil, currentDirectory: fullPath)
+                    entries.append(contentsOf: subDirEntries)
+                    symlog.value("Added \(subDirEntries.count) entries")
+                }
+            }
+        } catch {
+            symlog.error("Error scanning directory: \(error)")
+        }
+        return entries
+    }
+
+    func scanApplications1(atPath path: String, currentDirectory: AppEntry? = nil) -> [AppEntry] {
+        // Get the contents of the directory at the specified path
+        let fm = FileManager()
+        do {
+            let contents = try fm.contentsOfDirectory(atPath: path)
+
+            // Create an entry for the current directory
+            var directoryEntry: AppEntry?
+            if currentDirectory != nil {
+                directoryEntry = currentDirectory!
+            } else {
+                directoryEntry = AppEntry(withURL: URL(fileURLWithPath: path))
+            }
+            directoryEntry?.appURL = URL(fileURLWithPath: path)
+            directoryEntry?.attributes = try FileManager.default.attributesOfItem(atPath: path)
+            directoryEntry?.xattr = XATTR(path: path, options: XATTROptions.nofollow)
+            directoryEntry?.isLeaf = ((directoryEntry?.isALeaf(appURL)) != nil)
+            directoryEntry?.isFolder = isAFolder(appURL)
+            directoryEntry?.hasCustomIcon = ((directoryEntry?.hasACustomIcon()) != nil)
+            directoryEntry?.isApp = isAnApp(appURL)
+            directoryEntry?.canAccess = ((directoryEntry?.userCanAccess()) != nil)
+            directoryEntry?.name = appURL?.lastPathComponent
+            // Check if the item is a folder or application
+            if directoryEntry!.isFolder && ((directoryEntry?.hasMyCustomIcon) != nil) {
+                directoryEntry?.originalImage = NSWorkspace.shared.icon(for: UTType.folder)
+            } else {
+                directoryEntry?.originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
+            }
+            directoryEntry?.originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+            directoryEntry?.appImage = directoryEntry?.originalImage
+
+            // Iterate through the contents of the directory
+            for item in contents {
+                let fullPath = "\(path)/\(item)"
+                let appEntry = AppEntry(withURL: URL(fileURLWithPath: fullPath))
+                if appEntry.isApp {
+                    appEntry.isLeaf = false
+                    directoryEntry?.children.append(appEntry)
+                } else {
+                    if appEntry.isFolder && appEntry.isNotSpecial() {
+                        let children = scanApplications1(atPath: fullPath, currentDirectory: directoryEntry)
+                        appEntry.children.append(contentsOf: children.map { $0 })
+                        directoryEntry?.children.append(appEntry)
+                    }
+                }
+            }
+
+            return [directoryEntry!]
+        } catch {
+            print("Error scanning directory at path \(path): \(error)")
+            return []
         }
     }
 
@@ -150,7 +270,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     }
 
     func composeIcons() -> NSImage? {
-        let numImages = childEntries.count
+        let numImages = children.count
         let resultImageSize = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
         var resultImage = NSImage(size: resultImageSize)
 
@@ -178,7 +298,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
             for i in 0 ..< 3 {
                 point.x = offset
                 for j in 0 ..< 3 {
-                    let entry = childEntries[(i * 3) + j]
+                    let entry = children[(i * 3) + j]
                     let imageToCompose = entry.appImage
                     imageToCompose?.size = littleIconSize
                     //                    PMLOG_DEBUG("point: %f,%f", point.x, point.y)
@@ -237,7 +357,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
                 resultImage.addRepresentation(reduced)
             }
         } else {
-            let entry = childEntries[0]
+            let entry = children[0]
             if let copy = entry.appImage {
                 resultImage = copy
             }
@@ -287,12 +407,11 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         do {
             result2 = ((try appURL?.checkResourceIsReachable()) != nil)
         } catch {
-            print("checkResourceIsReachable: FAIL")
+            symlog.error("checkResourceIsReachable: FAIL")
         }
         return result2
         if !result1 || !result2 {
-            //            PMLOG(2, "no access: %@", appURL)
-            print("no access: \(String(describing: appURL?.absoluteString))")
+            symlog.error("no access: \(String(describing: appURL?.absoluteString))")
         }
         return result1 && result2
     }
@@ -310,84 +429,40 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     func scanURL() {
         let fm = FileManager.default
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
-        let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
+        let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: [.skipsHiddenFiles, .skipsPackageDescendants])!
+
         var newEntries: [AppEntry] = []
-        
-        for case let fileURL as URL in directoryEnumerator {
+
+        while let fileURL = directoryEnumerator.nextObject() as? URL {
             // Retrieve the directory property
             guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
                   let isDirectory = resourceValues.isDirectory,
-                  //                      let isSymLink = resourceValues.isSymbolicLink,
                   let isPackage = resourceValues.isPackage
-            //                      let isCustom = resourceValues.customIcon,
-            //                      let fileName = resourceValues.name
             else {
                 continue
             }
+
             if isDirectory {
-                if isPackage {
-                    let entry = AppEntry(url: fileURL)
-                    if entry.isApp {
-//                        PMLOG(2, "adding: %@", fileURL)
-                        if entry.addChildEntry(entry) {
+                let entry = AppEntry(url: fileURL)
+                if !newEntries.contains(where: { $0.appURL == entry.appURL }) {
+                    newEntries.append(entry)
+                    if isPackage {
+                        if entry.isApp {
                             directoryEnumerator.skipDescendents()
                         }
-                    } else {
+                    }
+                    if (directoryEnumerator.level) > MAX_LEVEL {
                         directoryEnumerator.skipDescendents()
                     }
-                    newEntries.append(entry)
-                }
-                if (directoryEnumerator.level) > MAX_LEVEL {
-                    directoryEnumerator.skipDescendents()
                 }
             }
         }
-        symlog.value("scanURL: Found \(newEntries.count) entries")
-        childEntries.append(contentsOf: newEntries)
-        symlog.value("scanURL: childEntries count after append: \(childEntries.count)")
-    }
 
-    class func collectFolders(_ directoryToScan: URL?) -> AppEntry {
-        let appEntry = AppEntry(url: directoryToScan)
-        let fm = FileManager()
-        let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
-        let dirEnumerator = fm.enumerator(at: directoryToScan!, includingPropertiesForKeys: Array(resourceKeys), options: .skipsHiddenFiles)!
-        let tempArray: [AnyHashable] = []
-
-        for case let fileURL as URL in dirEnumerator {
-            // Retrieve the directory property
-            guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
-                  let isDirectory = resourceValues.isDirectory,
-                  //                      let isSymLink = resourceValues.isSymbolicLink,
-                  let isPackage = resourceValues.isPackage
-            //                      let isCustom = resourceValues.customIcon,
-            //                      let fileName = resourceValues.name
-            else {
-                continue
-            }
-
-            if isDirectory {
-                if isPackage {
-                    let entry = AppEntry(url: fileURL)
-                    if entry.isApp {
-                        //                        PMLOG(2, "adding: %@", fileURL)
-                        if appEntry.addChildEntry(entry) {
-                            dirEnumerator.skipDescendents()
-                        }
-                    } else {
-                        dirEnumerator.skipDescendents()
-                    }
-                }
-                if (dirEnumerator.level) > MAX_LEVEL {
-                    dirEnumerator.skipDescendents()
-                }
-            }
+        // Update the entries property with the new entries
+        DispatchQueue.main.async {
+            self.children = newEntries
+            self.objectWillChange.send()
         }
-        //        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-        //        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
-//        performSelector(onMainThread: Selector(("setIcons:")), with: tempArray, waitUntilDone: true)
-        //        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
-        return appEntry
     }
 
     func folderHasCustomIcon(path: String) -> Bool {
@@ -407,7 +482,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 
     func addChildEntry(_ entry: AppEntry?) -> Bool {
         if let entry = entry {
-            childEntries.append(entry)
+            children.append(entry)
             return true
         } else {
             return false
@@ -416,7 +491,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 
     func childDirectoryEntry(withName str: String?, createIfNotPresent flag: Bool) -> AppEntry? {
         var childEntry: AppEntry?
-        for entry in childEntries {
+        for entry in children {
             if (entry.name == str) && !entry.isLeaf {
                 childEntry = entry
                 break
@@ -431,15 +506,15 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         return childEntry
     }
 
-    func add(toRootEntry rootEntry: AppEntry?) -> Bool {
+    func add(toRootEntry rootEntry: AppEntry) -> Bool {
         var directoryEntry = rootEntry
         let components = appURL?.pathComponents
         for component in components ?? [] {
             if "/" != component {
-                directoryEntry = directoryEntry?.childDirectoryEntry(withName: component, createIfNotPresent: true)
+                directoryEntry = directoryEntry.childDirectoryEntry(withName: component, createIfNotPresent: true)!
             }
         }
-        return Bool((directoryEntry != nil ? directoryEntry?.addChildEntry(self) : false) ?? false)
+        return Bool(directoryEntry != nil ? directoryEntry.addChildEntry(self) : false)
     }
 
     func setAttribute(_ xAttribute: String!, value xValue: String!) -> Bool {
@@ -509,7 +584,101 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 //        iconDictionary?[KEY_IMAGE] = appImage
     }
 
+    func badge() {
+        // Setup for the composite image with size same as the current icon
+        let point = NSPoint(x: 0.0, y: 0.0)
+        let currentSize = appImage?.size
+        let currentRect = NSRect(origin: point, size: currentSize!)
+
+        // setup the badge image and size
+        let mb = Bundle.main
+        let badgeImageURL = mb.url(forResource: "Badge", withExtension: "png")
+        var badgeImage: NSImage?
+        if let badgeImageURL = badgeImageURL {
+            badgeImage = NSImage(contentsOf: badgeImageURL)
+        }
+        let badgePoint = NSPoint(x: 0.0, y: 0.0)
+        let badgeSize = NSMakeSize((appImage?.size.width ?? 0.0) / 4.0, (appImage?.size.height ?? 0.0) / 4.0)
+
+        // draw current image badged
+        let currentImageBadged = NSImage(size: currentSize ?? NSSize.zero)
+        currentImageBadged.lockFocus()
+        appImage?.draw(at: badgePoint, from: currentRect, operation: .sourceOver, fraction: 1.0)
+        badgeImage?.draw(
+            in: NSRect(x: 0, y: 0, width: badgeSize.width, height: badgeSize.height),
+            from: NSRect.zero /* Draws full image. */,
+            operation: .sourceOver,
+            fraction: 0.7)
+        currentImageBadged.unlockFocus()
+        appImage = currentImageBadged
+
+        // draw original image badged
+        let originalImageBadged = NSImage(size: currentSize ?? NSSize.zero)
+        originalImageBadged.lockFocus()
+        originalImage?.draw(at: badgePoint, from: currentRect, operation: .sourceOver, fraction: 1.0)
+        badgeImage?.draw(
+            in: NSRect(x: 0, y: 0, width: badgeSize.width, height: badgeSize.height),
+            from: NSRect.zero /* Draws full image. */,
+            operation: .sourceOver,
+            fraction: 0.7)
+        originalImageBadged.unlockFocus()
+        originalImage = originalImageBadged
+
+        // set dictionary with badge version
+        //        iconDictionary?[KEY_IMAGE] = appImage
+    }
+
     func badgeAsFolder() {
+        if !isFolder {
+            return
+        }
+
+        // ask_software_developer How to get the icon used for a folder?
+        var folderIcon = NSWorkspace.shared.icon(for: UTType.folder)
+        // Setup for the composite image with size same as the current icon
+        let point = NSPoint(x: 0.0, y: 0.0)
+        let currentSize = folderIcon.size
+        let currentRect = NSRect(origin: point, size: currentSize)
+
+        // setup the badge image and size
+        let mb = Bundle.main
+        let badgeImageURL = mb.url(forResource: "Folder", withExtension: "png")
+        var badgeImage: NSImage?
+        if let badgeImageURL = badgeImageURL {
+            badgeImage = NSImage(contentsOf: badgeImageURL)
+        }
+        let badgePoint = NSPoint(x: 0.0, y: 0.0)
+        let badgeSize = NSMakeSize(folderIcon.size.width / 4.0, folderIcon.size.height / 4.0)
+
+        // draw current image badged
+        let currentImageBadged = NSImage(size: currentSize)
+        currentImageBadged.lockFocus()
+        folderIcon.draw(at: badgePoint, from: currentRect, operation: .sourceOver, fraction: 1.0)
+        badgeImage?.draw(
+            in: NSRect(x: 0, y: 0, width: badgeSize.width, height: badgeSize.height),
+            from: NSRect.zero /* Draws full image. */,
+            operation: .sourceOver,
+            fraction: 0.7)
+        currentImageBadged.unlockFocus()
+        folderIcon = currentImageBadged
+
+        // draw original image badged
+        let originalImageBadged = NSImage(size: currentSize)
+        originalImageBadged.lockFocus()
+        originalFolderIcon?.draw(at: badgePoint, from: currentRect, operation: .sourceOver, fraction: 1.0)
+        badgeImage?.draw(
+            in: NSRect(x: 0, y: 0, width: badgeSize.width, height: badgeSize.height),
+            from: NSRect.zero /* Draws full image. */,
+            operation: .sourceOver,
+            fraction: 0.7)
+        originalImageBadged.unlockFocus()
+        originalFolderIcon = originalImageBadged
+
+        // set dictionary with badge version
+        //        iconDictionary?[KEY_IMAGE] = folderIcon
+    }
+
+    func badgeAsFolderOLD() {
         // Setup for the composite image with size same as the current icon
         let point = NSPoint(x: 0.0, y: 0.0)
         let currentSize = appImage?.size
