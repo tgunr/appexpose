@@ -10,7 +10,7 @@ import SwiftUI
 struct ToolbarView: View {
 //    @EnvironmentObject var appData: AppData
     @State private var iconSize: Double = 32.0
-    
+
     var body: some View {
         let _ = symlog.info("ToolbarView")
         NavigationStack {
@@ -69,16 +69,16 @@ func after() {
 struct ToolbarView_Previews: PreviewProvider {
     static var previews: some View {
 //        NavigationView {
-            ContentView()
+        ToolbarView()
 //        }
-        .toolbar(id: "mytb") {
-            ToolbarItem(id: "before", placement: .automatic) {
-                Button(action: before, label: {
-                    Text("Before")
-                    Image(systemName: "arrowshape.turn.up.left.circle.fill")
-                })
+            .toolbar(id: "mytb") {
+                ToolbarItem(id: "before", placement: .automatic) {
+                    Button(action: before, label: {
+                        Text("Before")
+                        Image(systemName: "arrowshape.turn.up.left.circle.fill")
+                    })
+                }
             }
-        }
 
 //            .toolbar(id: "mytb") {
 //            ToolbarItem(id: "before", placement: .automatic) {
