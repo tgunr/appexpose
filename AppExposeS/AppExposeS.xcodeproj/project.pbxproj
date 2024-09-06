@@ -24,7 +24,7 @@
 		752C5ABC28C8D20500057685 /* Directory in Frameworks */ = {isa = PBXBuildFile; productRef = 752C5ABB28C8D20500057685 /* Directory */; };
 		752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC228C8D90000057685 /* DirectorySelectorView.swift */; };
 		752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC428C8E2C500057685 /* ToolBarView.swift */; };
-		752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */; };
+		752C5AC728C8F8ED00057685 /* AppFoldersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersView.swift */; };
 		7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFB28C7CC7F00A174BB /* ImageReducer.m */; };
 		757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757422B42C865A6C00CB8A0C /* SymLog.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
@@ -120,11 +120,10 @@
 		75234E8D28B2618100512430 /* AppExpose.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppExpose.entitlements; sourceTree = "<group>"; };
 		752C5AC228C8D90000057685 /* DirectorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DirectorySelectorView.swift; path = ../../../FileSelectorView/Sources/FileSelectorView/DirectorySelectorView.swift; sourceTree = "<group>"; };
 		752C5AC428C8E2C500057685 /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
-		752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFoldersViews.swift; sourceTree = "<group>"; };
+		752C5AC628C8F8ED00057685 /* AppFoldersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFoldersView.swift; sourceTree = "<group>"; };
 		757422B42C865A6C00CB8A0C /* SymLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymLog.swift; sourceTree = "<group>"; };
 		758FD2362C77673400878379 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = ../pmutility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		758FD2462C7769AC00878379 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = ../xattr/xattr.xcodeproj; sourceTree = "<group>"; };
-		75C78EE528BE3B8400801110 /* AppExposePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = AppExposePlayground.playground; path = ../AppExposeSwift/AppExposePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,7 +193,7 @@
 				750EECEF28C7CC4B00A174BB /* SidebarView.swift */,
 				750EECF028C7CC4B00A174BB /* Help.swift */,
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
-				752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */,
+				752C5AC628C8F8ED00057685 /* AppFoldersView.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
 			);
 			path = Views;
@@ -218,7 +217,6 @@
 				758FD2462C7769AC00878379 /* xattr.xcodeproj */,
 				758FD2362C77673400878379 /* PMUtility.xcodeproj */,
 				750EECF928C7CC7F00A174BB /* AppExposeS-Bridging-Header.h */,
-				75C78EE528BE3B8400801110 /* AppExposePlayground.playground */,
 				75234E8328B2617F00512430 /* AppExpose */,
 				75009A4E2C7660210098B6C5 /* Frameworks */,
 				75234E8228B2617F00512430 /* Products */,
@@ -409,7 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */,
-				752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */,
+				752C5AC728C8F8ED00057685 /* AppFoldersView.swift in Sources */,
 				752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */,
 				750EECF428C7CC4B00A174BB /* Help.swift in Sources */,
 				750EECEE28C7CBF300A174BB /* AppDelegate.swift in Sources */,

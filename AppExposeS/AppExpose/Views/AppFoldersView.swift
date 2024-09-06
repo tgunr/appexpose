@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppFoldersViews: View {
+struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
     @State var appEntries: [AppEntry] = []
     @State var selectedItem: String? = nil
@@ -87,6 +87,6 @@ struct AppFoldersViews: View {
 
 struct AppFoldersViews_Previews: PreviewProvider {
     static var previews: some View {
-        AppFoldersViews()
+        AppFoldersView()
     }
 }
