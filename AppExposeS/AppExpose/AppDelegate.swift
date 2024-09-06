@@ -25,28 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        var dirPaths = NSSearchPathForDirectoriesInDomains(.applicationDirectory,
-                                                           .systemDomainMask, true)
-        if (dirPaths.count > 0) {
-            appDirectory = dirPaths[0]
+        if let dirPaths = SettingsManager.shared.getStringArray(forKey: "folders") {
+            AppData.shared.folders = dirPaths
+        } else {
+            AppData.shared.folders = ["/Applications"]
+            SettingsManager.shared.setStringArray(AppData.shared.folders, forKey: "folders")
         }
-        
-        let defaults = UserDefaults.standard
-        let debug = defaults.bool(forKey: "debug")
-        if (debug) {
-            dirPaths = NSSearchPathForDirectoriesInDomains(.applicationDirectory, .userDomainMask, true)
-            if (dirPaths.count > 0) {
-                appDirectory = dirPaths[0]
-            }
-        }
-        
-        appDirectory = appDirectory + "/"
-        
-        let directory = defaults.string(forKey: "path")
-        if ((directory) != nil) {
-            appDirectory = directory!
-        }
-//        myWindowController?.viewController?.url = NSURL.fileURL(withPath: appDirectory)
     }
 
     func applicationDidResignActive(_ notification: Notification) {
