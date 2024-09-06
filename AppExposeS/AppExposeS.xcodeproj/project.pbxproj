@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		75009A392C765B080098B6C5 /* CompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75009A382C765B080098B6C5 /* CompositeView.m */; };
-		75009A3C2C765B670098B6C5 /* IconViewBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 75009A3A2C765B670098B6C5 /* IconViewBox.m */; };
-		75009A3F2C765D270098B6C5 /* MyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75009A3D2C765D270098B6C5 /* MyScrollView.m */; };
-		75009A452C765D730098B6C5 /* MyCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75009A432C765D730098B6C5 /* MyCollectionView.m */; };
-		75009A4A2C765F140098B6C5 /* MyCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 75009A492C765F140098B6C5 /* MyCollectionViewItem.m */; };
 		75009A502C7660210098B6C5 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75009A4F2C7660210098B6C5 /* PMUtility.framework */; };
 		75009A522C76609C0098B6C5 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75009A512C76609C0098B6C5 /* XATTR.framework */; };
 		750EECEE28C7CBF300A174BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECED28C7CBF300A174BB /* AppDelegate.swift */; };
@@ -19,8 +14,6 @@
 		750EECF428C7CC4B00A174BB /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECF028C7CC4B00A174BB /* Help.swift */; };
 		750EECF528C7CC4B00A174BB /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECF128C7CC4B00A174BB /* AppEntry.swift */; };
 		750EECF628C7CC4B00A174BB /* XATTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECF228C7CC4B00A174BB /* XATTR.swift */; };
-		750EECFC28C7CC7F00A174BB /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFB28C7CC7F00A174BB /* ImageReducer.m */; };
-		750EECFF28C7CD1200A174BB /* NSBezierPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFD28C7CD1200A174BB /* NSBezierPathAdditions.m */; };
 		750EED0128C7CEDD00A174BB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EED0028C7CEDD00A174BB /* SettingsView.swift */; };
 		750EED0728C7D83200A174BB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EED0628C7D83200A174BB /* Extensions.swift */; };
 		750F6D0428C9008C005209BC /* AppFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750F6D0328C9008C005209BC /* AppFolderView.swift */; };
@@ -32,6 +25,7 @@
 		752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC228C8D90000057685 /* DirectorySelectorView.swift */; };
 		752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC428C8E2C500057685 /* ToolBarView.swift */; };
 		752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersViews.swift */; };
+		7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFB28C7CC7F00A174BB /* ImageReducer.m */; };
 		757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757422B42C865A6C00CB8A0C /* SymLog.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
@@ -414,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */,
 				752C5AC728C8F8ED00057685 /* AppFoldersViews.swift in Sources */,
 				752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */,
 				750EECF428C7CC4B00A174BB /* Help.swift in Sources */,
@@ -427,14 +422,7 @@
 				750F6D0428C9008C005209BC /* AppFolderView.swift in Sources */,
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
 				750EED0728C7D83200A174BB /* Extensions.swift in Sources */,
-				75009A4A2C765F140098B6C5 /* MyCollectionViewItem.m in Sources */,
-				75009A392C765B080098B6C5 /* CompositeView.m in Sources */,
 				757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */,
-				75009A452C765D730098B6C5 /* MyCollectionView.m in Sources */,
-				750EECFF28C7CD1200A174BB /* NSBezierPathAdditions.m in Sources */,
-				75009A3F2C765D270098B6C5 /* MyScrollView.m in Sources */,
-				75009A3C2C765B670098B6C5 /* IconViewBox.m in Sources */,
-				750EECFC28C7CC7F00A174BB /* ImageReducer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
