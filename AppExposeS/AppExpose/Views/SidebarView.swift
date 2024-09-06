@@ -11,23 +11,18 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @EnvironmentObject var appData: AppData
-
     var body: some View {
         let _ = symlog.debug("SidebarView")
+        // ask_software_developer How create a menu bar item
         NavigationView {
             List {
                 Text("LOCATIONS")
                     .font(.system(size: 10))
                     .fontWeight(.bold)
-                Divider()
-                NavigationLink(destination: SettingsView()) {
-                    Label("Settings", systemImage: "gear")
-                }
-
-                Divider()
-                NavigationLink(destination: HelpView()) {
-                    Label("Help", systemImage: "gear.badge.questionmark")
+                List {
+                    ForEach(AppData.shared.folders, id: \.self) { folder in
+                        Text(folder)
+                    }
                 }
             }
             .listStyle(SidebarListStyle())
