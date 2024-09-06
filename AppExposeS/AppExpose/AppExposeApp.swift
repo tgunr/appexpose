@@ -34,8 +34,6 @@ class AppData: NSObject, ObservableObject {
     @State var remove = false
     @State var selectAll = false
     var progress: Progress?
-    override init() {
-    }
 }
 
 @main
@@ -44,13 +42,15 @@ struct MyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ToolbarView()
-            SidebarView()
-            AppFoldersViews()
+            ContentView()
+                .defaultAppStorage(UserDefaults(suiteName: "net.polymicro.appexpose")!)
+        }
+        MenuBarExtra("My Menu", systemImage: "gear") {
+            SettingsView()
         }
 //        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environmentObject(AppData.shared)
-
+        .menuBarExtraStyle(.automatic)
 //        Settings {
 //            PreferencesView(model: model)
 //        }

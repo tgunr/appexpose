@@ -7,22 +7,49 @@
 
 import SwiftUI
 
-// struct AppFolder: Identifiable, Hashable {
-//    let id = UUID()
-//    let path: String
-// }
+import Foundation
+
+struct StringArray: Encodable, Decodable{
+    let values: [String]
+}
+
+class SettingsManager {
+    let defaults = UserDefaults.standard
+    static let shared = SettingsManager()
+
+    func setStringArray(_ array: [String], forKey key: String) {
+        let stringArray = StringArray(values: array)
+        if let data = try? JSONEncoder().encode(stringArray) {
+            if let string = String(data: data, encoding: .utf8) {
+                defaults.set(string, forKey: key)
+            }
+        }
+    }
+    
+    func getStringArray(forKey key: String) -> [String]? {
+        guard let string = defaults.string(forKey: key) else { return nil }
+        do {
+            guard let data = string.data(using: .utf8) else { return nil }
+            let stringArray = try JSONDecoder().decode(StringArray.self, from: data)
+            return stringArray.values
+        } catch {
+            print("Error parsing JSON: \(error)")
+            return nil
+        }
+    }
+}
 
 struct SettingsView: View {
-    @AppStorage("itemsString") var appFolders = [""]
     @State private var fileURL: URL?
 
     var body: some View {
-//        var folders = appFolders.map({ AppFolder(path: $0) })
-//        NavigationStack {
         let _ = symlog.info("SettingsView")
-        ContentView()
         Form {
-            Section(header: Text("Application Folder")) {
+            Section(header: Text("Application Folders")) {
+                ForEach(AppData.shared.folders, id: \.self) { folder in
+                    Text(folder)
+                }
+                Spacer()
                 HStack(alignment: .firstTextBaseline) {
                     Text("Location:")
                     DirectorySelectorView(url: self.$fileURL)
@@ -35,14 +62,14 @@ struct SettingsView: View {
         .onSubmit {
             self.update(url: fileURL)
         }
-//        }
     }
 
     func update(url: URL?) {
         if let aURL = url {
 //            let thePrefix = "file://"
 //            let path = aURL.absoluteString.replacingOccurrences(of: thePrefix, with: "")
-            appFolders.append(aURL.absoluteString)
+            AppData.shared.folders.append(aURL.path)
+            SettingsManager.shared.setStringArray(AppData.shared.folders, forKey: "folders")
         }
     }
 }
