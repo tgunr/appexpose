@@ -444,20 +444,36 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 @end
 
 static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage) {
-    // See if the NSImage has an NSBitmapImageRep.  If so, return the first NSBitmapImageRep encountered.  An NSImage that is initialized by loading the contents of a bitmap image file (such as JPEG, TIFF, or PNG) and, not subsequently rescaled, will usually have a single NSBitmapImageRep.
-    NSEnumerator *enumerator = [[nsImage representations] objectEnumerator];
-    NSImageRep *representation;
-    while (representation = [enumerator nextObject]) {
+    // Check for existing NSBitmapImageRep
+    for (NSImageRep *representation in [nsImage representations]) {
         if ([representation isKindOfClass:[NSBitmapImageRep class]]) {
             return (NSBitmapImageRep *)representation;
         }
     }
 
-    // If we didn't find an NSBitmapImageRep (perhaps because we received a PDF image), we can create one using one of two approaches: (1) lock focus on the NSImage, and create the bitmap using -[NSBitmapImageRep initWithFocusedViewRect:], or (2) (Tiger and later) create an NSBitmapImageRep, and an NSGraphicsContext that draws into it using +[NSGraphicsContext graphicsContextWithBitmapImageRep:], and composite the NSImage into the bitmap graphics context.  We'll use approach (1) here, since it is simple and supported on all versions of Mac OS X.
+    // If no NSBitmapImageRep found, create one
     NSSize size = [nsImage size];
-    [nsImage lockFocus];
-    NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0, 0, size.width, size.height)];
-    [nsImage unlockFocus];
+    NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc]
+        initWithBitmapDataPlanes:NULL
+        pixelsWide:size.width
+        pixelsHigh:size.height
+        bitsPerSample:8
+        samplesPerPixel:4
+        hasAlpha:YES
+        isPlanar:NO
+        colorSpaceName:NSCalibratedRGBColorSpace
+        bytesPerRow:0
+        bitsPerPixel:0];
+    
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmapImageRep]];
+    
+    [nsImage drawInRect:NSMakeRect(0, 0, size.width, size.height)
+               fromRect:NSZeroRect
+              operation:NSCompositingOperationCopy
+               fraction:1.0];
+    
+    [NSGraphicsContext restoreGraphicsState];
 
     return bitmapImageRep;
 }

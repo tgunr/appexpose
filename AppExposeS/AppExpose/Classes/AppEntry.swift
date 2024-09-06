@@ -43,6 +43,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     var name: String?
     var appURL: URL?
     @Published var children = [AppEntry]()
+    @Published var directoryEntry: AppEntry?
     var iconDictionary: [String: NSImage]?
     var icons: [NSImage]?
     var appImage: NSImage?
@@ -409,9 +410,8 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         } catch {
             symlog.error("checkResourceIsReachable: FAIL")
         }
-        return result2
         if !result1 || !result2 {
-            symlog.error("no access: \(String(describing: appURL?.absoluteString))")
+            symlog.warning("no access: \(String(describing: appURL?.absoluteString))")
         }
         return result1 && result2
     }
@@ -507,15 +507,22 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     }
 
     func add(toRootEntry rootEntry: AppEntry) -> Bool {
-        var directoryEntry = rootEntry
-        let components = appURL?.pathComponents
-        for component in components ?? [] {
-            if "/" != component {
-                directoryEntry = directoryEntry.childDirectoryEntry(withName: component, createIfNotPresent: true)!
-            }
+        if let directoryEntry = rootEntry.directoryEntry {
+            return directoryEntry.addChildEntry(self)
         }
-        return Bool(directoryEntry != nil ? directoryEntry.addChildEntry(self) : false)
+        return false
     }
+    
+//    func add(toRootEntry rootEntry: AppEntry) -> Bool {
+//        var directoryEntry = rootEntry
+//        let components = appURL?.pathComponents
+//        for component in components ?? [] {
+//            if "/" != component {
+//                directoryEntry = directoryEntry.childDirectoryEntry(withName: component, createIfNotPresent: true)!
+//            }
+//        }
+//        return Bool(directoryEntry != nil ? directoryEntry.addChildEntry(self) : false)
+//    }
 
     func setAttribute(_ xAttribute: String!, value xValue: String!) -> Bool {
         xattr?.setAttribute(xAttribute, value: xValue)

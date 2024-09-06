@@ -20,7 +20,7 @@ struct AppFoldersViews: View {
     var body: some View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
-            if appEntries == nil {
+            if appEntries.isEmpty {
                 ProgressView()
             } else {
                 if appEntries.isEmpty {

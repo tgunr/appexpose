@@ -26,9 +26,9 @@ struct SettingsView: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text("Location:")
                     DirectorySelectorView(url: self.$fileURL)
-                        .onChange(of: fileURL, perform: { value in
-                            update(url: value)
-                        })
+                        .onChange(of: fileURL) { oldValue, newValue in
+                            update(url: newValue)
+                        }
                 }
             }
         }
