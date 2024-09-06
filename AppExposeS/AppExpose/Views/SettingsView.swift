@@ -33,7 +33,7 @@ class SettingsManager {
             let stringArray = try JSONDecoder().decode(StringArray.self, from: data)
             return stringArray.values
         } catch {
-            print("Error parsing JSON: \(error)")
+            symlog.error("Error parsing JSON: \(error)")
             return nil
         }
     }
