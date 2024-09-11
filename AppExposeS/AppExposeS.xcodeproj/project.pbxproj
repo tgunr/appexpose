@@ -30,6 +30,7 @@
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
+		75C811C62C8BA9A900478C98 /* SlogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75C811C52C8BA9A900478C98 /* SlogMacro */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 				75009A522C76609C0098B6C5 /* XATTR.framework in Frameworks */,
 				75009A502C7660210098B6C5 /* PMUtility.framework in Frameworks */,
 				75C78EEE28BE4DE700801110 /* Helm in Frameworks */,
+				75C811C62C8BA9A900478C98 /* SlogMacro in Frameworks */,
 				75C78EF028BE4DE700801110 /* Playground in Frameworks */,
 				752C5ABC28C8D20500057685 /* Directory in Frameworks */,
 				75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */,
@@ -296,6 +298,7 @@
 				75C78EED28BE4DE700801110 /* Helm */,
 				75C78EEF28BE4DE700801110 /* Playground */,
 				752C5ABB28C8D20500057685 /* Directory */,
+				75C811C52C8BA9A900478C98 /* SlogMacro */,
 			);
 			productName = AppExpose;
 			productReference = 75234E8128B2617F00512430 /* AppExposeS.app */;
@@ -696,6 +699,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */;
 			productName = Playground;
+		};
+		75C811C52C8BA9A900478C98 /* SlogMacro */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SlogMacro;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
