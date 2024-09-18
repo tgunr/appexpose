@@ -1,7 +1,7 @@
 import XCTest
-@testable import SlogMacro
+@testable import SLogMacro
 
-final class SlogMacroTests: XCTestCase {
+final class SLogMacroTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

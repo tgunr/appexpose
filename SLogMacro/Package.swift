@@ -3,17 +3,17 @@ import PackageDescription
 import CompilerPluginSupport
 
 let package = Package(
-    name: "SlogMacro",
+    name: "SLogMacro",
     platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "SlogMacro",
-            targets: ["SlogMacro"]
+            name: "SLogMacro",
+            targets: ["SLogMacro"]
         ),
         .executable(
-            name: "SlogMacroClient",
-            targets: ["SlogMacroClient"]
+            name: "SLogMacroClient",
+            targets: ["SLogMacroClient"]
         ),
     ],
     dependencies: [
@@ -23,24 +23,18 @@ let package = Package(
     targets: [
         // Macro implementation that performs the source transformation of a macro.
         .macro(
-            name: "SlogMacros",
+            name: "SLogMacroPlugin",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
-
-        // Library that exposes a macro as part of its API, which is used in client programs.
-//        .target(name: "SlogMacro", dependencies: ["SlogMacroMacros"]),
-
-        // A client of the library, which is able to use the macro in its own code.
-        .executableTarget(name: "SlogMacroClient", dependencies: ["SlogMacro"]),
-
-        // A test target used to develop the macro implementation.
+        .target(name: "SLogMacro", dependencies: ["SLogMacroPlugin"]),
+        .executableTarget(name: "SLogMacroClient", dependencies: ["SLogMacro"]),
         .testTarget(
-            name: "SlogMacroTests",
+            name: "SLogMacroTests",
             dependencies: [
-                "SlogMacroMacros",
+                "SLogMacroPlugin",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),

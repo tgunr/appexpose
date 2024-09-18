@@ -8,7 +8,7 @@ public macro alogwarn(_ message: String) = #externalMacro(module: "SLogMacroPlug
 public macro alogchange(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "ALogChange")
 
 @freestanding(expression)
-public macro alogmotice(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "ALogNotice")
+public macro alognotice(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "ALogNotice")
 
 @freestanding(expression)
 public macro aloginfo(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "ALogInfo")
@@ -26,13 +26,10 @@ public macro alogappear(_ message: String) = #externalMacro(module: "SLogMacroPl
 public macro alogentry(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "ALogEntry")
 
 @freestanding(expression)
-public macro alogverbose(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "ALogVerbose")
-
-@freestanding(expression)
 public macro slogtrace(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "SLogTrace")
 
 @freestanding(expression)
-public macro slog(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "SLogLog")
+public macro sloglog(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "SLogLog")
 
 @freestanding(expression)
 public macro slogdebug(_ message: String) = #externalMacro(module: "SLogMacroPlugin", type: "SLogDebug")

@@ -7,7 +7,7 @@
 
 import Foundation
 import AppKit
-import SlogMacro
+import SLogMacro
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     // create a shared instance of the AppDelegate
@@ -32,9 +32,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             AppData.shared.folders = ["/Applications"]
             SettingsManager.shared.setStringArray(AppData.shared.folders, forKey: "folders")
         }
-        symlog.entry("AppData.shared.folders: \(AppData.shared.folders.count)")
-        #slogerr("AppData.shared.folders: \(AppData.shared.folders.count)")
-        #slogwarn("AppData.shared.folders: \(AppData.shared.folders.count)")
     }
 
     func applicationDidResignActive(_ notification: Notification) {
