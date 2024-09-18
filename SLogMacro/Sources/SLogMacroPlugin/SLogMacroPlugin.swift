@@ -3,11 +3,27 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-private func createLogExpression(node: some FreestandingMacroExpansionSyntax, level: String) throws -> ExprSyntax {
+private func symlogExpression(node: some FreestandingMacroExpansionSyntax, level: String) throws -> ExprSyntax {
     guard let argument = node.argumentList.first?.expression else {
         throw MacroExpansionError.missingArgument
     }
     let logMessage = "symlog.\(level)(\"\\(#function): \\(#line): \\(String(describing: \(argument)))\")"
+    return ExprSyntax(stringLiteral: logMessage)
+}
+
+private func uilogExpression(node: some FreestandingMacroExpansionSyntax, level: String) throws -> ExprSyntax {
+    guard let argument = node.argumentList.first?.expression else {
+        throw MacroExpansionError.missingArgument
+    }
+    let logMessage = "uilog.\(level)(\"\\(#function): \\(#line): \\(String(describing: \(argument)))\")"
+    return ExprSyntax(stringLiteral: logMessage)
+}
+
+private func storelogExpression(node: some FreestandingMacroExpansionSyntax, level: String) throws -> ExprSyntax {
+    guard let argument = node.argumentList.first?.expression else {
+        throw MacroExpansionError.missingArgument
+    }
+    let logMessage = "storelog.\(level)(\"\\(#function): \\(#line): \\(String(describing: \(argument)))\")"
     return ExprSyntax(stringLiteral: logMessage)
 }
 
@@ -16,7 +32,7 @@ public struct ALogError: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "error")
+        try symlogExpression(node: node, level: "error")
     }
 }
 
@@ -25,7 +41,7 @@ public struct ALogWarning: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "warning")
+        try symlogExpression(node: node, level: "warning")
     }
 }
 
@@ -34,7 +50,7 @@ public struct ALogChange: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "change")
+        try symlogExpression(node: node, level: "change")
     }
 }
 
@@ -43,7 +59,7 @@ public struct ALogNotice: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "notice")
+        try symlogExpression(node: node, level: "notice")
     }
 }
 
@@ -52,7 +68,7 @@ public struct ALogInfo: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "info")
+        try symlogExpression(node: node, level: "info")
     }
 }
 
@@ -61,7 +77,7 @@ public struct ALogValue: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "value")
+        try symlogExpression(node: node, level: "value")
     }
 }
 
@@ -70,7 +86,7 @@ public struct ALogLog: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "log")
+        try symlogExpression(node: node, level: "log")
     }
 }
 
@@ -79,7 +95,7 @@ public struct ALogAppear: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "appear")
+        try symlogExpression(node: node, level: "appear")
     }
 }
 
@@ -88,7 +104,7 @@ public struct ALogEntry: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "entry")
+        try symlogExpression(node: node, level: "entry")
     }
 }
 
@@ -99,7 +115,7 @@ public struct SLogFault: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "fault")
+        try symlogExpression(node: node, level: "fault")
     }
 }
 
@@ -108,7 +124,7 @@ public struct SLogCritical: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "critical")
+        try symlogExpression(node: node, level: "critical")
     }
 }
 
@@ -117,7 +133,7 @@ public struct SLogError: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "error")
+        try symlogExpression(node: node, level: "error")
     }
 }
 
@@ -126,7 +142,7 @@ public struct SLogWarning: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "warning")
+        try symlogExpression(node: node, level: "warning")
     }
 }
 
@@ -135,7 +151,7 @@ public struct SLogNotice: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "notice")
+        try symlogExpression(node: node, level: "notice")
     }
 }
 
@@ -144,7 +160,34 @@ public struct SLogInfo: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        try createLogExpression(node: node, level: "info")
+        try symlogExpression(node: node, level: "info")
+    }
+}
+
+public struct SLogDebug: ExpressionMacro {
+    public static func expansion(
+        of node: some FreestandingMacroExpansionSyntax,
+        in context: some MacroExpansionContext
+    ) throws -> ExprSyntax {
+        try symlogExpression(node: node, level: "debug")
+    }
+}
+
+public struct SLogLog: ExpressionMacro {
+    public static func expansion(
+        of node: some FreestandingMacroExpansionSyntax,
+        in context: some MacroExpansionContext
+    ) throws -> ExprSyntax {
+        try symlogExpression(node: node, level: "log")
+    }
+}
+
+public struct SLogTrace: ExpressionMacro {
+    public static func expansion(
+        of node: some FreestandingMacroExpansionSyntax,
+        in context: some MacroExpansionContext
+    ) throws -> ExprSyntax {
+        try symlogExpression(node: node, level: "trace")
     }
 }
 
@@ -169,7 +212,9 @@ struct SLogPlugin: CompilerPlugin {
         SLogError.self,
         SLogWarning.self,
         SLogNotice.self,
-        SLogInfo.self
-        
+        SLogInfo.self,
+        SLogDebug.self,
+        SLogLog.self,
+        SLogTrace.self
     ]
 }
