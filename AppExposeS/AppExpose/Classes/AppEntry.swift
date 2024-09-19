@@ -305,8 +305,8 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
             reducer?.setMaxPixelsWide(512)
             reducer?.setMaxPixelsHigh(512)
             reducer?.setScalesImage(true)
-            reducer?.setSharpensImage(false)
-            reducer?.setDrawBorder(false)
+            reducer?.setSharpensImage(true)
+            reducer?.setDrawBorder(true)
             reducer?.setAddsShadow(true)
             var reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {

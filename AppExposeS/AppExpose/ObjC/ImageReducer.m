@@ -321,8 +321,9 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
         NSBezierPath *borderPath = nil;
         [NSGraphicsContext saveGraphicsState];
         if (drawBorder) {
-            borderPath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(*(NSRect *)&imageDestinationRect, 0.5 * borderThickness, 0.5 * borderThickness) cornerRadius:borderCornerRadius];
-
+            borderPath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(*(NSRect *)&imageDestinationRect, 0.5 * borderThickness, 0.5 * borderThickness)
+                                                        xRadius:borderCornerRadius
+                                                        yRadius:borderCornerRadius];
             if (addsShadow) {
                 [NSGraphicsContext saveGraphicsState];
                 [shadow set];
