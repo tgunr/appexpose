@@ -25,6 +25,7 @@
 		752C5AC528C8E2C500057685 /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC428C8E2C500057685 /* ToolBarView.swift */; };
 		752C5AC728C8F8ED00057685 /* AppFoldersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersView.swift */; };
 		7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFB28C7CC7F00A174BB /* ImageReducer.m */; };
+		753F32A22C9C780200C61ED2 /* AppFolderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */; };
 		757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757422B42C865A6C00CB8A0C /* SymLog.swift */; };
 		75B30B9A2C925C9D007F53F1 /* SLogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75B30B992C925C9D007F53F1 /* SLogMacro */; };
 		75B30B9D2C925E03007F53F1 /* SLogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75B30B9C2C925E03007F53F1 /* SLogMacro */; };
@@ -123,6 +124,7 @@
 		752C5AC228C8D90000057685 /* DirectorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DirectorySelectorView.swift; path = ../../../FileSelectorView/Sources/FileSelectorView/DirectorySelectorView.swift; sourceTree = "<group>"; };
 		752C5AC428C8E2C500057685 /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		752C5AC628C8F8ED00057685 /* AppFoldersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFoldersView.swift; sourceTree = "<group>"; };
+		753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFolderDetailView.swift; sourceTree = "<group>"; };
 		757422B42C865A6C00CB8A0C /* SymLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymLog.swift; sourceTree = "<group>"; };
 		758FD2362C77673400878379 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = ../pmutility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		758FD2462C7769AC00878379 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = ../xattr/xattr.xcodeproj; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
 				752C5AC628C8F8ED00057685 /* AppFoldersView.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
+				753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				75234E8528B2617F00512430 /* AppExposeApp.swift in Sources */,
 				750EED0728C7D83200A174BB /* Extensions.swift in Sources */,
 				757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */,
+				753F32A22C9C780200C61ED2 /* AppFolderDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
