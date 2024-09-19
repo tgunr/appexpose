@@ -26,6 +26,7 @@
 		752C5AC728C8F8ED00057685 /* AppFoldersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752C5AC628C8F8ED00057685 /* AppFoldersView.swift */; };
 		7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 750EECFB28C7CC7F00A174BB /* ImageReducer.m */; };
 		753F32A22C9C780200C61ED2 /* AppFolderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */; };
+		753F32AA2C9C7E4000C61ED2 /* RemoteImage in Frameworks */ = {isa = PBXBuildFile; productRef = 753F32A92C9C7E4000C61ED2 /* RemoteImage */; };
 		757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757422B42C865A6C00CB8A0C /* SymLog.swift */; };
 		75B30B9A2C925C9D007F53F1 /* SLogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75B30B992C925C9D007F53F1 /* SLogMacro */; };
 		75B30B9D2C925E03007F53F1 /* SLogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75B30B9C2C925E03007F53F1 /* SLogMacro */; };
@@ -144,6 +145,7 @@
 				75B30B9A2C925C9D007F53F1 /* SLogMacro in Frameworks */,
 				752C5ABC28C8D20500057685 /* Directory in Frameworks */,
 				75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */,
+				753F32AA2C9C7E4000C61ED2 /* RemoteImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +307,7 @@
 				752C5ABB28C8D20500057685 /* Directory */,
 				75B30B992C925C9D007F53F1 /* SLogMacro */,
 				75B30B9C2C925E03007F53F1 /* SLogMacro */,
+				753F32A92C9C7E4000C61ED2 /* RemoteImage */,
 			);
 			productName = AppExpose;
 			productReference = 75234E8128B2617F00512430 /* AppExposeS.app */;
@@ -343,6 +346,7 @@
 				75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */,
 				752C5ABA28C8D20500057685 /* XCRemoteSwiftPackageReference "Directory" */,
 				75B30B9B2C925E03007F53F1 /* XCLocalSwiftPackageReference "../SLogMacro" */,
+				753F32A82C9C7E4000C61ED2 /* XCRemoteSwiftPackageReference "RemoteImage" */,
 			);
 			productRefGroup = 75234E8228B2617F00512430 /* Products */;
 			projectDirPath = "";
@@ -676,6 +680,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		753F32A82C9C7E4000C61ED2 /* XCRemoteSwiftPackageReference "RemoteImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/crelies/RemoteImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/amosavian/ExtendedAttributes.git";
@@ -699,6 +711,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 752C5ABA28C8D20500057685 /* XCRemoteSwiftPackageReference "Directory" */;
 			productName = Directory;
+		};
+		753F32A92C9C7E4000C61ED2 /* RemoteImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 753F32A82C9C7E4000C61ED2 /* XCRemoteSwiftPackageReference "RemoteImage" */;
+			productName = RemoteImage;
 		};
 		75B30B992C925C9D007F53F1 /* SLogMacro */ = {
 			isa = XCSwiftPackageProductDependency;

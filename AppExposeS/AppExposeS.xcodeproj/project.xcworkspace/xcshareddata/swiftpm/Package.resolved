@@ -1,5 +1,5 @@
 {
-  "originHash" : "005d0ad4648a165cf0085025f4600951a00f49967fbffd9658d944cb4f8b5cc3",
+  "originHash" : "2eaacda090e0662206b43e8c9cfeb2f14bcfb5a27ec818cd9dd4091c5f4969ae",
   "pins" : [
     {
       "identity" : "cache",
@@ -44,6 +44,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "9e83233160174813b620e734d6e43018e123ed25"
+      }
+    },
+    {
+      "identity" : "remoteimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/crelies/RemoteImage.git",
+      "state" : {
+        "revision" : "7de20453a8b9733eb8e28ae762801c60a5a5f59d",
+        "version" : "4.0.0"
       }
     },
     {

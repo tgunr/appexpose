@@ -6,6 +6,23 @@
 //
 
 import SwiftUI
+import RemoteImage
+
+struct RemoteImageView: View {
+    let url: URL
+    
+    var body: some View {
+        RemoteImage(type: .url(url)) { error in
+            Text(error.localizedDescription)
+        } imageView: { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        } loadingView: {
+            Text("Loading ...")
+        }
+    }
+}
 
 struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
@@ -23,9 +40,18 @@ struct AppFoldersView: View {
             if appEntries.isEmpty {
                 Text("No Applications Found")
             } else {
-                Button("Plain", action: ({
+                let url = URL(string: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678084-folder-128.png")!
+
+                Button {
                     showPlain.toggle()
-                }))
+                } label: {
+                    VStack {
+                        RemoteImageView(url: url)
+                            .frame(width: 32, height: 32)
+                        Text("Show Plain")
+                    }
+                }
+                
                 Text("Applications")
                     .font(.title)
                     .padding(.bottom, 5)

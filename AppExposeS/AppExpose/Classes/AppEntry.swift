@@ -7,10 +7,10 @@
 
 import AppKit
 import Cocoa
+import CoreServices
 import Foundation
 import SLogMacro
 import UniformTypeIdentifiers
-import CoreServices
 
 let KEY_IMAGE = "icon"
 let KEY_NAME = "name"
@@ -116,19 +116,19 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
                 }
             }
         }
-        
+
         if let iconImage = appImage {
             iconDictionary = [
                 KEY_IMAGE: iconImage]
         }
     }
-    
+
     func getCustomFolderIcon(folderURL: URL) -> NSImage? {
         let workspace = NSWorkspace.shared
-        
+
         // Get the icon for the folder
         let icon = workspace.icon(forFile: folderURL.path)
-        
+
         // Check if the icon is custom (not the default folder icon)
         if icon.isValid {
             if let folderUTType = UTType(filenameExtension: "folder") {
@@ -142,21 +142,20 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         // If no custom icon found, check for the "Icon\r" file
         let iconFileName = "Icon\r"
         let iconFileURL = folderURL.appendingPathComponent(iconFileName)
-        
+
         if FileManager.default.fileExists(atPath: iconFileURL.path) {
             // If "Icon\r" file exists, get its icon
             return workspace.icon(forFile: iconFileURL.path)
         }
-        
+
         return nil
     }
-    
+
     // Helper function to convert a string to fourCharCode
     func fourCharCode(from string: String) -> FourCharCode {
         return string.utf8.reduce(0) { ($0 << 8) + FourCharCode($1) }
     }
 
-    
     func scanApplications(atPath: String?, currentDirectory: String?) -> [AppEntry] {
         var entries: [AppEntry] = []
 
@@ -170,40 +169,9 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 
             for item in contents {
                 if item.path.hasSuffix("Applications") || item.path.hasSuffix(".Trash") { continue }
-
                 let fullPath = item.path
                 let directoryEntry = AppEntry(withURL: item)
-                // Check if the item is a folder or application
-
-//                if directoryEntry.isApp {
-//                    directoryEntry.isLeaf = false
-                    entries.append(directoryEntry)
-//                    symlog.value("Added \(item) to entries")
-//                    continue
-//                }
-
-//                if directoryEntry.isFolder && directoryEntry.isNotSpecial() {
-//                    if directoryEntry.hasCustomIcon {
-//                        let iconURL = directoryEntry.appURL?
-//                            .appendingPathComponent(CUSTOM_ICON_NAME)
-//                        directoryEntry.appImage = NSImage(contentsOf: iconURL!)
-//                        entries.append(directoryEntry)
-//                        symlog.value("Added \(item) as custom icon to entries")
-//                        continue
-//                    } else {
-//                        let fUrl = directoryEntry.appURL!
-//                            .appendingPathComponent("Contents")
-//                        if isValidMacOSApplication(contentsURL: fUrl) {
-//                            entries.append(directoryEntry)
-//                            symlog.value("Added \(item) as application to entries")
-//                            continue
-//                        } else {
-//                            let subDirEntries = scanApplications(atPath: nil, currentDirectory: fullPath)
-//                            entries.append(contentsOf: subDirEntries)
-//                            symlog.value("Added \(subDirEntries.count) entries")
-//                        }
-//                    }
-//                }
+                entries.append(directoryEntry)
             }
         } catch {
             symlog.error("Error scanning directory: \(error)")
@@ -338,7 +306,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
             reducer?.setMaxPixelsHigh(512)
             reducer?.setScalesImage(true)
             reducer?.setSharpensImage(false)
-            reducer?.setDrawBorder(true)
+            reducer?.setDrawBorder(false)
             reducer?.setAddsShadow(true)
             var reduced = reducer?.outputBitmapImageRep()
             if let reduced = reduced {
@@ -456,7 +424,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
             else {
                 continue
             }
-
             if isDirectory {
                 let entry = AppEntry(url: fileURL)
                 if !newEntries.contains(where: { $0.appURL == entry.appURL }) {
@@ -474,10 +441,10 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         }
 
         // Update the entries property with the new entries
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             self.children = newEntries
-            self.objectWillChange.send()
-        }
+//            self.objectWillChange.send()
+//        }
     }
 
     func folderHasCustomIcon(path: String) -> Bool {
