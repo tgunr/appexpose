@@ -25,6 +25,7 @@ class AppFolder: ObservableObject {
 }
 
 class AppEntry: NSObject, Identifiable, ObservableObject {
+    var id: UUID = UUID()
     var childIcons: [AnyHashable]?
     var isLeaf = false
     var isApp = false
