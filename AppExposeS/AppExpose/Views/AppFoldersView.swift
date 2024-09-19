@@ -11,7 +11,7 @@ struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
     @State var appEntries: [AppEntry] = []
     @State var selectedItem: String? = nil
-
+    @State private var showPlain: Bool = false
 //    init() {
 //        let appsURL = URL(fileURLWithPath: "/Applications")
 //        self.appEntry = AppEntry(url: appsURL)
@@ -21,24 +21,27 @@ struct AppFoldersView: View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
             if appEntries.isEmpty {
-                ProgressView()
+                Text("No Applications Found")
             } else {
-                if appEntries.isEmpty {
-                    Text("No Applications Found")
-                } else {
-                    Text("Applications")
-                        .font(.title)
-                        .padding(.bottom, 5)
-                    ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                            ForEach(appEntries, id: \.self) { entry in
-                                NavigationLink(destination: AppFolderView(entry: entry)) {
+                Button("Plain", action: ({
+                    showPlain.toggle()
+                }))
+                Text("Applications")
+                    .font(.title)
+                    .padding(.bottom, 5)
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                        ForEach(appEntries, id: \.self) { entry in
+                            if showPlain {
+                                if entry.isFolder && !entry.hasCustomIcon && !entry.isApp {
                                     AppFolderView(entry: entry)
                                 }
+                            } else {
+                                AppFolderView(entry: entry)
                             }
                         }
-                        .padding()
                     }
+                    .padding()
                 }
             }
         }
