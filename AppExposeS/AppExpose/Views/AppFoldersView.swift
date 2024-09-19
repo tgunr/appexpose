@@ -32,28 +32,8 @@ struct AppFoldersView: View {
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                             ForEach(appEntries, id: \.self) { entry in
-                                let fname = entry.name
-                                NavigationLink(destination: AppFolderView(folder: fname!)) {
-                                    VStack {
-                                        if let appImage = entry.appImage {
-                                            Image(nsImage: appImage)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 50, height: 50)
-                                        } else {
-                                            Image(systemName: "folder")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 50, height: 50)
-                                        }
-                                        Text(fname!)
-                                            .lineLimit(2)
-                                            .multilineTextAlignment(.center)
-                                    }
-                                    .frame(width: 150, height: 100)
-                                    .padding()
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(10)
+                                NavigationLink(destination: AppFolderView(entry: entry)) {
+                                    AppFolderView(entry: entry)
                                 }
                             }
                         }

@@ -32,7 +32,33 @@ extension View {
 }
 
 struct AppFolderView: View {
-    var folder: String
+    @State var entry: AppEntry
+    var body: some View {
+        VStack {
+            if let appImage = entry.appImage {
+                Image(nsImage: appImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+            } else {
+                Image(systemName: "folder")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+            }
+            Text(entry.name ?? "none")
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+        }
+        .frame(width: 150, height: 100)
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(10)
+    }
+}
+
+struct AppFolderView1: View {
+    @State var entry: AppEntry
     @StateObject private var appFolder = AppFolder()
     @EnvironmentObject var appData: AppData
     
@@ -44,7 +70,7 @@ struct AppFolderView: View {
 //    }
 
     var body: some View {
-        Text("\(folder)")
+        Text("\(entry.name ?? "")")
         List {
             if let m = appFolder.model {
                 let entries = m.children
@@ -72,6 +98,7 @@ struct AppFolderView: View {
 
 struct AppFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        AppFolderView(folder: "one")
+        AppFolderView(entry: AppEntry(withURL: URL(string: "/Applications/SVG")!)
+)
     }
 }
