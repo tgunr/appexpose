@@ -38,7 +38,7 @@ struct AppFoldersView: View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
             if appEntries.isEmpty {
-                Text("No Applications Found")
+                ProgressView("Gathering Apps")
             } else {
                 let url = URL(string: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678084-folder-128.png")!
 

@@ -70,12 +70,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         collectEntries(url)
     }
 
-    init(url: URL?) {
-//        symlog.debug("\(#function) url: \(url?.path ?? "null")")
-        super.init()
-        collectEntries(url)
-    }
-
     fileprivate func collectEntries(_ url: URL?) {
         let fm = FileManager()
         appURL = url
@@ -109,10 +103,12 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
             }
             appImage = originalImage
             if isNotSpecial() {
-                children = []
-                scanURL()
-                if (children.count) != 0 {
-                    appImage = composeIcons()
+                DispatchQueue.main.async {
+                    self.children = []
+                    self.scanURL()
+                    if (self.children.count) != 0 {
+                        self.appImage = self.composeIcons()
+                    }
                 }
             }
         }
@@ -414,8 +410,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
         let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: [.skipsHiddenFiles, .skipsPackageDescendants])!
 
-        var newEntries: [AppEntry] = []
-
         while let fileURL = directoryEnumerator.nextObject() as? URL {
             // Retrieve the directory property
             guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
@@ -425,9 +419,9 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
                 continue
             }
             if isDirectory {
-                let entry = AppEntry(url: fileURL)
-                if !newEntries.contains(where: { $0.appURL == entry.appURL }) {
-                    newEntries.append(entry)
+                let entry = AppEntry(withURL: fileURL)
+                if !children.contains(where: { $0.appURL == entry.appURL }) {
+                    children.append(entry)
                     if isPackage {
                         if entry.isApp {
                             directoryEnumerator.skipDescendents()
@@ -439,12 +433,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
                 }
             }
         }
-
-        // Update the entries property with the new entries
-//        DispatchQueue.main.async {
-            self.children = newEntries
-//            self.objectWillChange.send()
-//        }
     }
 
     func folderHasCustomIcon(path: String) -> Bool {
@@ -461,68 +449,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     func compare(_ other: AppEntry?) -> ComparisonResult {
         return name?.localizedCaseInsensitiveCompare(other?.name ?? "") ?? ComparisonResult.orderedSame
     }
-
-    func addChildEntry(_ entry: AppEntry?) -> Bool {
-        if let entry = entry {
-            children.append(entry)
-            return true
-        } else {
-            return false
-        }
-    }
-
-    func childDirectoryEntry(withName str: String?, createIfNotPresent flag: Bool) -> AppEntry? {
-        var childEntry: AppEntry?
-        for entry in children {
-            if (entry.name == str) && !entry.isLeaf {
-                childEntry = entry
-                break
-            }
-        }
-        if childEntry == nil && flag && !isLeaf {
-            childEntry = AppEntry(
-                url: URL(
-                    string: URL(fileURLWithPath: pathWithName() ?? "").appendingPathComponent(str ?? "").path + "/"))
-            _ = addChildEntry(childEntry)
-        }
-        return childEntry
-    }
-
-    func add(toRootEntry rootEntry: AppEntry) -> Bool {
-        if let directoryEntry = rootEntry.directoryEntry {
-            return directoryEntry.addChildEntry(self)
-        }
-        return false
-    }
-
-//    func add(toRootEntry rootEntry: AppEntry) -> Bool {
-//        var directoryEntry = rootEntry
-//        let components = appURL?.pathComponents
-//        for component in components ?? [] {
-//            if "/" != component {
-//                directoryEntry = directoryEntry.childDirectoryEntry(withName: component, createIfNotPresent: true)!
-//            }
-//        }
-//        return Bool(directoryEntry != nil ? directoryEntry.addChildEntry(self) : false)
-//    }
-
-//    func setAttribute(_ xAttribute: String!, value xValue: String!) -> Bool {
-//        xattr?.setAttribute(xAttribute, value: xValue)
-//        return true
-//    }
-
-//    func hasAttribute(_ string: String?) -> Bool {
-//        let result = xattr?.hasAttribute(string) ?? false
-//        return result
-//    }
-
-//    func deleteAttribute(_ string: String?) -> Bool {
-//        var ok = false
-//        if hasAttribute(string) {
-//            ok = xattr?.deleteAttribute(string) ?? false
-//        }
-//        return ok
-//    }
 
     func revertIcon() {
         //    iconImage = originalImage;
