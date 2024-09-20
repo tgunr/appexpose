@@ -152,7 +152,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         return string.utf8.reduce(0) { ($0 << 8) + FourCharCode($1) }
     }
 
-    func scanApplications(atPath: String?, currentDirectory: String?) -> [AppEntry] {
+    class func scanApplications(atPath: String?, currentDirectory: String?) -> [AppEntry] {
         var entries: [AppEntry] = []
 
         guard let currentDir = atPath ?? currentDirectory else { return entries }
@@ -165,7 +165,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 
             for item in contents {
                 if item.path.hasSuffix("Applications") || item.path.hasSuffix(".Trash") { continue }
-                let fullPath = item.path
                 let directoryEntry = AppEntry(withURL: item)
                 entries.append(directoryEntry)
             }

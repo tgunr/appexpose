@@ -5,12 +5,12 @@
 //  Created by Dave Carlton on 9/7/22.
 //
 
-import SwiftUI
 import RemoteImage
+import SwiftUI
 
 struct RemoteImageView: View {
     let url: URL
-    
+
     var body: some View {
         RemoteImage(type: .url(url)) { error in
             Text(error.localizedDescription)
@@ -28,12 +28,9 @@ struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
     @State var appEntries: [AppEntry] = []
     @State var selectedItem: String? = nil
-    @State private var showPlain: Bool = false
-//    init() {
-//        let appsURL = URL(fileURLWithPath: "/Applications")
-//        self.appEntry = AppEntry(url: appsURL)
-//    }
+    @State var appFolders: [Folder]? = nil
 
+    @State private var showPlain: Bool = false
     var body: some View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
@@ -51,7 +48,8 @@ struct AppFoldersView: View {
                         Text("Show Plain")
                     }
                 }
-                
+                .padding(.bottom, 10)
+
                 Text("Applications")
                     .font(.title)
                     .padding(.bottom, 5)
@@ -73,15 +71,18 @@ struct AppFoldersView: View {
         }
         .task {
             symlog.info("Fetching Apps")
-//            let appsURL = URL(fileURLWithPath: "/Applications")
-            let appsPath = "/Applications"
             DispatchQueue.main.async {
-                let app = AppEntry(name: appsPath)
-                appEntries = app.scanApplications(atPath: appsPath, currentDirectory: nil)
-                symlog.value("AppEntry created with \(self.appEntries.count) child entries")
+                if let folders = appFolders {
+                    for folder in folders {
+                        let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
+                        appEntries.append(contentsOf: entries)
+                    }
+                    symlog.value("AppEntry created with \(self.appEntries.count) child entries")
+                }
             }
         }
-//        .onDeleteCommand(perform: ({
+        
+        //        .onDeleteCommand(perform: ({
 //            if
 //                let sel = self.selectedItem,
 //                let idx = self.appEntry.childEntries.firstIndex(of: sel) {
@@ -96,6 +97,7 @@ struct AppFoldersView: View {
 
 struct AppFoldersViews_Previews: PreviewProvider {
     static var previews: some View {
-        AppFoldersView()
+        let folders = [Folder(id: 1, name: "Apps", url: URL(fileURLWithPath: "/Users/davec/Applications"))]
+        AppFoldersView(appFolders: folders)
     }
 }

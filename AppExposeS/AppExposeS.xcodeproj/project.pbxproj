@@ -202,6 +202,7 @@
 				750EECEF28C7CC4B00A174BB /* SidebarView.swift */,
 				750EECF028C7CC4B00A174BB /* Help.swift */,
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
+				752C5AC228C8D90000057685 /* DirectorySelectorView.swift */,
 				752C5AC628C8F8ED00057685 /* AppFoldersView.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
 				753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */,
@@ -214,7 +215,6 @@
 			children = (
 				750EECF128C7CC4B00A174BB /* AppEntry.swift */,
 				757422B42C865A6C00CB8A0C /* SymLog.swift */,
-				752C5AC228C8D90000057685 /* DirectorySelectorView.swift */,
 				750EECF228C7CC4B00A174BB /* XATTR.swift */,
 				750EED0628C7D83200A174BB /* Extensions.swift */,
 				75C811AC2C8B5D9200478C98 /* ImageReducer.swift */,
