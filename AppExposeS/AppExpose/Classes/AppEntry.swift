@@ -26,6 +26,8 @@ class AppFolder: ObservableObject {
 
 class AppEntry: NSObject, Identifiable, ObservableObject {
     var id: UUID = UUID()
+    var name: String?
+    var appURL: URL
     var childIcons: [AnyHashable]?
     var isLeaf = false
     var isApp = false
@@ -41,8 +43,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         return result
     }
 
-    var name: String?
-    var appURL: URL?
     @Published var children = [AppEntry]()
     @Published var directoryEntry: AppEntry?
     var iconDictionary: [String: NSImage]?
@@ -59,46 +59,40 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
         return root
     }
 
-    init(name: String) {
-        self.name = name
-    }
-
     required init(withURL url: URL) {
+        self.appURL = url
         super.init()
-        appURL = url
 //        symlog.value("\(#function) url: \(url.path)")
         collectEntries(url)
     }
 
-    fileprivate func collectEntries(_ url: URL?) {
+    fileprivate func collectEntries(_ url: URL) {
         let fm = FileManager()
         appURL = url
         do {
-            attributes = try fm.attributesOfItem(atPath: url?.path ?? "")
+            attributes = try fm.attributesOfItem(atPath: url.path)
         } catch {
             symlog.error("attributes: FAIL")
         }
-        if let url = url {
             xattr = XATTR(path: url.path(), options: XATTROptions.nofollow)
-        }
         isLeaf = isALeaf(url)
         isFolder = isAFolder(url)
         hasCustomIcon = hasACustomIcon()
         isApp = isAnApp(url)
         canAccess = userCanAccess()
-        name = url?.lastPathComponent
+        name = url.lastPathComponent
         originalImage = NSWorkspace.shared.icon(for: UTType.folder)
         if isApp {
             isLeaf = false
-            originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
+            originalImage = NSWorkspace.shared.icon(forFile: appURL.path)
             originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
             appImage = originalImage
         } else if isFolder {
             if hasMyCustomIcon {
-                originalImage = getCustomFolderIcon(folderURL: appURL!)
+                originalImage = getCustomFolderIcon(folderURL: appURL)
                 originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
             } else {
-                originalImage = NSWorkspace.shared.icon(forFile: appURL?.path ?? "")
+                originalImage = NSWorkspace.shared.icon(forFile: appURL.path)
                 originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
             }
             appImage = originalImage
@@ -381,10 +375,10 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 
     func userCanAccess() -> Bool {
         let fm = FileManager.default
-        let result1 = fm.isWritableFile(atPath: (appURL?.path())!)
+        let result1 = fm.isWritableFile(atPath: (appURL.path()))
         var result2 = false
         do {
-            result2 = ((try appURL?.checkResourceIsReachable()) != nil)
+            result2 = try appURL.checkResourceIsReachable()
         } catch {
             symlog.error("checkResourceIsReachable: FAIL")
         }
@@ -396,8 +390,8 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
 
     func hasACustomIcon() -> Bool {
         let fm = FileManager.default
-        let customIconURL = appURL?.appendingPathComponent(CUSTOM_ICON_NAME)
-        let result = fm.fileExists(atPath: customIconURL!.path)
+        let customIconURL = appURL.appendingPathComponent(CUSTOM_ICON_NAME)
+        let result = fm.fileExists(atPath: customIconURL.path)
         return result
     }
 
@@ -407,7 +401,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     func scanURL() {
         let fm = FileManager.default
         let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
-        let directoryEnumerator = fm.enumerator(at: appURL!, includingPropertiesForKeys: Array(resourceKeys), options: [.skipsHiddenFiles, .skipsPackageDescendants])!
+        let directoryEnumerator = fm.enumerator(at: appURL, includingPropertiesForKeys: Array(resourceKeys), options: [.skipsHiddenFiles, .skipsPackageDescendants])!
 
         while let fileURL = directoryEnumerator.nextObject() as? URL {
             // Retrieve the directory property
@@ -441,7 +435,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     }
 
     func pathWithName() -> String? {
-        let path = URL(fileURLWithPath: appURL?.path ?? "").appendingPathComponent(name ?? "").path
+        let path = URL(fileURLWithPath: appURL.path).appendingPathComponent(name ?? "").path
         return isLeaf ? path : path + "/"
     }
 

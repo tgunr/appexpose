@@ -61,7 +61,7 @@ struct AppFolderView1: View {
     @State var entry: AppEntry
     @StateObject private var appFolder = AppFolder()
     @EnvironmentObject var appData: AppData
-    
+
 //    init(folder: String) {
 //        self.folder = folder
 //        //        if let u = URL(string: folder) {
@@ -75,9 +75,9 @@ struct AppFolderView1: View {
             if let m = appFolder.model {
                 let entries = m.children
                 ForEach(entries, id: \.self) { entry in
-                    if let entryURL = entry.appURL?.absoluteString {
-                        Text(entryURL)
-                    }
+                    let entryURL = entry.appURL.absoluteString
+                    Text(entryURL)
+
                     if let oImage = entry.originalImage {
                         let w = appData.iconSize
                         let wi = Int(w)
@@ -99,6 +99,6 @@ struct AppFolderView1: View {
 struct AppFolderView_Previews: PreviewProvider {
     static var previews: some View {
         AppFolderView(entry: AppEntry(withURL: URL(string: "/Applications/SVG")!)
-)
+        )
     }
 }
