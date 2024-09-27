@@ -30,9 +30,9 @@ class AppData: NSObject, ObservableObject {
     static let shared = AppData()
     var iconSize: Double = 32.0
     @Published var folders = Array<Folder>()
-    @State var bold = true
-    @State var remove = false
-    @State var selectAll = false
+    @Published var bold = true
+    @Published var remove = false
+    @Published var selectAll = false
 }
 
 @main
