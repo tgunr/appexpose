@@ -24,13 +24,33 @@ struct RemoteImageView: View {
     }
 }
 
+struct FolderHeaderView: View {
+    @State var folderURL: URL
+
+    var body: some View {
+        Text(folderURL.lastPathComponent)
+            .font(.headline)
+            .padding(.vertical, 5)
+    }
+}
+
+struct FolderHeaderViewWrapper: View {
+    let folderURL: URL?
+
+    var body: some View {
+        if let folder = folderURL {
+            FolderHeaderView(folderURL: folder)
+        }
+    }
+}
+
 struct AppFoldersView: View {
-    @EnvironmentObject var appData: AppData
+    @ObservedObject var appData = AppData.shared
     @State var appEntries: [AppEntry] = []
     @State var selectedItem: String? = nil
-    @State var appFolders: [Folder]? = nil
-
+    @State private var currentFolder: String = "/"
     @State private var showPlain: Bool = false
+    
     var body: some View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
@@ -38,7 +58,7 @@ struct AppFoldersView: View {
                 ProgressView("Gathering Apps")
             } else {
                 let url = URL(string: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678084-folder-128.png")!
-
+                
                 Button {
                     showPlain.toggle()
                 } label: {
@@ -49,55 +69,51 @@ struct AppFoldersView: View {
                     }
                 }
                 .padding(.bottom, 10)
-
-                Text("Applications")
-                    .font(.title)
-                    .padding(.bottom, 5)
+                
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                         ForEach(appEntries, id: \.self) { entry in
-                            if showPlain {
-                                if entry.isFolder && !entry.hasCustomIcon && !entry.isApp {
-                                    AppFolderView(entry: entry)
+                            Form {
+                                let folderName = entry.appURL.pathComponents[1]
+                                if folderName != currentFolder {
+                                    Text(folderName)
+                                        .onLoad() {
+                                            currentFolder = folderName
+                                        }
                                 }
-                            } else {
                                 AppFolderView(entry: entry)
                             }
+//                            .opacity((!entry.isApp && !entry.hasCustomIcon) || showPlain ? 1 : 0)
                         }
                     }
-                    .padding()
                 }
+                .padding()
             }
         }
-        .task {
-            symlog.info("Fetching Apps")
-            DispatchQueue.main.async {
-                if let folders = appFolders {
-                    for folder in folders {
-                        let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
-                        appEntries.append(contentsOf: entries)
-                    }
-                    symlog.value("AppEntry created with \(self.appEntries.count) child entries")
-                }
-            }
-        }
-        
-        //        .onDeleteCommand(perform: ({
-//            if
-//                let sel = self.selectedItem,
-//                let idx = self.appEntry.childEntries.firstIndex(of: sel) {
-//                print("delete: \(sel)")
-//                self.appFolders.remove(at: idx)
-//            }
-//        }))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
+        .task {
+            symlog.info("Fetching Apps")
+            await fetchApps()
+        }
+    }
+
+    private func fetchApps() async {
+        for folder in AppData.shared.folders {
+            let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
+            DispatchQueue.main.async {
+                appEntries.append(contentsOf: entries)
+            }
+        }
+        symlog.value("AppEntry created with \(appEntries.count) child entries")
     }
 }
 
+
+
 struct AppFoldersViews_Previews: PreviewProvider {
     static var previews: some View {
-        let folders = [Folder(id: 1, name: "Apps", url: URL(fileURLWithPath: "/Users/davec/Applications"))]
-        AppFoldersView(appFolders: folders)
+//        let folders = [Folder(id: 1, name: "Apps", url: URL(fileURLWithPath: "/Users/davec/Applications"))]
+        AppFoldersView()
     }
 }
