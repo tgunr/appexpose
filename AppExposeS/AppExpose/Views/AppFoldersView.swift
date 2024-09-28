@@ -72,18 +72,13 @@ struct AppFoldersView: View {
                 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                        ForEach(appEntries, id: \.self) { entry in
-                            Form {
-                                let folderName = entry.appURL.pathComponents[1]
-                                if folderName != currentFolder {
-                                    Text(folderName)
-                                        .onLoad() {
-                                            currentFolder = folderName
-                                        }
+                        let groupedEntries = Dictionary(grouping: appEntries) { $0.appURL.pathComponents[1] }
+                        ForEach(groupedEntries.keys.sorted(), id: \.self) { folderName in
+                            Section(header: Text(folderName).font(.title)) {
+                                ForEach(groupedEntries[folderName] ?? [], id: \.self) { entry in
+                                    AppFolderView(entry: entry)
                                 }
-                                AppFolderView(entry: entry)
                             }
-//                            .opacity((!entry.isApp && !entry.hasCustomIcon) || showPlain ? 1 : 0)
                         }
                     }
                 }
