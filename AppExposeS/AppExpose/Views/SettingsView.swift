@@ -46,9 +46,39 @@ class SettingsManager {
 }
 
 struct SettingsView: View {
+    @StateObject private var appData = AppData.shared
     @State private var fileURL: URL?
-    @State private var folders: [Folder] = AppData.shared.folders
     @State private var selectedFolder: Folder? = nil
+    @State private var isPresented = false
+    
+    func update(url: URL?) {
+        guard let aURL = url else { return }
+
+        let folderName = aURL.lastPathComponent
+        let folderURL = aURL
+
+        // Check if a folder with the same name or URL already exists
+        let isDuplicate = appData.folders.contains { folder in
+            folder.name == folderName || folder.url == folderURL
+        }
+
+        if !isDuplicate {
+            let newFolder = Folder(id: AppData.shared.folders.count, name: folderName, url: folderURL)
+            appData.folders.append(newFolder)
+            SettingsManager.shared.setFolderArray(appData.folders, forKey: "folders")
+        } else {
+            // Optionally, you can show an alert or message to the user
+            print("Folder already exists: \(folderName)")
+        }
+    }
+
+    func deleteSelectedFolder() {
+        if let selectedFolder = selectedFolder, let index = appData.folders.firstIndex(where: { $0.id == selectedFolder.id }) {
+            appData.folders.remove(at: index)
+            SettingsManager.shared.setFolderArray(appData.folders, forKey: "folders")
+            self.selectedFolder = nil
+        }
+    }
 
     var body: some View {
         let _ = symlog.info("SettingsView")
@@ -60,36 +90,30 @@ struct SettingsView: View {
                             .frame(width: 150, alignment: .leading)
                         Text("URL")
                     }
-                    ForEach($folders, editActions: [.move, .delete]) { folder in
+                    ForEach(appData.folders) { folder in
                         HStack {
-                            Text(folder.name.wrappedValue)
+                            Text(folder.name)
                                 .frame(width: 150, alignment: .leading)
-                            Text(folder.url.wrappedValue.path)
+                            Text(folder.url.path)
                         }
                         .contentShape(Rectangle())
+                        .background(selectedFolder?.id == folder.id ? Color.blue.opacity(0.3) : Color.clear)
                         .onTapGesture {
-                            selectedFolder = folder.wrappedValue
+                            selectedFolder = folder
                         }
                     }
                     .onDelete { indexSet in
-                            folders.remove(atOffsets: indexSet)
+                        AppData.shared.folders.remove(atOffsets: indexSet)
+                        SettingsManager.shared.setFolderArray(AppData.shared.folders, forKey: "folders")
                     }
                 }
+
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         Button("Delete") {
-                            self.fileURL = nil
+                            deleteSelectedFolder()
                         }
-                    }
-                    ToolbarItem {
-                        Button("Edit") {
-                            self.fileURL = nil
-                        }
-                    }
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Done") {
-                            self.folders = AppData.shared.folders
-                        }
+                        .disabled(selectedFolder == nil)
                     }
                 }
                 .padding([.leading, .trailing])
@@ -106,14 +130,6 @@ struct SettingsView: View {
         }
         .onSubmit {
             self.update(url: fileURL)
-        }
-    }
-
-    func update(url: URL?) {
-        if let aURL = url {
-            let folder = Folder(id: AppData.shared.folders.count, name: aURL.lastPathComponent, url: aURL)
-            AppData.shared.folders.append(folder)
-            SettingsManager.shared.setFolderArray(AppData.shared.folders, forKey: "folders")
         }
     }
 }

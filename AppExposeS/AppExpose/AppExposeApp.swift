@@ -29,7 +29,7 @@ let storelog = createLogger("store", subsystem: logid, subsystemColor: .blue, ca
 class AppData: NSObject, ObservableObject {
     static let shared = AppData()
     var iconSize: Double = 32.0
-    @Published var folders = Array<Folder>()
+    @Published var folders = [Folder]()
     @Published var bold = true
     @Published var remove = false
     @Published var selectAll = false
