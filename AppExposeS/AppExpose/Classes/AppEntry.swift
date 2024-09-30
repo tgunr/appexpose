@@ -9,7 +9,6 @@ import AppKit
 import Cocoa
 import CoreServices
 import Foundation
-import SLogMacro
 import UniformTypeIdentifiers
 
 let KEY_IMAGE = "icon"

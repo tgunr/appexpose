@@ -72,7 +72,8 @@ struct AppFoldersView: View {
                 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                        let groupedEntries = Dictionary(grouping: appEntries) { $0.appURL.pathComponents[1] }
+                        let groupedEntries = Dictionary(grouping: appEntries) { $0.appURL.pathComponents[1]
+                        }
                         ForEach(groupedEntries.keys.sorted(), id: \.self) { folderName in
                             Section(header: Text(folderName).font(.title)) {
                                 ForEach(groupedEntries[folderName] ?? [], id: \.self) { entry in
@@ -94,7 +95,7 @@ struct AppFoldersView: View {
     }
 
     private func fetchApps() async {
-        for folder in AppData.shared.folders {
+        for folder in appFolders {
             let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
             DispatchQueue.main.async {
                 appEntries.append(contentsOf: entries)

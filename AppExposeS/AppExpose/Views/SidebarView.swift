@@ -20,7 +20,7 @@ struct SidebarView: View {
                     .font(.system(size: 10))
                     .fontWeight(.bold)
                 List {
-                    ForEach(AppData.shared.folders) { folder in
+                    ForEach(appFolders) { folder in
                         Text(folder.name)
                     }
                 }
