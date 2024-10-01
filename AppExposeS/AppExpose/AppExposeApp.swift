@@ -26,11 +26,11 @@ let symlog = createLogger("app", subsystem: logid, subsystemColor: .black, categ
 let uilog = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
 let storelog = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
 
-var appFolders: [Folder] = []
 
 class AppData: NSObject, ObservableObject {
     static let shared = AppData()
     var iconSize: Double = 32.0
+    @Published var appFolders: [Folder] = []
     @Published var bold = true
     @Published var remove = false
     @Published var selectAll = false
@@ -39,14 +39,17 @@ class AppData: NSObject, ObservableObject {
 @main
 struct MyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject var appData = AppData.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appData)
                 .defaultAppStorage(UserDefaults(suiteName: "net.polymicro.appexpose")!)
         }
         MenuBarExtra("My Menu", systemImage: "gear") {
             SettingsView()
+                .environmentObject(appData)
         }
 //        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .menuBarExtraStyle(.automatic)
