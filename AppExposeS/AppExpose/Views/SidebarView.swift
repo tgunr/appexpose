@@ -11,9 +11,11 @@
 import SwiftUI
 
 struct SidebarView: View {
+    @EnvironmentObject var appData: AppData
+
     var body: some View {
+        var appFolders = appData.appFolders
         let _ = symlog.debug("SidebarView")
-        // ask_software_developer How create a menu bar item
         NavigationView {
             List {
                 Text("LOCATIONS")

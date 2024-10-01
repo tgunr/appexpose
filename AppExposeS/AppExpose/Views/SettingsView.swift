@@ -46,29 +46,32 @@ class SettingsManager {
 }
 
 struct FolderListView: View {
+    @EnvironmentObject var appData: AppData
     @Binding var selectedFolder: Folder?
 
     var body: some View {
         let _ = symlog.entry("FolderListView")
         List {
-            ForEach(appFolders) { folder in
+            ForEach(appData.appFolders) { folder in
                 FolderRow(selectedFolder: $selectedFolder, folder: folder)
             }
 
             .onMove(perform: move)
             .onDelete { indexSet in
-                appFolders.remove(atOffsets: indexSet)
-                SettingsManager.shared.setFolderArray(appFolders, forKey: "folders")
+                appData.appFolders.remove(atOffsets: indexSet)
+                SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
             }
         }
     }
 
     func move(from source: IndexSet, to destination: Int) {
+        var appFolders = appData.appFolders
         appFolders.move(fromOffsets: source, toOffset: destination)
     }
 }
 
 struct FolderRow: View {
+    @EnvironmentObject var appData: AppData
     @Binding var selectedFolder: Folder?
     let folder: Folder
 
@@ -86,7 +89,7 @@ struct FolderRow: View {
         }
         .onChange(of: selectedFolder) { old,new in
             // Update the selected folder index
-            if let newFolder = appFolders.first(where: { $0.id == new?.id }) {
+            if let newFolder = appData.appFolders.first(where: { $0.id == new?.id }) {
                 selectedFolder = newFolder
             }
         }
@@ -94,6 +97,7 @@ struct FolderRow: View {
 }
 
 struct SettingsView: View {
+    @EnvironmentObject var appData: AppData
     @State private var fileURL: URL?
     @State private var selectedFolder: Folder? = nil
     @State private var isPresented = false
@@ -102,7 +106,7 @@ struct SettingsView: View {
         let _ = symlog.entry("SettingsView")
         Form {
             Section(header: Text("Application Folders")) {
-                let _ = symlog.value("folders: \(appFolders)")
+                let _ = symlog.value("folders: \(appData.appFolders)")
                 FolderListView(selectedFolder: $selectedFolder)
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
@@ -145,14 +149,16 @@ struct SettingsView: View {
         let folderURL = aURL
 
         // Check if a folder with the same name or URL already exists
-        let isDuplicate = appFolders.contains { folder in
+        let isDuplicate = appData.appFolders.contains { folder in
             folder.url == folderURL
         }
 
         if !isDuplicate {
-            let newFolder = Folder(id: appFolders.count, name: folderName, url: folderURL)
-            appFolders.append(newFolder)
-            SettingsManager.shared.setFolderArray(appFolders, forKey: "folders")
+            let newFolder = Folder(id: appData.appFolders.count, name: folderName, url: folderURL)
+            appData.appFolders.append(newFolder)
+            SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
+            appData.appFolders = appData.appFolders // Force update
+            self.selectedFolder = newFolder
         } else {
             // Optionally, you can show an alert or message to the user
             print("Folder already exists: \(folderName)")
@@ -160,9 +166,10 @@ struct SettingsView: View {
     }
 
     func deleteSelectedFolder() {
-        if let selectedFolder = selectedFolder, let index = appFolders.firstIndex(where: { $0.id == selectedFolder.id }) {
-            appFolders.remove(at: index)
-            SettingsManager.shared.setFolderArray(appFolders, forKey: "folders")
+        if let selectedFolder = selectedFolder, let index = appData.appFolders.firstIndex(where: { $0.id == selectedFolder.id }) {
+            appData.appFolders.remove(at: index)
+            SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
+            appData.appFolders = appData.appFolders // Force update
             self.selectedFolder = nil
         }
     }

@@ -95,7 +95,7 @@ struct AppFoldersView: View {
     }
 
     private func fetchApps() async {
-        for folder in appFolders {
+        for folder in appData.appFolders {
             let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
             DispatchQueue.main.async {
                 appEntries.append(contentsOf: entries)
