@@ -23,7 +23,7 @@ class AppFolder: ObservableObject {
     @Published var model: AppEntry?
 }
 
-class AppEntry: NSObject, Identifiable, ObservableObject {
+class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     var id: UUID = UUID()
     var name: String?
     var appURL: URL
@@ -52,6 +52,36 @@ class AppEntry: NSObject, Identifiable, ObservableObject {
     var attributes: [FileAttributeKey: Any] = [:]
     var xattr: XATTR?
     var processedURLs = Set<URL>()
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, appURL, isLeaf, isApp, canAccess, hasCustomIcon
+        // Add other properties you want to encode/decode
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(appURL, forKey: .appURL)
+        try container.encode(isLeaf, forKey: .isLeaf)
+        try container.encode(isApp, forKey: .isApp)
+        try container.encode(canAccess, forKey: .canAccess)
+        try container.encode(hasCustomIcon, forKey: .hasCustomIcon)
+        // Encode other properties
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        appURL = try container.decode(URL.self, forKey: .appURL)
+        isLeaf = try container.decode(Bool.self, forKey: .isLeaf)
+        isApp = try container.decode(Bool.self, forKey: .isApp)
+        canAccess = try container.decode(Bool.self, forKey: .canAccess)
+        hasCustomIcon = try container.decode(Bool.self, forKey: .hasCustomIcon)
+        // Decode other properties
+        super.init()
+    }
 
     class func root() -> AppEntry? {
         let root = self.init(withURL: URL(fileURLWithPath: "/"))

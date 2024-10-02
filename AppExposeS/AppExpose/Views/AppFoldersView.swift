@@ -45,48 +45,55 @@ struct FolderHeaderViewWrapper: View {
 }
 
 struct AppFoldersView: View {
-    @ObservedObject var appData = AppData.shared
-    @State var appEntries: [AppEntry] = []
+    @EnvironmentObject var appData: AppData
     @State var selectedItem: String? = nil
     @State private var currentFolder: String = "/"
     @State private var showPlain: Bool = false
+
+    private var groupedFolderEntries: [(UUID, String, [String: [AppEntry]])] {
+        let folderOrder = Dictionary(uniqueKeysWithValues: appData.appFolders.enumerated().map { ($0.element.id, $0.offset) })
+        
+        return appData.appFolders
+            .map { folder in
+                (folder.id, folder.name, Dictionary(grouping: folder.entries) { entry in
+                    let path = entry.appURL.deletingLastPathComponent().path
+                    let check = path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
+                    return check
+                })
+            }
+            .sorted { folderOrder[$0.0, default: 0] < folderOrder[$1.0, default: 0] }
+    }
     
     var body: some View {
         let _ = symlog.debug("AppFoldersViews")
         VStack {
-            if appEntries.isEmpty {
-                ProgressView("Gathering Apps")
-            } else {
-                let url = URL(string: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678084-folder-128.png")!
-                
-                Button {
-                    showPlain.toggle()
-                } label: {
-                    VStack {
-                        RemoteImageView(url: url)
-                            .frame(width: 32, height: 32)
-                        Text("Show Plain")
-                    }
+            let url = URL(string: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678084-folder-128.png")!
+
+            Button {
+                showPlain.toggle()
+            } label: {
+                VStack {
+                    RemoteImageView(url: url)
+                        .frame(width: 32, height: 32)
+                    Text("Show Plain")
                 }
-                .padding(.bottom, 10)
-                
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                        let groupedEntries = Dictionary(grouping: appEntries) { entry in
-                            let path = entry.appURL.deletingLastPathComponent().path
-                            return path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
-                        }
-                        ForEach(groupedEntries.keys.sorted(), id: \.self) { folderName in
-                            Section(header: Text(folderName).font(.title)) {
-                                ForEach(groupedEntries[folderName] ?? [], id: \.self) { entry in
+            }
+            .padding(.bottom, 10)
+
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                    ForEach(groupedFolderEntries, id: \.0) { folderId, _, subfolders in
+                        ForEach(subfolders.keys.sorted(), id: \.self) { subfolderName in
+                            Section(header: Text(subfolderName).font(.title)) {
+                                ForEach(subfolders[subfolderName] ?? [], id: \.self) { entry in
                                     AppFolderView(entry: entry)
                                 }
                             }
                         }
                     }
                 }
-                .padding()
             }
+            .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
@@ -97,17 +104,15 @@ struct AppFoldersView: View {
     }
 
     private func fetchApps() async {
-        for folder in appData.appFolders {
-            let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
-            DispatchQueue.main.async {
-                appEntries.append(contentsOf: entries)
-            }
+        var updatedFolders = appData.appFolders
+        for index in updatedFolders.indices {
+            let entries = AppEntry.scanApplications(atPath: updatedFolders[index].url.path, currentDirectory: nil)
+            updatedFolders[index].entries = entries
+            symlog.value("Folder \(updatedFolders[index].name) created with \(entries.count) child entries")
         }
-        symlog.value("AppEntry created with \(appEntries.count) child entries")
+        appData.appFolders = updatedFolders
     }
 }
-
-
 
 struct AppFoldersViews_Previews: PreviewProvider {
     static var previews: some View {

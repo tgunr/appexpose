@@ -9,39 +9,22 @@ import SwiftUI
 
 import Foundation
 
-struct Folder: Identifiable, Equatable, Encodable, Decodable, Hashable {
-    var id: UUID = UUID()
-    var name: String
-    var url: URL
-}
-
-struct FolderArray: Encodable, Decodable {
-    let values: [Folder]
-}
-
 class SettingsManager {
     let defaults = UserDefaults.standard
     static let shared = SettingsManager()
-
+    
     func setFolderArray(_ array: [Folder], forKey key: String) {
-        let stringArray = FolderArray(values: array)
-        if let data = try? JSONEncoder().encode(stringArray) {
-            if let string = String(data: data, encoding: .utf8) {
-                defaults.set(string, forKey: key)
-            }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys // This ensures consistent encoding order
+        
+        if let data = try? encoder.encode(array) {
+            defaults.set(data, forKey: key)
         }
     }
-
+    
     func getFolderArray(forKey key: String) -> [Folder]? {
-        guard let string = defaults.string(forKey: key) else { return nil }
-        do {
-            guard let data = string.data(using: .utf8) else { return nil }
-            let stringArray = try JSONDecoder().decode(FolderArray.self, from: data)
-            return stringArray.values
-        } catch {
-            symlog.error("Error parsing JSON: \(error)")
-            return nil
-        }
+        guard let data = defaults.data(forKey: key) else { return nil }
+        return try? JSONDecoder().decode([Folder].self, from: data)
     }
 }
 
@@ -101,7 +84,6 @@ struct SettingsView: View {
     @EnvironmentObject var appData: AppData
     @State private var fileURL: URL?
     @State private var selectedFolder: Folder? = nil
-    @State private var isPresented = false
     @FocusState private var isFocused: Bool
 
     var body: some View {
@@ -163,6 +145,7 @@ struct SettingsView: View {
         guard let index = appData.appFolders.firstIndex(where: { $0.id == selectedFolder.id }),
               index < appData.appFolders.count - 1 else { return }
         appData.appFolders.swapAt(index, index + 1)
+        SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
     }
 
     private func moveUp() {
@@ -170,6 +153,7 @@ struct SettingsView: View {
         guard let index = appData.appFolders.firstIndex(where: { $0.id == selectedFolder.id }),
               index > 0 else { return }
         appData.appFolders.swapAt(index, index - 1)
+        SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
     }
 
     private func selectDir() {
@@ -197,15 +181,15 @@ struct SettingsView: View {
 
         if !isDuplicate {
 //            let _ = symlog.value("folders count: \(appData.appFolders.count)")
-            let newFolder = Folder(id: UUID(), name: folderName, url: folderURL)
+            let newFolder = Folder(id: UUID(), name: folderName, url: folderURL, entries: [])
 //            let _ = symlog.value("folders old: \(appData.appFolders)")
             appData.appFolders.append(newFolder)
 //            let _ = symlog.value("folders new: \(appData.appFolders)")
             SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
-            appData.appFolders = appData.appFolders // Force update
+//            appData.appFolders = appData.appFolders // Force update
             selectedFolder = newFolder
         } else {
-            appData.appFolders = appData.appFolders // Force update
+//            appData.appFolders = appData.appFolders // Force update
             print("Folder already exists: \(folderName)")
         }
     }
@@ -214,7 +198,7 @@ struct SettingsView: View {
         if let selectedFolder = selectedFolder, let index = appData.appFolders.firstIndex(where: { $0.id == selectedFolder.id }) {
             appData.appFolders.remove(at: index)
             SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
-            appData.appFolders = appData.appFolders // Force update
+//            appData.appFolders = appData.appFolders // Force update
             self.selectedFolder = nil
         }
     }

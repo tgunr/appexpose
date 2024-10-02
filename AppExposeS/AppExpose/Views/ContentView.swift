@@ -5,8 +5,8 @@
 //  Created by Dave Carlton on 8/21/22.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var appData: AppData
@@ -22,7 +22,7 @@ struct ContentView: View {
                 .tag(2)
         }
         .tabViewStyle(.automatic)
-        
+
         FloatingTabBar(selectedTab: $selectedTab)
     }
 }
@@ -35,10 +35,10 @@ struct FloatingTabBar: View {
         BottomBarItem(icon: "questionmark.circle", title: "Help", color: .pink),
         BottomBarItem(icon: "magnifyingglass", title: "Search", color: .orange),
     ]
-    
+
     var body: some View {
         HStack {
-            ForEach(0..<items.count) { index in
+            ForEach(0 ..< items.count) { index in
                 Button(action: {
                     selectedTab = index
                 }) {
@@ -62,7 +62,6 @@ struct FloatingTabBar: View {
         .padding(.horizontal)
     }
 }
-
 
 struct BottomBarItem {
     let icon: String

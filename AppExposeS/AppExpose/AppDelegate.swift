@@ -26,15 +26,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        if let dirPaths = SettingsManager.shared.getFolderArray(forKey: "folders") {
-            AppData.shared.appFolders = dirPaths
+        if let savedFolders = SettingsManager.shared.getFolderArray(forKey: "folders") {
+            AppData.shared.appFolders = savedFolders
         } else {
-            let defaultFolder: Folder = Folder(id: UUID(), name: "Applications", url: URL(fileURLWithPath: "/Applications"))
+            let defaultFolder: Folder = Folder(id: UUID(), name: "Applications", url: URL(fileURLWithPath: "/Applications"), entries: [])
             AppData.shared.appFolders = [defaultFolder]
             SettingsManager.shared.setFolderArray(AppData.shared.appFolders, forKey: "folders")
         }
     }
-
+    
     func applicationDidResignActive(_ notification: Notification) {
         self.isActive = false
     }
