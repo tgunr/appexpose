@@ -9,8 +9,8 @@ import SwiftUI
 
 import Foundation
 
-struct Folder: Identifiable, Equatable, Encodable, Decodable {
-    let id: Int
+struct Folder: Identifiable, Equatable, Encodable, Decodable, Hashable {
+    var id: UUID = UUID()
     var name: String
     var url: URL
 }
@@ -50,12 +50,12 @@ struct FolderListView: View {
     @Binding var selectedFolder: Folder?
 
     var body: some View {
-        let _ = symlog.entry("FolderListView")
-        List {
+//        let _ = symlog.entry("FolderListView folders: \(appData.appFolders)")
+        List(selection: $selectedFolder) {
             ForEach(appData.appFolders) { folder in
+//                let _ = symlog.value("folder: \(folder)")
                 FolderRow(selectedFolder: $selectedFolder, folder: folder)
             }
-
             .onMove(perform: move)
             .onDelete { indexSet in
                 appData.appFolders.remove(atOffsets: indexSet)
@@ -85,9 +85,10 @@ struct FolderRow: View {
         .contentShape(Rectangle())
         .background(selectedFolder?.id == folder.id ? Color.blue.opacity(0.3) : Color.clear)
         .onTapGesture {
+            symlog.info("FolderRow: tapped")
             selectedFolder = folder
         }
-        .onChange(of: selectedFolder) { old,new in
+        .onChange(of: selectedFolder) { _, new in
             // Update the selected folder index
             if let newFolder = appData.appFolders.first(where: { $0.id == new?.id }) {
                 selectedFolder = newFolder
@@ -101,33 +102,74 @@ struct SettingsView: View {
     @State private var fileURL: URL?
     @State private var selectedFolder: Folder? = nil
     @State private var isPresented = false
-    
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         let _ = symlog.entry("SettingsView")
         Form {
             Section(header: Text("Application Folders")) {
-                let _ = symlog.value("folders: \(appData.appFolders)")
-                FolderListView(selectedFolder: $selectedFolder)
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("Delete") {
-                            deleteSelectedFolder()
+                ZStack {
+                    FolderListView(selectedFolder: $selectedFolder)
+                        .focused($isFocused)
+                        .toolbar {
+                            ToolbarItem(placement: .primaryAction) {
+                                Button(action: {
+                                    moveUp()
+                                }) {
+                                    HStack {
+                                        Image(systemName: "chevron.up")
+                                    }
+                                }
+                                .disabled(selectedFolder == nil)
+                            }
+                            ToolbarItem(placement: .primaryAction) {
+                                Button(action: {
+                                    moveDown()
+                                }) {
+                                    HStack {
+                                        Image(systemName: "chevron.down")
+                                    }
+                                }
+                                .disabled(selectedFolder == nil)
+                            }
+                            ToolbarItem(placement: .primaryAction) {
+                                Button("Delete") {
+                                    deleteSelectedFolder()
+                                }
+                                .disabled(selectedFolder == nil)
+                            }
+                            ToolbarItem(placement: .primaryAction) {
+                                Button("Add") {
+                                    selectDir()
+                                }
+                            }
                         }
-                        .disabled(selectedFolder == nil)
-                    }
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("Add") {
-                            selectDir()
-                        }
-                    }
+                        .padding([.leading, .trailing])
                 }
-                .padding([.leading, .trailing])
             }
             .padding([.top, .leading])
+        }
+        .onTapGesture {
+            symlog.info("SettingsView: tapped")
+            selectedFolder = nil
         }
         .onSubmit {
             self.update(url: fileURL)
         }
+    }
+
+    private func moveDown() {
+        guard let selectedFolder else { return }
+        guard let index = appData.appFolders.firstIndex(where: { $0.id == selectedFolder.id }),
+              index < appData.appFolders.count - 1 else { return }
+        appData.appFolders.swapAt(index, index + 1)
+    }
+
+    private func moveUp() {
+        guard let selectedFolder else { return }
+        guard let index = appData.appFolders.firstIndex(where: { $0.id == selectedFolder.id }),
+              index > 0 else { return }
+        appData.appFolders.swapAt(index, index - 1)
     }
 
     private func selectDir() {
@@ -154,13 +196,16 @@ struct SettingsView: View {
         }
 
         if !isDuplicate {
-            let newFolder = Folder(id: appData.appFolders.count, name: folderName, url: folderURL)
+//            let _ = symlog.value("folders count: \(appData.appFolders.count)")
+            let newFolder = Folder(id: UUID(), name: folderName, url: folderURL)
+//            let _ = symlog.value("folders old: \(appData.appFolders)")
             appData.appFolders.append(newFolder)
+//            let _ = symlog.value("folders new: \(appData.appFolders)")
             SettingsManager.shared.setFolderArray(appData.appFolders, forKey: "folders")
             appData.appFolders = appData.appFolders // Force update
-            self.selectedFolder = newFolder
+            selectedFolder = newFolder
         } else {
-            // Optionally, you can show an alert or message to the user
+            appData.appFolders = appData.appFolders // Force update
             print("Folder already exists: \(folderName)")
         }
     }

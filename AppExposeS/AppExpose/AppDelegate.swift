@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         if let dirPaths = SettingsManager.shared.getFolderArray(forKey: "folders") {
             AppData.shared.appFolders = dirPaths
         } else {
-            let defaultFolder: Folder = Folder(id: 0, name: "Applications", url: URL(fileURLWithPath: "/Applications"))
+            let defaultFolder: Folder = Folder(id: UUID(), name: "Applications", url: URL(fileURLWithPath: "/Applications"))
             AppData.shared.appFolders = [defaultFolder]
             SettingsManager.shared.setFolderArray(AppData.shared.appFolders, forKey: "folders")
         }

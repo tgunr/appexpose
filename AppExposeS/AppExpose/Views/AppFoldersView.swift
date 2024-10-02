@@ -72,7 +72,9 @@ struct AppFoldersView: View {
                 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                        let groupedEntries = Dictionary(grouping: appEntries) { $0.appURL.pathComponents[1]
+                        let groupedEntries = Dictionary(grouping: appEntries) { entry in
+                            let path = entry.appURL.deletingLastPathComponent().path
+                            return path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
                         }
                         ForEach(groupedEntries.keys.sorted(), id: \.self) { folderName in
                             Section(header: Text(folderName).font(.title)) {
