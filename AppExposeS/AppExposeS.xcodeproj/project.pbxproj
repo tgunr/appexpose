@@ -31,6 +31,7 @@
 		75B30B9A2C925C9D007F53F1 /* SLogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75B30B992C925C9D007F53F1 /* SLogMacro */; };
 		75B30B9D2C925E03007F53F1 /* SLogMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 75B30B9C2C925E03007F53F1 /* SLogMacro */; };
 		75B30BB62C9AD982007F53F1 /* XATTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECF228C7CC4B00A174BB /* XATTR.swift */; };
+		75C569A42CAD87800078874D /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C569A32CAD877F0078874D /* Folder.swift */; };
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
@@ -129,6 +130,7 @@
 		757422B42C865A6C00CB8A0C /* SymLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymLog.swift; sourceTree = "<group>"; };
 		758FD2362C77673400878379 /* PMUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PMUtility.xcodeproj; path = ../pmutility/PMUtility.xcodeproj; sourceTree = "<group>"; };
 		758FD2462C7769AC00878379 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = ../xattr/xattr.xcodeproj; sourceTree = "<group>"; };
+		75C569A32CAD877F0078874D /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		75C811AC2C8B5D9200478C98 /* ImageReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -213,6 +215,7 @@
 		750EED0528C7D11A00A174BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				75C569A32CAD877F0078874D /* Folder.swift */,
 				750EECF128C7CC4B00A174BB /* AppEntry.swift */,
 				757422B42C865A6C00CB8A0C /* SymLog.swift */,
 				750EECF228C7CC4B00A174BB /* XATTR.swift */,
@@ -423,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75B30BB62C9AD982007F53F1 /* XATTR.swift in Sources */,
+				75C569A42CAD87800078874D /* Folder.swift in Sources */,
 				7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */,
 				752C5AC728C8F8ED00057685 /* AppFoldersView.swift in Sources */,
 				752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */,
