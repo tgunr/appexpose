@@ -33,6 +33,8 @@ extension View {
 
 struct AppFolderView: View {
     @State var entry: AppEntry
+    @Binding var showOptions: ShowOption
+
     var body: some View {
         VStack {
             if let appImage = entry.appImage {
@@ -57,48 +59,12 @@ struct AppFolderView: View {
     }
 }
 
-struct AppFolderView1: View {
-    @State var entry: AppEntry
-    @StateObject private var appFolder = AppFolder()
-    @EnvironmentObject var appData: AppData
-
-//    init(folder: String) {
-//        self.folder = folder
-//        //        if let u = URL(string: folder) {
-//        //            appFolder.model = AppEntry.collect(from: u)
-//        //        }
-//    }
-
-    var body: some View {
-        Text("\(entry.name ?? "")")
-        List {
-            if let m = appFolder.model {
-                let entries = m.children
-                ForEach(entries, id: \.self) { entry in
-                    let entryURL = entry.appURL.absoluteString
-                    Text(entryURL)
-
-                    if let oImage = entry.originalImage {
-                        let w = appData.iconSize
-                        let wi = Int(w)
-                        let h = appData.iconSize
-                        let hi = Int(h)
-                        var imageRect = CGRect(x: 0, y: 0, width: wi, height: hi)
-                        let imageRef = oImage.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
-                        Image(imageRef!,
-                              scale: 1.0,
-                              orientation: .up,
-                              label: Text("Locomotive"))
-                    }
-                }
-            }
-        }
-    }
-}
-
 struct AppFolderView_Previews: PreviewProvider {
+    @State var showOptions: ShowOption = .all
+
     static var previews: some View {
-        AppFolderView(entry: AppEntry(withURL: URL(string: "/Applications/SVG")!)
+        let entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
+        AppFolderView(entry: entry, showOptions: .constant(.all)
         )
     }
 }

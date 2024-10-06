@@ -1,3 +1,12 @@
+//
+//  FolderHeaderView.swift
+//  AppExposeS
+//
+//  Created by Dave Carlton on 10/6/24.
+//
+
+import SwiftUI
+
 struct FolderHeaderView: View {
     @State var folderURL: URL
 
