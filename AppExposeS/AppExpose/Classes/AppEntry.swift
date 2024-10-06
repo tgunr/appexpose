@@ -182,7 +182,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         let fm = FileManager.default
 
         do {
-//            let contents = try fm.contentsOfDirectory(atPath: currentDir)
             let keys = [URLResourceKey.nameKey, URLResourceKey.isDirectoryKey, URLResourceKey.isPackageKey]
             let contents = try fm.contentsOfDirectory(at: URL(fileURLWithPath: currentDir), includingPropertiesForKeys: keys, options: .skipsHiddenFiles)
 
