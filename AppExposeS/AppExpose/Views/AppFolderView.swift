@@ -32,17 +32,24 @@ extension View {
 }
 
 struct AppFolderView: View {
-    @State var entry: AppEntry
+    @ObservedObject var entry: AppEntry
     @Binding var showOptions: ShowOption
 
     var body: some View {
+        let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
         VStack {
             if let appImage = entry.appImage {
+                if entry.name == "!NCViewer" {
+                    let _ = symlog.info("AppFolderView appImage: \(appImage)")
+                }
                 Image(nsImage: appImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
             } else {
+                if entry.name == "!NCViewer" {
+                    let _ = symlog.info("AppFolderView folder")
+                }
                 Image(systemName: "folder")
                     .resizable()
                     .aspectRatio(contentMode: .fit)

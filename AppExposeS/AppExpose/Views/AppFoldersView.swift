@@ -9,16 +9,16 @@ import SwiftUI
 
 enum ShowOption: Int, CaseIterable, Identifiable {
     case all = 1
-    case unmodified = 2
-    case modified = 3
+    case exposed = 2
+    case unmodified = 3
 
     var id: Int { rawValue }
 
     var description: String {
         switch self {
         case .all: return "All"
+        case .exposed: return "Exposed"
         case .unmodified: return "Unmodified"
-        case .modified: return "Modified"
         }
     }
 }
@@ -26,8 +26,8 @@ enum ShowOption: Int, CaseIterable, Identifiable {
 struct MainView: View {
     @Binding var searchText: String
     @Binding var showOptions: ShowOption
+    var filteredEntries: [String: [AppEntry]]
     let appData: AppData
-    let filteredEntries: [String: [AppEntry]]
 
     private var groupedFolderEntries: [(UUID, String, [String: [AppEntry]])] {
         let folderOrder = Dictionary(uniqueKeysWithValues: appData.appFolders.enumerated().map { ($0.element.id, $0.offset) })
@@ -51,12 +51,14 @@ struct MainView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                     ForEach(groupedFolderEntries, id: \.0) { _, _, subfolders in
-//                        _ = symlog.value("subfolders: \(subfolders)")
                         ForEach(subfolders.keys.sorted(), id: \.self) { subfolderName in
-                            ExtractedView(showOptions: $showOptions, subfolderName: subfolderName, filteredEntries: filteredEntries)
+                            SubfolderView(showOptions: $showOptions, filteredEntries: filteredEntries, subfolderName: subfolderName)
                         }
                     }
                 }
+            }
+            .onChange(of: showOptions) { oldValue, newValue in
+                symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
             }
         }
     }
@@ -84,17 +86,27 @@ struct SearchBar: View {
     }
 }
 
-struct ExtractedView: View {
+struct SubfolderView: View {
     @Binding var showOptions: ShowOption
+    var filteredEntries: [String: [AppEntry]]
     let subfolderName: String
-    let filteredEntries: [String: [AppEntry]]
 
     var body: some View {
         Section(header: Text(subfolderName).font(.title)) {
-//                _ = symlog.value("filteredEntries: \(filteredEntries[subfolderName] ?? [])")
             ForEach(Array(filteredEntries[subfolderName] ?? []).indices, id: \.self) { index in
                 let entry = filteredEntries[subfolderName]![index]
-                AppFolderView(entry: entry, showOptions: $showOptions)
+                switch showOptions {
+                case .all:
+                    AppFolderView(entry: entry, showOptions: $showOptions)
+                case .unmodified:
+                    if entry.isNotSpecial() {
+                        AppFolderView(entry: entry, showOptions: $showOptions)
+                    }
+                case .exposed:
+                    if !entry.hasMyCustomIcon {
+                        AppFolderView(entry: entry, showOptions: $showOptions)
+                    }
+                }
             }
         }
     }
@@ -112,7 +124,16 @@ struct AppFoldersView: View {
     var filteredEntries: [String: [AppEntry]] {
         subfolders.mapValues { entries in
             entries.filter { entry in
-                searchText.isEmpty || ((entry.name?.lowercased().contains(searchText.lowercased())) != nil)
+                let nameMatch = searchText.isEmpty || ((entry.name?.lowercased().contains(searchText.lowercased())) != nil)
+
+                switch showOptions {
+                case .exposed:
+                    return nameMatch && entry.hasMyCustomIcon
+                case .unmodified:
+                    return nameMatch && entry.isFolder && !entry.hasMyCustomIcon
+                case .all:
+                    return nameMatch
+                }
             }
         }
     }
@@ -128,20 +149,21 @@ struct AppFoldersView: View {
                         }
                     }
                     .pickerStyle(.radioGroup)
-                    .onChange(of: showOptions) { _, new in
-                        switch new {
-                        case .all:
-                            unmodified = false
-                        case .unmodified:
-                            unmodified = true
-                        case .modified:
-                            unmodified = false
-                        }
-                    }
-                    Text("Folder: \(currentFolder)")
+//                        .onChange(of: showOptions) { _, new in
+//                        switch new {
+//                        case .all:
+//                            unmodified = false
+//                        case .unmodified:
+//                            unmodified = true
+//                        case .exposed:
+//                            unmodified = false
+//                        }
+//                    }
+                    Spacer()
                 }
-                .frame(width: 200)
-                MainView(searchText: $searchText, showOptions: $showOptions, appData: appData, filteredEntries: filteredEntries)
+                .padding(.top)
+                .frame(width: 140)
+                MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: filteredEntries, appData: appData)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
