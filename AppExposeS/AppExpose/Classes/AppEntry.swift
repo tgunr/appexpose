@@ -29,7 +29,12 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     var appURL: URL
     var childIcons: [AnyHashable]?
     var isLeaf = false
-    var isApp = false
+    var isApp: Bool {
+        let ws = NSWorkspace.shared
+        let isAnApp = ws.isFilePackage(atPath: appURL.path)
+        let wasAnApp = hasValidMacOSApplication(contentsURL: appURL)
+        return isAnApp || wasAnApp
+    }
     var canAccess = false
     var hasCustomIcon = false
     var originalFolderIcon: NSImage?
@@ -46,7 +51,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     @Published var directoryEntry: AppEntry?
     var iconDictionary: [String: NSImage]?
     var icons: [NSImage]?
-    var appImage: NSImage?
+    @Published var appImage: NSImage?
     var originalImage: NSImage?
     var isFolder = false
     var attributes: [FileAttributeKey: Any] = [:]
@@ -64,7 +69,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         try container.encode(name, forKey: .name)
         try container.encode(appURL, forKey: .appURL)
         try container.encode(isLeaf, forKey: .isLeaf)
-        try container.encode(isApp, forKey: .isApp)
+//        try container.encode(isApp, forKey: .isApp)
         try container.encode(canAccess, forKey: .canAccess)
         try container.encode(hasCustomIcon, forKey: .hasCustomIcon)
         // Encode other properties
@@ -76,7 +81,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         name = try container.decodeIfPresent(String.self, forKey: .name)
         appURL = try container.decode(URL.self, forKey: .appURL)
         isLeaf = try container.decode(Bool.self, forKey: .isLeaf)
-        isApp = try container.decode(Bool.self, forKey: .isApp)
+//        isApp = try container.decode(Bool.self, forKey: .isApp)
         canAccess = try container.decode(Bool.self, forKey: .canAccess)
         hasCustomIcon = try container.decode(Bool.self, forKey: .hasCustomIcon)
         // Decode other properties
@@ -92,24 +97,23 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         self.appURL = url
         super.init()
 //        symlog.value("\(#function) url: \(url.path)")
-        collectEntries(url)
+        collectEntries()
     }
 
-    fileprivate func collectEntries(_ url: URL) {
+    fileprivate func collectEntries() {
         let fm = FileManager()
-        appURL = url
         do {
-            attributes = try fm.attributesOfItem(atPath: url.path)
+            attributes = try fm.attributesOfItem(atPath: appURL.path)
         } catch {
             symlog.error("attributes: FAIL")
         }
-            xattr = XATTR(path: url.path(), options: XATTROptions.nofollow)
-        isLeaf = isALeaf(url)
-        isFolder = isAFolder(url)
+            xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
+        isLeaf = isALeaf(appURL)
+        isFolder = isAFolder(appURL)
         hasCustomIcon = hasACustomIcon()
-        isApp = isAnApp(url)
+//        isApp = isAnApp(appURL)
         canAccess = userCanAccess()
-        name = url.lastPathComponent
+        name = appURL.lastPathComponent
         originalImage = NSWorkspace.shared.icon(for: UTType.folder)
         if isApp {
             isLeaf = false
@@ -126,11 +130,13 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
             }
             appImage = originalImage
             if isNotSpecial() {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
                     self.children = []
                     self.scanURL()
                     if (self.children.count) != 0 {
                         self.appImage = self.composeIcons()
+                        symlog.value("Folder \(String(describing: self.name)) created with \(self.children.count) child entries")
                     }
                 }
             }
@@ -196,7 +202,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         return entries
     }
 
-    func isValidMacOSApplication(contentsURL: URL) -> Bool {
+    func hasValidMacOSApplication(contentsURL: URL) -> Bool {
         let fileManager = FileManager.default
 
         // Check for Info.plist
