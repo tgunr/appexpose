@@ -23,21 +23,72 @@ class AppFolder: ObservableObject {
     @Published var model: AppEntry?
 }
 
+let workspace = NSWorkspace.shared
+let filemanager = FileManager.default
+
 class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     var id: UUID = UUID()
     var name: String?
     var appURL: URL
     var childIcons: [AnyHashable]?
-    var isLeaf = false
+    var originalFolderIcon: NSImage?
+    @Published var children = [AppEntry]()
+    @Published var directoryEntry: AppEntry?
+    var iconDictionary: [String: NSImage]?
+    var icons: [NSImage]?
+    @Published var appImage: NSImage?
+    var originalImage: NSImage?
+    var attributes: [FileAttributeKey: Any] = [:]
+    var xattr: XATTR?
+    var processedURLs = Set<URL>()
+
+    var isSpecial: Bool {
+        let path = appURL.path
+        let iconPath = NSString.path(withComponents: [path, "Icon\r"])
+        return filemanager.fileExists(atPath: iconPath)
+    }
+
+    var isLeaf: Bool {
+        let fileType = attributes[FileAttributeKey.type] as! String
+
+        if fileType == "NSFileTypeDirectory" {
+            return false // folders are not leafs
+        }
+        if fileType == "NSFileTypeSymbolicLink" {
+            return false // symlinks can't be a leaf for now
+        }
+        if appURL.pathExtension == "app" {
+            return false // nor are Apps
+        }
+        return true
+    }
+
     var isApp: Bool {
-        let ws = NSWorkspace.shared
-        let isAnApp = ws.isFilePackage(atPath: appURL.path)
+        let isAnApp = workspace.isFilePackage(atPath: appURL.path)
         let wasAnApp = hasValidMacOSApplication(contentsURL: appURL)
         return isAnApp || wasAnApp
     }
-    var canAccess = false
-    var hasCustomIcon = false
-    var originalFolderIcon: NSImage?
+
+    var canAccess: Bool {
+        let result1 = filemanager.isWritableFile(atPath: appURL.path())
+        var result2 = false
+        do {
+            result2 = try appURL.checkResourceIsReachable()
+        } catch {
+            symlog.error("checkResourceIsReachable: FAIL")
+        }
+        //        if !result1 || !result2 {
+        //            symlog.warning("no access: \(String(describing: appURL?.absoluteString)) writeable: \(result1) reachable: \(result2)")
+        //        }
+        return result1 && result2
+    }
+
+    var hasCustomIcon: Bool {
+        let customIconURL = appURL.appendingPathComponent(CUSTOM_ICON_NAME)
+        let result = filemanager.fileExists(atPath: customIconURL.path)
+        return result
+    }
+
     var hasMyCustomIcon: Bool {
         return xattr?.hasAttribute(CUSTOM_ICON_ID) ?? false
     }
@@ -47,19 +98,17 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         return result
     }
 
-    @Published var children = [AppEntry]()
-    @Published var directoryEntry: AppEntry?
-    var iconDictionary: [String: NSImage]?
-    var icons: [NSImage]?
-    @Published var appImage: NSImage?
-    var originalImage: NSImage?
-    var isFolder = false
-    var attributes: [FileAttributeKey: Any] = [:]
-    var xattr: XATTR?
-    var processedURLs = Set<URL>()
+    var isFolder: Bool {
+        let fileType = attributes[FileAttributeKey.type] as? String
+        if fileType == "NSFileTypeSymbolicLink" {
+            return false // symlinks can't be a folder for now
+        }
+        return (fileType == "NSFileTypeDirectory") ? true : false
+    }
+
 
     enum CodingKeys: String, CodingKey {
-        case id, name, appURL, isLeaf, isApp, canAccess, hasCustomIcon
+        case id, name, appURL
         // Add other properties you want to encode/decode
     }
 
@@ -68,11 +117,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(appURL, forKey: .appURL)
-        try container.encode(isLeaf, forKey: .isLeaf)
-//        try container.encode(isApp, forKey: .isApp)
-        try container.encode(canAccess, forKey: .canAccess)
-        try container.encode(hasCustomIcon, forKey: .hasCustomIcon)
-        // Encode other properties
     }
 
     required init(from decoder: Decoder) throws {
@@ -80,11 +124,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decodeIfPresent(String.self, forKey: .name)
         appURL = try container.decode(URL.self, forKey: .appURL)
-        isLeaf = try container.decode(Bool.self, forKey: .isLeaf)
-//        isApp = try container.decode(Bool.self, forKey: .isApp)
-        canAccess = try container.decode(Bool.self, forKey: .canAccess)
-        hasCustomIcon = try container.decode(Bool.self, forKey: .hasCustomIcon)
-        // Decode other properties
         super.init()
     }
 
@@ -94,7 +133,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     }
 
     required init(withURL url: URL) {
-        self.appURL = url
+        appURL = url
         super.init()
 //        symlog.value("\(#function) url: \(url.path)")
         collectEntries()
@@ -107,17 +146,11 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         } catch {
             symlog.error("attributes: FAIL")
         }
-            xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
-        isLeaf = isALeaf(appURL)
-        isFolder = isAFolder(appURL)
-        hasCustomIcon = hasACustomIcon()
-//        isApp = isAnApp(appURL)
-        canAccess = userCanAccess()
+        xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
         name = appURL.lastPathComponent
-        originalImage = NSWorkspace.shared.icon(for: UTType.folder)
+        originalImage = workspace.icon(for: UTType.folder)
         if isApp {
-            isLeaf = false
-            originalImage = NSWorkspace.shared.icon(forFile: appURL.path)
+            originalImage = workspace.icon(forFile: appURL.path)
             originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
             appImage = originalImage
         } else if isFolder {
@@ -125,11 +158,11 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
                 originalImage = getCustomFolderIcon(folderURL: appURL)
                 originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
             } else {
-                originalImage = NSWorkspace.shared.icon(forFile: appURL.path)
+                originalImage = workspace.icon(forFile: appURL.path)
                 originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
             }
             appImage = originalImage
-            if isNotSpecial() {
+            if !isSpecial {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     self.children = []
@@ -149,15 +182,13 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     }
 
     func getCustomFolderIcon(folderURL: URL) -> NSImage? {
-        let workspace = NSWorkspace.shared
-
         // Get the icon for the folder
         let icon = workspace.icon(forFile: folderURL.path)
 
         // Check if the icon is custom (not the default folder icon)
         if icon.isValid {
             if let folderUTType = UTType(filenameExtension: "folder") {
-                let defaultFolderIcon = NSWorkspace.shared.icon(for: folderUTType)
+                let defaultFolderIcon = workspace.icon(for: folderUTType)
                 if !icon.isEqual(defaultFolderIcon) {
                     return icon
                 }
@@ -168,7 +199,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         let iconFileName = "Icon\r"
         let iconFileURL = folderURL.appendingPathComponent(iconFileName)
 
-        if FileManager.default.fileExists(atPath: iconFileURL.path) {
+        if filemanager.fileExists(atPath: iconFileURL.path) {
             // If "Icon\r" file exists, get its icon
             return workspace.icon(forFile: iconFileURL.path)
         }
@@ -185,11 +216,10 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         var entries: [AppEntry] = []
 
         guard let currentDir = atPath ?? currentDirectory else { return entries }
-        let fm = FileManager.default
 
         do {
             let keys = [URLResourceKey.nameKey, URLResourceKey.isDirectoryKey, URLResourceKey.isPackageKey]
-            let contents = try fm.contentsOfDirectory(at: URL(fileURLWithPath: currentDir), includingPropertiesForKeys: keys, options: .skipsHiddenFiles)
+            let contents = try filemanager.contentsOfDirectory(at: URL(fileURLWithPath: currentDir), includingPropertiesForKeys: keys, options: .skipsHiddenFiles)
 
             for item in contents {
                 if item.path.hasSuffix("Applications") || item.path.hasSuffix(".Trash") { continue }
@@ -372,63 +402,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         return resultImage
     }
 
-    func isALeaf(_ url: URL?) -> Bool {
-        let fileType = attributes[FileAttributeKey.type] as! String
-
-        if fileType == "NSFileTypeDirectory" {
-            return false // folders are not leafs
-        }
-        if fileType == "NSFileTypeSymbolicLink" {
-            return false // symlinks can't be a leaf for now
-        }
-        if url?.pathExtension == "app" {
-            return false // nor are Apps
-        }
-        return true
-    }
-
-    func isAFolder(_ url: URL?) -> Bool {
-        let fileType = attributes[FileAttributeKey.type] as? String
-        if fileType == "NSFileTypeSymbolicLink" {
-            return false // symlinks can't be a folder for now
-        }
-        return (fileType == "NSFileTypeDirectory") ? true : false
-    }
-
-    func isAnApp(_ url: URL?) -> Bool {
-        let ws = NSWorkspace.shared
-        let result = ws.isFilePackage(atPath: url?.path ?? "")
-        return result
-    }
-
-    func isNotSpecial() -> Bool {
-        let specialNames = ["Utilities"]
-        let result = specialNames.contains(name ?? "")
-        return !result
-    }
-
-    func userCanAccess() -> Bool {
-        let fm = FileManager.default
-        let result1 = fm.isWritableFile(atPath: (appURL.path()))
-        var result2 = false
-        do {
-            result2 = try appURL.checkResourceIsReachable()
-        } catch {
-            symlog.error("checkResourceIsReachable: FAIL")
-        }
-//        if !result1 || !result2 {
-//            symlog.warning("no access: \(String(describing: appURL?.absoluteString)) writeable: \(result1) reachable: \(result2)")
-//        }
-        return result1 && result2
-    }
-
-    func hasACustomIcon() -> Bool {
-        let fm = FileManager.default
-        let customIconURL = appURL.appendingPathComponent(CUSTOM_ICON_NAME)
-        let result = fm.fileExists(atPath: customIconURL.path)
-        return result
-    }
-
     /// Looks in the directoryToScan items which are directories or packages. If found an entry is created and checked if it is an application.
     /// If so, the entry is added as a child entry. If the item was a package, no further recursion is needed as packages are not applications per say.
     /// The folder being scanned is limited by the value in MAX_LEVEL
@@ -460,12 +433,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
                 }
             }
         }
-    }
-
-    func folderHasCustomIcon(path: String) -> Bool {
-        let iconPath = NSString.path(withComponents: [path, "Icon\r"])
-        let r = FileManager.default.fileExists(atPath: iconPath)
-        return r
     }
 
     func pathWithName() -> String? {
@@ -576,7 +543,7 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         }
 
         // ask_software_developer How to get the icon used for a folder?
-        var folderIcon = NSWorkspace.shared.icon(for: UTType.folder)
+        var folderIcon = workspace.icon(for: UTType.folder)
         // Setup for the composite image with size same as the current icon
         let point = NSPoint(x: 0.0, y: 0.0)
         let currentSize = folderIcon.size
