@@ -26,7 +26,7 @@ enum ShowOption: Int, CaseIterable, Identifiable {
 struct MainView: View {
     @Binding var searchText: String
     @Binding var showOptions: ShowOption
-    var filteredEntries: [String: [AppEntry]]
+    @Binding var filteredEntries: [String: [AppEntry]]
     let appData: AppData
 
     private var groupedFolderEntries: [(UUID, String, [String: [AppEntry]])] {
@@ -51,8 +51,12 @@ struct MainView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                     ForEach(groupedFolderEntries, id: \.0) { _, _, subfolders in
-                        ForEach(subfolders.keys.sorted(), id: \.self) { subfolderName in
-                            SubfolderView(showOptions: $showOptions, filteredEntries: filteredEntries, subfolderName: subfolderName)
+                        ForEach(subfolders.keys.sorted(), id: \.self) { _ in
+                            SubfolderView(
+                                subfolderName: subfolders.keys.sorted().first ?? "YourSubfolderName",
+                                filteredEntries: $filteredEntries,
+                                showOptions: $showOptions
+                            )
                         }
                     }
                 }
@@ -87,28 +91,35 @@ struct SearchBar: View {
 }
 
 struct SubfolderView: View {
-    @Binding var showOptions: ShowOption
-    var filteredEntries: [String: [AppEntry]]
     let subfolderName: String
+    @Binding var filteredEntries: [String: [AppEntry]]
+    @Binding var showOptions: ShowOption
 
     var body: some View {
-        Section(header: Text(subfolderName).font(.title)) {
-            ForEach(Array(filteredEntries[subfolderName] ?? []).indices, id: \.self) { index in
-                let entry = filteredEntries[subfolderName]![index]
-                switch showOptions {
-                case .all:
-                    AppFolderView(entry: entry, showOptions: $showOptions)
-                case .unmodified:
-                    if entry.isNotSpecial() {
-                        AppFolderView(entry: entry, showOptions: $showOptions)
-                    }
-                case .exposed:
-                    if !entry.hasMyCustomIcon {
-                        AppFolderView(entry: entry, showOptions: $showOptions)
+//        Section {
+            ForEach(Array(filteredEntries.keys.sorted().enumerated()), id: \.element) { _, key in
+                if let entries = filteredEntries[key] {
+                    Section(header: Text(key)) {
+                        ForEach(Array(entries.enumerated()), id: \.offset) { _, entry in
+                            switch showOptions {
+                            case .all:
+                                AppFolderView(entry: entry, showOptions: $showOptions)
+                            case .unmodified:
+                                if !entry.isSpecial {
+                                    AppFolderView(entry: entry, showOptions: $showOptions)
+                                }
+                            case .exposed:
+                                if !entry.hasMyCustomIcon {
+                                    AppFolderView(entry: entry, showOptions: $showOptions)
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
+//        } header: {
+//            Text(subfolderName).font(.title)
+//        }
     }
 }
 
@@ -120,8 +131,10 @@ struct AppFoldersView: View {
     @State private var showOptions: ShowOption = .all
     @State private var subfolders: [String: [AppEntry]] = [:]
     @State private var searchText: String = ""
-
-    var filteredEntries: [String: [AppEntry]] {
+    @State private var filteredEntries: [String: [AppEntry]] = [:]
+    @State private var refreshTrigger: UUID?
+    
+    var entries: [String: [AppEntry]] {
         subfolders.mapValues { entries in
             entries.filter { entry in
                 let nameMatch = searchText.isEmpty || ((entry.name?.lowercased().contains(searchText.lowercased())) != nil)
@@ -139,7 +152,6 @@ struct AppFoldersView: View {
     }
 
     var body: some View {
-//        let _ = symlog.debug("AppFoldersViews")
         VStack {
             HStack {
                 VStack(alignment: .leading) {
@@ -149,21 +161,12 @@ struct AppFoldersView: View {
                         }
                     }
                     .pickerStyle(.radioGroup)
-//                        .onChange(of: showOptions) { _, new in
-//                        switch new {
-//                        case .all:
-//                            unmodified = false
-//                        case .unmodified:
-//                            unmodified = true
-//                        case .exposed:
-//                            unmodified = false
-//                        }
-//                    }
                     Spacer()
                 }
                 .padding(.top)
                 .frame(width: 140)
-                MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: filteredEntries, appData: appData)
+                
+                MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: $filteredEntries, appData: appData)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -172,6 +175,13 @@ struct AppFoldersView: View {
             symlog.info("Fetching Apps")
             await fetchApps()
         }
+        .onChange(of: entries) { _, newEntries in
+            filteredEntries = newEntries
+            if refreshTrigger == nil {
+                refreshTrigger = UUID()
+            }
+        }
+        .id(refreshTrigger)
     }
 
     private func fetchApps() async {
