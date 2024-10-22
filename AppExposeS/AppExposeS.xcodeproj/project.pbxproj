@@ -37,6 +37,9 @@
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
+		75ECE8F62CC7A731003C2180 /* SubfolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ECE8F52CC7A731003C2180 /* SubfolderView.swift */; };
+		75ECE8FD2CC7AC35003C2180 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ECE8FC2CC7AC35003C2180 /* Preview.swift */; };
+		75ECE8FF2CC7B031003C2180 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ECE8FE2CC7B031003C2180 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +139,9 @@
 		758FD2462C7769AC00878379 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = ../xattr/xattr.xcodeproj; sourceTree = "<group>"; };
 		75C569A32CAD877F0078874D /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		75C811AC2C8B5D9200478C98 /* ImageReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReducer.swift; sourceTree = "<group>"; };
+		75ECE8F52CC7A731003C2180 /* SubfolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubfolderView.swift; sourceTree = "<group>"; };
+		75ECE8FC2CC7AC35003C2180 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
+		75ECE8FE2CC7B031003C2180 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,10 +216,13 @@
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
 				752C5AC228C8D90000057685 /* DirectorySelectorView.swift */,
 				752C5AC628C8F8ED00057685 /* AppFoldersView.swift */,
+				75ECE8FE2CC7B031003C2180 /* MainView.swift */,
+				75ECE8F52CC7A731003C2180 /* SubfolderView.swift */,
 				7562C7E12CB2DDDA00EA71B5 /* FolderHeaderView.swift */,
 				7562C7DA2CB2DD9E00EA71B5 /* RemoteImageView.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
 				753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */,
+				75ECE8FC2CC7AC35003C2180 /* Preview.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -433,10 +442,12 @@
 			files = (
 				75B30BB62C9AD982007F53F1 /* XATTR.swift in Sources */,
 				75C569A42CAD87800078874D /* Folder.swift in Sources */,
+				75ECE8FD2CC7AC35003C2180 /* Preview.swift in Sources */,
 				7531AC8F2C8AC78F0079419C /* ImageReducer.m in Sources */,
 				7562C7E22CB2DDDA00EA71B5 /* FolderHeaderView.swift in Sources */,
 				752C5AC728C8F8ED00057685 /* AppFoldersView.swift in Sources */,
 				752C5AC328C8D90000057685 /* DirectorySelectorView.swift in Sources */,
+				75ECE8FF2CC7B031003C2180 /* MainView.swift in Sources */,
 				750EECF428C7CC4B00A174BB /* Help.swift in Sources */,
 				750EECEE28C7CBF300A174BB /* AppDelegate.swift in Sources */,
 				750EECF528C7CC4B00A174BB /* AppEntry.swift in Sources */,
@@ -450,6 +461,7 @@
 				750EED0728C7D83200A174BB /* Extensions.swift in Sources */,
 				757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */,
 				753F32A22C9C780200C61ED2 /* AppFolderDetailView.swift in Sources */,
+				75ECE8F62CC7A731003C2180 /* SubfolderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,7 +626,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AppExpose/AppExposeS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -649,7 +661,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AppExpose/AppExposeS-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
