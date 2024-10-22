@@ -1,3 +1,10 @@
+//
+//  MainView.swift
+//  AppExposeS
+//
+//  Created by Dave Carlton on 10/22/24.
+//
+
 import SwiftUI
 
 struct MainView: View {
@@ -9,6 +16,7 @@ struct MainView: View {
 
     private var groupedFolderEntries: [(UUID, String, [String: [AppEntry]])] {
         let folderOrder = Dictionary(uniqueKeysWithValues: appData.appFolders.enumerated().map { ($0.element.id, $0.offset) })
+        symlog.value("Folders: \(appData.appFolders.count) child entries")
 
         let theFolders = appData.appFolders
             .map { folder in
@@ -19,6 +27,7 @@ struct MainView: View {
                 })
             }
             .sorted { folderOrder[$0.0, default: 0] < folderOrder[$1.0, default: 0] }
+        symlog.value("\(#function)• Folders: \(theFolders.count) child entries")
         return theFolders
     }
 
@@ -34,9 +43,13 @@ struct MainView: View {
 //            .padding()
 
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 250, maximum: 300))], alignment: .center, spacing: 20) {
                     ForEach(groupedFolderEntries, id: \.0) { _, _, subfolders in
+                        let _ = symlog.value("Found \(subfolders.count) subfolders")
                         ForEach(subfolders.keys.sorted(), id: \.self) { _ in
+//                            RoundedRectangle(cornerRadius: 5)
+//                                .fill(Color.blue)
+//                                .frame(width: 50, height: 50)
                             SubfolderView(
                                 subfolderName: subfolders.keys.sorted().first ?? "YourSubfolderName",
                                 filteredEntries: $filteredEntries,
@@ -46,10 +59,17 @@ struct MainView: View {
                         }
                     }
                 }
+                .padding()
+                .border(.secondary)
             }
             .onChange(of: showOptions) { oldValue, newValue in
                 symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
             }
         }
     }
+}
+
+#Preview {
+    let preview = Preview()
+    MainView(searchText: .constant(""), showOptions: preview.$showOptions, filteredEntries: .constant(["Applications": preview.entries]), sortOption: preview.sortOption, appData: preview.appData)
 }

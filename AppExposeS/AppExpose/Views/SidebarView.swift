@@ -42,7 +42,7 @@ struct SidebarView: View {
 }
 
 // Toggle Sidebar Function
-func toggleSidebar() {
+@MainActor func toggleSidebar() {
     NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
 }
 

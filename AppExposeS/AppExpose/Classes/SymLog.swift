@@ -241,6 +241,22 @@ public class SymLog<Category: LogCategory> {
     private func format(message: String, subsystemColor: OSLog.logColor, categoryColor: OSLog.logColor) -> String {
         let subsystemEmoji = emoji(for: subsystemColor)
         let categoryEmoji = emoji(for: categoryColor)
+        let callStackSymbols = Thread.callStackSymbols
+        if callStackSymbols.count > 1 {
+            let callingFunction = callStackSymbols[3]
+            let mirror = Mirror(reflecting: callingFunction)
+            let callingFunctionSymbol = callStackSymbols[3]
+            let symbol = callingFunctionSymbol.split(separator: " ").first ?? ""
+
+            if let displayStyle = mirror.displayStyle {
+                let callingFunctionName = mirror.children.first(where: { $0.label == "get" })?.value as? String ?? ""
+                
+                //            let callingFunctionName = callStackSymbols[3].components(separatedBy: " ")[18] ?? ""
+                return "\(callingFunctionName)•\(subsystemEmoji) \(categoryEmoji) \(message)"
+            } else {
+                return "\(subsystemEmoji) \(categoryEmoji) \(message)"
+            }
+        }
         return "\(subsystemEmoji) \(categoryEmoji) \(message)"
     }
 
@@ -364,9 +380,9 @@ class LoggerContext {
 /// This struct allows for dynamic creation of log categories at runtime,
 /// providing flexibility when the exact categories are not known at compile time.
 public struct AnyLogCategory: LogCategory {
-    public static var subsystem: String = ""
-    public static var logidentifier: String = ""
-    public static var rawValue: String = "AnyLogCategory"
+    public static let subsystem: String = ""
+    public static let logidentifier: String = ""
+    public static let rawValue: String = "AnyLogCategory"
     public let rawValue: String
 
     /// Initializes a new AnyLogCategory instance.

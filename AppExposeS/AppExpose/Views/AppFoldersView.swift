@@ -23,50 +23,14 @@ enum ShowOption: Int, CaseIterable, Identifiable {
     }
 }
 
-struct MainView: View {
-    @Binding var searchText: String
-    @Binding var showOptions: ShowOption
-    @Binding var filteredEntries: [String: [AppEntry]]
-    let appData: AppData
-
-    private var groupedFolderEntries: [(UUID, String, [String: [AppEntry]])] {
-        let folderOrder = Dictionary(uniqueKeysWithValues: appData.appFolders.enumerated().map { ($0.element.id, $0.offset) })
-
-        let theFolders = appData.appFolders
-            .map { folder in
-                (folder.id, folder.name, Dictionary(grouping: folder.entries) { entry in
-                    let path = entry.appURL.deletingLastPathComponent().path
-                    let check = path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
-                    return check
-                })
-            }
-            .sorted { folderOrder[$0.0, default: 0] < folderOrder[$1.0, default: 0] }
-        return theFolders
-    }
-
-    var body: some View {
-        VStack {
-            SearchBar(text: $searchText)
-
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                    ForEach(groupedFolderEntries, id: \.0) { _, _, subfolders in
-                        ForEach(subfolders.keys.sorted(), id: \.self) { _ in
-                            SubfolderView(
-                                subfolderName: subfolders.keys.sorted().first ?? "YourSubfolderName",
-                                filteredEntries: $filteredEntries,
-                                showOptions: $showOptions
-                            )
-                        }
-                    }
-                }
-            }
-            .onChange(of: showOptions) { oldValue, newValue in
-                symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
-            }
-        }
-    }
+enum SortOption: String, CaseIterable {
+    case name = "Name"
+    case modifiedDate = "Modified Date"
+    case creationDate = "Creation Date"
+    case addedDate = "Added Date"
 }
+
+
 
 struct SearchBar: View {
     @Binding var text: String
@@ -90,38 +54,7 @@ struct SearchBar: View {
     }
 }
 
-struct SubfolderView: View {
-    let subfolderName: String
-    @Binding var filteredEntries: [String: [AppEntry]]
-    @Binding var showOptions: ShowOption
 
-    var body: some View {
-//        Section {
-            ForEach(Array(filteredEntries.keys.sorted().enumerated()), id: \.element) { _, key in
-                if let entries = filteredEntries[key] {
-                    Section(header: Text(key)) {
-                        ForEach(Array(entries.enumerated()), id: \.offset) { _, entry in
-                            switch showOptions {
-                            case .all:
-                                AppFolderView(entry: entry, showOptions: $showOptions)
-                            case .unmodified:
-                                if !entry.isSpecial {
-                                    AppFolderView(entry: entry, showOptions: $showOptions)
-                                }
-                            case .exposed:
-                                if !entry.hasMyCustomIcon {
-                                    AppFolderView(entry: entry, showOptions: $showOptions)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-//        } header: {
-//            Text(subfolderName).font(.title)
-//        }
-    }
-}
 
 struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
@@ -133,7 +66,7 @@ struct AppFoldersView: View {
     @State private var searchText: String = ""
     @State private var filteredEntries: [String: [AppEntry]] = [:]
     @State private var refreshTrigger: UUID?
-    
+
     var entries: [String: [AppEntry]] {
         subfolders.mapValues { entries in
             entries.filter { entry in
@@ -163,13 +96,11 @@ struct AppFoldersView: View {
                     .pickerStyle(.radioGroup)
                     Spacer()
                 }
-                .padding(.top)
-                .frame(width: 140)
-                
+                .padding()
                 MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: $filteredEntries, appData: appData)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
         .task {
             symlog.info("Fetching Apps")
@@ -202,18 +133,10 @@ struct AppFoldersView: View {
 }
 
 struct AppFoldersViews_Previews: PreviewProvider {
-    static let mockAppData: AppData = {
-        symlog.info("mockAppData")
-        let data = AppData()
-        let entries = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
-        let folder = Folder(id: UUID(), name: "Apps", url: URL(fileURLWithPath: "/Users/davec/Applications"), entries: entries)
-        data.appFolders = [folder]
-        return data
-    }()
+    static let preview = Preview()
 
     static var previews: some View {
-//        let folders = [Folder(id: 1, name: "Apps", url: URL(fileURLWithPath: "/Users/davec/Applications"))]
         AppFoldersView()
-            .environmentObject(mockAppData)
+            .environmentObject(preview.appData)
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 
 class SettingsManager {
     let defaults = UserDefaults.standard
-    static let shared = SettingsManager()
+    @MainActor static let shared = SettingsManager()
     
     func setFolderArray(_ array: [Folder], forKey key: String) {
         let encoder = JSONEncoder()
@@ -87,7 +87,7 @@ struct SettingsView: View {
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        let _ = symlog.entry("SettingsView")
+        let _ = symlog.entry("\(#function)• SettingsView")
         Form {
             Section(header: Text("Application Folders")) {
                 ZStack {

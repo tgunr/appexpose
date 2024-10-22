@@ -20,7 +20,7 @@ enum XATTROptions: Int {
     case showcompressions = 0x0020
 }
 
-var errorDescription: String?
+@MainActor var errorDescription: String?
 // Make and return custom domain error.
 // var underlyingError = NSError(domain: NSPOSIXErrorDomain, code: errno, userInfo: nil)
 // var objArray = [errorDescription, underlyingError, url?.path]

@@ -23,12 +23,16 @@ class AppFolder: ObservableObject {
     @Published var model: AppEntry?
 }
 
-let workspace = NSWorkspace.shared
-let filemanager = FileManager.default
+@MainActor let workspace = NSWorkspace.shared
+@MainActor let filemanager = FileManager.default
 
-class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
+@MainActor
+class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preconcurrency Codable {
     var id: UUID = UUID()
     var name: String?
+    var addedDate: Date?
+    var modifiedDate: Date?
+    var createdDate: Date?
     var appURL: URL
     var childIcons: [AnyHashable]?
     var originalFolderIcon: NSImage?
@@ -42,10 +46,11 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
     var xattr: XATTR?
     var processedURLs = Set<URL>()
 
-    var isSpecial: Bool {
+    @MainActor var isSpecial: Bool {
         let path = appURL.path
         let iconPath = NSString.path(withComponents: [path, "Icon\r"])
-        return filemanager.fileExists(atPath: iconPath)
+        let exists = filemanager.fileExists(atPath: iconPath)
+        return exists
     }
 
     var isLeaf: Bool {
@@ -106,7 +111,6 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         return (fileType == "NSFileTypeDirectory") ? true : false
     }
 
-
     enum CodingKeys: String, CodingKey {
         case id, name, appURL
         // Add other properties you want to encode/decode
@@ -148,6 +152,10 @@ class AppEntry: NSObject, Identifiable, ObservableObject, Codable {
         }
         xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
         name = appURL.lastPathComponent
+        createdDate = (attributes[FileAttributeKey.creationDate] as! Date)
+        modifiedDate = (attributes[FileAttributeKey.modificationDate] as! Date)
+        addedDate = (attributes[FileAttributeKey.creationDate] as! Date)
+
         originalImage = workspace.icon(for: UTType.folder)
         if isApp {
             originalImage = workspace.icon(forFile: appURL.path)

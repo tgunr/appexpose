@@ -11,7 +11,7 @@ import SLogMacro
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     // create a shared instance of the AppDelegate
-    static let shared = AppDelegate()
+    @MainActor  static let shared = AppDelegate()
 
     @Published var isActive: Bool = true
 

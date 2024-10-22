@@ -7,16 +7,17 @@
 
 import SwiftUI
 
+@MainActor
 struct Preview {
-    var data = AppData()
+    var appData = AppData()
     var entries = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
     var folder: Folder
 
     init() {
         folder = Folder(id: UUID(), name: "Apps", url: URL(fileURLWithPath: "/Users/davec/Applications"), entries: entries)
-        data.appFolders = [folder]
+        appData.appFolders = [folder]
     }
 
-    let mockShowOptions = ShowOption.all
-    let mockSortOption = SortOption.name
+    @State var showOptions = ShowOption.all
+    @State var sortOption = SortOption.name
 }

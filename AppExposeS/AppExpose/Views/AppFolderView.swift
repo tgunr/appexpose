@@ -45,7 +45,7 @@ struct AppFolderView: View {
                 Image(nsImage: appImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
+                    .frame(width: 32, height: 32)
             } else {
                 if entry.name == "!NCViewer" {
                     let _ = symlog.info("AppFolderView folder")
@@ -53,13 +53,13 @@ struct AppFolderView: View {
                 Image(systemName: "folder")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
+                    .frame(width: 32, height: 32)
             }
             Text(entry.name ?? "none")
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
         }
-        .frame(width: 150, height: 100)
+        .frame(width: 50, height: 50)
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(10)

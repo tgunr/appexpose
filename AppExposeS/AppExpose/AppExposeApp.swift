@@ -22,13 +22,13 @@ let logCategories: [String: OSLog.logColor] = [
     "error": .red,
 ]
 
-let symlog = createLogger("app", subsystem: logid, subsystemColor: .black, categories: logCategories)
-let uilog = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
-let storelog = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
+@MainActor let symlog = createLogger("app", subsystem: logid, subsystemColor: .black, categories: logCategories)
+@MainActor let uilog = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
+@MainActor let storelog = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
 
 
 class AppData: NSObject, ObservableObject {
-    static let shared = AppData()
+    @MainActor   static let shared = AppData()
     var iconSize: Double = 32.0
     @Published var appFolders: [Folder] = []
     @Published var bold = true

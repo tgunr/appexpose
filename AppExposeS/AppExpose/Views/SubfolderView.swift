@@ -1,3 +1,11 @@
+//
+//  SubfolderView.swift
+//  AppExposeS
+//
+//  Created by Dave Carlton on 10/22/24.
+//
+
+
 import SwiftUI
 
 struct SubfolderView: View {
@@ -48,7 +56,22 @@ struct SubfolderView: View {
                         }
                     }
                 }
+                .padding(.top)
             }
         }
     }
 }
+
+struct SubfolderView_Previews: PreviewProvider {
+    static let preview = Preview()
+
+    static var previews: some View {
+        SubfolderView(
+            subfolderName: "Applications",
+            filteredEntries: .constant(["Applications": preview.entries]),
+            showOptions: .constant(.all),
+            sortOption: .name
+        )
+    }
+}
+
