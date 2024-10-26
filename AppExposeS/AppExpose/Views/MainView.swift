@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct FolderData {
+    let id: UUID
+    let name: String
+    let groupedEntries: [String: [AppEntry]]
+}
+
 struct MainView: View {
     @Binding var searchText: String
     @Binding var showOptions: ShowOption
@@ -14,25 +20,8 @@ struct MainView: View {
     @State var sortOption: SortOption = .name
     let appData: AppData
 
-    private var groupedFolderEntries: [(UUID, String, [String: [AppEntry]])] {
-        let folderOrder = Dictionary(uniqueKeysWithValues: appData.appFolders.enumerated().map { ($0.element.id, $0.offset) })
-        symlog.value("Folders: \(appData.appFolders.count) child entries")
-
-        let theFolders = appData.appFolders
-            .map { folder in
-                (folder.id, folder.name, Dictionary(grouping: folder.entries) { entry in
-                    let path = entry.appURL.deletingLastPathComponent().path
-                    let check = path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
-                    return check
-                })
-            }
-            .sorted { folderOrder[$0.0, default: 0] < folderOrder[$1.0, default: 0] }
-        symlog.value("\(#function)• Folders: \(theFolders.count) child entries")
-        return theFolders
-    }
-
-    var body: some View {
-        VStack {
+    var headerView: some View {
+        Group {
             SearchBar(text: $searchText)
             Picker("", selection: $sortOption) {
                 ForEach(SortOption.allCases, id: \.self) { option in
@@ -40,33 +29,54 @@ struct MainView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-//            .padding()
+        }
+    }
 
+    var body: some View {
+        let folderEntries = appData.appFolders.map { folder -> FolderData in
+            let grouped = Dictionary(grouping: folder.entries) { entry in
+                let path = entry.appURL.deletingLastPathComponent().path
+                let check = path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
+                return check
+            }
+            return FolderData(id: folder.id, name: folder.name, groupedEntries: grouped)
+        }
+
+        let folderOrder = Dictionary(uniqueKeysWithValues: appData.appFolders.enumerated().map { ($0.element.id, $0.offset) })
+
+        let sortedEntries = folderEntries.sorted { folderOrder[$0.id, default: 0] < folderOrder[$1.id, default: 0] }
+
+        VStack {
+            headerView
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 250, maximum: 300))], alignment: .center, spacing: 20) {
-                    ForEach(groupedFolderEntries, id: \.0) { _, _, subfolders in
-                        let _ = symlog.value("Found \(subfolders.count) subfolders")
-                        ForEach(subfolders.keys.sorted(), id: \.self) { _ in
-//                            RoundedRectangle(cornerRadius: 5)
-//                                .fill(Color.blue)
-//                                .frame(width: 50, height: 50)
-                            SubfolderView(
-                                subfolderName: subfolders.keys.sorted().first ?? "YourSubfolderName",
-                                filteredEntries: $filteredEntries,
-                                showOptions: $showOptions,
-                                sortOption: sortOption
-                            )
-                        }
+                LazyVGrid(columns: [
+                    GridItem(.adaptive(minimum: 100)),
+                ]) {
+                    ForEach(sortedEntries, id: \.id) { folder in
+                        makeFolderSection(folder: folder)
                     }
                 }
                 .padding()
-                .border(.secondary)
             }
-            .onChange(of: showOptions) { oldValue, newValue in
-                symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
+        }
+
+        .onChange(of: showOptions) { oldValue, newValue in
+            symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
+        }
+    }
+    
+    func makeFolderSection(folder: FolderData) -> some View {
+        ForEach(folder.groupedEntries.keys.sorted(), id: \.self) { key in
+            Section(header: Text(key)) {
+                ForEach(folder.groupedEntries[key] ?? [], id: \.id) { entry in
+                    if let entries = folder.groupedEntries[key] {
+                        SubfolderView(filteredEntries: .constant(entries), showOptions: $showOptions, sortOption: sortOption)
+                    }
+                }
             }
         }
     }
+
 }
 
 #Preview {

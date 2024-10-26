@@ -59,7 +59,7 @@ struct AppFolderView: View {
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
         }
-        .frame(width: 50, height: 50)
+//        .frame(width: 50, height: 50)
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(10)

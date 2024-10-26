@@ -100,7 +100,7 @@ struct AppFoldersView: View {
                 MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: $filteredEntries, appData: appData)
             }
         }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
         .task {
             symlog.info("Fetching Apps")
