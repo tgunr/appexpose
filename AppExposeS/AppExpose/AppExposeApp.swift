@@ -28,7 +28,7 @@ let logCategories: [String: OSLog.logColor] = [
 
 
 class AppData: NSObject, ObservableObject {
-    @MainActor   static let shared = AppData()
+    @MainActor static let shared = AppData()
     var iconSize: Double = 32.0
     @Published var appFolders: [Folder] = []
     @Published var bold = true
