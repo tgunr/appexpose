@@ -38,52 +38,28 @@ struct AppFolderView: View {
     var body: some View {
         let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
         VStack {
+            Group {
             if let appImage = entry.appImage {
+                    if entry.name == "!NCViewer" {
+//                        _ = symlog.info("AppFolderView appImage: NCViewer")
+                    }
                 Image(nsImage: appImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 64, height: 64)
             } else {
+                    if entry.name == "!NCViewer" {
+//                        _ = symlog.info("AppFolderView folder")
+                    }
                 Image(systemName: "folder")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 64, height: 64)
             }
             Text(entry.name ?? "none")
-                .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.black)
         }
-        .background(Color.blue.opacity(0.1))
-
-//        VStack {
-//            if let appImage = entry.appImage {
-//                if entry.name == "!NCViewer" {
-//                    let _ = symlog.info("AppFolderView appImage: NCViewer")
-//                }
-//                Image(nsImage: appImage)
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 32, height: 32)
-//            } else {
-//                if entry.name == "!NCViewer" {
-//                    let _ = symlog.info("AppFolderView folder")
-//                }
-//                Image(systemName: "folder")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 32, height: 32)
-//            }
-//            Text(entry.name ?? "none")
-//                .lineLimit(2)
-//                .multilineTextAlignment(.center)
-//        }
-//        .frame(width: 100, height: 100)
-        .padding()
-        .cornerRadius(10)
-        .background(Color.gray)
-        .border(Color.black, width: 1)
+        }
+        .frame(width: 64, height: 64)
     }
 }
 

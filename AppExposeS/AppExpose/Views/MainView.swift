@@ -52,7 +52,7 @@ struct MainView: View {
             headerView
             ScrollView {
                 LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 100)),
+                    GridItem(.adaptive(minimum: 64)),
                 ]) {
                     ForEach(sortedEntries, id: \.id) { folder in
                         makeFolderSection(folder: folder)
