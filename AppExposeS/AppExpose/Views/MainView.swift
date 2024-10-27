@@ -59,29 +59,39 @@ struct MainView: View {
                     }
                 }
                 .padding()
+                .cornerRadius(8)
             }
+            .padding()
         }
+        .padding()
 
         .onChange(of: showOptions) { oldValue, newValue in
             symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
         }
     }
 
-    // chat: the code is repeating endlessly and I don't know why
     func makeFolderSection(folder: FolderData) -> some View {
         let sortedKeys = folder.groupedEntries.keys.sorted()
 
-        return List {
-            ForEach(sortedKeys, id: \.self) { key in
-                let _ = symlog.value("\(#function)  key: \(key)")
-                Section(header: Text(key)) {
-                    let entries = folder.groupedEntries[key] ?? []
-                    ForEach(entries, id: \.id) { entry in
-                        let _ = symlog.value("\(#function)  entry: \(entry.name ?? "none")")
-                        AppFolderView(entry: entry, showOptions: $showOptions)
+        return Group {
+            if hasLoaded {
+                ForEach(sortedKeys, id: \.self) { key in
+//                    let _ = symlog.value("\(#function)  key: \(key)")
+                    Section(header: Text(key)) {
+                        let entries = folder.groupedEntries[key] ?? []
+                        ForEach(entries, id: \.id) { entry in
+                            _ = symlog.value("\(#function)  entry: \(entry.name ?? "none")")
+                            AppFolderView(entry: entry, showOptions: $showOptions)
+                        }
                     }
                 }
+                .listStyle(.sidebar)
+            } else {
+                ProgressView()
             }
+        }
+        .onAppear {
+            hasLoaded = true
         }
     }
 }
