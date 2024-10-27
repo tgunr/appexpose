@@ -238,28 +238,17 @@ public class SymLog<Category: LogCategory> {
     ///   - subsystemColor: The color associated with the subsystem.
     ///   - categoryColor: The color associated with the category.
     /// - Returns: A formatted string with color emojis prepended to the message.
-    private func format(message: String, subsystemColor: OSLog.logColor, categoryColor: OSLog.logColor) -> String {
-        let subsystemEmoji = emoji(for: subsystemColor)
-        let categoryEmoji = emoji(for: categoryColor)
-        let callStackSymbols = Thread.callStackSymbols
-        if callStackSymbols.count > 1 {
-            let callingFunction = callStackSymbols[3]
-            let mirror = Mirror(reflecting: callingFunction)
-            let callingFunctionSymbol = callStackSymbols[3]
-            let symbol = callingFunctionSymbol.split(separator: " ").first ?? ""
-
-            if let displayStyle = mirror.displayStyle {
-                let callingFunctionName = mirror.children.first(where: { $0.label == "get" })?.value as? String ?? ""
-                
-                //            let callingFunctionName = callStackSymbols[3].components(separatedBy: " ")[18] ?? ""
-                return "\(callingFunctionName)•\(subsystemEmoji) \(categoryEmoji) \(message)"
-            } else {
-                return "\(subsystemEmoji) \(categoryEmoji) \(message)"
-            }
-        }
-        return "\(subsystemEmoji) \(categoryEmoji) \(message)"
+private func format(message: String, subsystemColor: OSLog.logColor, categoryColor: OSLog.logColor) -> String {
+    let subsystemEmoji = emoji(for: subsystemColor)
+    let categoryEmoji = emoji(for: categoryColor)
+    let callStackSymbols = Thread.callStackSymbols
+    if callStackSymbols.count > 1 {
+        let callingFunctionSymbol = callStackSymbols[3]
+        let symbol = callingFunctionSymbol.split(separator: " ").first ?? ""
+        return "\(symbol)•\(subsystemEmoji) \(categoryEmoji) \(message)"
     }
-
+    return "\(subsystemEmoji) \(categoryEmoji) \(message)"
+}
     /// Returns an emoji representation for a given color.
     ///
     /// - Parameter color: The color for which to return an emoji.
