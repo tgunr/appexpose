@@ -73,19 +73,20 @@ struct MainView: View {
     func makeFolderSection(folder: FolderData) -> some View {
         let sortedKeys = folder.groupedEntries.keys.sorted()
 
-        return Group {
-            if hasLoaded {
-                ForEach(sortedKeys, id: \.self) { key in
-//                    let _ = symlog.value("\(#function)  key: \(key)")
-                    Section(header: Text(key)) {
-                        let entries = folder.groupedEntries[key] ?? []
-                        ForEach(entries, id: \.id) { entry in
-                            _ = symlog.value("\(#function)  entry: \(entry.name ?? "none")")
-                            AppFolderView(entry: entry, showOptions: $showOptions)
-                        }
+        let folderList = Group {
+            ForEach(sortedKeys, id: \.self) { key in
+                Section(header: Text(key)) {
+                    let entries = folder.groupedEntries[key] ?? []
+                    ForEach(entries, id: \.id) { entry in
+                        AppFolderView(entry: entry, showOptions: $showOptions)
                     }
                 }
-                .listStyle(.sidebar)
+            }
+        }
+
+        return Group {
+            if hasLoaded {
+                folderList
             } else {
                 ProgressView()
             }
