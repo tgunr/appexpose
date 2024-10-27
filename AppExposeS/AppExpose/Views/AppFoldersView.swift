@@ -30,8 +30,6 @@ enum SortOption: String, CaseIterable {
     case addedDate = "Added Date"
 }
 
-
-
 struct SearchBar: View {
     @Binding var text: String
 
@@ -53,8 +51,6 @@ struct SearchBar: View {
         .padding(.horizontal)
     }
 }
-
-
 
 struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
@@ -86,19 +82,7 @@ struct AppFoldersView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Picker("Show", selection: $showOptions) {
-                        ForEach(ShowOption.allCases) { option in
-                            Text(option.description).tag(option)
-                        }
-                    }
-                    .pickerStyle(.radioGroup)
-                    Spacer()
-                }
-                .padding()
-                MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: $filteredEntries, appData: appData)
-            }
+            MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: $filteredEntries, appData: appData)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
