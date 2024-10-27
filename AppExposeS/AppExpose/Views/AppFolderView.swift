@@ -33,42 +33,42 @@ extension View {
 
 struct AppFolderView: View {
     @ObservedObject var entry: AppEntry
-    @Binding var showOptions: ShowOption
-
+    @Binding var showFilter: ShowFilter
+    
     var body: some View {
         let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
         VStack {
             Group {
-            if let appImage = entry.appImage {
+                if let appImage = entry.appImage {
                     if entry.name == "!NCViewer" {
 //                        _ = symlog.info("AppFolderView appImage: NCViewer")
                     }
-                Image(nsImage: appImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } else {
+                    Image(nsImage: appImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
                     if entry.name == "!NCViewer" {
 //                        _ = symlog.info("AppFolderView folder")
                     }
-                Image(systemName: "folder")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    Image(systemName: "folder")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+                Text(entry.name ?? "none")
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
             }
-            Text(entry.name ?? "none")
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-        }
         }
         .frame(width: 64, height: 64)
     }
 }
 
 struct AppFolderView_Previews: PreviewProvider {
-    @State var showOptions: ShowOption = .all
+    @State var showFilter: ShowFilter = .all
 
     static var previews: some View {
         let entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-        AppFolderView(entry: entry, showOptions: .constant(.all)
+        AppFolderView(entry: entry, showFilter: .constant(.all)
         )
     }
 }

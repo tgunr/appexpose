@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ShowOption: Int, CaseIterable, Identifiable {
+enum ShowFilter: Int, CaseIterable, Identifiable {
     case all = 1
     case exposed = 2
     case unmodified = 3
@@ -55,7 +55,7 @@ struct AppFoldersView: View {
     @State var selectedItem: String? = nil
     @State private var currentFolder: String = "/"
     @State private var unmodified: Bool = false
-    @State private var showOptions: ShowOption = .all
+    @State private var showOptions: ShowFilter = .all
     @State private var subfolders: [String: [AppEntry]] = [:]
     @State private var searchText: String = ""
     @State private var filteredEntries: [String: [AppEntry]] = [:]

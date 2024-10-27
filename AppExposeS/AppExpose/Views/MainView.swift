@@ -15,7 +15,7 @@ struct FolderData {
 
 struct MainView: View {
     @Binding var searchText: String
-    @Binding var showOptions: ShowOption
+    @Binding var showOptions: ShowFilter
     @Binding var filteredEntries: [String: [AppEntry]]
     @State var sortOption: SortOption = .name
     let appData: AppData
@@ -58,15 +58,33 @@ struct MainView: View {
                         makeFolderSection(folder: folder)
                     }
                 }
-                .padding()
-                .cornerRadius(8)
             }
             .padding()
         }
-        .padding()
 
-        .onChange(of: showOptions) { oldValue, newValue in
+        .onChange(of: sortOption) { oldValue, newValue in
             symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
+            updateFilteredEntries()
+        }
+    }
+
+    func updateFilteredEntries() {
+        switch sortOption {
+        case .name:
+            filteredEntries = appData.appFolders.reduce(into: [:]) { $0[$1.name] = $1.entries }
+        case .addedDate:
+            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
+                result[folder.name] = folder.entries.sorted { $0.addedDate! < $1.addedDate! }
+            }
+        }
+    }
+
+    func sortEntries(_ entries: [AppEntry], by sortOption: SortOption) -> [AppEntry] {
+        switch sortOption {
+        case .name:
+            return entries.sorted { $0.name ?? "" < $1.name ?? "" }
+        case .addedDate:
+            return entries.sorted { $0.addedDate ?? .distantPast < $1.addedDate ?? .distantPast }
         }
     }
 
@@ -75,10 +93,11 @@ struct MainView: View {
 
         let folderList = Group {
             ForEach(sortedKeys, id: \.self) { key in
-                Section(header: Text(key)) {
+                Section(header: Text(key).font(.headline)) {
                     let entries = folder.groupedEntries[key] ?? []
-                    ForEach(entries, id: \.id) { entry in
-                        AppFolderView(entry: entry, showOptions: $showOptions)
+                    let sortedEntries = sortEntries(entries, by: sortOption)
+                    ForEach(sortedEntries, id: \.id) { entry in
+                        AppFolderView(entry: entry, showFilter: $showOptions)
                     }
                 }
             }

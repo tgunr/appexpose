@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SubfolderView: View {
     @Binding var filteredEntries: [AppEntry]
-    @Binding var showOptions: ShowOption
+    @Binding var showOptions: ShowFilter
     @State var sortOption: SortOption
     @State var sEntries: [AppEntry]?
     private var sortedEntries: [AppEntry] {
@@ -28,7 +28,7 @@ struct SubfolderView: View {
 
     var body: some View {
         ForEach(sortedEntries, id: \.id) { entry in
-            AppFolderView(entry: entry, showOptions: $showOptions)
+            AppFolderView(entry: entry, showFilter: $showOptions)
             .padding(.top)
         }
     }
