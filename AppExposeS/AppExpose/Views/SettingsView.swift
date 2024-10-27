@@ -12,16 +12,16 @@ import Foundation
 class SettingsManager {
     let defaults = UserDefaults.standard
     @MainActor static let shared = SettingsManager()
-    
+
     func setFolderArray(_ array: [Folder], forKey key: String) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .sortedKeys // This ensures consistent encoding order
-        
+
         if let data = try? encoder.encode(array) {
             defaults.set(data, forKey: key)
         }
     }
-    
+
     func getFolderArray(forKey key: String) -> [Folder]? {
         guard let data = defaults.data(forKey: key) else { return nil }
         return try? JSONDecoder().decode([Folder].self, from: data)
@@ -192,6 +192,7 @@ struct SettingsView: View {
 //            appData.appFolders = appData.appFolders // Force update
             print("Folder already exists: \(folderName)")
         }
+        appData.appFolders = appData.appFolders // Force update
     }
 
     func deleteSelectedFolder() {
