@@ -19,6 +19,7 @@ struct MainView: View {
     @Binding var filteredEntries: [String: [AppEntry]]
     @State var sortOption: SortOption = .name
     let appData: AppData
+    @State private var hasLoaded = false
 
     var headerView: some View {
         Group {
@@ -29,6 +30,7 @@ struct MainView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+            .padding()
         }
     }
 
@@ -64,19 +66,24 @@ struct MainView: View {
             symlog.debug("showOptions changed from \(oldValue) to \(newValue)")
         }
     }
-    
+
+    // chat: the code is repeating endlessly and I don't know why
     func makeFolderSection(folder: FolderData) -> some View {
-        ForEach(folder.groupedEntries.keys.sorted(), id: \.self) { key in
-            Section(header: Text(key)) {
-                ForEach(folder.groupedEntries[key] ?? [], id: \.id) { entry in
-                    if let entries = folder.groupedEntries[key] {
-                        SubfolderView(filteredEntries: .constant(entries), showOptions: $showOptions, sortOption: sortOption)
+        let sortedKeys = folder.groupedEntries.keys.sorted()
+
+        return List {
+            ForEach(sortedKeys, id: \.self) { key in
+                let _ = symlog.value("\(#function)  key: \(key)")
+                Section(header: Text(key)) {
+                    let entries = folder.groupedEntries[key] ?? []
+                    ForEach(entries, id: \.id) { entry in
+                        let _ = symlog.value("\(#function)  entry: \(entry.name ?? "none")")
+                        AppFolderView(entry: entry, showOptions: $showOptions)
                     }
                 }
             }
         }
     }
-
 }
 
 #Preview {
