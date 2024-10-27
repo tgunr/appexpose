@@ -36,7 +36,7 @@ struct AppFolderView: View {
     @Binding var showOptions: ShowOption
 
     var body: some View {
-        let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
+//        let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
         VStack {
             if let appImage = entry.appImage {
                 if entry.name == "!NCViewer" {
@@ -59,7 +59,7 @@ struct AppFolderView: View {
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
         }
-//        .frame(width: 50, height: 50)
+        .frame(width: 50, height: 50)
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(10)

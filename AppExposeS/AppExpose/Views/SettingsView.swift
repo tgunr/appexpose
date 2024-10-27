@@ -87,7 +87,7 @@ struct SettingsView: View {
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        let _ = symlog.entry("\(#function)• SettingsView")
+//        let _ = symlog.entry("\(#function)• SettingsView")
         Form {
             Section(header: Text("Application Folders")) {
                 ZStack {
