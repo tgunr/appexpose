@@ -25,41 +25,53 @@ struct ViewDidLoadModifier: ViewModifier {
     }
 }
 
-extension View {
-    func onLoad(perform action: (() -> Void)? = nil) -> some View {
-        modifier(ViewDidLoadModifier(perform: action))
-    }
-}
+// extension View {
+//    func onLoad(perform action: (() -> Void)? = nil) -> some View {
+//        modifier(ViewDidLoadModifier(perform: action))
+//    }
+// }
 
 struct AppFolderView: View {
     @ObservedObject var entry: AppEntry
     @Binding var showFilter: ShowFilter
-    
+
     var body: some View {
         let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
         VStack {
-            Group {
-                if let appImage = entry.appImage {
-                    if entry.name == "!NCViewer" {
+            Button(action: {
+                entry.isSelected.toggle()
+                symlog.info("Selected \(entry.isSelected ? "true" : "false")")
+            }, label: {
+                VStack {
+                    Group {
+                        if let appImage = entry.appImage {
+                            if entry.name == "!NCViewer" {
 //                        _ = symlog.info("AppFolderView appImage: NCViewer")
-                    }
-                    Image(nsImage: appImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    if entry.name == "!NCViewer" {
+                            }
+                            Image(nsImage: appImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            if entry.name == "!NCViewer" {
 //                        _ = symlog.info("AppFolderView folder")
+                            }
+                            Image(systemName: "folder")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
                     }
-                    Image(systemName: "folder")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
+                    .padding(3)
+                    Text(entry.name ?? "none")
+                        .lineLimit(2)
+                        .multilineTextAlignment(.center)
                 }
-                Text(entry.name ?? "none")
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-            }
+                .frame(width: 64, height: 64)
+                .border(.blue, width: entry.isSelected ? 3.0 : 0.0)
+                .background(Color(NSColor.windowBackgroundColor))
+                .cornerRadius(8.0)
+            })
+            .buttonStyle(.bordered)
         }
-        .frame(width: 64, height: 64)
     }
 }
 

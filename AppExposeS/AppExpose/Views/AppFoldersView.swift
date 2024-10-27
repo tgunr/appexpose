@@ -7,20 +7,10 @@
 
 import SwiftUI
 
-enum ShowFilter: Int, CaseIterable, Identifiable {
-    case all = 1
-    case exposed = 2
-    case unmodified = 3
-
-    var id: Int { rawValue }
-
-    var description: String {
-        switch self {
-        case .all: return "All"
-        case .exposed: return "Exposed"
-        case .unmodified: return "Unmodified"
-        }
-    }
+enum ShowFilter: String, CaseIterable {
+    case all = "All"
+    case exposed = "Exposed"
+    case unmodified = "Unmodified"
 }
 
 enum SortOption: String, CaseIterable {
@@ -55,7 +45,7 @@ struct AppFoldersView: View {
     @State var selectedItem: String? = nil
     @State private var currentFolder: String = "/"
     @State private var unmodified: Bool = false
-    @State private var showOptions: ShowFilter = .all
+    @State private var showFilter: ShowFilter = .exposed
     @State private var subfolders: [String: [AppEntry]] = [:]
     @State private var searchText: String = ""
     @State private var filteredEntries: [String: [AppEntry]] = [:]
@@ -66,7 +56,7 @@ struct AppFoldersView: View {
             entries.filter { entry in
                 let nameMatch = searchText.isEmpty || ((entry.name?.lowercased().contains(searchText.lowercased())) != nil)
 
-                switch showOptions {
+                switch showFilter {
                 case .exposed:
                     return nameMatch && entry.hasMyCustomIcon
                 case .unmodified:
@@ -80,7 +70,7 @@ struct AppFoldersView: View {
 
     var body: some View {
         VStack {
-            MainView(searchText: $searchText, showOptions: $showOptions, filteredEntries: $filteredEntries, appData: appData)
+            MainView(searchText: $searchText, showFilter: $showFilter,  filteredEntries: $filteredEntries, appData: appData)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
@@ -88,11 +78,11 @@ struct AppFoldersView: View {
             symlog.info("Fetching Apps")
             await fetchApps()
         }
-        .onChange(of: entries) { _, newEntries in
-            filteredEntries = newEntries
-            if refreshTrigger == nil {
+        .onChange(of: showFilter) { _, newEntries in
+            filteredEntries = entries
+//            if refreshTrigger == nil {
                 refreshTrigger = UUID()
-            }
+//            }
         }
         .id(refreshTrigger)
     }

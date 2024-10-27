@@ -18,6 +18,6 @@ struct Preview {
         appData.appFolders = [folder]
     }
 
-    @State var showOptions = ShowFilter.all
+    @State var showFilter = ShowFilter.all
     @State var sortOption = SortOption.name
 }

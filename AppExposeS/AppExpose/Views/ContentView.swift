@@ -22,7 +22,6 @@ struct ContentView: View {
                 .tag(2)
         }
         .tabViewStyle(.automatic)
-
         FloatingTabBar(selectedTab: $selectedTab)
     }
 }

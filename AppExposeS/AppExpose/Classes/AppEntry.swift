@@ -45,7 +45,8 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preco
     var attributes: [FileAttributeKey: Any] = [:]
     var xattr: XATTR?
     var processedURLs = Set<URL>()
-
+    @Published var isSelected: Bool = false
+    
     @MainActor var isSpecial: Bool {
         let path = appURL.path
         let iconPath = NSString.path(withComponents: [path, "Icon\r"])
