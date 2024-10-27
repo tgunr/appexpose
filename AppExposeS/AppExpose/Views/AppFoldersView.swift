@@ -25,8 +25,6 @@ enum ShowOption: Int, CaseIterable, Identifiable {
 
 enum SortOption: String, CaseIterable {
     case name = "Name"
-    case modifiedDate = "Modified Date"
-    case creationDate = "Creation Date"
     case addedDate = "Added Date"
 }
 

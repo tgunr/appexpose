@@ -21,10 +21,6 @@ struct SubfolderView: View {
         switch sortOption {
         case .name:
             return (entry1.name ?? "").localizedStandardCompare(entry2.name ?? "") == .orderedAscending
-        case .modifiedDate:
-            return (entry1.modifiedDate ?? .distantPast) < (entry2.modifiedDate ?? .distantPast)
-        case .creationDate:
-            return (entry1.createdDate ?? .distantPast) < (entry2.createdDate ?? .distantPast)
         case .addedDate:
             return (entry1.addedDate ?? .distantPast) < (entry2.addedDate ?? .distantPast)
         }
