@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SubfolderView: View {
-    @Binding var filteredEntries: [AppEntry]
+    @Binding var filteredEntries: [EntryFilterData]
     @Binding var showFilter: ShowFilter
     @State var sortOption: SortOption
     @State var sEntries: [AppEntry]?
-    private var sortedEntries: [AppEntry] {
-        let sortedEntries = filteredEntries.sorted { $0.name! < $1.name! }
+    private var sortedEntries: [EntryFilterData] {
+        let sortedEntries = filteredEntries.sorted { $0.name < $1.name }
         return sortedEntries
     }
 

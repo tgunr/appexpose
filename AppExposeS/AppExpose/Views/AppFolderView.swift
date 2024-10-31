@@ -32,7 +32,7 @@ struct ViewDidLoadModifier: ViewModifier {
 // }
 
 struct AppFolderView: View {
-    @ObservedObject var entry: AppEntry
+    @ObservedObject var entry: EntryFilterData
     @Binding var showFilter: ShowFilter
 
     var body: some View {
