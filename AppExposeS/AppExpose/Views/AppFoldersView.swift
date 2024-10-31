@@ -23,7 +23,8 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
-            TextField("Search", text: $text)
+            Image(systemName: "magnifyingglass")
+            TextField("name", text: $text)
                 .padding(7)
                 .cornerRadius(8)
 
@@ -45,7 +46,7 @@ struct AppFoldersView: View {
     @State var selectedItem: String? = nil
     @State private var currentFolder: String = "/"
     @State private var unmodified: Bool = false
-    @State private var showFilter: ShowFilter = .exposed
+    @State private var showFilter: ShowFilter = .all
     @State private var subfolders: [String: [AppEntry]] = [:]
     @State private var searchText: String = ""
     @State private var filteredEntries: [String: [AppEntry]] = [:]
@@ -57,12 +58,12 @@ struct AppFoldersView: View {
                 let nameMatch = searchText.isEmpty || ((entry.name?.lowercased().contains(searchText.lowercased())) != nil)
 
                 switch showFilter {
+                case .all:
+                    return nameMatch
                 case .exposed:
                     return nameMatch && entry.hasMyCustomIcon
                 case .unmodified:
-                    return nameMatch && entry.isFolder && !entry.hasMyCustomIcon
-                case .all:
-                    return nameMatch
+                    return nameMatch && entry.isFolder && !entry.hasMyCustomIcon && !entry.isApp
                 }
             }
         }
@@ -70,18 +71,24 @@ struct AppFoldersView: View {
 
     var body: some View {
         VStack {
-            MainView(searchText: $searchText, showFilter: $showFilter,  filteredEntries: $filteredEntries, appData: appData)
+            MainView(searchText: $searchText, showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
+        .onAppear {
+            symlog.info("AppFoldersView Appeared")
+        }
         .task {
             symlog.info("Fetching Apps")
             await fetchApps()
+            if refreshTrigger == nil {
+                refreshTrigger = UUID()
+            }
         }
-        .onChange(of: showFilter) { _, newEntries in
+        .onChange(of: showFilter) { _, _ in
             filteredEntries = entries
 //            if refreshTrigger == nil {
-                refreshTrigger = UUID()
+            refreshTrigger = UUID()
 //            }
         }
         .id(refreshTrigger)

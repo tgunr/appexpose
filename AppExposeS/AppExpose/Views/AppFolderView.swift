@@ -37,25 +37,27 @@ struct AppFolderView: View {
 
     var body: some View {
         let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
-        VStack {
+
+        let extractedExpr: VStack<some View> = VStack {
             Button(action: {
                 entry.isSelected.toggle()
                 symlog.info("Selected \(entry.isSelected ? "true" : "false")")
             }, label: {
                 VStack {
                     Group {
-                        if let appImage = entry.appImage {
+                        if entry.hasMyCustomIcon {
                             if entry.name == "!NCViewer" {
-//                        _ = symlog.info("AppFolderView appImage: NCViewer")
+                                let _ = symlog.info("AppFolderView appImage: NCViewer")
                             }
-                            Image(nsImage: appImage)
+                            Image(nsImage: entry.appImage!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         } else {
                             if entry.name == "!NCViewer" {
-//                        _ = symlog.info("AppFolderView folder")
+                                let _ = symlog.info("AppFolderView folder")
                             }
-                            Image(systemName: "folder")
+                            Image(nsImage: entry.originalImage!)
+//                            Image(systemName: "folder")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         }
@@ -72,6 +74,18 @@ struct AppFolderView: View {
             })
             .buttonStyle(.bordered)
         }
+        switch showFilter {
+        case .all:
+            extractedExpr
+        case .exposed:
+            if entry.hasMyCustomIcon {
+                extractedExpr
+            }
+        case .unmodified:
+            if !entry.hasMyCustomIcon && entry.isFolder && !entry.isApp {
+                extractedExpr
+            }
+        }
     }
 }
 
@@ -80,7 +94,7 @@ struct AppFolderView_Previews: PreviewProvider {
 
     static var previews: some View {
         let entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-        AppFolderView(entry: entry, showFilter: .constant(.all)
+        AppFolderView(entry: entry, showFilter: .constant(.unmodified)
         )
     }
 }
