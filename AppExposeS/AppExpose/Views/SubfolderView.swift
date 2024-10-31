@@ -29,7 +29,7 @@ struct SubfolderView: View {
     var body: some View {
         ForEach(sortedEntries, id: \.id) { entry in
             AppFolderView(entry: entry, showFilter: $showFilter)
-            .padding(.top)
+//            .padding(.top)
         }
     }
 }

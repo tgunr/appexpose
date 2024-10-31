@@ -47,24 +47,36 @@ struct AppFoldersView: View {
     @State private var currentFolder: String = "/"
     @State private var unmodified: Bool = false
     @State private var showFilter: ShowFilter = .all
+    @State private var sortOption: SortOption = .name
     @State private var subfolders: [String: [AppEntry]] = [:]
     @State private var searchText: String = ""
-    @State private var filteredEntries: [String: [AppEntry]] = [:]
+    @State private var filteredEntries: [AppEntry] = []
     @State private var refreshTrigger: UUID?
 
-    var entries: [String: [AppEntry]] {
-        subfolders.mapValues { entries in
-            entries.filter { entry in
-                let nameMatch = searchText.isEmpty || ((entry.name?.lowercased().contains(searchText.lowercased())) != nil)
+    var entries: [AppEntry] {
+        let allEntries = subfolders.values.flatMap { $0 }
 
-                switch showFilter {
-                case .all:
-                    return nameMatch
-                case .exposed:
-                    return nameMatch && entry.hasMyCustomIcon
-                case .unmodified:
-                    return nameMatch && entry.isFolder && !entry.hasMyCustomIcon && !entry.isApp
-                }
+        let filteredEntries = allEntries.filter { entry in
+            switch showFilter {
+            case .all:
+                return true
+            case .exposed:
+                return entry.hasMyCustomIcon
+            case .unmodified:
+                return entry.isFolder && !entry.hasMyCustomIcon && !entry.isApp
+            }
+        }
+
+        let searchFilteredEntries = filteredEntries.filter { entry in
+            searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
+        }
+
+        return searchFilteredEntries.sorted { entry1, entry2 in
+            switch sortOption {
+            case .name:
+                return (entry1.name ?? "") < (entry2.name ?? "")
+            case .addedDate:
+                return (entry1.addedDate ?? .distantPast) < (entry2.addedDate ?? .distantPast)
             }
         }
     }
@@ -87,9 +99,7 @@ struct AppFoldersView: View {
         }
         .onChange(of: showFilter) { _, _ in
             filteredEntries = entries
-//            if refreshTrigger == nil {
             refreshTrigger = UUID()
-//            }
         }
         .id(refreshTrigger)
     }

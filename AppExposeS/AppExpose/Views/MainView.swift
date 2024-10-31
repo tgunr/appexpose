@@ -55,8 +55,8 @@ class FolderEntries: ObservableObject {
 struct MainView: View {
     @Binding var searchText: String
     @Binding var showFilter: ShowFilter
-    @Binding var filteredEntries: [String: [AppEntry]]
     @State var sortOption: SortOption = .name
+    @Binding var filteredEntries: [AppEntry]
     let appData: AppData
     @State private var isShowingSheet = false
     @StateObject var folderEntries = FolderEntries()
@@ -106,8 +106,7 @@ struct MainView: View {
     }
 
     var folderList: some View {
-        symlog.debug("folderList folderEntries: \(folderEntries)")
-        symlog.value("folderList: sortedEntries: \(sortedEntries)")
+        symlog.debug("folderList filteredEntries: \(filteredEntries)")
         return ForEach(sortedEntries, id: \.id) { folder in
             FolderSectionView(folder: folder, showFilter: $showFilter, sortOption: $sortOption)
         }
@@ -121,7 +120,9 @@ struct MainView: View {
                 Group {
 //                    if hasLoaded {
                     if !filteredEntries.isEmpty {
-                        folderList
+                        ForEach(filteredEntries, id: \.id) { entry in
+                            AppFolderView(entry: entry, showFilter: $showFilter)
+                        }
                     } else {
                         ProgressView()
                     }
@@ -137,7 +138,7 @@ struct MainView: View {
         VStack {
             headerView
                 .padding()
-            if !folderEntries.entries.0 {
+            if $filteredEntries.isEmpty {
                 HStack {
                     Spacer()
                     Text("No Entries")
@@ -152,18 +153,18 @@ struct MainView: View {
             }
             Spacer()
         }
-        .onChange(of: sortOption) { oldValue, newValue in
-            symlog.value("sortOption changed from \(oldValue) to \(newValue)")
-            updateFilteredEntries()
-        }
-        .onChange(of: showFilter) { oldValue, newValue in
-            symlog.value("showFilter changed from \(oldValue) to \(newValue)")
-            updateShowFilter()
-        }
-        .onChange(of: appData.appFolders) { _, _ in
-            symlog.value("appData.appFolders changed \(appData.appFolders.count)")
-            updateFolderEntries()
-        }
+//        .onChange(of: sortOption) { oldValue, newValue in
+//            symlog.value("sortOption changed from \(oldValue) to \(newValue)")
+//            updateFilteredEntries()
+//        }
+//        .onChange(of: showFilter) { oldValue, newValue in
+//            symlog.value("showFilter changed from \(oldValue) to \(newValue)")
+//            updateShowFilter()
+//        }
+//        .onChange(of: appData.appFolders) { _, _ in
+//            symlog.value("appData.appFolders changed \(appData.appFolders.count)")
+//            updateFolderEntries()
+//        }
     }
 
     func updateFolderEntries() {
@@ -201,43 +202,47 @@ struct MainView: View {
         }
     }
 
-    func updateShowFilter() {
-        symlog.entry("\(#function)")
-        switch showFilter {
-        case .all:
-            filteredEntries = appData.appFolders.reduce(into: [:]) { $0[$1.name] = $1.entries }
-        case .exposed:
-            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
-                result[folder.name] = folder.entries.filter { entry in
-                    entry.hasMyCustomIcon
-                }
-            }
-        case .unmodified:
-            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
-                result[folder.name] = folder.entries.filter { entry in
-                    !entry.hasMyCustomIcon && entry.isFolder && !entry.isApp
-                }
-            }
-        }
-        filteredEntries = filteredEntries
-    }
+//    func updateShowFilter() {
+//        symlog.entry("\(#function)")
+//        switch showFilter {
+//        case .all:
+//            filteredEntries = appData.appFolders.reduce(into: [:]) { $0[$1.name] = $1.entries }
+//        case .exposed:
+//            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
+//                result[folder.name] = folder.entries.filter { entry in
+//                    entry.hasMyCustomIcon
+//                }
+//            }
+//        case .unmodified:
+//            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
+//                result[folder.name] = folder.entries.filter { entry in
+//                    !entry.hasMyCustomIcon && entry.isFolder && !entry.isApp
+//                }
+//            }
+//        }
+//        filteredEntries = filteredEntries
+//    }
     
-    func updateFilteredEntries() {
-        symlog.entry("\(#function)")
-
-        switch sortOption {
-        case .name:
-            filteredEntries = appData.appFolders.reduce(into: [:]) { $0[$1.name] = $1.entries }
-        case .addedDate:
-            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
-                result[folder.name] = folder.entries.sorted { $0.addedDate! < $1.addedDate! }
-            }
-        }
-        filteredEntries = filteredEntries
-    }
+//    func updateFilteredEntries() {
+//        symlog.entry("\(#function)")
+//
+//        switch sortOption {
+//        case .name:
+//            filteredEntries = appData.appFolders.reduce(into: [:]) { $0[$1.name] = $1.entries }
+//        case .addedDate:
+//            filteredEntries = appData.appFolders.reduce(into: [:]) { result, folder in
+//                result[folder.name] = folder.entries.sorted { $0.addedDate! < $1.addedDate! }
+//            }
+//        }
+//        filteredEntries = filteredEntries
+//    }
 }
 
 #Preview {
-    let preview = Preview()
-    MainView(searchText: .constant(""), showFilter: preview.$showFilter, filteredEntries: .constant(["Applications": preview.entries]), sortOption: preview.sortOption, appData: preview.appData)
+    @Previewable @State var showFilter: ShowFilter = .all
+    @Previewable @State var sortOption: SortOption = .name
+    @Previewable @State var filteredEntries: [AppEntry] = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
+    var appData = AppData()
+    MainView(searchText: .constant(""), showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData)
+
 }
