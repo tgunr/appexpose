@@ -93,6 +93,9 @@ struct AppFoldersView: View {
         .task {
             symlog.info("Fetching Apps")
             await fetchApps()
+            filteredEntries = entries
+            let _ = symlog.value("task: Fetched Apps,  filteredEntries: \(filteredEntries.count)")
+
             if refreshTrigger == nil {
                 refreshTrigger = UUID()
             }
