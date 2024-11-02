@@ -7,6 +7,33 @@
 
 import SwiftUI
 
+struct SearchTextKey: EnvironmentKey {
+    static let defaultValue: String = ""
+}
+
+struct UpdateSearchTextKey: @preconcurrency EnvironmentKey {
+    @MainActor static let defaultValue: (String) -> Void = { _ in }
+}
+
+struct SearchTextFocus: @preconcurrency EnvironmentKey {
+    @MainActor static let defaultValue: Bool = false
+}
+
+extension EnvironmentValues {
+    var searchText: String {
+        get { self[SearchTextKey.self] }
+        set { self[SearchTextKey.self] = newValue }
+    }
+    var updateSearchText: (String) -> Void {
+        get { self[UpdateSearchTextKey.self] }
+        set { self[UpdateSearchTextKey.self] = newValue }
+    }
+    var isSearchFieldFocused: Bool {
+        get { self[SearchTextFocus.self] }
+        set { self[SearchTextFocus.self] = newValue }
+    }
+}
+
 struct MainView: View {
     @Binding var searchText: String
     @Binding var showFilter: ShowFilter
@@ -14,6 +41,14 @@ struct MainView: View {
     @Binding var filteredEntries: [AppEntry]
     let appData: AppData
     @State private var isShowingSheet = false
+    @FocusState var isSearchFieldFocused: Bool
+
+    init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, filteredEntries: Binding<[AppEntry]>, appData: AppData) {
+        _searchText = searchText
+        _showFilter = showFilter
+        _filteredEntries = filteredEntries
+        self.appData = appData
+    }
 
     var sortView: some View {
         Picker("Sort by", selection: $sortOption) {
@@ -37,7 +72,7 @@ struct MainView: View {
 
     var headerView: some View {
         VStack {
-            SearchBar(text: $searchText)
+            SearchBar(searchText: $searchText, isFocused: $isSearchFieldFocused)
             sortView
             filterView
         }
@@ -84,6 +119,7 @@ struct MainView: View {
             }
             Spacer()
         }
+
 //        .onChange(of: sortOption) { oldValue, newValue in
 //            symlog.value("sortOption changed from \(oldValue) to \(newValue)")
 //            updateFilteredEntries()

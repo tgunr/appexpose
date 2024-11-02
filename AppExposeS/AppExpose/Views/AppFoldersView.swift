@@ -19,18 +19,25 @@ enum SortOption: String, CaseIterable {
 }
 
 struct SearchBar: View {
-    @Binding var text: String
+    @Binding var searchText: String
+    @Environment(\.updateSearchText) var updateSearchText
+    var isFocused: FocusState<Bool>.Binding
 
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-            TextField("name", text: $text)
+            TextField("name", text: $searchText)
+                .onChange(of: searchText) { _, newValue in
+                    updateSearchText(newValue)
+                }
+                .focused(isFocused)
                 .padding(7)
                 .cornerRadius(8)
 
-            if !text.isEmpty {
+            if !searchText.isEmpty {
                 Button(action: {
-                    self.text = ""
+                    updateSearchText("")
+                    self.searchText = ""
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
@@ -50,6 +57,7 @@ struct AppFoldersView: View {
     @State private var sortOption: SortOption = .name
     @State private var subfolders: [String: [AppEntry]] = [:]
     @State private var searchText: String = ""
+    @FocusState private var isSearchFieldFocused: Bool
     @State private var filteredEntries: [AppEntry] = []
     @State private var refreshTrigger: UUID?
 
@@ -83,6 +91,12 @@ struct AppFoldersView: View {
 
     var body: some View {
         VStack {
+            SearchBar(searchText: $searchText, isFocused: $isSearchFieldFocused)
+                .onChange(of: searchText) { _, _ in
+                    filteredEntries = entries.filter { entry in
+                        searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
+                    }
+                }
             MainView(searchText: $searchText, showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
