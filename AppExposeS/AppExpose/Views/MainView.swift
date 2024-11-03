@@ -24,10 +24,12 @@ extension EnvironmentValues {
         get { self[SearchTextKey.self] }
         set { self[SearchTextKey.self] = newValue }
     }
+
     var updateSearchText: (String) -> Void {
         get { self[UpdateSearchTextKey.self] }
         set { self[UpdateSearchTextKey.self] = newValue }
     }
+
     var isSearchFieldFocused: Bool {
         get { self[SearchTextFocus.self] }
         set { self[SearchTextFocus.self] = newValue }
@@ -45,7 +47,7 @@ struct MainView: View {
     let entries: () -> [AppEntry]
     @State private var canSelect = false
 
-    init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>,filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
+    init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>, filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
         _searchText = searchText
         _showFilter = showFilter
         _sortOption = sortOption
@@ -73,7 +75,7 @@ struct MainView: View {
             Spacer()
         }
     }
-    
+
     var sortView: some View {
         Picker("Sort by", selection: $sortOption) {
             ForEach(SortOption.allCases, id: \.self) { option in
@@ -110,33 +112,33 @@ struct MainView: View {
     var appsView: some View {
         ScrollView {
             #if DEBUG
-            LazyVGrid(columns: [
-                GridItem(.adaptive(minimum: 120)),
-            ]){
-                Group {
-                    if !filteredEntries.isEmpty {
-                        ForEach(filteredEntries, id: \.id) { entry in
-                            AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
+                LazyVGrid(columns: [
+                    GridItem(.adaptive(minimum: 120)),
+                ]) {
+//                    NavigationStack {
+                        if !filteredEntries.isEmpty {
+                            ForEach($filteredEntries, id: \.id) { entry in
+                                AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
+                            }
+                        } else {
+                            ProgressView()
                         }
-                    } else {
-                        ProgressView()
-                    }
+//                    }
                 }
-            }
             #else
-            LazyVGrid(columns: [
-                GridItem(.adaptive(minimum: 64)),
-            ]){
-                Group {
-                    if !filteredEntries.isEmpty {
-                        ForEach(filteredEntries, id: \.id) { entry in
-                            AppFolderView(entry: entry, showFilter: $showFilter)
+                LazyVGrid(columns: [
+                    GridItem(.adaptive(minimum: 64)),
+                ]) {
+                    Group {
+                        if !filteredEntries.isEmpty {
+                            ForEach(filteredEntries, id: \.id) { entry in
+                                AppFolderView(entry: entry, showFilter: $showFilter)
+                            }
+                        } else {
+                            ProgressView()
                         }
-                    } else {
-                        ProgressView()
                     }
                 }
-            }
             #endif
         }
     }
@@ -148,5 +150,4 @@ struct MainView: View {
     @Previewable @State var filteredEntries: [AppEntry] = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
     var appData = AppData()
     MainView(searchText: .constant(""), showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil) })
-
 }

@@ -28,9 +28,15 @@ struct SubfolderView: View {
     }
 
     var body: some View {
-        ForEach(sortedEntries, id: \.id) { entry in
-            AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
-//            .padding(.top)
+        ForEach(sortedEntries.indices, id: \.self) { index in
+            AppFolderView(
+                entry: Binding(
+                    get: { sortedEntries[index] },
+                    set: { filteredEntries[index] = $0 }
+                ),
+                showFilter: $showFilter,
+                canSelect: $canSelect
+            )
         }
     }
 }

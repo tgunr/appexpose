@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct AppFolderDetailView: View {
-    @Binding var isShowingSheet: Bool
-    @State var entry: AppEntry
+    @Binding var entry: AppEntry
     
     var body: some View {
         Text(entry.name ?? "")
-            .onTapGesture {
-                isShowingSheet = false
-            }
+            .frame(width: 200, height: 200)
     }
 }
 
 #Preview {
     @Previewable @State var entry = AppEntry(withURL: URL(fileURLWithPath: "/Applications/SVG"))
-    AppFolderDetailView(isShowingSheet: .constant(true), entry: entry)
+    AppFolderDetailView(entry: $entry)
 }
