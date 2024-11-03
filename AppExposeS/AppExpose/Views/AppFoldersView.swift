@@ -91,7 +91,7 @@ struct AppFoldersView: View {
             case .name:
                 return (entry1.name ?? "") < (entry2.name ?? "")
             case .addedDate:
-                return (entry1.addedDate ?? .distantPast) < (entry2.addedDate ?? .distantPast)
+                return (entry1.addedDate ?? .distantPast) > (entry2.addedDate ?? .distantPast)
             }
         }
     }
