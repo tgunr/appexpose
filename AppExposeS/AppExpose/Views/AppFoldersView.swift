@@ -86,7 +86,6 @@ struct AppFoldersView: View {
         let searchFilteredEntries = filteredEntries.filter { entry in
             searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
         }
-
         return searchFilteredEntries.sorted { entry1, entry2 in
             switch sortOption {
             case .name:
@@ -99,7 +98,7 @@ struct AppFoldersView: View {
 
     var body: some View {
         VStack {
-            MainView(searchText: $searchText, showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData, entries: { self.entries })
+            MainView(searchText: $searchText, showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { self.entries })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
@@ -117,6 +116,10 @@ struct AppFoldersView: View {
             }
         }
         .onChange(of: showFilter) { _, _ in
+            filteredEntries = entries
+            refreshTrigger = UUID()
+        }
+        .onChange(of: sortOption) { _, _ in
             filteredEntries = entries
             refreshTrigger = UUID()
         }

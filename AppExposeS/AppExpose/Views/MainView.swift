@@ -37,16 +37,17 @@ extension EnvironmentValues {
 struct MainView: View {
     @Binding var searchText: String
     @Binding var showFilter: ShowFilter
-    @State var sortOption: SortOption = .name
+    @Binding var sortOption: SortOption
     @Binding var filteredEntries: [AppEntry]
     let appData: AppData
     @State private var isShowingSheet = false
     @FocusState var isSearchFieldFocused: Bool
     let entries: () -> [AppEntry]
 
-    init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
+    init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>,filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
         _searchText = searchText
         _showFilter = showFilter
+        _sortOption = sortOption
         _filteredEntries = filteredEntries
         self.appData = appData
         self.entries = entries
@@ -55,7 +56,6 @@ struct MainView: View {
     var body: some View {
         VStack {
             headerView
-                .padding()
             if $filteredEntries.isEmpty {
                 HStack {
                     Spacer()
@@ -99,6 +99,7 @@ struct MainView: View {
             sortView
             filterView
         }
+        .padding()
     }
 
     var appsView: some View {
@@ -125,6 +126,6 @@ struct MainView: View {
     @Previewable @State var sortOption: SortOption = .name
     @Previewable @State var filteredEntries: [AppEntry] = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
     var appData = AppData()
-    MainView(searchText: .constant(""), showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData, entries: { AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil) })
+    MainView(searchText: .constant(""), showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil) })
 
 }
