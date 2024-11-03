@@ -104,9 +104,10 @@ struct MainView: View {
 
     var appsView: some View {
         ScrollView {
+            #if DEBUG
             LazyVGrid(columns: [
-                GridItem(.adaptive(minimum: 64)),
-            ]) {
+                GridItem(.adaptive(minimum: 120)),
+            ]){
                 Group {
                     if !filteredEntries.isEmpty {
                         ForEach(filteredEntries, id: \.id) { entry in
@@ -117,6 +118,21 @@ struct MainView: View {
                     }
                 }
             }
+            #else
+            LazyVGrid(columns: [
+                GridItem(.adaptive(minimum: 64)),
+            ]){
+                Group {
+                    if !filteredEntries.isEmpty {
+                        ForEach(filteredEntries, id: \.id) { entry in
+                            AppFolderView(entry: entry, showFilter: $showFilter)
+                        }
+                    } else {
+                        ProgressView()
+                    }
+                }
+            }
+            #endif
         }
     }
 }

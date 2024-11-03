@@ -66,11 +66,19 @@ struct AppFolderView: View {
                     Text(entry.name ?? "none")
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
+                    #if DEBUG
+                        Text(entry.addedDate?.formatted(date: .numeric, time: .omitted) ?? "none")
+                            .font(.caption)
+                    #endif
                 }
-                .frame(width: 64, height: 64)
-                .border(.blue, width: entry.isSelected ? 3.0 : 0.0)
-                .background(Color(NSColor.windowBackgroundColor))
-                .cornerRadius(8.0)
+                #if DEBUG
+                    .frame(width: 120, height: 64)
+                #else
+                    .frame(width: 64, height: 64)
+                #endif
+                    .border(.blue, width: entry.isSelected ? 3.0 : 0.0)
+                    .background(Color(NSColor.windowBackgroundColor))
+                    .cornerRadius(8.0)
             })
             .buttonStyle(.bordered)
         }
@@ -89,12 +97,9 @@ struct AppFolderView: View {
     }
 }
 
-struct AppFolderView_Previews: PreviewProvider {
-    @State var showFilter: ShowFilter = .all
+#Preview {
+    @Previewable @State var showFilter: ShowFilter = .all
 
-    static var previews: some View {
-        let entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-        AppFolderView(entry: entry, showFilter: .constant(.unmodified)
-        )
-    }
+    let entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
+    AppFolderView(entry: entry, showFilter: $showFilter)
 }
