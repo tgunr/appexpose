@@ -24,24 +24,27 @@ struct SearchBar: View {
     var isFocused: FocusState<Bool>.Binding
 
     var body: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-            TextField("name", text: $searchText)
-                .onChange(of: searchText) { _, newValue in
-                    updateSearchText(newValue)
-                }
-                .focused(isFocused)
-                .padding(7)
-                .cornerRadius(8)
-
+        ZStack(alignment: .trailing) {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField("name", text: $searchText)
+                    .onChange(of: searchText) { _, newValue in
+                        updateSearchText(newValue)
+                    }
+                    .focused(isFocused)
+            }
+            .padding(7)
+            .cornerRadius(8)
+            
             if !searchText.isEmpty {
                 Button(action: {
                     updateSearchText("")
                     self.searchText = ""
                 }) {
-                    Image(systemName: "xmark.circle.fill")
+                    Image(systemName: "xmark")
                         .foregroundColor(.gray)
                 }
+                .padding([.top, .bottom, .trailing], 4.0)
             }
         }
         .padding(.horizontal)
@@ -91,13 +94,7 @@ struct AppFoldersView: View {
 
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText, isFocused: $isSearchFieldFocused)
-                .onChange(of: searchText) { _, _ in
-                    filteredEntries = entries.filter { entry in
-                        searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
-                    }
-                }
-            MainView(searchText: $searchText, showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData)
+            MainView(searchText: $searchText, showFilter: $showFilter, filteredEntries: $filteredEntries, appData: appData, entries: { self.entries })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.default, value: selectedItem)
