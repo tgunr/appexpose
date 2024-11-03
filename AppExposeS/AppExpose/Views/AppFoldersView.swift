@@ -20,8 +20,10 @@ enum SortOption: String, CaseIterable {
 
 struct SearchBar: View {
     @Binding var searchText: String
+    @Binding var filteredEntries: [AppEntry]
     @Environment(\.updateSearchText) var updateSearchText
     var isFocused: FocusState<Bool>.Binding
+    let entries: () -> [AppEntry]
 
     var body: some View {
         ZStack(alignment: .trailing) {
@@ -48,6 +50,9 @@ struct SearchBar: View {
             }
         }
         .padding(.horizontal)
+        .onChange(of: searchText) { _, _ in
+            filteredEntries = entries()
+        }
     }
 }
 

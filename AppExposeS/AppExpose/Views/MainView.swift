@@ -74,11 +74,7 @@ struct MainView: View {
 
     var headerView: some View {
         VStack {
-//            SearchBar(searchText: $searchText, isFocused: $isSearchFieldFocused)
-            SearchBar(searchText: $searchText, isFocused: $isSearchFieldFocused)
-                .onChange(of: searchText) { _, _ in
-                    filteredEntries = entries()
-                }
+            SearchBar(searchText: $searchText, filteredEntries: $filteredEntries, isFocused: $isSearchFieldFocused, entries: { self.entries() })
             sortView
             filterView
         }
@@ -90,7 +86,6 @@ struct MainView: View {
                 GridItem(.adaptive(minimum: 64)),
             ]) {
                 Group {
-//                    if hasLoaded {
                     if !filteredEntries.isEmpty {
                         ForEach(filteredEntries, id: \.id) { entry in
                             AppFolderView(entry: entry, showFilter: $showFilter)
@@ -98,9 +93,6 @@ struct MainView: View {
                     } else {
                         ProgressView()
                     }
-//                    } else {
-//                        ProgressView()
-//                    }
                 }
             }
         }
@@ -125,21 +117,7 @@ struct MainView: View {
             }
             Spacer()
         }
-
-//        .onChange(of: sortOption) { oldValue, newValue in
-//            symlog.value("sortOption changed from \(oldValue) to \(newValue)")
-//            updateFilteredEntries()
-//        }
-//        .onChange(of: showFilter) { oldValue, newValue in
-//            symlog.value("showFilter changed from \(oldValue) to \(newValue)")
-//            updateShowFilter()
-//        }
-//        .onChange(of: appData.appFolders) { _, _ in
-//            symlog.value("appData.appFolders changed \(appData.appFolders.count)")
-//            updateFolderEntries()
-//        }
     }
-
 }
 
 #Preview {
