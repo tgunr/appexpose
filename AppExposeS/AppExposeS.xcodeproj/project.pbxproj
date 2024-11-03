@@ -215,12 +215,12 @@
 				750EECF028C7CC4B00A174BB /* Help.swift */,
 				750EED0028C7CEDD00A174BB /* SettingsView.swift */,
 				752C5AC228C8D90000057685 /* DirectorySelectorView.swift */,
-				75ECE8F52CC7A731003C2180 /* SubfolderView.swift */,
 				7562C7E12CB2DDDA00EA71B5 /* FolderHeaderView.swift */,
 				7562C7DA2CB2DD9E00EA71B5 /* RemoteImageView.swift */,
 				752C5AC628C8F8ED00057685 /* AppFoldersView.swift */,
 				75ECE8FE2CC7B031003C2180 /* MainView.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
+				75ECE8F52CC7A731003C2180 /* SubfolderView.swift */,
 				753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */,
 				75ECE8FC2CC7AC35003C2180 /* Preview.swift */,
 			);

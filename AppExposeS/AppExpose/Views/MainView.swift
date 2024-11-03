@@ -43,6 +43,7 @@ struct MainView: View {
     @State private var isShowingSheet = false
     @FocusState var isSearchFieldFocused: Bool
     let entries: () -> [AppEntry]
+    @State private var canSelect = false
 
     init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>,filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
         _searchText = searchText
@@ -98,6 +99,10 @@ struct MainView: View {
             SearchBar(searchText: $searchText, filteredEntries: $filteredEntries, isFocused: $isSearchFieldFocused, entries: { self.entries() })
             sortView
             filterView
+            Button("Select", action: {
+                canSelect.toggle()
+            })
+            Divider()
         }
         .padding()
     }
@@ -111,7 +116,7 @@ struct MainView: View {
                 Group {
                     if !filteredEntries.isEmpty {
                         ForEach(filteredEntries, id: \.id) { entry in
-                            AppFolderView(entry: entry, showFilter: $showFilter)
+                            AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
                         }
                     } else {
                         ProgressView()

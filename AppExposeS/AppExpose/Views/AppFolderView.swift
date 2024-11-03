@@ -34,14 +34,17 @@ struct ViewDidLoadModifier: ViewModifier {
 struct AppFolderView: View {
     @ObservedObject var entry: AppEntry
     @Binding var showFilter: ShowFilter
-
+    @Binding var canSelect: Bool
+    
     var body: some View {
         let _ = symlog.entry("AppFolderView entry: \(entry.name ?? "none")")
 
         let extractedExpr: VStack<some View> = VStack {
             Button(action: {
-                entry.isSelected.toggle()
-                symlog.info("Selected \(entry.isSelected ? "true" : "false")")
+                if canSelect {
+                    entry.isSelected.toggle()
+                    symlog.info("Selected \(entry.isSelected ? "true" : "false")")
+                }
             }, label: {
                 VStack {
                     Group {
@@ -57,7 +60,6 @@ struct AppFolderView: View {
                                 let _ = symlog.info("AppFolderView folder")
                             }
                             Image(nsImage: entry.originalImage!)
-//                            Image(systemName: "folder")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         }
@@ -99,7 +101,8 @@ struct AppFolderView: View {
 
 #Preview {
     @Previewable @State var showFilter: ShowFilter = .all
+    @Previewable @State var canSelect: Bool = false
 
     let entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-    AppFolderView(entry: entry, showFilter: $showFilter)
+    AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
 }

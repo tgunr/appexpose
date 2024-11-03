@@ -10,6 +10,7 @@ import SwiftUI
 struct SubfolderView: View {
     @Binding var filteredEntries: [AppEntry]
     @Binding var showFilter: ShowFilter
+    @Binding var canSelect: Bool
     @State var sortOption: SortOption
     @State var sEntries: [AppEntry]?
     private var sortedEntries: [AppEntry] {
@@ -28,21 +29,20 @@ struct SubfolderView: View {
 
     var body: some View {
         ForEach(sortedEntries, id: \.id) { entry in
-            AppFolderView(entry: entry, showFilter: $showFilter)
+            AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
 //            .padding(.top)
         }
     }
 }
 
-struct SubfolderView_Previews: PreviewProvider {
-    static let preview = Preview()
-
-    static var previews: some View {
-        SubfolderView(
-            filteredEntries: .constant(preview.entries),
-//            filteredEntries: .constant(["Applications": preview.entries]),
-            showFilter: .constant(.all),
-            sortOption: .name
-        )
-    }
+#Preview {
+    @Previewable @State var showFilter: ShowFilter = .all
+    @Previewable @State var canSelect: Bool = false
+    @Previewable @State var filteredEntries: [AppEntry] = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
+    SubfolderView(
+        filteredEntries: $filteredEntries,
+        showFilter: .constant(.all),
+        canSelect: $canSelect,
+        sortOption: .name
+    )
 }
