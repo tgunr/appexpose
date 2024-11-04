@@ -37,7 +37,6 @@
 		75C78EEB28BE4D5300801110 /* ExtendedAttributes in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEA28BE4D5300801110 /* ExtendedAttributes */; };
 		75C78EEE28BE4DE700801110 /* Helm in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EED28BE4DE700801110 /* Helm */; };
 		75C78EF028BE4DE700801110 /* Playground in Frameworks */ = {isa = PBXBuildFile; productRef = 75C78EEF28BE4DE700801110 /* Playground */; };
-		75ECE8F62CC7A731003C2180 /* SubfolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ECE8F52CC7A731003C2180 /* SubfolderView.swift */; };
 		75ECE8FD2CC7AC35003C2180 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ECE8FC2CC7AC35003C2180 /* Preview.swift */; };
 		75ECE8FF2CC7B031003C2180 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ECE8FE2CC7B031003C2180 /* MainView.swift */; };
 /* End PBXBuildFile section */
@@ -461,7 +460,6 @@
 				750EED0728C7D83200A174BB /* Extensions.swift in Sources */,
 				757422B52C865A6C00CB8A0C /* SymLog.swift in Sources */,
 				753F32A22C9C780200C61ED2 /* AppFolderDetailView.swift in Sources */,
-				75ECE8F62CC7A731003C2180 /* SubfolderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
