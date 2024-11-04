@@ -55,7 +55,6 @@ struct AppFolderView: View {
                             .aspectRatio(contentMode: .fit)
                     }
                 }
-                .padding(3)
                 Text(entry.name ?? "none")
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
@@ -70,7 +69,7 @@ struct AppFolderView: View {
                 .frame(width: 64, height: 64)
             #endif
             .border(.blue, width: entry.isSelected ? 1.0 : 0.0)
-            .background(Color(NSColor.windowBackgroundColor))
+//            .background(Color(NSColor.windowBackgroundColor))
             .cornerRadius(8.0)
         }
     }

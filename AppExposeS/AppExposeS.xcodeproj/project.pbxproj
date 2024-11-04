@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0DB502285E5F36E60E9C9 /* SubfolderView.swift in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0D1642F02F19A52F4D969 /* SubfolderView.swift */; };
 		75009A502C7660210098B6C5 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75009A4F2C7660210098B6C5 /* PMUtility.framework */; };
 		75009A522C76609C0098B6C5 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75009A512C76609C0098B6C5 /* XATTR.framework */; };
 		750EECEE28C7CBF300A174BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750EECED28C7CBF300A174BB /* AppDelegate.swift */; };
@@ -94,6 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5AF0D1642F02F19A52F4D969 /* SubfolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubfolderView.swift; sourceTree = "<group>"; };
 		75009A372C765B080098B6C5 /* CompositeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompositeView.h; sourceTree = "<group>"; };
 		75009A382C765B080098B6C5 /* CompositeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompositeView.m; sourceTree = "<group>"; };
 		75009A3A2C765B670098B6C5 /* IconViewBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconViewBox.m; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
 				753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */,
 				75ECE8FC2CC7AC35003C2180 /* Preview.swift */,
+				5AF0D1642F02F19A52F4D969 /* SubfolderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -360,7 +363,7 @@
 				75C78EE928BE4D5300801110 /* XCRemoteSwiftPackageReference "ExtendedAttributes" */,
 				75C78EEC28BE4DE700801110 /* XCRemoteSwiftPackageReference "Helm" */,
 				752C5ABA28C8D20500057685 /* XCRemoteSwiftPackageReference "Directory" */,
-				75B30B9B2C925E03007F53F1 /* XCLocalSwiftPackageReference "../SLogMacro" */,
+				75B30B9B2C925E03007F53F1 /* XCLocalSwiftPackageReference */,
 				753F32A82C9C7E4000C61ED2 /* XCRemoteSwiftPackageReference "RemoteImage" */,
 			);
 			productRefGroup = 75234E8228B2617F00512430 /* Products */;
@@ -427,6 +430,7 @@
 			files = (
 				75234E8C28B2618100512430 /* Preview Assets.xcassets in Resources */,
 				75234E8928B2618100512430 /* Assets.xcassets in Resources */,
+				5AF0DB502285E5F36E60E9C9 /* SubfolderView.swift in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,7 +689,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		75B30B9B2C925E03007F53F1 /* XCLocalSwiftPackageReference "../SLogMacro" */ = {
+		75B30B9B2C925E03007F53F1 /* XCLocalSwiftPackageReference */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../SLogMacro;
 		};

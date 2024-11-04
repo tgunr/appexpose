@@ -132,7 +132,7 @@ struct MainView: View {
                  if !filteredEntries.isEmpty {
                      ForEach($filteredEntries, id: \.id) { entry in
                          AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
-                             // set the selected entry
+                             let _ = symlog.value("\(#function)  selectedEntry: \(selectedEntry.name ?? "none")")
                              self.selectedEntry = selectedEntry
                          })
                      }

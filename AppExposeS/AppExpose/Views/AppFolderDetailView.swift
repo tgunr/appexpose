@@ -7,16 +7,33 @@
 
 import SwiftUI
 
+// AppFolderDetailView.swift
+
 struct AppFolderDetailView: View {
     @Binding var entry: AppEntry?
-    
+
     var body: some View {
         if let entry = entry {
-            Text(entry.name ?? "")
-                .frame(width: 200, height: 200)
+            VStack {
+                Text(entry.name ?? "")
+                        .font(.title)
+                List {
+                    ForEach(entry.children, id: \.self) { child in
+                        HStack {
+                            Image(nsImage: child.appImage ?? NSImage())
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                            Text(child.name ?? "")
+                        }
+                    }
+                }
+            }
         } else {
             Text("No Entry Selected")
-                .frame(width: 200, height: 200)
+                    .font(.largeTitle)
+                    .foregroundColor(.red)
+                    .lineLimit(2)
+                    .background(Color.red.opacity(0.2))
         }
     }
 }

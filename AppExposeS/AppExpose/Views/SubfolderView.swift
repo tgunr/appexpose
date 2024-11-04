@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// SubfolderView.swift
+
 struct SubfolderView: View {
     @Binding var filteredEntries: [AppEntry]
     @Binding var showFilter: ShowFilter
@@ -32,13 +34,15 @@ struct SubfolderView: View {
     var body: some View {
         ForEach(sortedEntries.indices, id: \.self) { index in
             AppFolderView(
-                entry: Binding(
-                    get: { sortedEntries[index] },
-                    set: { filteredEntries[index] = $0 }
-                ),
-                showFilter: $showFilter,
-                canSelect: $canSelect
-                onSelected: selectedEntry
+                    entry: Binding(
+                            get: { sortedEntries[index] },
+                            set: { filteredEntries[index] = $0 }
+                    ),
+                    showFilter: $showFilter,
+                    canSelect: $canSelect,
+                    onSelected: { selectedEntry in
+                        self.selectedEntry = selectedEntry
+                    }
             )
         }
     }
