@@ -87,6 +87,7 @@ struct MainView: View {
                     EmptyView()
                 }
             )
+            .navigationTitle("Main View")
         }
     }
 
@@ -142,7 +143,6 @@ struct MainView: View {
          }
      }
    }
-
 
 // Wrapper view for NavigationLink destination
 struct AppFolderDetailViewWrapper: View {

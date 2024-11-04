@@ -69,7 +69,7 @@ struct AppFolderView: View {
             #else
                 .frame(width: 64, height: 64)
             #endif
-            .border(.blue, width: entry.isSelected ? 3.0 : 0.0)
+            .border(.blue, width: entry.isSelected ? 1.0 : 0.0)
             .background(Color(NSColor.windowBackgroundColor))
             .cornerRadius(8.0)
         }
