@@ -13,6 +13,8 @@ struct SubfolderView: View {
     @Binding var canSelect: Bool
     @State var sortOption: SortOption
     @State var sEntries: [AppEntry]?
+    @State private var selectedEntry: AppEntry?
+
     private var sortedEntries: [AppEntry] {
         let sortedEntries = filteredEntries.sorted { $0.name! < $1.name! }
         return sortedEntries
@@ -36,6 +38,7 @@ struct SubfolderView: View {
                 ),
                 showFilter: $showFilter,
                 canSelect: $canSelect
+                onSelected: selectedEntry()
             )
         }
     }

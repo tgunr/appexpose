@@ -35,44 +35,43 @@ struct AppFolderView: View {
     @Binding var entry: AppEntry
     @Binding var showFilter: ShowFilter
     @Binding var canSelect: Bool
+    var onSelected: (AppEntry) -> Void // new callback
+
     @State private var pushed = false
 
     var link: some View {
-        NavigationStack {
-            NavigationLink(value: entry) {
-                VStack {
-                    Group {
-                        if entry.hasMyCustomIcon {
-                            Image(nsImage: entry.appImage!)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else {
-                            Image(nsImage: entry.originalImage!)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
+        Button(action: {
+            onSelected(entry)
+        }) {
+            VStack {
+                Group {
+                    if entry.hasMyCustomIcon {
+                        Image(nsImage: entry.appImage!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(nsImage: entry.originalImage!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                     }
-                    .padding(3)
-                    Text(entry.name ?? "none")
-                        .lineLimit(2)
-                        .multilineTextAlignment(.center)
-                    #if DEBUG
-                        Text(entry.addedDate?.formatted(date: .numeric, time: .omitted) ?? "none")
-                            .font(.caption)
-                    #endif
                 }
+                .padding(3)
+                Text(entry.name ?? "none")
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
                 #if DEBUG
-                    .frame(width: 120, height: 64)
-                #else
-                    .frame(width: 64, height: 64)
+                    Text(entry.addedDate?.formatted(date: .numeric, time: .omitted) ?? "none")
+                        .font(.caption)
                 #endif
-                    .border(.blue, width: entry.isSelected ? 3.0 : 0.0)
-                    .background(Color(NSColor.windowBackgroundColor))
-                    .cornerRadius(8.0)
             }
-            .navigationDestination(for: AppEntry.self) { entry in
-                AppFolderDetailView(entry: $entry)
-            }
+            #if DEBUG
+                .frame(width: 120, height: 64)
+            #else
+                .frame(width: 64, height: 64)
+            #endif
+            .border(.blue, width: entry.isSelected ? 3.0 : 0.0)
+            .background(Color(NSColor.windowBackgroundColor))
+            .cornerRadius(8.0)
         }
     }
 
@@ -98,5 +97,5 @@ struct AppFolderView: View {
     @Previewable @State var showFilter: ShowFilter = .all
     @Previewable @State var canSelect: Bool = false
     @Previewable @State var entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-    AppFolderView(entry: $entry, showFilter: $showFilter, canSelect: $canSelect)
+    AppFolderView(entry: $entry, showFilter: $showFilter, canSelect: $canSelect, onSelected: {_ in})
 }

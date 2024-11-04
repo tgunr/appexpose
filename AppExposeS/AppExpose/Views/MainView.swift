@@ -46,6 +46,7 @@ struct MainView: View {
     @FocusState var isSearchFieldFocused: Bool
     let entries: () -> [AppEntry]
     @State private var canSelect = false
+    @State private var selectedEntry: AppEntry?
 
     init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>, filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
         _searchText = searchText
@@ -57,22 +58,35 @@ struct MainView: View {
     }
 
     var body: some View {
-        VStack {
-            headerView
-            if $filteredEntries.isEmpty {
-                HStack {
-                    Spacer()
-                    Text("No Entries")
-                        .font(.largeTitle)
-                        .foregroundColor(.red)
-                        .lineLimit(2)
-                        .background(Color.red.opacity(0.2))
-                    Spacer()
+        NavigationStack {
+            VStack {
+                headerView
+                if $filteredEntries.isEmpty {
+                    HStack {
+                        Spacer()
+                        Text("No Entries")
+                            .font(.largeTitle)
+                            .foregroundColor(.red)
+                            .lineLimit(2)
+                            .background(Color.red.opacity(0.2))
+                        Spacer()
+                    }
+                } else {
+                    appsView
                 }
-            } else {
-                appsView
+                Spacer()
             }
-            Spacer()
+            .background(
+                NavigationLink(destination: AppFolderDetailViewWrapper(selectedEntry: $selectedEntry), isActive: Binding(get: {
+                    return selectedEntry != nil
+                }, set: { value in
+                    if !value {
+                        selectedEntry = nil
+                    }
+                })) {
+                    EmptyView()
+                }
+            )
         }
     }
 
@@ -110,36 +124,35 @@ struct MainView: View {
     }
 
     var appsView: some View {
-        ScrollView {
-            #if DEBUG
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 120)),
-                ]) {
-//                    NavigationStack {
-                        if !filteredEntries.isEmpty {
-                            ForEach($filteredEntries, id: \.id) { entry in
-                                AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
-                            }
-                        } else {
-                            ProgressView()
-                        }
-//                    }
-                }
-            #else
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 64)),
-                ]) {
-                    Group {
-                        if !filteredEntries.isEmpty {
-                            ForEach(filteredEntries, id: \.id) { entry in
-                                AppFolderView(entry: entry, showFilter: $showFilter)
-                            }
-                        } else {
-                            ProgressView()
-                        }
-                    }
-                }
-            #endif
+         ScrollView {
+             LazyVGrid(columns: [
+                 GridItem(.adaptive(minimum: 120)), // for debug
+             ]) {
+                 if !filteredEntries.isEmpty {
+                     ForEach($filteredEntries, id: \.id) { entry in
+                         AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
+                             // set the selected entry
+                             self.selectedEntry = selectedEntry
+                         })
+                     }
+                 } else {
+                     ProgressView()
+                 }
+             }
+         }
+     }
+   }
+
+
+// Wrapper view for NavigationLink destination
+struct AppFolderDetailViewWrapper: View {
+    @Binding var selectedEntry: AppEntry?
+
+    var body: some View {
+        if let unwrappedEntry = selectedEntry {
+            AppFolderDetailView(entry: .constant(unwrappedEntry))
+        } else {
+            EmptyView()
         }
     }
 }
