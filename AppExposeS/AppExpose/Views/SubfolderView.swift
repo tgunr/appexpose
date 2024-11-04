@@ -38,7 +38,7 @@ struct SubfolderView: View {
                 ),
                 showFilter: $showFilter,
                 canSelect: $canSelect
-                onSelected: selectedEntry()
+                onSelected: selectedEntry
             )
         }
     }

@@ -138,7 +138,6 @@
 		758FD2462C7769AC00878379 /* xattr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xattr.xcodeproj; path = ../xattr/xattr.xcodeproj; sourceTree = "<group>"; };
 		75C569A32CAD877F0078874D /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		75C811AC2C8B5D9200478C98 /* ImageReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReducer.swift; sourceTree = "<group>"; };
-		75ECE8F52CC7A731003C2180 /* SubfolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubfolderView.swift; sourceTree = "<group>"; };
 		75ECE8FC2CC7AC35003C2180 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		75ECE8FE2CC7B031003C2180 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,7 +218,6 @@
 				752C5AC628C8F8ED00057685 /* AppFoldersView.swift */,
 				75ECE8FE2CC7B031003C2180 /* MainView.swift */,
 				750F6D0328C9008C005209BC /* AppFolderView.swift */,
-				75ECE8F52CC7A731003C2180 /* SubfolderView.swift */,
 				753F32A12C9C780200C61ED2 /* AppFolderDetailView.swift */,
 				75ECE8FC2CC7AC35003C2180 /* Preview.swift */,
 			);
