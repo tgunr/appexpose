@@ -19,6 +19,7 @@ struct AppFolderDetailView: View {
                         .font(.title)
                 List {
                     ForEach(entry.children, id: \.self) { child in
+                        let _ = symlog.value("AppFolderDetailView• child: \(child.name ?? "none")")
                         HStack {
                             Image(nsImage: child.appImage ?? NSImage())
                                     .resizable()
@@ -39,6 +40,6 @@ struct AppFolderDetailView: View {
 }
 
 #Preview {
-    @Previewable @State var entry = AppEntry(withURL: URL(fileURLWithPath: "/Applications/SVG"))
+    @Previewable @State var entry = AppEntry(withURL: URL(fileURLWithPath: "/Users/davec/Applications/!NCViewer"))
     AppFolderDetailView(entry: Binding(get: { entry }, set: { entry = $0! } ))
 }
