@@ -40,17 +40,19 @@
 @property(nonatomic, assign) BOOL isApp;
 @property(nonatomic, assign) BOOL canAccess;
 @property(nonatomic, assign) BOOL hasCustomIcon;
+@property(nonatomic, assign) BOOL isSpecial;
 @property(nonatomic, assign, getter = hasMyCustomIcon) BOOL hasMyCustomIcon;
 @property(nonatomic, assign, getter = shouldSkipDescendents) BOOL skipDescendents;
-@property(nonatomic, copy) NSString              *name;
-@property(nonatomic, copy) NSURL                 *appURL;
+@property(nonatomic, copy)   NSString            *name;
+@property(nonatomic, copy)   NSString            *fullName;
+@property(nonatomic, copy)   NSURL               *appURL;
 @property(nonatomic, strong) NSMutableArray      *childEntries;
 @property(nonatomic, strong) NSMutableDictionary *iconDictionary;
 @property(nonatomic, strong) NSImage             *iconImage;
 @property(nonatomic, strong) NSImage             *originalImage;
-@property(nonatomic, assign) BOOL isFolder;
-@property(nonatomic, strong) NSDictionary *attributes;
-@property(nonatomic, strong) XATTR *xattr;
+@property(nonatomic, strong) NSDictionary        *attributes;
+@property(nonatomic, strong) XATTR               *xattr;
+@property(nonatomic, assign) BOOL                isFolder;
 
 + (AppEntry *)rootEntry;
 

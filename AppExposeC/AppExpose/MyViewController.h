@@ -4,28 +4,10 @@
  */
 
 #import <Cocoa/Cocoa.h>
-
-@interface IconViewBox : NSBox
-@property (strong) IBOutlet NSTextField *labelField;
-@property (strong) IBOutlet NSImageView *imageView;
-@property (readwrite) BOOL selected;
-
-- (IBAction)iconSelected:(id)sender;
-
-@end
-
-@interface MyScrollView : NSScrollView {
-	NSGradient *backgroundGradient;
-}
-@end
-
-@interface MyCollectionView : NSCollectionView
-@end
-
-@interface MyCollectionViewItem : NSCollectionViewItem
-
-@end
-
+#import "IconViewBox.h"
+#import "MyScrollView.h"
+#import "MyCollectionView.h"
+#import "MyCollectionViewItem.h"
 
 @interface MyViewController : NSViewController <NSCollectionViewDelegate> {
 	IBOutlet NSCollectionView *collectionView;
@@ -67,5 +49,6 @@
 - (void)selectNone: (id)sender;
 
 - (void) zoomChanged: (CGFloat) newValue;
+- (void) resetView;
 
 @end

@@ -5,7 +5,7 @@
      
     Version:  1.0
 
-    Copyright:  © Copyright 2005 Apple Computer, Inc. All rights reserved.
+    Copyright:  Â© Copyright 2005 Apple Computer, Inc. All rights reserved.
 
     Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Computer, Inc.
     ("Apple") in consideration of your agreement to the following terms, and your
@@ -14,7 +14,7 @@
     please do not use, install, modify or redistribute this Apple software.
 
     In consideration of your agreement to abide by the following terms, and subject
-    to these terms, Apple grants you a personal, non-exclusive license, under AppleÕs
+    to these terms, Apple grants you a personal, non-exclusive license, under Appleâ€™s
     copyrights in this original Apple software (the "Apple Software"), to use,
     reproduce, modify and redistribute the Apple Software, with or without
     modifications, in source and/or binary forms; provided that if you redistribute
@@ -55,24 +55,24 @@
 
 - (void)appendBezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius {
     if (!NSIsEmptyRect(rect)) {
-	if (radius > 0.0) {
-	    // Clamp radius to be no larger than half the rect's width or height.
-	    float clampedRadius = MIN(radius, 0.5 * MIN(rect.size.width, rect.size.height));
+    if (radius > 0.0) {
+        // Clamp radius to be no larger than half the rect's width or height.
+        float clampedRadius = MIN(radius, 0.5 * MIN(rect.size.width, rect.size.height));
 
-	    NSPoint topLeft = NSMakePoint(NSMinX(rect), NSMaxY(rect));
-	    NSPoint topRight = NSMakePoint(NSMaxX(rect), NSMaxY(rect));
-	    NSPoint bottomRight = NSMakePoint(NSMaxX(rect), NSMinY(rect));
+        NSPoint topLeft = NSMakePoint(NSMinX(rect), NSMaxY(rect));
+        NSPoint topRight = NSMakePoint(NSMaxX(rect), NSMaxY(rect));
+        NSPoint bottomRight = NSMakePoint(NSMaxX(rect), NSMinY(rect));
 
-	    [self moveToPoint:NSMakePoint(NSMidX(rect), NSMaxY(rect))];
-	    [self appendBezierPathWithArcFromPoint:topLeft     toPoint:rect.origin radius:clampedRadius];
-	    [self appendBezierPathWithArcFromPoint:rect.origin toPoint:bottomRight radius:clampedRadius];
-	    [self appendBezierPathWithArcFromPoint:bottomRight toPoint:topRight    radius:clampedRadius];
-	    [self appendBezierPathWithArcFromPoint:topRight    toPoint:topLeft     radius:clampedRadius];
-	    [self closePath];
-	} else {
-	    // When radius == 0.0, this degenerates to the simple case of a plain rectangle.
-	    [self appendBezierPathWithRect:rect];
-	}
+        [self moveToPoint:NSMakePoint(NSMidX(rect), NSMaxY(rect))];
+        [self appendBezierPathWithArcFromPoint:topLeft     toPoint:rect.origin radius:clampedRadius];
+        [self appendBezierPathWithArcFromPoint:rect.origin toPoint:bottomRight radius:clampedRadius];
+        [self appendBezierPathWithArcFromPoint:bottomRight toPoint:topRight    radius:clampedRadius];
+        [self appendBezierPathWithArcFromPoint:topRight    toPoint:topLeft     radius:clampedRadius];
+        [self closePath];
+    } else {
+        // When radius == 0.0, this degenerates to the simple case of a plain rectangle.
+        [self appendBezierPathWithRect:rect];
+    }
     }
 }
 

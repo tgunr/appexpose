@@ -8,18 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7E714B5A0F4009ACADB /* InfoPlist.strings */; };
-		752BC7EB14B5A0F4009ACADB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7EA14B5A0F4009ACADB /* main.m */; };
 		752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7ED14B5A0F4009ACADB /* Credits.rtf */; };
-		752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BC7F114B5A0F4009ACADB /* AppDelegate.m */; };
 		752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752BC7F314B5A0F5009ACADB /* MainMenu.xib */; };
+		753C0A6C28B5050700DE1D87 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A6328B501BE00DE1D87 /* XATTR.framework */; };
+		753C0A6D28B5051100DE1D87 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A5628B501A900DE1D87 /* PMUtility.framework */; };
 		756DF6F81551D68600558DD4 /* Finder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F71551D68600558DD4 /* Finder.icns */; };
 		756DF6FA1551D8D600558DD4 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6F91551D8D600558DD4 /* Folder.png */; };
 		756DF7001551E2EA00558DD4 /* before-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF6FF1551E2EA00558DD4 /* before-32.png */; };
 		756DF7021551E35300558DD4 /* after-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DF7011551E35300558DD4 /* after-32.png */; };
-		758FD2762C77760C00878379 /* PMUtility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A5628B501A900DE1D87 /* PMUtility.framework */; };
-		758FD2772C77761700878379 /* XATTR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753C0A6328B501BE00DE1D87 /* XATTR.framework */; };
+		75882ECA28C22C9200065C3E /* MyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75882EC928C22C9200065C3E /* MyWindowController.swift */; };
+		75882EE228C27F2100065C3E /* Swiftify.README.md in Resources */ = {isa = PBXBuildFile; fileRef = 75882EDF28C27F2100065C3E /* Swiftify.README.md */; };
 		75A0142A154F2A1800AA6F70 /* AppExposeC.icns in Resources */ = {isa = PBXBuildFile; fileRef = 75A01429154F2A1800AA6F70 /* AppExposeC.icns */; };
 		75A0142C154F34DA00AA6F70 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A0142B154F34DA00AA6F70 /* default.png */; };
+		75A2E42028BD5AA1009C4BB7 /* IconViewBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E41F28BD5AA1009C4BB7 /* IconViewBox.m */; };
+		75A2E42828BD5BCF009C4BB7 /* MyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E42728BD5BCF009C4BB7 /* MyScrollView.m */; };
+		75A2E42C28BD5D23009C4BB7 /* MyCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E42B28BD5D23009C4BB7 /* MyCollectionView.m */; };
+		75A2E42F28BD5D5F009C4BB7 /* MyCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A2E42E28BD5D5F009C4BB7 /* MyCollectionViewItem.m */; };
+		75C78ED128BD6CF500801110 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C78ECB28BD6CF500801110 /* AppDelegate.swift */; };
 		75C904991545C635004FC088 /* red-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C904971545C635004FC088 /* red-lock.png */; };
 		75C9049C1545C6A3004FC088 /* redpadlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C9049B1545C6A3004FC088 /* redpadlock.png */; };
 		75C9049F15461D09004FC088 /* CompositeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C9049E15461D09004FC088 /* CompositeView.m */; };
@@ -28,7 +33,6 @@
 		75F6367D153922D50079D063 /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367C153922D50079D063 /* Collection.xib */; };
 		75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F6367E153922E20079D063 /* IconViewPrototype.xib */; };
 		75F63684153923730079D063 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63681153923730079D063 /* MyViewController.m */; };
-		75F63685153923730079D063 /* MyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63683153923730079D063 /* MyWindowController.m */; };
 		75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F4B215704C2300E15A10 /* ImageReducer.m */; };
 		75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F4B515704C6600E15A10 /* NSBezierPathAdditions.m */; };
 		75FE04A928B2778800129B47 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE04A828B2778800129B47 /* Security.framework */; };
@@ -102,9 +106,6 @@
 
 /* Begin PBXFileReference section */
 		752BC7DA14B5A0F4009ACADB /* AppExposeC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppExposeC.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		752BC7E114B5A0F4009ACADB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		752BC7E214B5A0F4009ACADB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		752BC7E314B5A0F4009ACADB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		752BC7E614B5A0F4009ACADB /* AppExposeC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppExposeC-Info.plist"; sourceTree = "<group>"; };
 		752BC7E814B5A0F4009ACADB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		752BC7EA14B5A0F4009ACADB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -119,8 +120,24 @@
 		756DF6F91551D8D600558DD4 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		756DF6FF1551E2EA00558DD4 /* before-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before-32.png"; sourceTree = "<group>"; };
 		756DF7011551E35300558DD4 /* after-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "after-32.png"; sourceTree = "<group>"; };
+		75882EC928C22C9200065C3E /* MyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWindowController.swift; sourceTree = "<group>"; };
+		75882EDD28C27F2100065C3E /* AppExposeC-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Prefix.pch"; sourceTree = "<group>"; };
+		75882EDF28C27F2100065C3E /* Swiftify.README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; fileEncoding = 4; path = Swiftify.README.md; sourceTree = "<group>"; };
+		75882EE028C27F2100065C3E /* AppExposeC-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppExposeC-Bridging-Header.h"; sourceTree = "<group>"; };
+		75882EE428C27F5100065C3E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		75882EE528C27F5500065C3E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		75882EE628C27F5700065C3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75A01429154F2A1800AA6F70 /* AppExposeC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppExposeC.icns; sourceTree = SOURCE_ROOT; };
 		75A0142B154F34DA00AA6F70 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		75A2E41F28BD5AA1009C4BB7 /* IconViewBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconViewBox.m; sourceTree = "<group>"; };
+		75A2E42628BD5B42009C4BB7 /* IconViewBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconViewBox.h; sourceTree = "<group>"; };
+		75A2E42728BD5BCF009C4BB7 /* MyScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScrollView.m; sourceTree = "<group>"; };
+		75A2E42928BD5C28009C4BB7 /* MyScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScrollView.h; sourceTree = "<group>"; };
+		75A2E42A28BD5D06009C4BB7 /* MyCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionView.h; sourceTree = "<group>"; };
+		75A2E42B28BD5D23009C4BB7 /* MyCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionView.m; sourceTree = "<group>"; };
+		75A2E42D28BD5D47009C4BB7 /* MyCollectionViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewItem.h; sourceTree = "<group>"; };
+		75A2E42E28BD5D5F009C4BB7 /* MyCollectionViewItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewItem.m; sourceTree = "<group>"; };
+		75C78ECB28BD6CF500801110 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75C904971545C635004FC088 /* red-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-lock.png"; sourceTree = "<group>"; };
 		75C9049B1545C6A3004FC088 /* redpadlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpadlock.png; sourceTree = "<group>"; };
 		75C9049D15461D09004FC088 /* CompositeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeView.h; sourceTree = "<group>"; };
@@ -132,8 +149,6 @@
 		75F6367E153922E20079D063 /* IconViewPrototype.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconViewPrototype.xib; sourceTree = "<group>"; };
 		75F63680153923730079D063 /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		75F63681153923730079D063 /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
-		75F63682153923730079D063 /* MyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindowController.h; sourceTree = "<group>"; };
-		75F63683153923730079D063 /* MyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindowController.m; sourceTree = "<group>"; };
 		75F6F4B115704C2300E15A10 /* ImageReducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReducer.h; sourceTree = "<group>"; };
 		75F6F4B215704C2300E15A10 /* ImageReducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageReducer.m; sourceTree = "<group>"; };
 		75F6F4B415704C6600E15A10 /* NSBezierPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBezierPathAdditions.h; sourceTree = "<group>"; };
@@ -148,8 +163,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				758FD2772C77761700878379 /* XATTR.framework in Frameworks */,
-				758FD2762C77760C00878379 /* PMUtility.framework in Frameworks */,
+				753C0A6D28B5051100DE1D87 /* PMUtility.framework in Frameworks */,
+				753C0A6C28B5050700DE1D87 /* XATTR.framework in Frameworks */,
 				75FE04AD28B277A500129B47 /* Cocoa.framework in Frameworks */,
 				75FE04AB28B2779900129B47 /* Quartz.framework in Frameworks */,
 				75FE04A928B2778800129B47 /* Security.framework in Frameworks */,
@@ -162,6 +177,9 @@
 		752BC7CF14B5A0F4009ACADB = {
 			isa = PBXGroup;
 			children = (
+				75882EE028C27F2100065C3E /* AppExposeC-Bridging-Header.h */,
+				75882EDD28C27F2100065C3E /* AppExposeC-Prefix.pch */,
+				75882EDF28C27F2100065C3E /* Swiftify.README.md */,
 				753C0A5928B501BE00DE1D87 /* xattr.xcodeproj */,
 				753C0A4F28B501A900DE1D87 /* PMUtility.xcodeproj */,
 				752BC7E414B5A0F4009ACADB /* AppExpose */,
@@ -184,24 +202,17 @@
 				75FE04AC28B277A500129B47 /* Cocoa.framework */,
 				75FE04AA28B2779900129B47 /* Quartz.framework */,
 				75FE04A828B2778800129B47 /* Security.framework */,
-				752BC7E014B5A0F4009ACADB /* Other Frameworks */,
+				75882EE428C27F5100065C3E /* AppKit.framework */,
+				75882EE528C27F5500065C3E /* CoreData.framework */,
+				75882EE628C27F5700065C3E /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		752BC7E014B5A0F4009ACADB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				752BC7E114B5A0F4009ACADB /* AppKit.framework */,
-				752BC7E214B5A0F4009ACADB /* CoreData.framework */,
-				752BC7E314B5A0F4009ACADB /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		752BC7E414B5A0F4009ACADB /* AppExpose */ = {
 			isa = PBXGroup;
 			children = (
+				75C78ECB28BD6CF500801110 /* AppDelegate.swift */,
 				75F6F4B415704C6600E15A10 /* NSBezierPathAdditions.h */,
 				75F6F4B515704C6600E15A10 /* NSBezierPathAdditions.m */,
 				75F6F4B115704C2300E15A10 /* ImageReducer.h */,
@@ -214,10 +225,17 @@
 				752BC7F114B5A0F4009ACADB /* AppDelegate.m */,
 				75F63680153923730079D063 /* MyViewController.h */,
 				75F63681153923730079D063 /* MyViewController.m */,
-				75F63682153923730079D063 /* MyWindowController.h */,
-				75F63683153923730079D063 /* MyWindowController.m */,
+				75882EC928C22C9200065C3E /* MyWindowController.swift */,
 				75F6367B153922C00079D063 /* Nibs */,
 				752BC7E514B5A0F4009ACADB /* Resources */,
+				75A2E41F28BD5AA1009C4BB7 /* IconViewBox.m */,
+				75A2E42628BD5B42009C4BB7 /* IconViewBox.h */,
+				75A2E42728BD5BCF009C4BB7 /* MyScrollView.m */,
+				75A2E42928BD5C28009C4BB7 /* MyScrollView.h */,
+				75A2E42A28BD5D06009C4BB7 /* MyCollectionView.h */,
+				75A2E42B28BD5D23009C4BB7 /* MyCollectionView.m */,
+				75A2E42D28BD5D47009C4BB7 /* MyCollectionViewItem.h */,
+				75A2E42E28BD5D5F009C4BB7 /* MyCollectionViewItem.m */,
 			);
 			path = AppExpose;
 			sourceTree = "<group>";
@@ -392,6 +410,7 @@
 			files = (
 				752BC7E914B5A0F4009ACADB /* InfoPlist.strings in Resources */,
 				752BC7EF14B5A0F4009ACADB /* Credits.rtf in Resources */,
+				75882EE228C27F2100065C3E /* Swiftify.README.md in Resources */,
 				752BC7F514B5A0F5009ACADB /* MainMenu.xib in Resources */,
 				75F6367D153922D50079D063 /* Collection.xib in Resources */,
 				75F6367F153922E20079D063 /* IconViewPrototype.xib in Resources */,
@@ -431,14 +450,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				752BC7EB14B5A0F4009ACADB /* main.m in Sources */,
-				752BC7F214B5A0F4009ACADB /* AppDelegate.m in Sources */,
+				75A2E42C28BD5D23009C4BB7 /* MyCollectionView.m in Sources */,
+				75882ECA28C22C9200065C3E /* MyWindowController.swift in Sources */,
+				75A2E42828BD5BCF009C4BB7 /* MyScrollView.m in Sources */,
+				75C78ED128BD6CF500801110 /* AppDelegate.swift in Sources */,
 				75F636761538FFAC0079D063 /* AppEntry.m in Sources */,
 				75F63684153923730079D063 /* MyViewController.m in Sources */,
-				75F63685153923730079D063 /* MyWindowController.m in Sources */,
 				75C9049F15461D09004FC088 /* CompositeView.m in Sources */,
 				75F6F4B315704C2300E15A10 /* ImageReducer.m in Sources */,
+				75A2E42028BD5AA1009C4BB7 /* IconViewBox.m in Sources */,
 				75F6F4B615704C6600E15A10 /* NSBezierPathAdditions.m in Sources */,
+				75A2E42F28BD5D5F009C4BB7 /* MyCollectionViewItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +558,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -584,7 +605,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -599,15 +619,17 @@
 				DEVELOPMENT_TEAM = BG856GB4D8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AppExposeC-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
@@ -624,15 +646,17 @@
 				DEVELOPMENT_TEAM = BG856GB4D8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AppExposeC-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "AppExpose/AppExposeC-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = " @loader_path/../Frameworks ";
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.polymicro.appexpose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AppExposeC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};

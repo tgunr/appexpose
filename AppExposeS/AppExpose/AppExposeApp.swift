@@ -5,102 +5,60 @@
 //  Created by Dave Carlton on 8/21/22.
 //
 
+import AppKit
+import OSLog
 import SwiftUI
+
+let logid = "appexpose"
+let logCategories: [String: OSLog.logColor] = [
+    "entry": .black,
+    "appear": .white,
+    "log": .brown,
+    "value": .violet,
+    "info": .blue,
+    "notice": .green,
+    "change": .yellow,
+    "warning": .orange,
+    "error": .red,
+]
+
+@MainActor let symlog = createLogger("app", subsystem: logid, subsystemColor: .black, categories: logCategories)
+@MainActor let uilog = createLogger("uiview", subsystem: logid, subsystemColor: .violet, categories: logCategories)
+@MainActor let storelog = createLogger("store", subsystem: logid, subsystemColor: .blue, categories: logCategories)
+
+
+class AppData: NSObject, ObservableObject {
+    @MainActor static let shared = AppData()
+    var iconSize: Double = 32.0
+    @Published var appFolders: [Folder] = []
+    @Published var bold = true
+    @Published var remove = false
+    @Published var selectAll = false
+}
 
 @main
 struct MyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var model = AppFolders()
-    var body: some Scene {
-        WindowGroup(String("AppExpose"), id: "root") {
-            //            ExampleView().frame(maxWidth: .infinity, maxHeight: .infinity)
-            ToolbarView().frame(maxWidth: .infinity, maxHeight: .infinity)
-            ContentView(appDelegate: appDelegate)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+    @StateObject var appData = AppData.shared
 
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environmentObject(appData)
+                .defaultAppStorage(UserDefaults(suiteName: "net.polymicro.appexpose")!)
         }
-        Settings {
-            PreferencesView(model: model)
+        MenuBarExtra("My Menu", systemImage: "gear") {
+            SettingsView()
+                .environmentObject(appData)
         }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .menuBarExtraStyle(.automatic)
+//        Settings {
+//            PreferencesView(model: model)
+//        }
 //        }.commands {
-            // This is optional, but adds menu items for toolbar customization
+        // This is optional, but adds menu items for toolbar customization
 //            ToolbarCommands()
 //        }
-    }
-}
-
-struct ToolbarView: View {
-    @State private var size: Double = 0.7
-    @State private var bold = true
-    @State private var remove = false
-    @State private var selectAll = false
-    var body: some View {
-        Text("Top")
-//        Color.clear
-            .toolbar(id: "mytb") {
-                ToolbarItem(id: "before", placement: .automatic) {
-                    Button(action: before, label: {
-                        Text("Before")
-                        Image(systemName: "arrowshape.turn.up.left.circle.fill") })
-                }
-                
-                ToolbarItem(id: "after", placement: .automatic) {
-                    Button(action: after, label: {
-                        Text("After")
-                        Image(systemName: "arrowshape.turn.up.right.circle.fill") })
-                }
-                
-                ToolbarItem(id: "size", placement: .automatic) {
-                    Slider(value: $size, in: 0...1, label: { Text("Size")})
-                        .frame(width: 100)
-                }
-                
-                ToolbarItem(id: "apply", placement: .automatic) {
-                    Toggle(isOn: $bold, label: {
-                        Image(systemName: "square.and.arrow.down.on.square.fill")
-                        Text("Apply").fontWeight(.heavy) })
-                }
-                
-                ToolbarItem(id: "remove", placement: .automatic) {
-                    Toggle(isOn: $remove, label: {
-                        Image(systemName: "trash")
-                        Text("Remove").italic() })
-                }
-                ToolbarItem(id: "selectAll", placement: .automatic) {
-                    Toggle(isOn: $selectAll, label: {
-                        Image(systemName: "filemenu.and.selection")
-                        Text("Select All").italic() })
-                }
-
-            }
-            .navigationTitle("Application Folders")
-        
-    }
-    
-    func before() {
-        
-    }
-    
-    func after() {
-        
-    }
-}
-
-func before() {
-    
-}
-
-struct ToolbarView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            ToolbarView()
-        }
-        .toolbar(id: "mytb") {
-            ToolbarItem(id: "before", placement: .automatic) {
-                Button(action: before, label: {
-                    Text("Before")
-                    Image(systemName: "arrowshape.turn.up.left.circle.fill") })
-            }
-        }
     }
 }

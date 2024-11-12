@@ -1,0 +1,78 @@
+{
+  "originHash" : "2eaacda090e0662206b43e8c9cfeb2f14bcfb5a27ec818cd9dd4091c5f4969ae",
+  "pins" : [
+    {
+      "identity" : "cache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nashysolutions/Cache.git",
+      "state" : {
+        "revision" : "12b577aa115eeba4ec5a841e9f005709e01052ca",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "directory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nashysolutions/Directory.git",
+      "state" : {
+        "revision" : "c55f8a61b3feb9a9e349a9747569f43157c56bdb",
+        "version" : "5.0.0"
+      }
+    },
+    {
+      "identity" : "extendedattributes",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/amosavian/ExtendedAttributes.git",
+      "state" : {
+        "revision" : "075e545e2f128482fa377c825bfa0e4f0e266419",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "files",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/Files",
+      "state" : {
+        "revision" : "d273b5b7025d386feef79ef6bad7de762e106eaf",
+        "version" : "4.2.0"
+      }
+    },
+    {
+      "identity" : "helm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/valentinradu/Helm",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9e83233160174813b620e734d6e43018e123ed25"
+      }
+    },
+    {
+      "identity" : "remoteimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/crelies/RemoteImage.git",
+      "state" : {
+        "revision" : "7de20453a8b9733eb8e28ae762801c60a5a5f59d",
+        "version" : "4.0.0"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections.git",
+      "state" : {
+        "revision" : "f504716c27d2e5d4144fa4794b12129301d17729",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-syntax.git",
+      "state" : {
+        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
+        "version" : "509.1.1"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -3,114 +3,18 @@
  Abstract: Controls the collection view of icons.
  */
 
-#import "AppDelegate.h"
 #import "MyViewController.h"
-#import "MyWindowController.h"
 #import "AppEntry.h"
 #import "PMUtility/pmUtility.h"
 #import "xattr/xattr.h"
-
-@implementation IconViewBox
-
-// -------------------------------------------------------------------------------
-//	hitTest:aPoint
-// -------------------------------------------------------------------------------
-@synthesize labelField;
-@synthesize imageView;
-@synthesize selected;
-
-- (IconViewBox *)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-    
-- (void)awakeFromNib {
-    [[[[AppDelegate shared] myWindowController] viewController] setIconViewBox: self];
-}
-
-- (IconViewBox *)hitTest: (NSPoint) aPoint {
-	// don't allow any mouse clicks for subviews in this NSBox
-    [[AppDelegate shared] selectionChanged];
-    selected = YES;
-	return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect 
-{
-    [super drawRect:dirtyRect];
-    [self setBoxType:NSBoxSecondary];
-    [self setBorderType:NSBezelBorder];
-}
-
-- (IBAction)iconSelected:(id)sender {
-}
-@end
-
-
-@implementation MyScrollView
-
-- (void)awakeFromNib {
-	// set up the background gradient for this custom scrollView
-	backgroundGradient = [[NSGradient alloc] initWithStartingColor:
-			[NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: 0.898f alpha: 0.0f]
-	                                                   endingColor: [NSColor colorWithDeviceRed: 0.349f green: 0.6f blue: .898f alpha: 0.4f]];
-}
-
-- (void)drawRect: (NSRect) rect {
-	// draw our special background as a gradient
-	[backgroundGradient drawInRect: [self documentVisibleRect] angle: 90.0f];
-}
-
-@end
-
-@implementation MyCollectionView
-
-- (void)awakeFromNib {
-    [self setSubviewSize: 128.0];
-}
-
-- (NSView *)hitTest: (NSPoint) aPoint {
-    [[AppDelegate shared] selectionChanged];
-    return nil;
-}
-
-- (void)didAddSubview:(IconViewBox *)subview {
-    
-}
-
-- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
-    
-}
-
--(void)setSubviewSize:(CGFloat)theSubviewSize {
-    [self setMaxItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
-    [self setMinItemSize:NSMakeSize(theSubviewSize,theSubviewSize)];
-}
-
-@end
-
-@implementation MyCollectionViewItem
-
-- (NSView *)hitTest: (NSPoint) aPoint {
-    return nil;
-}
-
-- (void)setSelected:(BOOL)flag
-{
-    [super setSelected:flag];
-    [(IconViewBox*)[self view] setSelected:flag];
-    [(IconViewBox*)[self view] setNeedsDisplay:YES];
-}
-
-@end
+#import "IconViewBox.h"
+#import "AppExposeC-Swift.h"
 
 @implementation MyViewController {
 	id appDirectory;
 	AppEntry *rootEntry;
-
+    BOOL showProgress;
+    
 }
 
 @synthesize iconViewBox;
@@ -125,27 +29,36 @@
 {
     self = [super init];
     if (self) {
+        showProgress = true;
     }
     return self;
 }
 
-- (void)awakeFromNib {
+- (void) resetView {
+    [collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
+    NSIndexSet *indexes = [NSIndexSet indexSet];
+    [collectionView setSelectionIndexes:indexes];
     images = [[NSMutableArray alloc] init];
     contentArray = [[NSMutableArray alloc] init];
+}
 
-    [self addObserver:	self
+- (void)awakeFromNib {
+    [self addObserver:self
            forKeyPath:@"url"
               options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
               context:NULL];
-
+   
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(stopProgress:)
+     name:@"stopprogress"
+     object:nil];
+    
 	// save this for later when toggling between alternate colors
 	savedAlternateColors = [collectionView backgroundColors];
 
 	[self setSortingMode: 0];        // icon collection in ascending sort order
-
-	[collectionView setDraggingSourceOperationMask: NSDragOperationCopy forLocal: NO];
-    NSIndexSet *indexes = [NSIndexSet indexSet];
-    [collectionView setSelectionIndexes:indexes];
+    [self resetView];
 }
 
 - (void)addEntries: (NSArray *) array {
@@ -161,9 +74,10 @@
             [arrayController addObject: iconDictionary];
             [contentArray addObject: entry];
             [self zoomChanged:DEFAULT_ICON_SIZE];
+            [self selectNone:self];
         }
         else {
-            PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+            PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
         }
     }
 }
@@ -173,7 +87,8 @@
 	for (AppEntry  *entry in iconImages) {
         if (entry != nil) {
             if ([entry isFolder] && [[entry childEntries] count] == 1 )
-                [entry badgeAsFolder];
+                if ([entry isSpecial])
+                    [entry badgeAsFolder];
                 
             if (![entry canAccess] && ![entry isApp]) {
                 [entry badgeAsNoAccess];
@@ -184,12 +99,16 @@
                 [tempArray addObject: iconDictionary];
             }
             else {
-                PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+                PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
             }
         }
 	}
 	[self setImages: tempArray];
-    
+}
+
+- (void)startProgress {
+    [[[[AppDelegate shared] windowController] progressIndicator] setHidden:NO];
+    [[[[AppDelegate shared] windowController] progressIndicator] startAnimation:self];
 }
 
 - (void)observeValueForKeyPath:(NSString*)keyPath
@@ -197,15 +116,24 @@
                         change:(NSDictionary*)change 
                        context:(void *)context
 {
-    [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:NO];
-    [[[[AppDelegate shared] myWindowController] progressIndicator] startAnimation:self];
 
 	// build our directory contents on a separate thread,
 	// some portions are from disk which could get expensive depending on the size
-    PMLOG_SetVerbose(PMLogLevelDebug);
+    [self startProgress];
+    self->showProgress = true;
     [NSThread detachNewThreadSelector:	@selector(collectFolders:)
                              toTarget:self		// we are the target
                            withObject:url];
+}
+
+- (void) stopProgress:(NSNotification *) notification {
+    SEL select = NSSelectorFromString(@"stopOnMainThread");
+    [self performSelectorOnMainThread:select withObject:nil waitUntilDone:YES];
+}
+
+- (void) stopOnMainThread {
+    [[[[AppDelegate shared] windowController] progressIndicator] stopAnimation:self];
+    [[[[AppDelegate shared] windowController] progressIndicator] setHidden:YES];
 }
 
 - (void) collectFolders:(NSURL *) directoryToScan {
@@ -216,7 +144,7 @@
                                         includingPropertiesForKeys:fileKeys
                                                            options:NSDirectoryEnumerationSkipsHiddenFiles
                                                       errorHandler:nil];
-        
+
         NSMutableArray *tempArray = [NSMutableArray array];
         for (NSURL *theURL in dirEnumerator) {
             
@@ -252,10 +180,10 @@
                     [dirEnumerator skipDescendents];
             }
         }
-//        [[[[AppDelegate shared] myWindowController] progressIndicator] stopAnimation:self];
-//        [[[[AppDelegate shared] myWindowController] progressIndicator] setHidden:YES];
         [self performSelectorOnMainThread:@selector(setIcons:) withObject:tempArray waitUntilDone:YES];
-//        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:@"stopprogress"
+            object:self];
     }
 }
 
@@ -338,7 +266,7 @@
 				}
 			}
 			else {
-				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+				PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
 			}
 		}
 	}
@@ -388,13 +316,13 @@
                         NSImage *original = [entry originalImage];
                         NSImage *current  = [entry iconImage];
                         if (current != original) {
-                            PMLOG(1, @"Setting icon on: %@", [entry appURL]);
+                            PMLOG_DEBUG(@"Setting icon on: %@", [entry appURL]);
                             [tempArray addObject: entry];
                         }
                     } else 
-                        PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+                        PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
                 } else
-                    PMLOG(1, @"Skipping non-accessible url: %@", [[entry appURL] path]);
+                    PMLOG_DEBUG(@"Skipping non-accessible url: %@", [[entry appURL] path]);
             }
         }
         NSWorkspace    *ws        = [NSWorkspace sharedWorkspace];
@@ -432,7 +360,7 @@
             NSURL *aURL = [entry appURL];
             BOOL hasCustomIcon = [entry hasAttribute: CUSTOM_ICON_ID];
             if (hasCustomIcon) {
-                PMLOG(1, @"removing CustomIcon: %@", aURL);
+                PMLOG_DEBUG(@"removing CustomIcon: %@", aURL);
                 NSURL         *customIconURL = [aURL URLByAppendingPathComponent: CUSTOM_ICON_NAME];
                 NSFileManager *fm            = [NSFileManager defaultManager];
                 BOOL ok = [fm fileExistsAtPath: [customIconURL path]];
@@ -510,7 +438,7 @@
 //                [tempArray addObject: iconDictionary];
 //			}
 //			else {
-//				PMLOG(1, @"iconDictionary nil for: %@", [[entry appURL] path]);
+//				PMLOG_DEBUG(@"iconDictionary nil for: %@", [[entry appURL] path]);
 //			}
 //		}
 //	}

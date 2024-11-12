@@ -48,8 +48,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "MyViewController.h"
-
 @interface MyWindowController : NSWindowController
 {
     MyViewController *viewController;
@@ -90,5 +88,7 @@
 - (IBAction)zoomChanged:(id)sender;
 - (IBAction)restartFinder:(id)sender;
 - (void)selectionChanged;
+@property (weak) IBOutlet NSToolbarItem *refreshWindow;
 
 @end
+

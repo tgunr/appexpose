@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21223" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="15705"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21223"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -659,23 +658,20 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="550" y="450" width="735" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2240" height="1235"/>
             <value key="minSize" type="size" width="500" height="330"/>
             <view key="contentView" id="597" userLabel="Content View">
                 <rect key="frame" x="0.0" y="0.0" width="735" height="500"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="598">
-                        <rect key="frame" x="0.0" y="26" width="736" height="454"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="598">
+                        <rect key="frame" x="0.0" y="26" width="735" height="454"/>
                     </customView>
-                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="600">
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="600">
                         <rect key="frame" x="0.0" y="481" width="735" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="599">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="599">
                         <rect key="frame" x="0.0" y="485" width="735" height="14"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="601">
                             <font key="font" metaFont="menu" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -685,19 +681,40 @@
                             <binding destination="614" name="value" keyPath="viewController.arrayController.selection.name" id="630"/>
                         </connections>
                     </textField>
-                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="683" userLabel="Horizontal Slider">
+                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="683" userLabel="Horizontal Slider">
                         <rect key="frame" x="631" y="10" width="96" height="15"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="92" id="0Ee-15-rKG"/>
+                            <constraint firstAttribute="height" constant="11" id="e8F-BV-Yq2"/>
+                        </constraints>
                         <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="96" maxValue="512" doubleValue="128" tickMarkPosition="above" sliderType="linear" id="684"/>
                         <connections>
                             <action selector="zoomChanged:" target="614" id="687"/>
                         </connections>
                     </slider>
-                    <progressIndicator hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="694">
-                        <rect key="frame" x="289" y="6" width="156" height="20"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                    <progressIndicator hidden="YES" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="694">
+                        <rect key="frame" x="290" y="6" width="156" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="156" id="cjx-Kd-QsL"/>
+                        </constraints>
                     </progressIndicator>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="694" secondAttribute="bottom" constant="7" id="5iH-YT-A1U"/>
+                    <constraint firstItem="600" firstAttribute="leading" secondItem="597" secondAttribute="leading" id="EEx-Xt-D64"/>
+                    <constraint firstItem="598" firstAttribute="centerX" secondItem="600" secondAttribute="centerX" id="KG6-kT-9DV"/>
+                    <constraint firstItem="600" firstAttribute="top" secondItem="599" secondAttribute="bottom" constant="1" id="KJD-RA-jhc"/>
+                    <constraint firstAttribute="trailing" secondItem="683" secondAttribute="trailing" constant="10" id="OAl-A5-kmP"/>
+                    <constraint firstItem="599" firstAttribute="centerX" secondItem="600" secondAttribute="centerX" id="ORg-d0-xKx"/>
+                    <constraint firstItem="598" firstAttribute="leading" secondItem="600" secondAttribute="leading" id="PrP-g4-0UT"/>
+                    <constraint firstItem="598" firstAttribute="top" secondItem="597" secondAttribute="top" constant="20" symbolic="YES" id="Xnv-ly-EZI"/>
+                    <constraint firstItem="598" firstAttribute="top" secondItem="600" secondAttribute="bottom" constant="3" id="YMs-9i-i86"/>
+                    <constraint firstAttribute="trailing" secondItem="600" secondAttribute="trailing" id="gG0-kN-FD2"/>
+                    <constraint firstItem="694" firstAttribute="top" secondItem="598" secondAttribute="bottom" constant="1" id="lpc-aJ-Ys3"/>
+                    <constraint firstItem="600" firstAttribute="centerX" secondItem="694" secondAttribute="centerX" id="pvL-Gl-gHa"/>
+                    <constraint firstItem="683" firstAttribute="top" secondItem="598" secondAttribute="bottom" constant="3" id="wpj-ki-7g5"/>
+                    <constraint firstItem="599" firstAttribute="leading" secondItem="597" secondAttribute="leading" constant="2" id="yQb-mn-zEm"/>
+                </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="637B631B-4E3F-4C65-AD0B-B3DF00F40FE3" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="596" userLabel="Toolbar">
                 <allowedToolbarItems>
@@ -764,7 +781,7 @@
                         <size key="minSize" width="48" height="48"/>
                         <size key="maxSize" width="48" height="48"/>
                         <button key="view" imageHugsTitle="YES" id="718">
-                            <rect key="frame" x="4" y="14" width="48" height="48"/>
+                            <rect key="frame" x="5" y="14" width="48" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSMultipleDocuments" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="719">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -791,12 +808,26 @@
                             </connections>
                         </button>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="FEA131A3-E36F-45F8-A4E7-C8CB65E88659" label="" paletteLabel="Refresh" image="NSRefreshTemplate" sizingBehavior="auto" id="u1V-vn-JVE">
+                        <nil key="toolTip"/>
+                        <button key="view" verticalHuggingPriority="750" id="ibc-HR-udq">
+                            <rect key="frame" x="2" y="14" width="44" height="32"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="emo-X8-w1u">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="refreshWindow:" target="614" id="wmz-MZ-ceG"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="1359999A-DBDB-48F3-822F-EB692F27483A" label="" paletteLabel="" id="729">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="220" height="25"/>
-                        <size key="maxSize" width="300" height="25"/>
+                        <size key="minSize" width="220" height="23"/>
+                        <size key="maxSize" width="300" height="26"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="727">
-                            <rect key="frame" x="0.0" y="14" width="222" height="25"/>
+                            <rect key="frame" x="0.0" y="14" width="232" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="728">
                                 <font key="font" metaFont="system"/>
@@ -812,6 +843,7 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="u1V-vn-JVE"/>
                     <toolbarItem reference="729"/>
                     <toolbarItem reference="607"/>
                     <toolbarItem reference="714"/>
@@ -829,21 +861,20 @@
             </connections>
             <point key="canvasLocation" x="36" y="6"/>
         </window>
-        <customObject id="494" customClass="AppDelegate">
+        <customObject id="494" customClass="AppDelegate" customModule="AppExposeC" customModuleProvider="target">
             <connections>
-                <outlet property="myWindowController" destination="614" id="671"/>
                 <outlet property="window" destination="595" id="615"/>
+                <outlet property="windowController" destination="614" id="671"/>
             </connections>
         </customObject>
-        <customObject id="614" userLabel="WindowController" customClass="MyWindowController">
+        <customObject id="614" userLabel="WindowController" customClass="MyWindowController" customModule="AppExposeC" customModuleProvider="target">
             <connections>
                 <outlet property="appearanceControl" destination="727" id="730"/>
-                <outlet property="applyButton" destination="712" id="737"/>
-                <outlet property="iconView" destination="664" id="668"/>
-                <outlet property="iconsView" destination="665" id="667"/>
+                <outlet property="applyButton" destination="712" id="N6c-Yu-V3P"/>
                 <outlet property="myTargetView" destination="598" id="618"/>
                 <outlet property="progressIndicator" destination="694" id="695"/>
-                <outlet property="removeButton" destination="715" id="735"/>
+                <outlet property="refreshWindow" destination="u1V-vn-JVE" id="oVT-bD-ZQo"/>
+                <outlet property="removeButton" destination="715" id="2PI-sl-fYW"/>
                 <outlet property="restartFinder" destination="723" id="739"/>
                 <outlet property="selectAllButton" destination="721" id="734"/>
                 <outlet property="selectAllToolBarItem" destination="720" id="740"/>
@@ -855,35 +886,12 @@
         <customObject id="420" customClass="NSFontManager"/>
         <customObject id="638"/>
         <userDefaultsController representsSharedInstance="YES" id="621"/>
-        <window title="Icons Discovered" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" visibleAtLaunch="NO" animationBehavior="default" id="649" customClass="NSPanel">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="272" y="199" width="276" height="378"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
-            <view key="contentView" id="650">
-                <rect key="frame" x="0.0" y="0.0" width="276" height="378"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <ikImageView wantsLayer="YES" fixedFrame="YES" zoomFactor="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="664">
-                        <rect key="frame" x="74" y="20" width="128" height="128"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.50002289" green="0.50002289" blue="0.50002289" alpha="1" colorSpace="deviceRGB"/>
-                    </ikImageView>
-                    <ikImageBrowserView autoresizesSubviews="NO" fixedFrame="YES" zoomValue="0.63702207803726196" allowsMultipleSelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="665">
-                        <rect key="frame" x="20" y="156" width="236" height="202"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <ikCellsStyle key="cellsStyleMask" shadowed="YES" outlined="YES"/>
-                        <autoresizingMask key="contentResizingMask" heightSizable="YES"/>
-                        <size key="cellSize" width="100" height="100"/>
-                    </ikImageBrowserView>
-                </subviews>
-            </view>
-        </window>
     </objects>
     <resources>
         <image name="Finder" width="512" height="512"/>
         <image name="Folder" width="286" height="224"/>
         <image name="NSMultipleDocuments" width="32" height="32"/>
+        <image name="NSRefreshTemplate" width="18" height="21"/>
         <image name="after-32" width="32" height="32"/>
         <image name="app" width="128" height="128"/>
         <image name="before-32" width="32" height="32"/>

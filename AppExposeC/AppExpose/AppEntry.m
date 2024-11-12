@@ -10,7 +10,6 @@
 #import "xattr/xattr.h"
 #import "PMUtility/pmUtility.h"
 #import "CompositeView.h"
-#import "AppDelegate.h"
 #import "ImageReducer.h"
 
 @interface NSImage (Dump)
@@ -35,7 +34,9 @@
 @synthesize isApp;
 @synthesize canAccess;
 @synthesize hasCustomIcon;
+@synthesize isSpecial;
 @synthesize name;
+@synthesize fullName;
 @synthesize appURL;
 @synthesize childEntries;
 @synthesize iconImage;
@@ -57,7 +58,9 @@
         appURL         = [url copy];
         isLeaf         = YES;
         isApp          = NO;
+        isSpecial      = NO;
         name           = [[url lastPathComponent] copy];
+        fullName       = [url path];
         originalImage  = [[NSWorkspace sharedWorkspace] iconForFile:[appURL path]];
         iconImage      = originalImage;
         iconDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -117,7 +120,7 @@
         NSSize  littleIconSize = NSMakeSize((resultImageSize.width / 4.0), (resultImageSize.height / 4.0) );
         [resultImage lockFocus];
         [bgImage setSize:NSMakeSize(resultImageSize.width - 64, resultImageSize.height - 64)];
-        [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:.8];
+//        [bgImage drawAtPoint:NSMakePoint(32.0, 32.0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:.8];
         [self drawRect:NSMakeRect(0.0, 0.0, ICON_SIZE, ICON_SIZE)];
         int i, j;
         long count = MIN(9, numImages);
@@ -201,6 +204,7 @@
         isApp         = [self isAnApp:url];
         canAccess     = [self userCanAccess];
         name          = [[url lastPathComponent] copy];
+        fullName      = [url path];
         if (isFolder && [self hasMyCustomIcon]) {
             originalImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
         } else {
@@ -233,8 +237,19 @@
 
 - (BOOL) isNotSpecial {
     NSArray *specialNames = [NSArray arrayWithObjects:@"Utilities", nil];
-    BOOL result = [specialNames containsObject:name];
-    return !result;
+    NSArray *components = [appURL pathComponents];
+    if ([components[0] isEqualToString:@"/"] &&
+        [components[1] isEqualToString:@"System"] &&
+        [components[2] isEqualToString:@"Applications"] &&
+        [specialNames containsObject: components[3]]) {
+        self.isSpecial = false;
+        return false;
+    }
+    else
+    {
+        self.isSpecial = false;
+        return true;
+    }
 }
 
 - (BOOL) shouldSkipDescendents {
@@ -274,7 +289,7 @@
             if ([isPackage boolValue]) {
                 AppEntry *entry = [[AppEntry alloc] initWithURL: theURL];
                 if ([entry isApp]) {
-                    PMLOG(2, @"adding: %@", theURL);
+                    PMLOG_DEBUG(@"adding: %@", theURL);
                     if ([appEntry addChildEntry:entry]) {
                         [dirEnumerator skipDescendents];
                     }
@@ -318,7 +333,7 @@
     NSError *error;
     BOOL result2 = [appURL checkResourceIsReachableAndReturnError:&error];
     if (!result1 || !result2) {
-        PMLOG(2, @"no access: %@", appURL);
+        PMLOG_DEBUG(@"no access: %@", appURL);
     }
     return result1 && result2;
 }

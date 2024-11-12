@@ -3,5 +3,15 @@ ScriptingBridgeFinder
 build
 AppExpose/DerivedData
 AppExposeC/DerivedData
-*.xcbkptlist
-*/xcuserdataAppExposeC/AppExposeC.xcodeproj/xcuserdata/
+AppExposeSwift/DerivedData
+AppExposeC.backup
+AppExposeSwift/AppExposeSwift.xcodeproj/project.xcworkspace/xcuserdata
+AppExposeS/AppExposeS.xcodeproj/xcuserdata
+AppExposeWS.xcworkspace/xcuserdata
+AppExposeC/AppExposeC.xcodeproj/project.xcworkspace/xcuserdata
+AppExposeC/AppExposeC.xcodeproj/xcuserdata
+AppExposeSwift/AppExposeSwift.xcodeproj/xcuserdata
+DerivedData
+AppExposeS/DerivedData
+AppExposeS/Untitled/.nova
+AppExposeS/.vscode/settings.json
