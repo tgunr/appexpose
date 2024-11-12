@@ -76,18 +76,14 @@ struct MainView: View {
                 }
                 Spacer()
             }
-            .background(
-                NavigationLink(destination: AppFolderDetailViewWrapper(selectedEntry: $selectedEntry), isActive: Binding(get: {
-                    return selectedEntry != nil
-                }, set: { value in
-                    if !value {
-                        selectedEntry = nil
-                    }
-                })) {
-                    EmptyView()
-                }
-            )
             .navigationTitle("Main View")
+        }
+        .navigationDestination(for: AppEntry?.self) { entry in
+            if let unwrappedEntry = entry {
+                AppFolderDetailView(entry: .constant(unwrappedEntry))
+            } else {
+                EmptyView()
+            }
         }
     }
 
@@ -116,35 +112,48 @@ struct MainView: View {
             SearchBar(searchText: $searchText, filteredEntries: $filteredEntries, isFocused: $isSearchFieldFocused, entries: { self.entries() })
             sortView
             filterView
-            Button("Select", action: {
-                canSelect.toggle()
+            HStack {
+                Button(action: {
+                    canSelect.toggle()
+                    if canSelect {
+                        selectedEntry = nil
+                    }
+                }) {
+                    Text("Select")
+                        .foregroundColor(canSelect ? .white : .black)
+                        .fontWeight(canSelect ? .bold : .regular)
+                }
+                .background(canSelect ? Color.blue : Color.clear)
+            Button(action: {
+                
+            }, label: {
+                Text("Combine")
             })
+            }
             Divider()
         }
         .padding()
     }
 
     var appsView: some View {
-         ScrollView {
-             LazyVGrid(columns: [
-                 GridItem(.adaptive(minimum: 120)), // for debug
-             ]) {
-                 if !filteredEntries.isEmpty {
-                     ForEach($filteredEntries, id: \.id) { entry in
-                         AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
-                             let _ = symlog.value("\(#function)  selectedEntry: \(selectedEntry.name ?? "none")")
-                             self.selectedEntry = selectedEntry
-                         })
-                     }
-                 } else {
-                     ProgressView()
-                 }
-             }
-         }
-     }
-   }
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
+                ForEach($filteredEntries, id: \.id) { $entry in
+                    Button(action: {
+                        selectedEntry = entry
+                    }) {
+                        AppFolderView(entry: $entry, showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
+                            _ = symlog.value("\(#function)  selectedEntry: \(selectedEntry.name ?? "none")")
+                            self.selectedEntry = selectedEntry
+                        })
+                        .overlay(canSelect && selectedEntry?.id == entry.id ? Color.blue.opacity(0.5) : Color.clear)
+                    }
+                }
+            }
+        }
+    }
+}
 
-// Wrapper view for NavigationLink destination
 struct AppFolderDetailViewWrapper: View {
     @Binding var selectedEntry: AppEntry?
 
