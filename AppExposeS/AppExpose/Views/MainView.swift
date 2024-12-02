@@ -47,6 +47,8 @@ struct MainView: View {
     let entries: () -> [AppEntry]
     @State private var canSelect = false
     @State private var selectedEntry: AppEntry?
+    @State private var isNavigationActive = false
+    @State private var selectedEntryID: UUID?
 
     init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>, filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
         _searchText = searchText
@@ -61,7 +63,7 @@ struct MainView: View {
         NavigationStack {
             VStack {
                 headerView
-                if $filteredEntries.isEmpty {
+                if filteredEntries.isEmpty {
                     HStack {
                         Spacer()
                         Text("No Entries")
@@ -77,12 +79,18 @@ struct MainView: View {
                 Spacer()
             }
             .navigationTitle("Main View")
-        }
-        .navigationDestination(for: AppEntry?.self) { entry in
-            if let unwrappedEntry = entry {
-                AppFolderDetailView(entry: .constant(unwrappedEntry))
-            } else {
-                EmptyView()
+            .navigationDestination(for: UUID.self) { id in
+                if let entry = filteredEntries.first(where: { entry in entry.id == id }) {
+                    AppFolderDetailView(entry: .constant(entry))
+                        .onAppear {
+                            _ = symlog.value("AppFolderDetailView appeared for: \(entry.name ?? "unknown")")
+                        }
+                } else {
+                    Text("Entry not found")
+                        .onAppear {
+                            _ = symlog.value("Entry not found for id: \(id)")
+                        }
+                }
             }
         }
     }
@@ -112,24 +120,9 @@ struct MainView: View {
             SearchBar(searchText: $searchText, filteredEntries: $filteredEntries, isFocused: $isSearchFieldFocused, entries: { self.entries() })
             sortView
             filterView
-            HStack {
-                Button(action: {
-                    canSelect.toggle()
-                    if canSelect {
-                        selectedEntry = nil
-                    }
-                }) {
-                    Text("Select")
-                        .foregroundColor(canSelect ? .white : .black)
-                        .fontWeight(canSelect ? .bold : .regular)
-                }
-                .background(canSelect ? Color.blue : Color.clear)
-            Button(action: {
-                
-            }, label: {
-                Text("Combine")
+            Button("Select", action: {
+                canSelect.toggle()
             })
-            }
             Divider()
         }
         .padding()
@@ -138,30 +131,22 @@ struct MainView: View {
     var appsView: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
-                ForEach($filteredEntries, id: \.id) { $entry in
-                    Button(action: {
-                        selectedEntry = entry
-                    }) {
-                        AppFolderView(entry: $entry, showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
-                            _ = symlog.value("\(#function)  selectedEntry: \(selectedEntry.name ?? "none")")
+                ForEach(filteredEntries, id: \.id) { entry in
+                    NavigationLink(value: entry.id) {
+                        AppFolderView(entry: .constant(entry), showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
                             self.selectedEntry = selectedEntry
+                            self.selectedEntryID = selectedEntry.id
+                            _ = symlog.value("\(#function)  selectedEntry: \(selectedEntry.name ?? "none")")
+                            _ = symlog.value("Navigation to AppFolderDetailView triggered for: \(selectedEntry.name ?? "unknown")")
                         })
-                        .overlay(canSelect && selectedEntry?.id == entry.id ? Color.blue.opacity(0.5) : Color.clear)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .onTapGesture {
+                        _ = symlog.value("Tapped on: \(entry.name ?? "unknown")")
+                        self.selectedEntryID = entry.id
                     }
                 }
             }
-        }
-    }
-}
-
-struct AppFolderDetailViewWrapper: View {
-    @Binding var selectedEntry: AppEntry?
-
-    var body: some View {
-        if let unwrappedEntry = selectedEntry {
-            AppFolderDetailView(entry: .constant(unwrappedEntry))
-        } else {
-            EmptyView()
         }
     }
 }
