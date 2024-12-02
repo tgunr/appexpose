@@ -153,9 +153,9 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preco
         }
         xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
         name = appURL.lastPathComponent
-        createdDate = (attributes[FileAttributeKey.creationDate] as! Date)
-        modifiedDate = (attributes[FileAttributeKey.modificationDate] as! Date)
-        addedDate = (attributes[FileAttributeKey.creationDate] as! Date)
+        createdDate = attributes[FileAttributeKey.creationDate] as? Date
+        modifiedDate = attributes[FileAttributeKey.modificationDate] as? Date
+        addedDate = attributes[FileAttributeKey.creationDate] as? Date
 
         originalImage = workspace.icon(for: UTType.folder)
         if isApp {
