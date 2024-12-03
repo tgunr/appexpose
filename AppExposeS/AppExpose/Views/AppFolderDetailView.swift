@@ -11,14 +11,14 @@ import SwiftUI
 
 struct AppFolderDetailView: View {
     @Binding var entry: AppEntry
-    @Environment(\.dismiss) var dismiss
+    @Binding var showDetailView: Bool
 
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 Button("Done") {
-                    dismiss()
+                    showDetailView = false
                 }
                 .padding()
             }
@@ -46,5 +46,7 @@ struct AppFolderDetailView: View {
 
 #Preview {
     @Previewable @State var entry = AppEntry(withURL: URL(fileURLWithPath: "/Users/davec/Applications/WebApps"))
-    AppFolderDetailView(entry: $entry)
+    @Previewable @State var showDetailView: Bool = true
+
+    AppFolderDetailView(entry: $entry, showDetailView: $showDetailView)
 }

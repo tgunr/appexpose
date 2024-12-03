@@ -64,7 +64,7 @@ struct MainView: View {
         //        NavigationView {
         if showDetailView {
             if let selectedEntry = selectedEntry {
-                AppFolderDetailView(entry: .constant(selectedEntry))
+                AppFolderDetailView(entry: .constant(selectedEntry), showDetailView: $showDetailView)
             } else {
                 EmptyView()
             }
