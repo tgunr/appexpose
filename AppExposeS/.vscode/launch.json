@@ -1,11 +1,14 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
-            "type": "sweetpad-lldb",
+            "type": "lldb",
             "request": "launch",
-            "name": "Attach to running app (SweetPad)",
-            "preLaunchTask": "sweetpad: launch"
+            "name": "Debug AppExposeS",
+            "program": "${workspaceFolder}/DerivedData/AppExposeS/Build/Products/Debug/AppExposeS.app/Contents/MacOS/AppExposeS",
+            "preLaunchTask": "Build AppExpose",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
