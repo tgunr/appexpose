@@ -3,6 +3,7 @@
 //  AppExposeS
 //
 //  Created by Dave Carlton on 9/19/24.
+//
 
 import SwiftUI
 
@@ -10,14 +11,14 @@ import SwiftUI
 
 struct AppFolderDetailView: View {
     @Binding var entry: AppEntry
-    @Environment(\.presentationMode) var presentationMode // Add this line
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
-            HStack { // Add this HStack
+            HStack {
                 Spacer()
                 Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }
                 .padding()
             }
@@ -25,8 +26,8 @@ struct AppFolderDetailView: View {
             Text(entry.name ?? "")
                 .font(.title)
             ScrollView {
-                List {
-                    ForEach(entry.children, id: \.self) { child in
+                LazyVStack {
+                    ForEach(entry.children) { child in
                         let _ = symlog.value("AppFolderDetailView• child: \(child.name ?? "none")")
                         HStack {
                             Image(nsImage: child.appImage ?? NSImage())
@@ -34,11 +35,12 @@ struct AppFolderDetailView: View {
                                 .frame(width: 32, height: 32)
                             Text(child.name ?? "")
                         }
+                        .padding(.vertical, 4)
                     }
                 }
             }
-
         }
+        .navigationTitle(entry.name ?? "")
     }
 }
 

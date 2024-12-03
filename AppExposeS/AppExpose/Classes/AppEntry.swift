@@ -27,7 +27,7 @@ class AppFolder: ObservableObject {
 @MainActor let filemanager = FileManager.default
 
 @MainActor
-class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preconcurrency Codable {
+class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     var id: UUID = UUID()
     var name: String?
     var addedDate: Date?
@@ -112,24 +112,59 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preco
         return (fileType == "NSFileTypeDirectory") ? true : false
     }
 
-    enum CodingKeys: String, CodingKey {
-        case id, name, appURL
-        // Add other properties you want to encode/decode
+    // Add a nested struct for Codable conformance
+    struct CodableRepresentation: Codable {
+        let id: UUID
+        let name: String?
+        let appURL: URL
     }
 
     func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(name, forKey: .name)
-        try container.encode(appURL, forKey: .appURL)
+        let representation = CodableRepresentation(id: id, name: name, appURL: appURL)
+        try representation.encode(to: encoder)
     }
 
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-        name = try container.decodeIfPresent(String.self, forKey: .name)
-        appURL = try container.decode(URL.self, forKey: .appURL)
+    override nonisolated var hash: Int {
+        return cachedHash
+    }
+
+    static func == (lhs: AppEntry, rhs: AppEntry) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    private let cachedHash: Int
+
+    private init(id: UUID, name: String?, appURL: URL, cachedHash: Int) {
+        self.id = id
+        self.name = name
+        self.appURL = appURL
+        self.cachedHash = cachedHash
+        childIcons = []
+        originalFolderIcon = nil
+        children = []
+        directoryEntry = nil
+        iconDictionary = [:]
+        icons = []
+        appImage = nil
+        originalImage = nil
+        attributes = [:]
+        xattr = nil
+        processedURLs = Set<URL>()
+        isSelected = false
+        addedDate = nil
+        modifiedDate = nil
+        createdDate = nil
         super.init()
+        collectEntries()
+    }
+
+    convenience init(from representation: CodableRepresentation) {
+        self.init(id: representation.id, name: representation.name, appURL: representation.appURL, cachedHash: representation.id.hashValue)
+    }
+
+    @MainActor
+    func nonisolatedEncode() -> CodableRepresentation {
+        return CodableRepresentation(id: id, name: name, appURL: appURL)
     }
 
     class func root() -> AppEntry? {
@@ -139,8 +174,8 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preco
 
     required init(withURL url: URL) {
         appURL = url
+        cachedHash = UUID().hashValue // Use a new UUID for the hash
         super.init()
-//        symlog.value("\(#function) url: \(url.path)")
         collectEntries()
     }
 
@@ -499,7 +534,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preco
         originalImage = originalImageBadged
 
         // set dictionary with badge version
-//        iconDictionary?[KEY_IMAGE] = appImage
+        //        iconDictionary?[KEY_IMAGE] = appImage
     }
 
     func badge() {
@@ -638,7 +673,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject, @preco
         originalImage = originalImageBadged
 
         // set dictionary with badge version
-//        iconDictionary?[KEY_IMAGE] = appImage
+        //        iconDictionary?[KEY_IMAGE] = appImage
     }
 }
 

@@ -64,34 +64,19 @@ struct MainView: View {
             VStack {
                 headerView
                 if filteredEntries.isEmpty {
-                    HStack {
-                        Spacer()
-                        Text("No Entries")
-                            .font(.largeTitle)
-                            .foregroundColor(.red)
-                            .lineLimit(2)
-                            .background(Color.red.opacity(0.2))
-                        Spacer()
-                    }
+                    emptyStateView
                 } else {
                     appsView
                 }
                 Spacer()
             }
             .navigationTitle("Main View")
-            .navigationDestination(for: UUID.self) { id in
-                if let entry = filteredEntries.first(where: { entry in entry.id == id }) {
-                    AppFolderDetailView(entry: .constant(entry))
-                        .onAppear {
-                            _ = symlog.value("AppFolderDetailView appeared for: \(entry.name ?? "unknown")")
-                        }
-                } else {
-                    Text("Entry not found")
-                        .onAppear {
-                            _ = symlog.value("Entry not found for id: \(id)")
-                        }
+        }
+        .navigationDestination(for: AppEntry.self) { entry in
+            AppFolderDetailView(entry: .constant(entry))
+                .onAppear {
+                    _ = symlog.value("AppFolderDetailView appeared for: \(entry.name ?? "unknown")")
                 }
-            }
         }
     }
 
@@ -131,22 +116,22 @@ struct MainView: View {
     var appsView: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
-                ForEach(filteredEntries, id: \.id) { entry in
-                    NavigationLink(value: entry.id) {
-                        AppFolderView(entry: .constant(entry), showFilter: $showFilter, canSelect: $canSelect, onSelected: { selectedEntry in
-                            self.selectedEntry = selectedEntry
-                            self.selectedEntryID = selectedEntry.id
-                            _ = symlog.value("\(#function)  selectedEntry: \(selectedEntry.name ?? "none")")
-                            _ = symlog.value("Navigation to AppFolderDetailView triggered for: \(selectedEntry.name ?? "unknown")")
-                        })
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .onTapGesture {
-                        _ = symlog.value("Tapped on: \(entry.name ?? "unknown")")
-                        self.selectedEntryID = entry.id
-                    }
+                ForEach(filteredEntries) { entry in
+                    AppFolderView(entry: .constant(entry), showFilter: $showFilter, canSelect: $canSelect)
                 }
             }
+        }
+    }
+
+    var emptyStateView: some View {
+        HStack {
+            Spacer()
+            Text("No Entries")
+                .font(.largeTitle)
+                .foregroundColor(.red)
+                .lineLimit(2)
+                .background(Color.red.opacity(0.2))
+            Spacer()
         }
     }
 }

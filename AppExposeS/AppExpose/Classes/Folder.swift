@@ -5,8 +5,7 @@
 //  Created by Dave Carlton on 10/2/24.
 //
 
-
-struct Folder: Identifiable, Equatable, Codable, Hashable {
+struct Folder: Identifiable, Equatable, @preconcurrency Codable, Hashable {
     var id: UUID = UUID()
     var name: String
     var url: URL
@@ -23,21 +22,32 @@ struct Folder: Identifiable, Equatable, Codable, Hashable {
         self.entries = entries
     }
     
-    func encode(to encoder: Encoder) throws {
+    @MainActor func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(url.absoluteString, forKey: .url)
-        try container.encode(entries, forKey: .entries)
+        var entriesContainer = container.nestedUnkeyedContainer(forKey: .entries)
+        for entry in entries {
+            try entriesContainer.encode(entry.nonisolatedEncode())
+        }
     }
-    
+
+    @MainActor
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         let urlString = try container.decode(String.self, forKey: .url)
         url = URL(string: urlString)!
-        entries = try container.decode([AppEntry].self, forKey: .entries)
+        var entriesContainer = try container.nestedUnkeyedContainer(forKey: .entries)
+        var decodedEntries: [AppEntry] = []
+        while !entriesContainer.isAtEnd {
+            let entryData = try entriesContainer.decode(AppEntry.CodableRepresentation.self)
+            // Use the new from(_:) method
+            decodedEntries.append(AppEntry(from: entryData))
+        }
+        entries = decodedEntries
     }
 }
 
