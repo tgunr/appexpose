@@ -49,6 +49,7 @@ struct MainView: View {
     @State private var selectedEntry: AppEntry?
     @State private var isNavigationActive = false
     @State private var selectedEntryID: UUID?
+    @State private var showDetailView = false
 
     init(searchText: Binding<String>, showFilter: Binding<ShowFilter>, sortOption: Binding<SortOption>, filteredEntries: Binding<[AppEntry]>, appData: AppData, entries: @escaping () -> [AppEntry]) {
         _searchText = searchText
@@ -60,7 +61,14 @@ struct MainView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        //        NavigationView {
+        if showDetailView {
+            if let selectedEntry = selectedEntry {
+                AppFolderDetailView(entry: .constant(selectedEntry))
+            } else {
+                EmptyView()
+            }
+        } else {
             VStack {
                 headerView
                 if filteredEntries.isEmpty {
@@ -70,13 +78,8 @@ struct MainView: View {
                 }
                 Spacer()
             }
-            .navigationTitle("Main View")
-        }
-        .navigationDestination(for: AppEntry.self) { entry in
-            AppFolderDetailView(entry: .constant(entry))
-                .onAppear {
-                    _ = symlog.value("AppFolderDetailView appeared for: \(entry.name ?? "unknown")")
-                }
+            //            .navigationTitle("Main View")
+            //        }
         }
     }
 
@@ -117,7 +120,12 @@ struct MainView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
                 ForEach(filteredEntries) { entry in
-                    AppFolderView(entry: .constant(entry), showFilter: $showFilter, canSelect: $canSelect)
+                    Button(action: {
+                        showDetailView = true
+                        selectedEntry = entry
+                    }) {
+                        AppFolderView(entry: .constant(entry), showFilter: $showFilter, canSelect: $canSelect)
+                    }
                 }
             }
         }
