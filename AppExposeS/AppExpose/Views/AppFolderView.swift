@@ -61,7 +61,17 @@ struct AppFolderView: View {
                 }
             }
         }
-        // Remove the .buttonStyle modifier from here
+        .contextMenu {
+            Button("Show In Finder") {
+                NSWorkspace.shared.selectFile(self.$entry.wrappedValue.appURL.path, inFileViewerRootedAtPath: "")
+            }
+            Button("Edit") {
+                // Edit the entry
+            }
+            Button("Delete") {
+                // Delete the entry
+            }
+        }
     }
 
     var entryView: some View {
