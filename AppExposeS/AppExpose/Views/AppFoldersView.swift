@@ -12,11 +12,13 @@ enum ShowFilter: String, CaseIterable {
     case exposed = "Exposed"
     case unmodified = "Unmodified"
 }
+
 //
 enum SortOption: String, CaseIterable {
     case name = "Name"
     case addedDate = "Added Date"
 }
+
 //
 struct SearchBar: View {
     @Binding var searchText: String
@@ -37,7 +39,7 @@ struct SearchBar: View {
             }
             .padding(7)
             .cornerRadius(8)
-            
+
             if !searchText.isEmpty {
                 Button(action: {
                     updateSearchText("")
@@ -55,6 +57,7 @@ struct SearchBar: View {
         }
     }
 }
+
 //
 struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
@@ -68,6 +71,7 @@ struct AppFoldersView: View {
     @FocusState private var isSearchFieldFocused: Bool
     @State private var filteredEntries: [AppEntry] = []
     @State private var refreshTrigger: UUID?
+    @State private var isLoading = false
 //
     var entries: [AppEntry] {
         let allEntries = appData.appFolders.flatMap { folder in
@@ -104,62 +108,89 @@ struct AppFoldersView: View {
             }
         }
     }
+
 //
     var body: some View {
-        VStack {
-            MainView(searchText: $searchText, showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { self.entries })
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .animation(.default, value: selectedItem)
-        .onAppear {
-            symlog.info("AppFoldersView Appeared")
-        }
-        .task {
-            symlog.info("Fetching Apps")
-            await fetchApps()
-            filteredEntries = entries
-            symlog.value("task: Fetched Apps, filteredEntries: \(filteredEntries.count)")
-//
-            if refreshTrigger == nil {
+        ZStack {
+            VStack {
+                MainView(searchText: $searchText, showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { self.entries })
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(.default, value: selectedItem)
+            .onAppear {
+                symlog.info("AppFoldersView Appeared")
+                isLoading = true
+                Task(priority: .background) {
+                    await fetchApps()
+                    filteredEntries = entries
+                }
+            }
+            .onChange(of: showFilter) { _, _ in
+                filteredEntries = entries
                 refreshTrigger = UUID()
             }
+            .onChange(of: sortOption) { _, _ in
+                filteredEntries = entries
+                refreshTrigger = UUID()
+            }
+            .id(refreshTrigger)
+
+            if isLoading {
+                ProgressOverlay()
+            }
         }
-        .onChange(of: showFilter) { _, _ in
-            filteredEntries = entries
-            refreshTrigger = UUID()
-        }
-        .onChange(of: sortOption) { _, _ in
-            filteredEntries = entries
-            refreshTrigger = UUID()
-        }
-        .id(refreshTrigger)
     }
+
 //
     private func fetchApps() async {
         var updatedSubfolders: [String: [AppEntry]] = [:]
         var updatedAppFolders: [Folder] = []
-        
+        isLoading = true
+
         for var folder in appData.appFolders {
             let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
             folder.entries = entries
             updatedAppFolders.append(folder)
-            
+
             symlog.value("AppFoldersView - fetchApps: Folder \(folder.name) created with \(entries.count) child entries")
-            
+
             updatedSubfolders[folder.url.path] = entries
-            
+
             let folderEntry = AppEntry(withURL: folder.url)
             for entry in entries {
                 entry.directoryEntry = folderEntry
             }
         }
-        
+
         appData.appFolders = updatedAppFolders
         subfolders = updatedSubfolders
         symlog.value("AppFoldersView - fetchApps: Total subfolders created: \(subfolders.count)")
+        isLoading = false
     }
 }
-//
+
+struct ProgressOverlay: View {
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .edgesIgnoringSafeArea(.all)
+
+            VStack {
+                ProgressView()
+                    .scaleEffect(1.5)
+                    .padding()
+
+                Text("Loading...")
+                    .foregroundColor(.white)
+                    .font(.headline)
+            }
+            .padding(30)
+            .background(Color.gray.opacity(0.7))
+            .cornerRadius(10)
+        }
+    }
+}
+
 struct AppFoldersViews_Previews: PreviewProvider {
     static let preview = Preview()
 //

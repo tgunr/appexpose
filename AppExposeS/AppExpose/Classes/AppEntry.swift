@@ -207,15 +207,16 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
             }
             appImage = originalImage
             if !isSpecial {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
+//                DispatchQueue.main.async { [weak self] in
+//                    guard let self = self else { return }
+//                    if let self = self else { return }
                     self.children = []
                     self.scanURL()
                     if (self.children.count) != 0 {
                         self.appImage = self.composeIcons()
                         symlog.value("Folder \(String(describing: self.name)) created with \(self.children.count) child entries")
                     }
-                }
+//                }
             }
         }
 
