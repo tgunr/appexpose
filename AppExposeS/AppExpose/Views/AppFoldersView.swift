@@ -72,6 +72,8 @@ struct AppFoldersView: View {
     var entries: [AppEntry] {
         let allEntries = subfolders.values.flatMap { $0 }
 
+        symlog.value("All Entries Count: \(allEntries.count)")
+
         let filteredEntries = allEntries.filter { entry in
             switch showFilter {
             case .all:
@@ -83,9 +85,14 @@ struct AppFoldersView: View {
             }
         }
 
+        symlog.value("Filtered Entries Count (before search): \(filteredEntries.count)")
+
         let searchFilteredEntries = filteredEntries.filter { entry in
             searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
         }
+
+        symlog.value("Search Filtered Entries Count: \(searchFilteredEntries.count)")
+
         return searchFilteredEntries.sorted { entry1, entry2 in
             switch sortOption {
             case .name:
@@ -109,7 +116,7 @@ struct AppFoldersView: View {
             symlog.info("Fetching Apps")
             await fetchApps()
             filteredEntries = entries
-            let _ = symlog.value("task: Fetched Apps,  filteredEntries: \(filteredEntries.count)")
+            symlog.value("task: Fetched Apps, filteredEntries: \(filteredEntries.count)")
 
             if refreshTrigger == nil {
                 refreshTrigger = UUID()
@@ -131,15 +138,23 @@ struct AppFoldersView: View {
         for index in updatedFolders.indices {
             let entries = AppEntry.scanApplications(atPath: updatedFolders[index].url.path, currentDirectory: nil)
             updatedFolders[index].entries = entries
-            symlog.value("Folder \(updatedFolders[index].name) created with \(entries.count) child entries")
+            symlog.value("AppFoldersView - fetchApps: Folder \(updatedFolders[index].name) created with \(entries.count) child entries")
         }
         appData.appFolders = updatedFolders
-        // Ensure subfolders are updated
         subfolders = Dictionary(grouping: appData.appFolders.flatMap { $0.entries }) { entry in
             let path = entry.appURL.deletingLastPathComponent().path
             let check = path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
             return check
         }
+        
+        for (folderPath, entries) in subfolders {
+            let folderEntry = AppEntry(withURL: URL(fileURLWithPath: folderPath))
+            for entry in entries {
+                entry.directoryEntry = folderEntry
+            }
+        }
+        
+        symlog.value("AppFoldersView - fetchApps: Total subfolders created: \(subfolders.count)")
     }
 }
 

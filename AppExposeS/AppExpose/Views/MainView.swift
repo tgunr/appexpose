@@ -117,43 +117,45 @@ struct MainView: View {
     }
 
     var appsView: some View {
-        let groupedEntries = Dictionary(grouping: filteredEntries, by: { $0.directoryEntry })
+        let groupedEntries = Dictionary(grouping: filteredEntries, by: { $0.directoryEntry ?? $0 })
         let columns = [
             GridItem(.adaptive(minimum: 120))
         ]
 
         let sortedKeys = getSortedKeys(from: groupedEntries)
         
+        // Add more detailed logging
+        symlog.value("MainView - appsView: Filtered Entries Count: \(filteredEntries.count)")
+        symlog.value("MainView - appsView: Grouped Entries Count: \(groupedEntries.count)")
+        symlog.value("MainView - appsView: Sorted Keys Count: \(sortedKeys.count)")
+        symlog.value("MainView - appsView: Grouped Entries Keys: \(groupedEntries.keys)")
+        
         return ScrollView {
             LazyVGrid(columns: columns) {
-                folderHeaders(for: sortedKeys)
-                folderEntries(for: groupedEntries)
+                ForEach(sortedKeys, id: \.self) { folderPath in
+                    Section(header: Text(getFolderDisplayPath(folderPath.appURL)).font(.headline)) {
+                        folderContent(for: folderPath, entries: groupedEntries[folderPath] ?? [])
+                    }
+                }
             }
         }
     }
 
     private func getSortedKeys(from groupedEntries: [AppEntry?: [AppEntry]]) -> [AppEntry] {
-        groupedEntries.keys.compactMap { $0 }.sorted { (lhs, rhs) in
-            lhs.appURL.deletingLastPathComponent().path < rhs.appURL.deletingLastPathComponent().path
+        let sortedKeys = groupedEntries.keys.compactMap { $0 }.sorted { (lhs, rhs) in
+            getFolderDisplayPath(lhs.appURL) < getFolderDisplayPath(rhs.appURL)
         }
+        // Add more detailed logging
+        symlog.value("MainView - getSortedKeys: Sorted Keys Count: \(sortedKeys.count)")
+        symlog.value("MainView - getSortedKeys: First 5 Sorted Keys: \(sortedKeys.prefix(5).map { getFolderDisplayPath($0.appURL) })")
+        return sortedKeys
     }
 
-    private func folderHeaders(for sortedKeys: [AppEntry]) -> some View {
-        ForEach(sortedKeys, id: \.self) { folder in
-            Text(folder.appURL.deletingLastPathComponent().path)
-                .font(.headline)
-        }
-    }
-
-    private func folderEntries(for groupedEntries: [AppEntry?: [AppEntry]]) -> some View {
-        let sortedFolderPaths = groupedEntries.keys.compactMap { $0 }.sorted { $0.appURL.path < $1.appURL.path }
-        return ForEach(sortedFolderPaths, id: \.self) { folderPath in
-            folderContent(for: folderPath, entries: groupedEntries[folderPath] ?? [])
-        }
-    }
 
     private func folderContent(for folderPath: AppEntry, entries: [AppEntry]) -> some View {
-        ForEach(entries, id: \.id) { entry in
+        // Add more detailed logging
+        symlog.value("MainView - folderContent: Folder: \(getFolderDisplayPath(folderPath.appURL)), Entries Count: \(entries.count)")
+        return ForEach(entries, id: \.id) { entry in
             Button(action: {
                 showDetailView = true
                 selectedEntry = entry
@@ -161,6 +163,28 @@ struct MainView: View {
                 AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
             }
         }
+    }
+
+    private func getFolderDisplayPath(_ url: URL) -> String {
+        let path = url.path
+        let homeDirectory = FileManager.default.homeDirectoryForCurrentUser.path
+        
+        // Handle /Applications
+        if path == "/Applications" {
+            return path
+        }
+        
+        // Handle /~/Applications
+        if path.hasPrefix("/~") {
+            return "~" + path.dropFirst(2)
+        }
+        // Handle ~/Applications
+        if path.hasPrefix(homeDirectory) {
+            return "~" + path.dropFirst(homeDirectory.count)
+        }
+        
+        // Handle other cases
+        return path
     }
 
     var emptyStateView: some View {
