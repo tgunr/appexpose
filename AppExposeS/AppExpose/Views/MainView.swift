@@ -117,16 +117,48 @@ struct MainView: View {
     }
 
     var appsView: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
-                ForEach(filteredEntries) { entry in
-                    Button(action: {
-                        showDetailView = true
-                        selectedEntry = entry
-                    }) {
-                        AppFolderView(entry: .constant(entry), showFilter: $showFilter, canSelect: $canSelect)
-                    }
-                }
+        let groupedEntries = Dictionary(grouping: filteredEntries, by: { $0.directoryEntry })
+        let columns = [
+            GridItem(.adaptive(minimum: 120))
+        ]
+
+        let sortedKeys = getSortedKeys(from: groupedEntries)
+        
+        return ScrollView {
+            LazyVGrid(columns: columns) {
+                folderHeaders(for: sortedKeys)
+                folderEntries(for: groupedEntries)
+            }
+        }
+    }
+
+    private func getSortedKeys(from groupedEntries: [AppEntry?: [AppEntry]]) -> [AppEntry] {
+        groupedEntries.keys.compactMap { $0 }.sorted { (lhs, rhs) in
+            lhs.appURL.deletingLastPathComponent().path < rhs.appURL.deletingLastPathComponent().path
+        }
+    }
+
+    private func folderHeaders(for sortedKeys: [AppEntry]) -> some View {
+        ForEach(sortedKeys, id: \.self) { folder in
+            Text(folder.appURL.deletingLastPathComponent().path)
+                .font(.headline)
+        }
+    }
+
+    private func folderEntries(for groupedEntries: [AppEntry?: [AppEntry]]) -> some View {
+        let sortedFolderPaths = groupedEntries.keys.compactMap { $0 }.sorted { $0.appURL.path < $1.appURL.path }
+        return ForEach(sortedFolderPaths, id: \.self) { folderPath in
+            folderContent(for: folderPath, entries: groupedEntries[folderPath] ?? [])
+        }
+    }
+
+    private func folderContent(for folderPath: AppEntry, entries: [AppEntry]) -> some View {
+        ForEach(entries, id: \.id) { entry in
+            Button(action: {
+                showDetailView = true
+                selectedEntry = entry
+            }) {
+                AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
             }
         }
     }
@@ -149,5 +181,6 @@ struct MainView: View {
     @Previewable @State var sortOption: SortOption = .name
     @Previewable @State var filteredEntries: [AppEntry] = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
     var appData = AppData()
-    MainView(searchText: .constant(""), showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil) })
+    MainView(searchText: .constant(""), showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
+    })
 }

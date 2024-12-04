@@ -32,7 +32,7 @@ struct ViewDidLoadModifier: ViewModifier {
 // }
 
 struct AppFolderView: View {
-    @Binding var entry: AppEntry
+    let entry: AppEntry
     @Binding var showFilter: ShowFilter
     @Binding var canSelect: Bool
     // var onSelected: (AppEntry) -> Void // new callback
@@ -63,7 +63,7 @@ struct AppFolderView: View {
         }
         .contextMenu {
             Button("Show In Finder") {
-                NSWorkspace.shared.selectFile(self.$entry.wrappedValue.appURL.path, inFileViewerRootedAtPath: "")
+                NSWorkspace.shared.selectFile(entry.appURL.path, inFileViewerRootedAtPath: "")
             }
             Button("Edit") {
                 // Edit the entry
@@ -109,7 +109,7 @@ struct AppFolderView: View {
     @Previewable @State var showFilter: ShowFilter = .all
     @Previewable @State var canSelect: Bool = false
     @Previewable @State var entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-    AppFolderView(entry: $entry, showFilter: $showFilter, canSelect: $canSelect)
+    AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
 }
 
 struct AppFolderDetailViewT: View {
