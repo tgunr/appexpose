@@ -143,7 +143,7 @@ struct MainView: View {
 
     private func getSortedKeys(from groupedEntries: [AppEntry?: [AppEntry]]) -> [AppEntry] {
         let sortedKeys = groupedEntries.keys.compactMap { $0 }.sorted { (lhs, rhs) in
-            getFolderDisplayPath(lhs.appURL) < getFolderDisplayPath(rhs.appURL)
+            getFolderDisplayPath(lhs.appURL) > getFolderDisplayPath(rhs.appURL)
         }
         // Add more detailed logging
         symlog.value("MainView - getSortedKeys: Sorted Keys Count: \(sortedKeys.count)")

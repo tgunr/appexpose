@@ -4,27 +4,27 @@
 //
 //  Created by Dave Carlton on 9/7/22.
 //
-
+//
 import SwiftUI
-
+//
 enum ShowFilter: String, CaseIterable {
     case all = "All"
     case exposed = "Exposed"
     case unmodified = "Unmodified"
 }
-
+//
 enum SortOption: String, CaseIterable {
     case name = "Name"
     case addedDate = "Added Date"
 }
-
+//
 struct SearchBar: View {
     @Binding var searchText: String
     @Binding var filteredEntries: [AppEntry]
     @Environment(\.updateSearchText) var updateSearchText
     var isFocused: FocusState<Bool>.Binding
     let entries: () -> [AppEntry]
-
+//
     var body: some View {
         ZStack(alignment: .trailing) {
             HStack {
@@ -55,7 +55,7 @@ struct SearchBar: View {
         }
     }
 }
-
+//
 struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
     @State var selectedItem: String? = nil
@@ -68,12 +68,14 @@ struct AppFoldersView: View {
     @FocusState private var isSearchFieldFocused: Bool
     @State private var filteredEntries: [AppEntry] = []
     @State private var refreshTrigger: UUID?
-
+//
     var entries: [AppEntry] {
-        let allEntries = subfolders.values.flatMap { $0 }
-
+        let allEntries = appData.appFolders.flatMap { folder in
+            subfolders[folder.url.path] ?? []
+        }
+//
         symlog.value("All Entries Count: \(allEntries.count)")
-
+//
         let filteredEntries = allEntries.filter { entry in
             switch showFilter {
             case .all:
@@ -84,15 +86,15 @@ struct AppFoldersView: View {
                 return entry.isFolder && !entry.hasMyCustomIcon && !entry.isApp
             }
         }
-
+//
         symlog.value("Filtered Entries Count (before search): \(filteredEntries.count)")
-
+//
         let searchFilteredEntries = filteredEntries.filter { entry in
             searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
         }
-
+//
         symlog.value("Search Filtered Entries Count: \(searchFilteredEntries.count)")
-
+//
         return searchFilteredEntries.sorted { entry1, entry2 in
             switch sortOption {
             case .name:
@@ -102,7 +104,7 @@ struct AppFoldersView: View {
             }
         }
     }
-
+//
     var body: some View {
         VStack {
             MainView(searchText: $searchText, showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { self.entries })
@@ -117,7 +119,7 @@ struct AppFoldersView: View {
             await fetchApps()
             filteredEntries = entries
             symlog.value("task: Fetched Apps, filteredEntries: \(filteredEntries.count)")
-
+//
             if refreshTrigger == nil {
                 refreshTrigger = UUID()
             }
@@ -132,35 +134,35 @@ struct AppFoldersView: View {
         }
         .id(refreshTrigger)
     }
-
+//
     private func fetchApps() async {
-        var updatedFolders = appData.appFolders
-        for index in updatedFolders.indices {
-            let entries = AppEntry.scanApplications(atPath: updatedFolders[index].url.path, currentDirectory: nil)
-            updatedFolders[index].entries = entries
-            symlog.value("AppFoldersView - fetchApps: Folder \(updatedFolders[index].name) created with \(entries.count) child entries")
-        }
-        appData.appFolders = updatedFolders
-        subfolders = Dictionary(grouping: appData.appFolders.flatMap { $0.entries }) { entry in
-            let path = entry.appURL.deletingLastPathComponent().path
-            let check = path.replacingOccurrences(of: "^/Users/[^/]+", with: "~", options: .regularExpression)
-            return check
-        }
+        var updatedSubfolders: [String: [AppEntry]] = [:]
+        var updatedAppFolders: [Folder] = []
         
-        for (folderPath, entries) in subfolders {
-            let folderEntry = AppEntry(withURL: URL(fileURLWithPath: folderPath))
+        for var folder in appData.appFolders {
+            let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
+            folder.entries = entries
+            updatedAppFolders.append(folder)
+            
+            symlog.value("AppFoldersView - fetchApps: Folder \(folder.name) created with \(entries.count) child entries")
+            
+            updatedSubfolders[folder.url.path] = entries
+            
+            let folderEntry = AppEntry(withURL: folder.url)
             for entry in entries {
                 entry.directoryEntry = folderEntry
             }
         }
         
+        appData.appFolders = updatedAppFolders
+        subfolders = updatedSubfolders
         symlog.value("AppFoldersView - fetchApps: Total subfolders created: \(subfolders.count)")
     }
 }
-
+//
 struct AppFoldersViews_Previews: PreviewProvider {
     static let preview = Preview()
-
+//
     static var previews: some View {
         AppFoldersView()
             .environmentObject(preview.appData)
