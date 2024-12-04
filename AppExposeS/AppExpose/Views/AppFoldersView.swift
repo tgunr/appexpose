@@ -4,29 +4,25 @@
 //
 //  Created by Dave Carlton on 9/7/22.
 //
-//
 import SwiftUI
-//
+
 enum ShowFilter: String, CaseIterable {
     case all = "All"
     case exposed = "Exposed"
     case unmodified = "Unmodified"
 }
 
-//
 enum SortOption: String, CaseIterable {
     case name = "Name"
     case addedDate = "Added Date"
 }
 
-//
 struct SearchBar: View {
     @Binding var searchText: String
     @Binding var filteredEntries: [AppEntry]
     @Environment(\.updateSearchText) var updateSearchText
     var isFocused: FocusState<Bool>.Binding
     let entries: () -> [AppEntry]
-//
     var body: some View {
         ZStack(alignment: .trailing) {
             HStack {
@@ -58,7 +54,6 @@ struct SearchBar: View {
     }
 }
 
-//
 struct AppFoldersView: View {
     @EnvironmentObject var appData: AppData
     @State var selectedItem: String? = nil
@@ -72,14 +67,14 @@ struct AppFoldersView: View {
     @State private var filteredEntries: [AppEntry] = []
     @State private var refreshTrigger: UUID?
     @State private var isLoading = false
-//
+
     var entries: [AppEntry] {
         let allEntries = appData.appFolders.flatMap { folder in
             subfolders[folder.url.path] ?? []
         }
-//
+
         symlog.value("All Entries Count: \(allEntries.count)")
-//
+
         let filteredEntries = allEntries.filter { entry in
             switch showFilter {
             case .all:
@@ -90,15 +85,14 @@ struct AppFoldersView: View {
                 return entry.isFolder && !entry.hasMyCustomIcon && !entry.isApp
             }
         }
-//
+
         symlog.value("Filtered Entries Count (before search): \(filteredEntries.count)")
-//
+
         let searchFilteredEntries = filteredEntries.filter { entry in
             searchText.isEmpty || (entry.name?.lowercased().contains(searchText.lowercased()) ?? false)
         }
-//
+
         symlog.value("Search Filtered Entries Count: \(searchFilteredEntries.count)")
-//
         return searchFilteredEntries.sorted { entry1, entry2 in
             switch sortOption {
             case .name:
@@ -109,7 +103,6 @@ struct AppFoldersView: View {
         }
     }
 
-//
     var body: some View {
         ZStack {
             VStack {
@@ -141,7 +134,6 @@ struct AppFoldersView: View {
         }
     }
 
-//
     private func fetchApps() async {
         var updatedSubfolders: [String: [AppEntry]] = [:]
         var updatedAppFolders: [Folder] = []
@@ -193,7 +185,6 @@ struct ProgressOverlay: View {
 
 struct AppFoldersViews_Previews: PreviewProvider {
     static let preview = Preview()
-//
     static var previews: some View {
         AppFoldersView()
             .environmentObject(preview.appData)
