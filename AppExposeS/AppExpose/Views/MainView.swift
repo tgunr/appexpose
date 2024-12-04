@@ -169,22 +169,13 @@ struct MainView: View {
         let path = url.path
         let homeDirectory = FileManager.default.homeDirectoryForCurrentUser.path
         
-        // Handle /Applications
         if path == "/Applications" {
             return path
-        }
-        
-        // Handle /~/Applications
-        if path.hasPrefix("/~") {
-            return "~" + path.dropFirst(2)
-        }
-        // Handle ~/Applications
-        if path.hasPrefix(homeDirectory) {
+        } else if path.hasPrefix(homeDirectory) {
             return "~" + path.dropFirst(homeDirectory.count)
+        } else {
+            return path
         }
-        
-        // Handle other cases
-        return path
     }
 
     var emptyStateView: some View {
