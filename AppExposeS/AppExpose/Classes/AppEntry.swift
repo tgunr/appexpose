@@ -29,22 +29,22 @@ class AppFolder: ObservableObject {
 @MainActor
 class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     var id: UUID = UUID()
-    var name: String?
-    var addedDate: Date?
-    var modifiedDate: Date?
-    var createdDate: Date?
-    var appURL: URL
-    var childIcons: [AnyHashable]?
-    var originalFolderIcon: NSImage?
+    @Published var name: String?
+    @Published var addedDate: Date?
+    @Published var modifiedDate: Date?
+    @Published var createdDate: Date?
+    @Published var appURL: URL
+    @Published var childIcons: [AnyHashable]?
+    @Published var originalFolderIcon: NSImage?
     @Published var children = [AppEntry]()
     @Published var directoryEntry: AppEntry?
-    var iconDictionary: [String: NSImage]?
-    var icons: [NSImage]?
+    @Published var iconDictionary: [String: NSImage]?
+    @Published var icons: [NSImage]?
     @Published var appImage: NSImage?
-    var originalImage: NSImage?
-    var attributes: [FileAttributeKey: Any] = [:]
-    var xattr: XATTR?
-    var processedURLs = Set<URL>()
+    @Published var originalImage: NSImage?
+    @Published var attributes: [FileAttributeKey: Any] = [:]
+    @Published var xattr: XATTR?
+    @Published var processedURLs = Set<URL>()
     @Published var isSelected: Bool = false
     
     @MainActor var isSpecial: Bool {
