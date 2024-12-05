@@ -28,6 +28,13 @@ extension Array: @retroactive RawRepresentable where Element: Codable {
     }
 }
 
+// Add this extension to the Array class for safe indexing
+extension Array {
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 //struct ContentView: View {
 //    @AppStorage("itemsInt") var itemsInt = [1, 2, 3]
 //    @AppStorage("itemsBool") var itemsBool = [true, false, true]
