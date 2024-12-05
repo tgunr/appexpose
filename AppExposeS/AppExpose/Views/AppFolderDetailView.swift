@@ -11,24 +11,60 @@ struct AppFolderDetailView: View {
     @Binding var entry: AppEntry
     @Binding var showDetailView: Bool
     @State private var selectMode: Bool = false
+    @State private var customIcon: Image? = nil
+
     var body: some View {
-        VStack {
-            header
-                .toolbar {
-                    ToolbarItem(id: "selectModeToggle") {
-                        Toggle(isOn: $selectMode, label: {
-                            Text(selectMode ? "Done" : "Select") // Update text based on state
-                        })
-                    }
+        HStack {
+            VStack {
+                header
+                scrollview
+                tools
+            }
+            .frame(maxWidth: .infinity)
+
+            // Sidebar for custom icon preview
+            VStack {
+                Text("Custom Icon Preview")
+                    .font(.headline)
+                    .padding()
+
+                if let icon = customIcon {
+                    icon
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 128, height: 128)
+                        .padding()
+                } else {
+                    Text("No custom icon yet")
+                        .foregroundColor(.gray)
+                        .padding()
                 }
-            scrollview
+
+                Button("Generate Icon") {
+                    // Here you would implement the logic to generate the custom icon
+                    // For now, we'll just set a placeholder image
+                    customIcon = Image(systemName: "star.square.fill")
+                }
+                .padding()
+            }
+            .frame(width: 200)
+            .background(Color.secondary.opacity(0.1))
         }
     }
 
     var header: some View {
-        Text(entry.name ?? "")
-            .font(.title)
-            .padding()
+        Group {
+            Text(entry.name ?? "")
+                .font(.title)
+                .padding()
+        }
+        .toolbar {
+            ToolbarItem(id: "selectModeToggle") {
+                Toggle(isOn: $selectMode, label: {
+                    Text(selectMode ? "Done" : "Select")
+                })
+            }
+        }
     }
 
     var scrollview: some View {
@@ -39,6 +75,18 @@ struct AppFolderDetailView: View {
                         EntryView(entry: entry.children[index], selectMode: $selectMode)
                     }
                     .padding(.vertical, 4)
+                }
+            }
+        }
+    }
+
+    var tools: some View {
+        Group {
+            if selectMode {
+                HStack {
+                    Button("Select Entries") {
+                        toggleSelect()
+                    }
                 }
             }
         }
@@ -59,10 +107,12 @@ struct EntryView: View {
                 if let appImage = entry.appImage {
                     Image(nsImage: appImage)
                         .resizable()
+                        .frame(width: 64, height: 64)
                         .aspectRatio(contentMode: .fit)
                 }
                 Text(entry.name ?? "")
             }
+            .padding()
             .onTapGesture {
                 if selectMode {
                     entry.isSelected.toggle()
