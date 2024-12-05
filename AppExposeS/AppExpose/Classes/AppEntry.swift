@@ -17,6 +17,7 @@ let ICON_SIZE = 1024.0
 let DEFAULT_ICON_SIZE = 128.0
 let CUSTOM_ICON_NAME = "Icon\r"
 let CUSTOM_ICON_ID = "com.polymicrosystems.appexpose.customicon"
+let CUSTOM_ATTRIBUTES = "net.polymicro.appexpose"
 let MAX_LEVEL = 2
 
 class AppFolder: ObservableObject {
@@ -44,6 +45,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     @Published var originalImage: NSImage?
     @Published var attributes: [FileAttributeKey: Any] = [:]
     @Published var xattr: XATTR?
+    @Published var exposedFiles: [Int] = []
     @Published var processedURLs = Set<URL>()
     @Published var isSelected: Bool = false
     
@@ -187,6 +189,27 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
             symlog.error("attributes: FAIL")
         }
         xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
+        if let xattr = xattr {
+            for attrName in xattr.attributes {
+                if attrName.starts(with: CUSTOM_ATTRIBUTES) {
+                    do {
+                        // Use optional binding for attrData
+                        let attrData = try xattr.getXattr(name: attrName)
+                        if let attrString = String(data: attrData, encoding: .utf8),
+                           let intValue = Int(attrString) {
+                            exposedFiles.append(intValue)
+                        }
+                    } catch {
+                        symlog.error("Error reading xattr \(attrName): \(error)")
+                    }
+                }
+            }
+        }
+        // Rest of the function remains unchanged
+        name = appURL.lastPathComponent
+        createdDate = attributes[FileAttributeKey.creationDate] as? Date
+        modifiedDate = attributes[FileAttributeKey.modificationDate] as? Date
+        addedDate = attributes[FileAttributeKey.creationDate] as? Date
         name = appURL.lastPathComponent
         createdDate = attributes[FileAttributeKey.creationDate] as? Date
         modifiedDate = attributes[FileAttributeKey.modificationDate] as? Date
@@ -207,16 +230,12 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
             }
             appImage = originalImage
             if !isSpecial {
-//                DispatchQueue.main.async { [weak self] in
-//                    guard let self = self else { return }
-//                    if let self = self else { return }
-                    self.children = []
-                    self.scanURL()
-                    if (self.children.count) != 0 {
-                        self.appImage = self.composeIcons()
-                        symlog.value("Folder \(String(describing: self.name)) created with \(self.children.count) child entries")
-                    }
-//                }
+                self.children = []
+                self.scanURL()
+                if (self.children.count) != 0 {
+                    self.appImage = self.composeIcons()
+                    symlog.value("Folder \(String(describing: self.name)) created with \(self.children.count) child entries")
+                }
             }
         }
 
@@ -225,6 +244,8 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
                 KEY_IMAGE: iconImage]
         }
     }
+
+    // The rest of the file remains unchanged
 
     func getCustomFolderIcon(folderURL: URL) -> NSImage? {
         // Get the icon for the folder
