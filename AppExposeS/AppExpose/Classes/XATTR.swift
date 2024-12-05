@@ -92,7 +92,7 @@ class XATTR: NSObject {
         self.options = options
         attributes = [] // Initialize with an empty dictionary
         super.init()
-        attributes = listXattrs(path: url.path)
+        attributes = listXattrs()
     }
 
     required init(path: String?, options: XATTROptions) {
@@ -100,7 +100,7 @@ class XATTR: NSObject {
         self.options = options
         attributes = [] // Initialize with an empty dictionary
         super.init()
-        attributes = listXattrs(path: url.path)
+        attributes = listXattrs()
     }
 
     let VERBOSE = 0x0020
@@ -108,8 +108,8 @@ class XATTR: NSObject {
     let REPLACE = XATTR_REPLACE
     let CREATE = XATTR_CREATE
 
-    func listXattrs(path: String) -> [String] {
-        let pathCString = path.cString(using: .utf8)!
+    func listXattrs() -> [String] {
+        let pathCString = url.path.cString(using: .utf8)!
         var size = listxattr(pathCString, nil, 0, 0)
 
         guard size > 0 else { return [] }
@@ -138,24 +138,24 @@ class XATTR: NSObject {
         return xattrs
     }
 
-    func setXattr(path: String, name: String, value: Data) throws {
+    func setXattr(name: String, value: Data) throws {
         let result = value.withUnsafeBytes { (pointer: UnsafeRawBufferPointer) -> Int32 in
-            setxattr(path, name, pointer.baseAddress, value.count, 0, 0)
+            setxattr(url.path, name, pointer.baseAddress, value.count, 0, 0)
         }
         if result == -1 {
             throw POSIXError(POSIXErrorCode(rawValue: errno)!)
         }
     }
 
-    func getXattr(path: String, name: String) throws -> Data {
-        let size = getxattr(path, name, nil, 0, 0, 0)
+    func getXattr(name: String) throws -> Data {
+        let size = getxattr(url.path, name, nil, 0, 0, 0)
         if size == -1 {
             throw POSIXError(POSIXErrorCode(rawValue: errno)!)
         }
 
         var data = Data(count: size)
         let result = data.withUnsafeMutableBytes { (pointer: UnsafeMutableRawBufferPointer) -> Int in
-            getxattr(path, name, pointer.baseAddress, size, 0, 0)
+            getxattr(url.path, name, pointer.baseAddress, size, 0, 0)
         }
         if result == -1 {
             throw POSIXError(POSIXErrorCode(rawValue: errno)!)
@@ -163,8 +163,8 @@ class XATTR: NSObject {
         return data
     }
 
-    func removeXattr(path: String, name: String) throws {
-        let result = removexattr(path, name, 0)
+    func removeXattr(name: String) throws {
+        let result = removexattr(url.path, name, 0)
         if result == -1 {
             throw POSIXError(POSIXErrorCode(rawValue: errno)!)
         }
@@ -220,7 +220,6 @@ class XATTR: NSObject {
         var xattributes: [String: Any] = [:]
 
         let cPath = FileManager.default.fileSystemRepresentation(withPath: url.path)
-        var buffer = [Int8](repeating: 0, count: 1024)
         var bufferSize = listxattr(cPath, nil, 0, Int32(options.rawValue))
 
         if bufferSize == -1 {
@@ -233,7 +232,7 @@ class XATTR: NSObject {
             return xattributes
         }
 
-        guard var buffer = malloc(Int(bufferSize)) else {
+        guard let buffer = malloc(Int(bufferSize)) else {
             if ifErrno("could not allocate memory for keys") {
                 return xattributes
             }
@@ -307,7 +306,7 @@ class XATTR: NSObject {
 //        let path = url.path.fileSystemRepresentation
         let cPath = FileManager.default.fileSystemRepresentation(withPath: url.path)
 
-        var bufferSize = listxattr(cPath, nil, 0, Int32(options.rawValue))
+        let bufferSize = listxattr(cPath, nil, 0, Int32(options.rawValue))
         if bufferSize == 0 || bufferSize == -1 {
             if errno != 0 {
                 if ifErrno("listxattr did not return a buffer size") {
