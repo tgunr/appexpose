@@ -133,21 +133,6 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         let appURL: URL
     }
 
-    func encode(to encoder: Encoder) throws {
-        let representation = CodableRepresentation(id: id, name: name, appURL: appURL)
-        try representation.encode(to: encoder)
-    }
-
-    override nonisolated var hash: Int {
-        return cachedHash
-    }
-
-    static func == (lhs: AppEntry, rhs: AppEntry) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-    private let cachedHash: Int
-
     private init(id: UUID, name: String?, appURL: URL, cachedHash: Int) {
         self.id = id
         self.name = name
@@ -192,6 +177,21 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         super.init()
         collectEntries()
     }
+
+    func encode(to encoder: Encoder) throws {
+        let representation = CodableRepresentation(id: id, name: name, appURL: appURL)
+        try representation.encode(to: encoder)
+    }
+
+    override nonisolated var hash: Int {
+        return cachedHash
+    }
+
+    static func == (lhs: AppEntry, rhs: AppEntry) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    private let cachedHash: Int
 
     func isAppFolder() -> Bool {
         let appFolderSettings = AppData.shared.appFolders
@@ -275,8 +275,8 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     }
 
     @MainActor
-    func collectEntries() async {
-        Task {
+    func collectEntries() {
+//        Task {
             let fm = FileManager()
             do {
                 attributes = try fm.attributesOfItem(atPath: appURL.path)
@@ -347,7 +347,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
                 iconDictionary = [
                     KEY_IMAGE: iconImage]
             }
-        }
+//        }
     }
 
     /// Looks in the directoryToScan items which are directories or packages. If found an entry is created and checked if it is an application.
@@ -355,7 +355,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     /// The folder being scanned is limited by the value in MAX_LEVEL
     @MainActor
     func scanURL() {
-        Task {
+//        Task {
             let fm = FileManager.default
             let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
             let directoryEnumerator = fm.enumerator(at: appURL, includingPropertiesForKeys: Array(resourceKeys), options: [.skipsHiddenFiles, .skipsPackageDescendants])!
@@ -369,7 +369,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
                     continue
                 }
                 if isDirectory {
-                    let entry = await AppEntry(withURL: fileURL)
+                    let entry = AppEntry(withURL: fileURL)
                     if !children.contains(where: { $0.appURL == entry.appURL }) {
                         children.append(entry)
                         if isPackage {
@@ -382,7 +382,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
                         }
                     }
                 }
-            }
+//            }
         }
     }
 

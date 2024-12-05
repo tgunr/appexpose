@@ -110,14 +110,6 @@ struct AppFoldersView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .animation(.default, value: selectedItem)
-            .onAppear {
-                symlog.info("AppFoldersView Appeared")
-                isLoading = true
-                Task(priority: .background) {
-                    await fetchApps()
-                    filteredEntries = entries
-                }
-            }
             .onChange(of: showFilter) { _, _ in
                 filteredEntries = entries
                 refreshTrigger = UUID()
@@ -131,6 +123,11 @@ struct AppFoldersView: View {
             if isLoading {
                 ProgressOverlay()
             }
+        }
+        .task {
+            await fetchApps()
+            filteredEntries = entries
+            isLoading = false
         }
     }
 
