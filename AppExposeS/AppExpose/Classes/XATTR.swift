@@ -145,6 +145,7 @@ class XATTR: NSObject {
         if result == -1 {
             throw POSIXError(POSIXErrorCode(rawValue: errno)!)
         }
+        attributes.append(name)
     }
 
     func getXattr(name: String) throws -> Data {
@@ -168,6 +169,7 @@ class XATTR: NSObject {
         if result == -1 {
             throw POSIXError(POSIXErrorCode(rawValue: errno)!)
         }
+        attributes.removeAll(where: { $0 == name })
     }
 
 //    func displayXattrKeys(path: String, options: Int32) -> Int32 {
