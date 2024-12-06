@@ -49,7 +49,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     @Published var exposedFiles: [Int] = []
     @Published var processedURLs = Set<URL>()
     @Published var isSelected: Bool = false
-    
+
     @MainActor var isSpecial: Bool {
         let path = appURL.path
         let iconPath = NSString.path(withComponents: [path, "Icon\r"])
@@ -133,6 +133,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         let appURL: URL
     }
 
+    @MainActor
     private init(id: UUID, name: String?, appURL: URL, cachedHash: Int) {
         self.id = id
         self.name = name
@@ -154,7 +155,10 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         modifiedDate = nil
         createdDate = nil
         super.init()
-        collectEntries()
+
+        Task {
+            await collectEntries()
+        }
     }
 
     convenience init(from representation: CodableRepresentation) {
@@ -166,7 +170,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         return CodableRepresentation(id: id, name: name, appURL: appURL)
     }
 
-    class func root() -> AppEntry? {
+    class func root() async -> AppEntry? {
         let root = self.init(withURL: URL(fileURLWithPath: "/"))
         return root
     }
@@ -175,7 +179,9 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         appURL = url
         cachedHash = UUID().hashValue // Use a new UUID for the hash
         super.init()
-        collectEntries()
+        Task {
+            await collectEntries()
+        }
     }
 
     func encode(to encoder: Encoder) throws {
@@ -275,114 +281,143 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
     }
 
     @MainActor
-    func collectEntries() {
-//        Task {
-            let fm = FileManager()
-            do {
-                attributes = try fm.attributesOfItem(atPath: appURL.path)
-            } catch {
-                symlog.error("attributes: FAIL")
-            }
-            xattr = XATTR(path: appURL.path(), options: XATTROptions.nofollow)
-            if let xattr = xattr {
-                for attrName in xattr.attributes {
-                    if attrName.starts(with: CUSTOM_ATTRIBUTES) {
-                        do {
-                            // Use optional binding for attrData
-                            let attrData = try xattr.getXattr(name: attrName)
-                            if let attrString = String(data: attrData, encoding: .utf8),
-                               let intValue = Int(attrString) {
-                                exposedFiles.append(intValue)
-                            }
-                        } catch {
-                            symlog.error("Error reading xattr \(attrName): \(error)")
-                        }
+    fileprivate func collectEntries() async {
+        // Create a task group to handle parallel operations
+        await withTaskGroup(of: Void.self) { group in
+            // File attributes operation
+            group.addTask {
+                do {
+                    let fm = FileManager.default
+                    let attrs = try await fm.attributesOfItem(atPath: self.appURL.path)
+                    await MainActor.run {
+                        self.attributes = attrs
+                        self.name = self.appURL.lastPathComponent
+                        self.createdDate = attrs[FileAttributeKey.creationDate] as? Date
+                        self.modifiedDate = attrs[FileAttributeKey.modificationDate] as? Date
+                        self.addedDate = attrs[FileAttributeKey.creationDate] as? Date
+                    }
+                } catch {
+                    await MainActor.run {
+                        symlog.error("attributes: FAIL")
                     }
                 }
             }
-            // Rest of the function remains unchanged
-            name = appURL.lastPathComponent
-            createdDate = attributes[FileAttributeKey.creationDate] as? Date
-            modifiedDate = attributes[FileAttributeKey.modificationDate] as? Date
-            addedDate = attributes[FileAttributeKey.creationDate] as? Date
-            name = appURL.lastPathComponent
-            createdDate = attributes[FileAttributeKey.creationDate] as? Date
-            modifiedDate = attributes[FileAttributeKey.modificationDate] as? Date
-            addedDate = attributes[FileAttributeKey.creationDate] as? Date
-            
-            originalImage = workspace.icon(for: UTType.folder)
-            if isApp {
-                originalImage = workspace.icon(forFile: appURL.path)
-                originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
-                appImage = originalImage
-            } else if isFolder {
-                if hasMyCustomIcon {
-                    originalImage = getCustomFolderIcon(folderURL: appURL)
-                    originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
-                } else {
-                    originalImage = workspace.icon(forFile: appURL.path)
-                    originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+
+            // Extended attributes operation
+
+            group.addTask {
+                func loadXattr() {
+                    Task { @MainActor in
+                        self.xattr = await XATTR(path: self.appURL.path(), options: XATTROptions.nofollow)
+                    }
                 }
-                appImage = originalImage
-                // Check if the folder is a special folder
+                loadXattr()
                 
-                if !isSpecial && !isAppFolder() {
-                    children = []
-                    scanURL()
-                    if (children.count) != 0 {
-                        appImage = composeIcons()
-                        let ws = NSWorkspace.shared
-                        if !ws.setIcon(appImage, forFile: appURL.path, options: []) {
-                            symlog.error("Failed to set icon on: \(appURL)")
-                        }
-                        symlog.value("Folder \(String(describing: name)) created with \(children.count) child entries")
-                        for (index, childEntry) in children.enumerated() {
-                            setCustomAttribute(for: childEntry, index: index)
+                var tempExposedFiles: [Int] = []
+
+                let attrNames = await self.xattr?.listXattrs()
+                for attrName in attrNames ?? [] {
+                    if attrName.starts(with: CUSTOM_ATTRIBUTES) {
+                        let attrData = await self.xattr!.getValue(attrName)
+                        if let attrString = String(data: attrData, encoding: .utf8),
+                           let intValue = Int(attrString) {
+                            tempExposedFiles.append(intValue)
                         }
                     }
                 }
+
+                // Update exposedFiles on the main actor
+                await MainActor.run {
+                    self.exposedFiles = tempExposedFiles
+                }
             }
-            
-            if let iconImage = appImage {
-                iconDictionary = [
-                    KEY_IMAGE: iconImage]
+
+            // Icon handling operation
+            group.addTask {
+                await MainActor.run {
+                    self.originalImage = workspace.icon(for: UTType.folder)
+
+                    if self.isApp {
+                        self.originalImage = workspace.icon(forFile: self.appURL.path)
+                        self.originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+                        self.appImage = self.originalImage
+                    } else if self.isFolder {
+                        if self.hasMyCustomIcon {
+                            self.originalImage = self.getCustomFolderIcon(folderURL: self.appURL)
+                            self.originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+                        } else {
+                            self.originalImage = workspace.icon(forFile: self.appURL.path)
+                            self.originalImage?.size = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
+                        }
+                        self.appImage = self.originalImage
+
+                        if !self.isSpecial {
+                            self.children = []
+                            Task {
+                                await self.scanURL()
+                                if self.children.count != 0 {
+                                    self.appImage = await self.composeIcons()
+                                    symlog.value("Folder \(String(describing: self.name)) created with \(self.children.count) child entries")
+                                }
+                            }
+                        }
+                    }
+
+                    if let iconImage = self.appImage {
+                        self.iconDictionary = [KEY_IMAGE: iconImage]
+                    }
+                }
             }
-//        }
+
+            // Wait for all operations to complete
+            await group.waitForAll()
+        }
     }
+
 
     /// Looks in the directoryToScan items which are directories or packages. If found an entry is created and checked if it is an application.
     /// If so, the entry is added as a child entry. If the item was a package, no further recursion is needed as packages are not applications per say.
     /// The folder being scanned is limited by the value in MAX_LEVEL
     @MainActor
-    func scanURL() {
-//        Task {
-            let fm = FileManager.default
-            let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
-            let directoryEnumerator = fm.enumerator(at: appURL, includingPropertiesForKeys: Array(resourceKeys), options: [.skipsHiddenFiles, .skipsPackageDescendants])!
-            
-            while let fileURL = directoryEnumerator.nextObject() as? URL {
-                // Retrieve the directory property
-                guard let resourceValues = try? fileURL.resourceValues(forKeys: resourceKeys),
-                      let isDirectory = resourceValues.isDirectory,
+    func scanURL() async {
+        let fm = FileManager.default
+        let resourceKeys = Set<URLResourceKey>([.nameKey, .isDirectoryKey, .isPackageKey, .customIconKey])
+
+        guard let directoryEnumerator = fm.enumerator(
+            at: appURL,
+            includingPropertiesForKeys: Array(resourceKeys),
+            options: [.skipsHiddenFiles, .skipsPackageDescendants]
+        ) else { return }
+
+        var newChildren: [AppEntry] = []
+
+        while let fileURL = directoryEnumerator.nextObject() as? URL {
+            do {
+                let resourceValues = try fileURL.resourceValues(forKeys: resourceKeys)
+                guard let isDirectory = resourceValues.isDirectory,
                       let isPackage = resourceValues.isPackage
-                else {
-                    continue
-                }
+                else { continue }
+
                 if isDirectory {
                     let entry = AppEntry(withURL: fileURL)
-                    if !children.contains(where: { $0.appURL == entry.appURL }) {
-                        children.append(entry)
-                        if isPackage {
-                            if entry.isApp {
-                                directoryEnumerator.skipDescendents()
-                            }
+                    if !newChildren.contains(where: { $0.appURL == entry.appURL }) {
+                        newChildren.append(entry)
+                        if isPackage && entry.isApp {
+                            directoryEnumerator.skipDescendents()
                         }
-                        if (directoryEnumerator.level) > MAX_LEVEL {
+                        if directoryEnumerator.level > MAX_LEVEL {
                             directoryEnumerator.skipDescendents()
                         }
                     }
                 }
-//            }
+            } catch {
+                continue
+            }
+        }
+
+        // Update children on main actor
+        await MainActor.run {
+            self.children = newChildren
         }
     }
 
@@ -417,7 +452,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         return string.utf8.reduce(0) { ($0 << 8) + FourCharCode($1) }
     }
 
-    class func scanApplications(atPath: String?, currentDirectory: String?) -> [AppEntry] {
+    class func scanApplications(atPath: String?, currentDirectory: String?) async -> [AppEntry] {
         var entries: [AppEntry] = []
 
         guard let currentDir = atPath ?? currentDirectory else { return entries }
@@ -428,7 +463,7 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
 
             for item in contents {
                 if item.path.hasSuffix("Applications") || item.path.hasSuffix(".Trash") { continue }
-                let directoryEntry = AppEntry(withURL: item)
+                let directoryEntry = await AppEntry(withURL: item)
                 entries.append(directoryEntry)
             }
         } catch {
@@ -511,7 +546,8 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         NSGraphicsContext.current?.restoreGraphicsState()
     }
 
-    func composeIcons() -> NSImage? {
+    @MainActor
+    func composeIcons() async -> NSImage? {
         let numImages = children.count
         let resultImageSize = NSMakeSize(CGFloat(ICON_SIZE), CGFloat(ICON_SIZE))
         var resultImage = NSImage(size: resultImageSize)
@@ -662,7 +698,6 @@ class AppEntry: NSObject, @preconcurrency Identifiable, ObservableObject {
         }
         collectionView.selectionIndexes = IndexSet()
     }
-
 
     func pathWithName() -> String? {
         let path = URL(fileURLWithPath: appURL.path).appendingPathComponent(name ?? "").path

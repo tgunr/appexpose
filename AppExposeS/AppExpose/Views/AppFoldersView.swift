@@ -137,7 +137,7 @@ struct AppFoldersView: View {
         isLoading = true
 
         for var folder in appData.appFolders {
-            let entries = AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
+            let entries = await AppEntry.scanApplications(atPath: folder.url.path, currentDirectory: nil)
             folder.entries = entries
             updatedAppFolders.append(folder)
 
@@ -145,7 +145,7 @@ struct AppFoldersView: View {
 
             updatedSubfolders[folder.url.path] = entries
 
-            let folderEntry = AppEntry(withURL: folder.url)
+            let folderEntry = await AppEntry(withURL: folder.url)
             for entry in entries {
                 entry.directoryEntry = folderEntry
             }

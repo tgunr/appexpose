@@ -119,17 +119,17 @@ struct MainView: View {
     var appsView: some View {
         let groupedEntries = Dictionary(grouping: filteredEntries, by: { $0.directoryEntry ?? $0 })
         let columns = [
-            GridItem(.adaptive(minimum: 120))
+            GridItem(.adaptive(minimum: 120)),
         ]
 
         let sortedKeys = getSortedKeys(from: groupedEntries)
-        
+
         // Add more detailed logging
         symlog.value("MainView - appsView: Filtered Entries Count: \(filteredEntries.count)")
         symlog.value("MainView - appsView: Grouped Entries Count: \(groupedEntries.count)")
         symlog.value("MainView - appsView: Sorted Keys Count: \(sortedKeys.count)")
         symlog.value("MainView - appsView: Grouped Entries Keys: \(groupedEntries.keys)")
-        
+
         return ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(sortedKeys, id: \.self) { folderPath in
@@ -142,7 +142,7 @@ struct MainView: View {
     }
 
     private func getSortedKeys(from groupedEntries: [AppEntry?: [AppEntry]]) -> [AppEntry] {
-        let sortedKeys = groupedEntries.keys.compactMap { $0 }.sorted { (lhs, rhs) in
+        let sortedKeys = groupedEntries.keys.compactMap { $0 }.sorted { lhs, rhs in
             getFolderDisplayPath(lhs.appURL) > getFolderDisplayPath(rhs.appURL)
         }
         // Add more detailed logging
@@ -150,7 +150,6 @@ struct MainView: View {
         symlog.value("MainView - getSortedKeys: First 5 Sorted Keys: \(sortedKeys.prefix(5).map { getFolderDisplayPath($0.appURL) })")
         return sortedKeys
     }
-
 
     private func folderContent(for folderPath: AppEntry, entries: [AppEntry]) -> some View {
         // Add more detailed logging
@@ -168,7 +167,7 @@ struct MainView: View {
     private func getFolderDisplayPath(_ url: URL) -> String {
         let path = url.path
         let homeDirectory = FileManager.default.homeDirectoryForCurrentUser.path
-        
+
         if path == "/Applications" {
             return path
         } else if path.hasPrefix(homeDirectory) {
@@ -192,10 +191,19 @@ struct MainView: View {
 }
 
 #Preview {
-    @Previewable @State var showFilter: ShowFilter = .all
-    @Previewable @State var sortOption: SortOption = .name
-    @Previewable @State var filteredEntries: [AppEntry] = AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
-    var appData = AppData()
-    MainView(searchText: .constant(""), showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
-    })
+    struct PreviewWrapper: View {
+        @State private var showFilter: ShowFilter = .all
+        @State private var sortOption: SortOption = .name
+        @State private var filteredEntries: [AppEntry] = []
+        @State private var appData = AppData()
+
+        var body: some View {
+            MainView(searchText: .constant(""), showFilter: $showFilter, sortOption: $sortOption, filteredEntries: $filteredEntries, appData: appData, entries: { filteredEntries })
+                .task {
+                    filteredEntries = await AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
+                }
+        }
+    }
+
+    return PreviewWrapper()
 }

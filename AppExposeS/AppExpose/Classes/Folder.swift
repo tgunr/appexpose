@@ -10,18 +10,18 @@ struct Folder: Identifiable, Equatable, @preconcurrency Codable, Hashable {
     var name: String
     var url: URL
     var entries: [AppEntry]
-    
+
     enum CodingKeys: String, CodingKey {
         case id, name, url, entries
     }
-    
+
     init(id: UUID, name: String, url: URL, entries: [AppEntry]) {
         self.id = id
         self.name = name
         self.url = url
         self.entries = entries
     }
-    
+
     @MainActor func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -44,7 +44,6 @@ struct Folder: Identifiable, Equatable, @preconcurrency Codable, Hashable {
         var decodedEntries: [AppEntry] = []
         while !entriesContainer.isAtEnd {
             let entryData = try entriesContainer.decode(AppEntry.CodableRepresentation.self)
-            // Use the new from(_:) method
             decodedEntries.append(AppEntry(from: entryData))
         }
         entries = decodedEntries
@@ -54,4 +53,3 @@ struct Folder: Identifiable, Equatable, @preconcurrency Codable, Hashable {
 struct FolderArray: Encodable, Decodable {
     let values: [Folder]
 }
-

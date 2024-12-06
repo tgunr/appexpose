@@ -141,11 +141,30 @@ struct Star: View {
 }
 
 // Preview Configuration
+struct AppFolderDetail_PreviewWrapper: View {
+    @State var entry: AppEntry?
+    @State var showDetailView = true
+
+    var body: some View {
+        Group {
+            if let entry = entry {
+                AppFolderDetailView(entry: .constant(entry), showDetailView: $showDetailView)
+            } else {
+                Text("Loading")
+            }
+        }
+        .task {
+            let entries = await AppEntry.scanApplications(atPath: "/Users/davec/Applications/WebApps", currentDirectory: nil)
+            if let firstEntry = entries.first {
+                self.entry = firstEntry
+                self.entry!.isSelected = true
+            }
+        }
+    }
+}
+
 struct AppFolderDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var entry = AppEntry(withURL: URL(fileURLWithPath: "/Users/davec/Applications/WebApps"))
-        @State var showDetailView = true
-        entry.isSelected = true
-        return AppFolderDetailView(entry: $entry, showDetailView: $showDetailView)
+        AppFolderDetail_PreviewWrapper()
     }
 }

@@ -100,27 +100,35 @@ struct AppFolderView: View {
         #else
             .frame(width: 64, height: 64)
         #endif
-        .border(.blue, width: entry.isSelected ? 1.0 : 0.0)
-        .cornerRadius(8.0)
+            .border(.blue, width: entry.isSelected ? 1.0 : 0.0)
+            .cornerRadius(8.0)
     }
 }
 
-#Preview {
-    @Previewable @State var showFilter: ShowFilter = .all
-    @Previewable @State var canSelect: Bool = false
-    @Previewable @State var entry = AppEntry(withURL: URL(string: "/Applications/SVG")!)
-    AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
-}
-
-struct AppFolderDetailViewT: View {
-    let entry: AppEntry
-
+struct AppFolderView_PreviewWrapper: View {
+    @State private var showFilter: ShowFilter = .all
+    @State private var canSelect: Bool = false
+    @State private var entry: AppEntry?
+    
     var body: some View {
-        VStack {
-            Text("Folder Details")
-                .font(.title)
-            Text("Name: \(entry.name ?? "Unknown")")
-            // Add more details as needed
+        Group {
+            if let entry = entry {
+                AppFolderView(entry: entry, showFilter: $showFilter, canSelect: $canSelect)
+            } else {
+                Text("Loading...")
+            }
+        }
+        .task {
+            let entries = await AppEntry.scanApplications(atPath: "/Users/davec/Applications", currentDirectory: nil)
+            self.entry = entries.first
         }
     }
 }
+
+struct AppFolderView_Previews: PreviewProvider {
+    static var previews: some View {
+        AppFolderView_PreviewWrapper()
+    }
+}
+
+        

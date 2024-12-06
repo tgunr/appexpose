@@ -80,27 +80,27 @@ enum XATTROptions: Int {
 ////EINVAL
 // var result: Any?
 
-class XATTR: NSObject {
-    var url: URL
-    var options: XATTROptions
-    var resultError: Error?
-    var attributes: [String]
+final class XATTR: NSObject, @unchecked Sendable {
+    let url: URL
+    let options: XATTROptions
+    private(set) var resultError: Error?
+    private(set) var attributes: [String]
     private(set) var keysValues: [AnyHashable: Any]?
 
-    init(url: URL, options: XATTROptions) {
+    init(url: URL, options: XATTROptions) async {
         self.url = url
         self.options = options
         attributes = [] // Initialize with an empty dictionary
         super.init()
-        attributes = listXattrs()
+        attributes = await listXattrs()
     }
 
-    required init(path: String?, options: XATTROptions) {
+    required init(path: String?, options: XATTROptions) async {
         url = URL(fileURLWithPath: path!)
         self.options = options
         attributes = [] // Initialize with an empty dictionary
         super.init()
-        attributes = listXattrs()
+        attributes = await listXattrs()
     }
 
     let VERBOSE = 0x0020
@@ -108,7 +108,7 @@ class XATTR: NSObject {
     let REPLACE = XATTR_REPLACE
     let CREATE = XATTR_CREATE
 
-    func listXattrs() -> [String] {
+    func listXattrs() async -> [String] {
         let pathCString = url.path.cString(using: .utf8)!
         var size = listxattr(pathCString, nil, 0, 0)
 
@@ -164,6 +164,15 @@ class XATTR: NSObject {
         return data
     }
 
+    func getValue(_ name: String) async -> Data {
+        do {
+            return try getXattr(name: name)
+        } catch {
+            print("Error getting xattr: \(error)") // Or handle the error more robustly
+            return Data() // Return an empty Data object or handle appropriately
+        }
+    }
+    
     func removeXattr(name: String) throws {
         let result = removexattr(url.path, name, 0)
         if result == -1 {
